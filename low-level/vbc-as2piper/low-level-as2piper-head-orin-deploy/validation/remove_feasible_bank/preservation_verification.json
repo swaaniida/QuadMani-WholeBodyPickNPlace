@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "changed_deploy_sources": [
+    "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+    "legged_gym/envs/manip_loco/manip_loco.py",
+    "legged_gym/utils/feasible_workspace.py"
+  ],
+  "all_other_deploy_sources_unchanged": true,
+  "original_sources_unchanged": 39,
+  "preserved_checkpoint_metadata_count": 226,
+  "all_urdf_unchanged": true,
+  "source_exactly_matches_pre_bank": true,
+  "active_bank_files_removed": true,
+  "collision_box_front_extension_preserved": true,
+  "training_started": false
+}

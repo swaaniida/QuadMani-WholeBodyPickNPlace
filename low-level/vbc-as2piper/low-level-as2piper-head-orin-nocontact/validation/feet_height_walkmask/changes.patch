@@ -1,0 +1,94 @@
+--- before/audit_observations.py
++++ after/audit_observations.py
+@@ -9,8 +9,8 @@
+ from legged_gym.envs.manip_loco.as2_head_orin_config import AS2HeadOrinCfg
+ from legged_gym.utils.helpers import class_to_dict
+ 
+-parser=argparse.ArgumentParser();parser.add_argument('--label',default='after');args=parser.parse_args()
+-root=Path(__file__).resolve().parent;out=root/'validation/gait_clock'/args.label;out.mkdir(parents=True,exist_ok=True)
++parser=argparse.ArgumentParser();parser.add_argument('--label',default='after');parser.add_argument('--output-stage',default='gait_clock');args=parser.parse_args()
++root=Path(__file__).resolve().parent;out=root/'validation'/args.output_stage/args.label;out.mkdir(parents=True,exist_ok=True)
+ random.seed(20261111);np.random.seed(20261111);torch.manual_seed(20261111)
+ cfg=AS2HeadOrinCfg();cfg.env.num_envs=16;cfg.terrain.num_rows=cfg.terrain.num_cols=4;cfg.terrain.border_size=5;cfg.env.episode_length_s=20
+ for name in ('randomize_friction','randomize_base_mass','randomize_base_com','randomize_motor','randomize_gripper_mass','push_robots'):setattr(cfg.domain_rand,name,False)
+@@ -36,6 +36,7 @@
+         else:
+             value=env.rigid_body_state[:,env.feet_indices,7:10].norm(dim=-1)
+             expected=(desired*(1-torch.exp(-value.square()/cfg.rewards.gait_vel_sigma))).mean(-1)
++        expected *= env._get_walking_cmd_mask()
+         assert torch.allclose(raw,expected,atol=1e-6)
+         assert (raw>=0).all() and (raw*env.reward_scales[name]<=0).all()
+         shape_samples[name].append(raw.detach().cpu().numpy().copy())
+@@ -85,6 +86,7 @@
+             v=values[:,i*4:(i+1)*4]
+             result['shaping_rollout'][name]['conditions'][label]={'raw_mean':float(v.mean()),'weighted_mean':float(v.mean()*env.reward_scales[name]),'nonzero_fraction':float((v>1e-6).mean())}
+         assert values.max()>1e-6
++        assert not values[:,:4].any()
+     # Isolated live-source and sign tests; do not change the real simulation.
+     import copy
+     from legged_gym.envs.rewards.maniploco_rewards import ManipLoco_rewards
+@@ -92,6 +94,8 @@
+     shadow.force_sensor_tensor=torch.full_like(env.force_sensor_tensor,float('nan'))
+     shadow.foot_velocities=torch.full_like(env.foot_velocities,float('nan'))
+     shadow.desired_contact_states=torch.zeros_like(env.desired_contact_states)
++    shadow.commands=env.commands.clone();shadow.commands[:,0]=.3
++    shadow._get_walking_cmd_mask=lambda: type(env)._get_walking_cmd_mask(shadow)
+     reward=ManipLoco_rewards(shadow)
+     shadow.contact_forces[:,env.feet_indices,:]=torch.tensor([0.,0.,50.],device=env.device)
+     swing_force=reward._reward_tracking_contacts_shaped_force()[0]
+@@ -105,6 +109,22 @@
+     no_slip=reward._reward_tracking_contacts_shaped_vel()[0]
+     assert not no_slip.any()
+     result['shaping_probes']={'swing_50N_weighted':float(swing_force.mean()*-2),'stance_50N_weighted':float(stance_force.mean()*-2),'stance_1m_s_weighted':float(stance_slip.mean()*-2),'stance_0m_s_weighted':float(no_slip.mean()*-2),'sensor_nan_and_stale_velocity_nan_independent':True}
++    mask_checks={}
++    for label,cmd,moving in [('stop',[0.,0.,0.],False),('deadband',[.19,0.,.49],False),('forward',[.3,0.,0.],True),('reverse',[-.3,0.,0.],True),('turn',[0.,0.,.6],True),('reverse_turn',[0.,0.,-.6],True),('combined',[.3,0.,.6],True)]:
++        shadow.commands[:]=torch.tensor(cmd,device=env.device)
++        shadow.desired_contact_states.zero_()
++        f,metric_f=reward._reward_tracking_contacts_shaped_force()
++        shadow.desired_contact_states.fill_(1.)
++        shadow.rigid_body_state[:,env.feet_indices,7:10]=torch.tensor([1.,0.,0.],device=env.device)
++        v,metric_v=reward._reward_tracking_contacts_shaped_vel()
++        assert torch.equal(f,metric_f) and torch.equal(v,metric_v)
++        if moving:assert (f>0).all() and (v>0).all()
++        else:assert not f.any() and not v.any()
++        mask_checks[label]={'force_weighted':float(f.mean()*-2),'velocity_weighted':float(v.mean()*-2)}
++    result['walking_mask_probes']=mask_checks
++    assert cfg.rewards.feet_height_target==.18 and cfg.rewards.scales.feet_height==1.
++    result['feet_height_target']=cfg.rewards.feet_height_target
++    result['feet_height_scale']=cfg.rewards.scales.feet_height
+     assert cfg.rewards.scales.foot_contacts_z==0 and 'foot_contacts_z' not in env.reward_names
+     result['sensor_only_foot_contacts_z_disabled']=True
+     # A disabled privileged observation flag must still produce fresh correctly sized data.
+--- before/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ after/legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -78,6 +78,8 @@
+ 
+     class rewards(B1Z1RoughCfg.rewards):
+         base_height_target = .3244069024246581
++        # 0.30 m B1 target x approximately 0.60 geometric scale.
++        feet_height_target = 0.18
+ 
+         class scales(B1Z1RoughCfg.rewards.scales):
+             # This unused legacy term requires a foot-mounted force sensor.
+--- before/legged_gym/envs/rewards/maniploco_rewards.py
++++ after/legged_gym/envs/rewards/maniploco_rewards.py
+@@ -321,8 +321,7 @@
+             reward += (1 - desired_contact[:, i]) * (
+                         1 - torch.exp(-1 * foot_forces[:, i] ** 2 / self.env.cfg.rewards.gait_force_sigma))
+         
+-        # cmd_stop_flag = ~self.env._get_walking_cmd_mask()
+-        # reward[cmd_stop_flag] = 0
++        reward *= self.env._get_walking_cmd_mask()
+         return reward / 4, reward / 4
+ 
+     def _reward_tracking_contacts_shaped_vel(self):
+@@ -334,8 +333,7 @@
+         for i in range(4):
+             reward += (desired_contact[:, i] * (
+                         1 - torch.exp(-1 * foot_velocities[:, i] ** 2 / self.env.cfg.rewards.gait_vel_sigma)))
+-        # cmd_stop_flag = ~self.env._get_walking_cmd_mask()
+-        # reward[cmd_stop_flag] = 0
++        reward *= self.env._get_walking_cmd_mask()
+         
+         return reward / 4, reward / 4
+     

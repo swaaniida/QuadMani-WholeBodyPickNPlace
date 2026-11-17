@@ -1,0 +1,27 @@
+{
+  "mode": "guard",
+  "num_envs": 6144,
+  "steps": 24,
+  "wall_s": 26.10752071812749,
+  "equivalent_collection_24steps_s": 26.10752071812749,
+  "seconds": {
+    "goal_sampling_inclusive": 22.370633502025157,
+    "iterative_ik": 20.36307975044474,
+    "body_obb": 0.658072839025408,
+    "candidate_check_inclusive": 22.250072189606726
+  },
+  "calls": {
+    "goal_sampling_inclusive": 24,
+    "iterative_ik": 366,
+    "body_obb": 366,
+    "candidate_check_inclusive": 122
+  },
+  "items": {
+    "goal_sampling_inclusive": 5888,
+    "iterative_ik": 24819,
+    "body_obb": 24819,
+    "candidate_check_inclusive": 8273
+  },
+  "non_sampling_s": 3.736887216102332,
+  "note": "CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time."
+}

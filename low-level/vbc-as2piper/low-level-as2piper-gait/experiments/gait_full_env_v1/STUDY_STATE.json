@@ -1,0 +1,16 @@
+{
+  "status": "This first study stage has ended; ongoing stage is ../gait_reward_proxy_v2/CURRENT_STATE.json",
+  "completed": {
+    "original": 600,
+    "stable": 600,
+    "speed": 200,
+    "progress": 201
+  },
+  "cooperatively_stopped": {
+    "progress_gain2": 37
+  },
+  "never_trained": [
+    "gaussian_gain2"
+  ],
+  "selection": "No full-environment candidate passed command tracking and stability."
+}

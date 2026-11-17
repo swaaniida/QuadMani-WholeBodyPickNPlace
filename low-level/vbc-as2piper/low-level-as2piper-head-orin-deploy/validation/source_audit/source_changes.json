@@ -1,0 +1,229 @@
+[
+  {
+    "file": "legged_gym/envs/__init__.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/__init__.py",
+    "changed_symbols": [],
+    "sha256": "a5fe24b5d5eb5a9ed157dce1b598367be1aa9e51414f5633656f60f284574314"
+  },
+  {
+    "file": "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+    "status": "added",
+    "original": null,
+    "changed_symbols": [
+      "AS2HeadOrinCfg",
+      "AS2HeadOrinCfg.env",
+      "AS2HeadOrinCfg.init_state",
+      "AS2HeadOrinCfg.asset",
+      "AS2HeadOrinCfg.control",
+      "AS2HeadOrinCfg.goal_ee",
+      "AS2HeadOrinCfg.goal_ee.sphere_center",
+      "AS2HeadOrinCfg.goal_ee.ranges",
+      "AS2HeadOrinCfg.domain_rand",
+      "AS2HeadOrinCfg.termination",
+      "AS2HeadOrinCfg.rewards",
+      "AS2HeadOrinCfg.rewards.scales",
+      "AS2HeadOrinCfgPPO",
+      "AS2HeadOrinCfgPPO.runner"
+    ],
+    "sha256": "6e0674d3c0d31c942feec52daba16cc791bfa14877a7055fa785f972b0f73ca7"
+  },
+  {
+    "file": "legged_gym/envs/manip_loco/manip_loco.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/manip_loco.py",
+    "changed_symbols": [
+      "ManipLoco",
+      "ManipLoco.__init__",
+      "ManipLoco.step",
+      "ManipLoco.post_physics_step",
+      "ManipLoco.compute_observations",
+      "ManipLoco._termination_ground_height",
+      "ManipLoco._reward_foot_ground_heights",
+      "ManipLoco.check_termination",
+      "ManipLoco.create_sim",
+      "ManipLoco.reset_idx",
+      "ManipLoco._get_env_origins",
+      "ManipLoco._create_envs",
+      "ManipLoco._process_rigid_body_props",
+      "ManipLoco._init_buffers",
+      "ManipLoco._push_robots",
+      "ManipLoco._reset_dofs",
+      "ManipLoco._get_noise_scale_vec",
+      "ManipLoco._collision_check",
+      "ManipLoco._update_curr_ee_goal",
+      "ManipLoco._get_ee_goal_spherical_center"
+    ],
+    "sha256": "585a56391c42ec105d2f74132be035a3b333ddbbb8b952743015e3ade5bc3de2"
+  },
+  {
+    "file": "legged_gym/envs/rewards/maniploco_rewards.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/rewards/maniploco_rewards.py",
+    "changed_symbols": [
+      "ManipLoco_rewards",
+      "ManipLoco_rewards._reward_feet_jerk",
+      "ManipLoco_rewards._reward_feet_drag",
+      "ManipLoco_rewards._reward_feet_contact_forces",
+      "ManipLoco_rewards._reward_base_height",
+      "ManipLoco_rewards._reward_tracking_contacts_shaped_force",
+      "ManipLoco_rewards._reward_tracking_contacts_shaped_vel",
+      "ManipLoco_rewards._reward_feet_height",
+      "ManipLoco_rewards._reward_feet_air_time"
+    ],
+    "sha256": "0c8e001a3047f5af7b7ba56ddecf09723724baccbef6718dc860c5c4df1dd3b4"
+  },
+  {
+    "file": "legged_gym/scripts/b1z1_interface.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/b1z1_interface.py",
+    "changed_symbols": [
+      "ManipLoco_Policy",
+      "ManipLoco_Policy.init_env",
+      "ManipLoco_Policy.step"
+    ],
+    "sha256": "87bdc9c6bcee4d9d425c9110bb00720424cc83d4304935146c8fa36a232968a1"
+  },
+  {
+    "file": "legged_gym/scripts/play.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/play.py",
+    "changed_symbols": [
+      "play"
+    ],
+    "sha256": "c606ee78cd5e8fd67ed38a2b27c206ba73d6e8500ba8b496d86ddb7d4d45a354"
+  },
+  {
+    "file": "legged_gym/scripts/train.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/train.py",
+    "changed_symbols": [
+      "train"
+    ],
+    "sha256": "27ec152d5dec672ab193486318a317ff48e0967ec6051b55abd4ae05553849ff"
+  },
+  {
+    "file": "legged_gym/utils/helpers.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/helpers.py",
+    "changed_symbols": [
+      "export_policy_as_jit",
+      "HistoryPolicyExporter",
+      "HistoryPolicyExporter.__init__",
+      "HistoryPolicyExporter.forward"
+    ],
+    "sha256": "4c8998474c0d4f1dbb5698a13b347b1e91ad7147f8f3eb227a93beee6479f86c"
+  },
+  {
+    "file": "rsl_rl_local/rsl_rl/modules/actor_critic.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/modules/actor_critic.py",
+    "changed_symbols": [
+      "ActorCritic",
+      "ActorCritic.__init__",
+      "ActorCritic.__init__.Actor",
+      "ActorCritic.__init__.Actor.forward",
+      "ActorCritic.__init__.Critic",
+      "ActorCritic.__init__.Critic.forward"
+    ],
+    "sha256": "5c6bb26a58d32a78ec9d6a5028754da14b547324111b45b591c5d292cf6cedc4"
+  },
+  {
+    "file": "rsl_rl_local/rsl_rl/runners/on_policy_runner.py",
+    "status": "modified",
+    "original": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/runners/on_policy_runner.py",
+    "changed_symbols": [
+      "OnPolicyRunner",
+      "OnPolicyRunner.__init__",
+      "OnPolicyRunner.get_inference_policy"
+    ],
+    "sha256": "ef5ab2afa0422efc68e90a92702c2930e94c604c65c489b23c06e644e3a612e4"
+  },
+  {
+    "file": "force_ablation/__init__.py",
+    "status": "added",
+    "original": null,
+    "changed_symbols": [],
+    "sha256": "55afcf76351478a5912234f7ac485dd89188eb8bb5509ee2feaae1a5bfe88b7d"
+  },
+  {
+    "file": "force_ablation/configs.py",
+    "status": "added",
+    "original": null,
+    "changed_symbols": [
+      "Force40Cfg",
+      "Force200Cfg",
+      "Force200Cfg.rewards",
+      "ForceOffCfg",
+      "ForceOffCfg.rewards",
+      "ForceOffCfg.rewards.scales",
+      "configs",
+      "register_tasks"
+    ],
+    "sha256": "36ac1e52c3bf10a766a22261ce079cb61a6fd21892abac5ae952c0c567e65d90"
+  },
+  {
+    "file": "force_ablation/report_validation.py",
+    "status": "added",
+    "original": null,
+    "changed_symbols": [],
+    "sha256": "26a3d0735bfee694d8f95369b4524097135953c2a0653fb25fea49a5d5abcb6f"
+  },
+  {
+    "file": "force_ablation/run.py",
+    "status": "added",
+    "original": null,
+    "changed_symbols": [
+      "serial",
+      "canonical",
+      "model_hash",
+      "build_model",
+      "initialization",
+      "config_manifest",
+      "compare_settings",
+      "environment",
+      "initialize_runner",
+      "source_hashes",
+      "new_directory",
+      "validate",
+      "train_run",
+      "evaluate",
+      "main"
+    ],
+    "sha256": "070b6a2ae124ec91f2c3ac3f11066d9e029af28d730ff23253ff5e431232a170"
+  },
+  {
+    "file": "force_ablation/runtime.py",
+    "status": "added",
+    "original": null,
+    "changed_symbols": [
+      "Meter",
+      "Meter.__init__",
+      "Meter.clear",
+      "Meter.record",
+      "Meter.sample",
+      "Meter.summary",
+      "Meter.save_samples",
+      "MeteredEnvironment",
+      "MeteredEnvironment.__init__",
+      "MeteredEnvironment.compute_reward",
+      "AblationRunner",
+      "AblationRunner.log"
+    ],
+    "sha256": "1ca9c274af32f2397d7f2c6fd7fdbcdfc739978492826fa098f5c0de3114bbf7"
+  },
+  {
+    "file": "run_force_ablation.sh",
+    "status": "added",
+    "original": null,
+    "changed_symbols": [],
+    "sha256": "84f448a2180c837f58aabd5e01340aca28bbba273ae40f1f22cd02ce624da981"
+  },
+  {
+    "file": "run_head.sh",
+    "status": "added",
+    "original": null,
+    "changed_symbols": [],
+    "sha256": "ca29a495ff0231c84918d5037737dab56080399fae9416193286dae0ef9bedcd"
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "terrain": "plane",
+  "vx": 0.25,
+  "reference": "Offline sphere/actual simulator triangle mesh distance gap<2mm; geometric near-contact, not a normal force measurement.",
+  "raw": {
+    "precision": 1.0,
+    "recall": 0.9310344827586207,
+    "agreement": 0.96,
+    "positive_fraction": 0.54
+  },
+  "substep_peak": {
+    "precision": 1.0,
+    "recall": 0.9339080459770115,
+    "agreement": 0.9616666666666667,
+    "positive_fraction": 0.5416666666666666
+  },
+  "filtered": {
+    "precision": 0.9799426934097422,
+    "recall": 0.9827586206896551,
+    "agreement": 0.9783333333333334,
+    "positive_fraction": 0.5816666666666667
+  },
+  "legacy_sensor": {
+    "precision": 1.0,
+    "recall": 0.8972701149425287,
+    "agreement": 0.9404166666666667,
+    "positive_fraction": 0.5204166666666666
+  },
+  "valid_frames": 600
+}

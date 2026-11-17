@@ -1,0 +1,209 @@
+{
+  "as2": {
+    "mass_kg": 22.72772408133,
+    "com_world_m": [
+      0.01835087756023927,
+      -0.00035541677868115954,
+      0.3819652282302161
+    ],
+    "inertia_diag_kg_m2": [
+      0.7500539896211217,
+      1.2344169787527335,
+      0.8278434440559201
+    ],
+    "stance_height_m": 0.3244069024246581,
+    "foot_positions": [
+      [
+        0.2129329927708953,
+        0.1654,
+        0.028000000000000025
+      ],
+      [
+        0.2129329927708953,
+        -0.1654,
+        0.028000000000000025
+      ],
+      [
+        -0.2108670072291047,
+        0.1654,
+        0.028000000000000025
+      ],
+      [
+        -0.2108670072291047,
+        -0.1654,
+        0.028000000000000025
+      ]
+    ],
+    "static_foot_load_N": [
+      60.175392482862165,
+      60.41494314805642,
+      51.06454347086722,
+      51.30409413606148
+    ],
+    "static_leg_torque_Nm": [
+      -5.131626929220529,
+      0.6268634304183311,
+      9.002541896978409,
+      5.156887471639215,
+      0.6271029422812776,
+      9.039220094380118,
+      -4.148645555545481,
+      0.6390238588059493,
+      7.607557173023959,
+      4.173893841401377,
+      0.639268749901551,
+      7.644235370425668
+    ],
+    "leg_inertia_diagonal_kg_m2": [
+      0.03273472323647854,
+      0.02684286654469571,
+      0.008787417412323207,
+      0.03273452445653765,
+      0.026842974550602704,
+      0.008787417412323207,
+      0.033169349981728755,
+      0.02713644958380958,
+      0.008787417412323207,
+      0.0331694181059598,
+      0.027136544426465414,
+      0.008787417412323207
+    ],
+    "asset": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-hw/resources/commands/plate_forward.xml",
+    "asset_sha256": "3976ed735b7d334b00ce05285f92a0485b8a1ffa2b88900962256815531688bc"
+  },
+  "b1": {
+    "mass_kg": 57.98697083,
+    "com_world_m": [
+      0.024404999340470166,
+      0.0009418480631197882,
+      0.520833170336016
+    ],
+    "inertia_diag_kg_m2": [
+      2.3674058683105335,
+      6.534204334053186,
+      6.075628017523891
+    ],
+    "stance_height_m": 0.5161639912360256,
+    "foot_positions": [
+      [
+        0.3199015587183588,
+        0.29785116816770213,
+        0.03999999999999998
+      ],
+      [
+        0.3199015587183588,
+        -0.29785116816770213,
+        0.03999999999999998
+      ],
+      [
+        -0.3710984412816412,
+        0.29785116816770213,
+        0.03999999999999998
+      ],
+      [
+        -0.3710984412816412,
+        -0.29785116816770213,
+        0.03999999999999998
+      ]
+    ],
+    "static_foot_load_N": [
+      163.24491938114562,
+      162.3455233323585,
+      122.08056858879132,
+      121.18117254000418
+    ],
+    "static_leg_torque_Nm": [
+      -30.860123865778505,
+      -1.6480243415798173,
+      34.85623464751997,
+      30.656994217514523,
+      -1.6254601345441202,
+      34.6574845990762,
+      -21.563107152460212,
+      -0.6152858333093727,
+      25.759667317510143,
+      21.359977504196223,
+      -0.5927216262736752,
+      25.560917269066366
+    ],
+    "leg_inertia_diagonal_kg_m2": [
+      0.24583883569913834,
+      0.2356017016738956,
+      0.06058826312425804,
+      0.2458388356991383,
+      0.2356017016738956,
+      0.060588263124258024,
+      0.24583883569913834,
+      0.2356017016738957,
+      0.06058826312425801,
+      0.2458388356991383,
+      0.23560170167389577,
+      0.06058826312425798
+    ],
+    "asset": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/b1z1.xml",
+    "asset_sha256": "7f67bb3fde2eed22ab6e23cbad0d11a490de52c699c0e83712b9d98b567d6a5d"
+  },
+  "official_simulation_preset": "/data/team/users/suhwan/robot-sources/unitree_ros/robots/as2_description/as2.xml",
+  "official_preset_sha256": "05ba05c3a1db0179ec6182a7fa06e11a16e06fdca5128aaf5c72e36a8e90af78",
+  "ratios": {
+    "mass": 0.3919453586903291,
+    "length": 0.6284958035290706,
+    "time": 0.7927772723338319,
+    "torque": 0.24633601314956818,
+    "angular_damping": 0.19528959258230563
+  },
+  "derived": {
+    "leg_kp": [
+      59.467,
+      53.404,
+      75.327
+    ],
+    "leg_kd": [
+      2.626,
+      2.358,
+      2.628
+    ],
+    "leg_armature": [
+      0.026,
+      0.026,
+      0.038
+    ],
+    "leg_action_scale": [
+      0.2018,
+      0.2247,
+      0.239
+    ],
+    "gait_hz": 2.5227766609810387,
+    "max_linear_velocity_m_s": 0.6342218178670656,
+    "max_yaw_velocity_rad_s": 1.0,
+    "added_base_mass_kg": [
+      0.0,
+      2.272772408133
+    ],
+    "base_com_half_range_m": [
+      0.02736366325473765,
+      0.02135889524461353,
+      0.02135889524461353
+    ],
+    "max_push_velocity_m_s": 0.39638863616691594,
+    "feet_height_target_m": 0.08547604386008635,
+    "max_contact_force_N": 167.2192299283855,
+    "gait_vel_sigma": 0.3142479017645353,
+    "gait_force_sigma": 0.07681058209944537
+  },
+  "design_choices": {
+    "max_static_joint_sag_rad": 0.12,
+    "swing_damping_ratio": 0.7,
+    "swing_bandwidth_to_gait": 2,
+    "exploration_torque_budget_fraction": 0.2,
+    "total_added_mass_fraction": 0.1,
+    "full_com_support_half_width_fraction": 0.05
+  },
+  "limitations": [
+    "Gravity dynamic similarity is approximate for different morphologies.",
+    "Static support assumes four vertical nonnegative forces on a plane.",
+    "Inertia diagonal damping neglects coupling; armature is an official simulation preset, not motor identification.",
+    "URDF effort is a simulation limit, not a measured continuous motor rating.",
+    "Camera, cables and exact mount hardware masses remain unverified."
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "measurements": [
+    {
+      "terrain": "flat",
+      "iteration": 20000,
+      "vx_mean": 0.5836822986602783,
+      "vx_rmse": 0.19427275657653809,
+      "linear_weighted_reward": 1.980697512626648,
+      "walking_dof_weighted_reward": 1.3587329387664795,
+      "leg_total_before_div100": 4.152988036317765,
+      "fraction_below_command": 0.015,
+      "mean_shortfall": 0.00385065795853734,
+      "mean_excess": 0.18753299117088318,
+      "reconstructed_command_min": 0.3999999761581421,
+      "reconstructed_command_max": 0.40000003576278687
+    },
+    {
+      "terrain": "flat",
+      "iteration": 30000,
+      "vx_mean": 0.6032925844192505,
+      "vx_rmse": 0.21190203726291656,
+      "linear_weighted_reward": 1.98384428024292,
+      "walking_dof_weighted_reward": 1.3478472232818604,
+      "leg_total_before_div100": 4.189507413901083,
+      "fraction_below_command": 0.012302631578947369,
+      "mean_shortfall": 0.003221302293241024,
+      "mean_excess": 0.2065138816833496,
+      "reconstructed_command_min": 0.3999999761581421,
+      "reconstructed_command_max": 0.40000003576278687
+    },
+    {
+      "terrain": "flat",
+      "iteration": 45000,
+      "vx_mean": 0.6196084022521973,
+      "vx_rmse": 0.22977539896965027,
+      "linear_weighted_reward": 1.9797630310058594,
+      "walking_dof_weighted_reward": 1.3442658185958862,
+      "leg_total_before_div100": 4.1510143261384655,
+      "fraction_below_command": 0.015131578947368421,
+      "mean_shortfall": 0.0040375725366175175,
+      "mean_excess": 0.22364598512649536,
+      "reconstructed_command_min": 0.3999999761581421,
+      "reconstructed_command_max": 0.40000003576278687
+    },
+    {
+      "terrain": "rough",
+      "iteration": 20000,
+      "vx_mean": 0.5810982584953308,
+      "vx_rmse": 0.1976882517337799,
+      "linear_weighted_reward": 1.9804960489273071,
+      "walking_dof_weighted_reward": 1.3566691875457764,
+      "leg_total_before_div100": 4.052366095624166,
+      "fraction_below_command": 0.019539473684210527,
+      "mean_shortfall": 0.0038909357972443104,
+      "mean_excess": 0.18498915433883667,
+      "reconstructed_command_min": 0.3999999761581421,
+      "reconstructed_command_max": 0.40000003576278687
+    },
+    {
+      "terrain": "rough",
+      "iteration": 30000,
+      "vx_mean": 0.5956396460533142,
+      "vx_rmse": 0.20980291068553925,
+      "linear_weighted_reward": 1.9834338426589966,
+      "walking_dof_weighted_reward": 1.3459405899047852,
+      "leg_total_before_div100": 3.9966683985894633,
+      "fraction_below_command": 0.01618421052631579,
+      "mean_shortfall": 0.003303335979580879,
+      "mean_excess": 0.19894300401210785,
+      "reconstructed_command_min": 0.3999999761581421,
+      "reconstructed_command_max": 0.40000003576278687
+    },
+    {
+      "terrain": "rough",
+      "iteration": 45000,
+      "vx_mean": 0.6150563955307007,
+      "vx_rmse": 0.22968073189258575,
+      "linear_weighted_reward": 1.980702519416809,
+      "walking_dof_weighted_reward": 1.3435721397399902,
+      "leg_total_before_div100": 4.057542203081539,
+      "fraction_below_command": 0.01888157894736842,
+      "mean_shortfall": 0.0038496481720358133,
+      "mean_excess": 0.21890607476234436,
+      "reconstructed_command_min": 0.3999999761581421,
+      "reconstructed_command_max": 0.40000003576278687
+    }
+  ],
+  "verified": "Original VBC one-sided linear speed reward saturates above command; symmetric x-speed terms disabled. No measured command drift.",
+  "inference": "Asymmetric under-speed cost without direct over-speed cost permits a positive speed margin. Exact cause of successive upward bias is not isolated by these observational comparisons.",
+  "not_supported": "walking_dof alone or negative penalties alone caused increasing overspeed; adaptation module is proven cause; fastest evaluated policy has uniformly higher reward",
+  "code_changed": false
+}

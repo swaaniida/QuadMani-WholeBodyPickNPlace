@@ -1,0 +1,81 @@
+{
+  "progress201": {
+    "valid_fraction": 0.9575,
+    "gap_p95_per_foot_m": [
+      0.11072841137647624,
+      0.07843278199434266,
+      0.08234848380088805,
+      0.06957429349422453
+    ],
+    "contact_fraction_per_foot": [
+      0.5630983463881636,
+      0.6347548592979403,
+      0.6942268639396577,
+      0.6852335364084712
+    ],
+    "contact_proxy_agreement": 0.9501740644038295,
+    "contact_proxy_precision": 0.997209753730438,
+    "contact_proxy_recall": 0.9252588923908149,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.06705242395401001,
+    "contact_dominant_Hz": 2.0,
+    "closest_surface_tangent_slip_m_s": null,
+    "grid_minus_contact_ground_abs_p95_m": 0.03862607628107071,
+    "counterfactual_grid_height_reward": 0.32804086804389954,
+    "counterfactual_last_support_height_reward": 0.42914000153541565,
+    "geometric_two_or_more_contact_fraction": 0.9541630403249203,
+    "geometric_no_contact_fraction": 0.005802146794313896,
+    "geometric_phase_contact_agreement": 0.6876994487960545,
+    "missing_geometric_stance_per_foot": [
+      0.13423423423423422,
+      0.1003616636528029,
+      0.06871609403254973,
+      0.06936936936936937
+    ],
+    "missing_proxy_stance_same_samples": [
+      0.16936936936936936,
+      0.1410488245931284,
+      0.07685352622061482,
+      0.08018018018018018
+    ]
+  },
+  "progress401": {
+    "valid_fraction": 0.9511111111111111,
+    "gap_p95_per_foot_m": [
+      0.1258442983031273,
+      0.09776221737265586,
+      0.11457110270857811,
+      0.10296853259205815
+    ],
+    "contact_fraction_per_foot": [
+      0.4491822429906542,
+      0.5186915887850467,
+      0.6156542056074766,
+      0.6276285046728972
+    ],
+    "contact_proxy_agreement": 0.9546582943925234,
+    "contact_proxy_precision": 0.9944507683551508,
+    "contact_proxy_recall": 0.9231277242108044,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.09162157028913498,
+    "contact_dominant_Hz": 2.0,
+    "closest_surface_tangent_slip_m_s": 0.09613276273012161,
+    "grid_minus_contact_ground_abs_p95_m": 0.039934417232871056,
+    "counterfactual_grid_height_reward": 0.18348851799964905,
+    "counterfactual_last_support_height_reward": 0.26447731256484985,
+    "geometric_two_or_more_contact_fraction": 0.8574766355140186,
+    "geometric_no_contact_fraction": 0.007009345794392523,
+    "geometric_phase_contact_agreement": 0.6783732476635514,
+    "missing_geometric_stance_per_foot": [
+      0.3089430894308943,
+      0.22893772893772893,
+      0.06227106227106227,
+      0.07588075880758807
+    ],
+    "missing_proxy_stance_same_samples": [
+      0.3405600722673893,
+      0.29945054945054944,
+      0.07875457875457875,
+      0.08491418247515808
+    ]
+  },
+  "coverage_note": "Stride4,0.08s, coprime to25-step2Hz gait period; covers all phases. Warm-up/done/absRP>=.35 excluded. Geometric touch is not normal force or static stability proof."
+}

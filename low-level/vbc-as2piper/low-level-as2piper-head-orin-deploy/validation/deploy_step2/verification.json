@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "production_files_unchanged": 56,
+  "analysis_only": true,
+  "sampler_applied": false,
+  "optimizer_updates": 0,
+  "simulation_rollout": false,
+  "validation": "Nominal static IK/collision/CoM/gravity and discrete transition screen; not deployment certification."
+}

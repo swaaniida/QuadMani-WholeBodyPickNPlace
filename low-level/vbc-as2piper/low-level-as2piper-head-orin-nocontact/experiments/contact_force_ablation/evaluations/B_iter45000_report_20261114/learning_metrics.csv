@@ -1,0 +1,96 @@
+metric,10000,20000,30000,45000
+Arm mean action noise std,0.13,0.13,0.13,0.13
+Dones,0.0,0.0,0.0,0.0
+ETA,130259.8,94076.3,58807.9,4.3
+History latent supervision loss,0.0174,0.0131,0.0109,0.0093
+Iteration time,3.37,3.85,4.49,5.47
+Leg mean action noise std,0.22,0.22,0.22,0.22
+Mean episode length,502.0,500.92,502.0,501.1
+Mean episode metric_action_rate,85.7305,83.8399,84.2356,83.7304
+Mean episode metric_alive,50.2,50.1679,50.0634,50.1466
+Mean episode metric_ang_vel_xy,15.7809,18.7872,18.9007,18.1708
+Mean episode metric_base_height,16.3103,16.5344,16.587,16.5075
+Mean episode metric_collision,0.61,0.3194,0.4416,0.3911
+Mean episode metric_delta_torques,71604.4531,69067.8359,71193.2031,71477.0234
+Mean episode metric_dof_acc,12990263.0,12784704.0,12449056.0,12337544.0
+Mean episode metric_dof_pos_limits,0.0,0.0,0.0,0.0
+Mean episode metric_feet_air_time,-2.0233,-1.8302,-1.9111,-1.9029
+Mean episode metric_feet_contact_forces,423.4474,536.3276,564.0081,528.9968
+Mean episode metric_feet_drag,36.9955,33.2542,34.9437,32.8476
+Mean episode metric_feet_height,-2.2766,-1.8371,-1.9249,-2.1349
+Mean episode metric_feet_jerk,6236.2178,6107.8525,6273.542,6195.4473
+Mean episode metric_hip_pos,6.2041,4.8435,4.4543,4.0387
+Mean episode metric_lin_vel_z,1.4461,1.4354,1.3027,1.2069
+Mean episode metric_roll,0.6868,0.8491,0.834,0.7331
+Mean episode metric_stand_still,6.399,6.4972,5.3975,5.9605
+Mean episode metric_torques,95010.5469,87396.7422,88792.1719,87569.7422
+Mean episode metric_tracking_ang_vel,4.2447,5.0696,5.1442,5.0946
+Mean episode metric_tracking_contacts_shaped_force,1.5963,1.3543,1.5635,1.466
+Mean episode metric_tracking_contacts_shaped_vel,5.7787,5.949,5.8773,5.6956
+Mean episode metric_tracking_ee_world,1.3024,1.3783,1.3583,1.3467
+Mean episode metric_tracking_lin_vel_max,44.3015,43.3406,44.2416,43.9757
+Mean episode metric_walking_dof,37.9259,38.2164,39.2672,38.9653
+Mean episode metric_work,2933.4565,2829.2075,2718.8687,2609.5088
+Mean episode rew_action_rate,-1.286,-1.2576,-1.2635,-1.256
+Mean episode rew_alive,50.2,50.1679,50.0634,50.1466
+Mean episode rew_ang_vel_xy,-3.1562,-3.7574,-3.7801,-3.6342
+Mean episode rew_base_height,-5.2979,-4.9696,-5.2193,-4.9196
+Mean episode rew_collision,-6.1004,-3.1936,-4.4156,-3.9107
+Mean episode rew_delta_torques,-0.0072,-0.0069,-0.0071,-0.0071
+Mean episode rew_dof_acc,-9.7427,-9.5885,-9.3368,-9.2532
+Mean episode rew_dof_pos_limits,-0.0001,-0.0001,-0.0,-0.0002
+Mean episode rew_feet_air_time,-4.0466,-3.6603,-3.8221,-3.8058
+Mean episode rew_feet_contact_forces,-0.4234,-0.5363,-0.564,-0.529
+Mean episode rew_feet_drag,-2.9596,-2.6603,-2.7955,-2.6278
+Mean episode rew_feet_height,-2.2766,-1.8371,-1.9249,-2.1349
+Mean episode rew_feet_jerk,-1.2472,-1.2216,-1.2547,-1.2391
+Mean episode rew_hip_pos,-1.8612,-1.453,-1.3363,-1.2116
+Mean episode rew_lin_vel_z,-2.1692,-2.1531,-1.954,-1.8104
+Mean episode rew_roll,-1.3736,-1.6983,-1.668,-1.4662
+Mean episode rew_stand_still,6.399,6.4972,5.3975,5.9605
+Mean episode rew_torques,-2.3753,-2.1849,-2.2198,-2.1892
+Mean episode rew_tracking_ang_vel,18.9969,18.3695,18.2516,18.4924
+Mean episode rew_tracking_contacts_shaped_force,-3.1926,-2.7086,-3.127,-2.9321
+Mean episode rew_tracking_contacts_shaped_vel,-11.5575,-11.898,-11.7547,-11.3913
+Mean episode rew_tracking_ee_world,38.1396,38.0009,37.9476,38.0349
+Mean episode rew_tracking_lin_vel_max,88.6031,86.6811,88.4832,87.9515
+Mean episode rew_walking_dof,56.8888,57.3246,58.9008,58.448
+Mean episode rew_work,-8.8004,-8.4876,-8.1566,-7.8285
+Mean episode termination_contact,0.0,0.0,0.0,0.0
+Mean episode termination_ground_z_m,-0.0132,-0.01,-0.0105,-0.0114
+Mean episode termination_height,0.0,0.0,0.0,0.0
+Mean episode termination_height_above_ground_m,0.3352,0.3244,0.328,0.3246
+Mean episode termination_pitch,0.0,0.003,0.0,0.0022
+Mean episode termination_pitch_rad,0.0613,0.099,0.0653,0.066
+Mean episode termination_roll,0.0,0.0,0.003,0.003
+Mean episode termination_roll_rad,0.0245,0.02,0.0187,0.0188
+Mean episode termination_timeout,1.0,0.997,0.997,0.9948
+Mean episode termination_world_z_m,0.3219,0.3144,0.3174,0.3132
+Mean reward,15.28,15.48,15.83,16.18
+Perf/collection_s,3.137,3.618,4.263,5.158
+Perf/fps,43783.0,38289.0,32815.0,26953.0
+Perf/learning_s,0.231,0.233,0.231,0.313
+Privileged info regularizer lambda,0.1,0.1,0.1,0.1
+Privileged info regularizer loss,0.0157,0.0124,0.0106,0.0086
+Surrogate loss,-0.0024,-0.0037,-0.0043,-0.0054
+Total time,37220.79,75264.8,117619.74,191665.53
+Total timesteps,1474707456.0,2949267456.0,4423827456.0,6635520000.0
+Value function loss,0.0041,0.004,0.0031,0.0029
+action_noise_std_0,0.15000000596046448,0.15000000596046448,0.15000000596046448,0.15000000596046448
+action_noise_std_1,0.25,0.25,0.25,0.25
+action_noise_std_2,0.25,0.25,0.25,0.25
+action_noise_std_3,0.15000000596046448,0.15000000596046448,0.15000000596046448,0.15000000596046448
+action_noise_std_4,0.25,0.25,0.25,0.25
+action_noise_std_5,0.25,0.25,0.25,0.25
+action_noise_std_6,0.15000000596046448,0.15000000596046448,0.15000000596046448,0.15023815631866455
+action_noise_std_7,0.25,0.25,0.25,0.25
+action_noise_std_8,0.25,0.25,0.25,0.25
+action_noise_std_9,0.15000000596046448,0.15000000596046448,0.15000000596046448,0.15000000596046448
+action_noise_std_10,0.25,0.25,0.25,0.25
+action_noise_std_11,0.25,0.25,0.25,0.25
+action_noise_std_12,0.20012761652469635,0.20031395554542542,0.20151659846305847,0.2016814947128296
+action_noise_std_13,0.20131933689117432,0.20000000298023224,0.20025554299354553,0.20000000298023224
+action_noise_std_14,0.2008868008852005,0.20185689628124237,0.20388108491897583,0.20000000298023224
+action_noise_std_15,0.05000000074505806,0.05000000074505806,0.05000000074505806,0.05019686743617058
+action_noise_std_16,0.05000000074505806,0.050085630267858505,0.05000000074505806,0.05003949627280235
+action_noise_std_17,0.05000000074505806,0.05000000074505806,0.05000000074505806,0.05001285299658775

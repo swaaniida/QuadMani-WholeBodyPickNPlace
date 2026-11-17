@@ -1,0 +1,62 @@
+{
+  "url": "http://127.0.0.1:8774/",
+  "ready": true,
+  "visual_geometries": 31,
+  "geometry_visible": true,
+  "seek_18s_ground_goal": true,
+  "orbit_zoom_changed": true,
+  "play_pause": true,
+  "checkpoint_switch": true,
+  "four_panel_mode": true,
+  "camera_preset": true,
+  "page_errors": [],
+  "failed_requests": [],
+  "state": {
+    "ready": true,
+    "frame": 1049,
+    "time": 42,
+    "selected": 3,
+    "compare": true,
+    "playing": false,
+    "meshCount": 31,
+    "camera": [
+      0.23055840445094566,
+      -1.898536556306075,
+      0.7957202746553402
+    ],
+    "target": [
+      0.6599998474121094,
+      -0.12000083923339844,
+      0.010000440292060375
+    ],
+    "actual": [
+      0.6068344116210938,
+      -0.09952735900878906,
+      0.0018022209405899048
+    ]
+  },
+  "font_fix_verified": true,
+  "linked_camera_presets_exact": true,
+  "camera_positions": [
+    [
+      1.400000000000001,
+      -1.7499999999999947,
+      1.3399999999999967
+    ],
+    [
+      1.400000000000001,
+      -1.7499999999999947,
+      1.3399999999999967
+    ],
+    [
+      1.400000000000001,
+      -1.7499999999999947,
+      1.3399999999999967
+    ],
+    [
+      1.4000000000000008,
+      -1.7499999999999947,
+      1.3399999999999972
+    ]
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "environment_differences": {
+    "asset.arm_base_offset": {
+      "original": null,
+      "as2": [
+        -0.02,
+        0.0,
+        0.08202847821788371
+      ]
+    },
+    "asset.file": {
+      "original": "{LEGGED_GYM_ROOT_DIR}/resources/robots/b1z1/urdf/b1z1.urdf",
+      "as2": "{LEGGED_GYM_ROOT_DIR}/resources/robots/as2piper/urdf/as2piper_plate_training.urdf"
+    },
+    "asset.gripper_name": {
+      "original": "ee_gripper_link",
+      "as2": "piper_umi_nominal_tcp"
+    },
+    "asset.penalize_contacts_on": {
+      "original": [
+        "thigh",
+        "trunk",
+        "calf"
+      ],
+      "as2": [
+        "thigh",
+        "base_link",
+        "calf"
+      ]
+    },
+    "control.arm_effort_limit": {
+      "original": null,
+      "as2": Infinity
+    },
+    "control.arm_position_damping": {
+      "original": null,
+      "as2": 40.0
+    },
+    "control.arm_position_stiffness": {
+      "original": null,
+      "as2": 400.0
+    },
+    "control.damping.piper_joint": {
+      "original": null,
+      "as2": 0.5
+    },
+    "control.damping.z1": {
+      "original": 0.5,
+      "as2": null
+    },
+    "control.gripper_position_damping": {
+      "original": null,
+      "as2": 35.0
+    },
+    "control.gripper_position_stiffness": {
+      "original": null,
+      "as2": 1800.0
+    },
+    "control.stiffness.piper_joint": {
+      "original": null,
+      "as2": 5.0
+    },
+    "control.stiffness.z1": {
+      "original": 5,
+      "as2": null
+    },
+    "env.num_gripper_joints": {
+      "original": 1,
+      "as2": 2
+    },
+    "goal_ee.orientation_roll_offset": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.piper_gripper_joint1": {
+      "original": null,
+      "as2": 0.049
+    },
+    "init_state.default_joint_angles.piper_gripper_joint2": {
+      "original": null,
+      "as2": -0.049
+    },
+    "init_state.default_joint_angles.piper_joint1": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.piper_joint2": {
+      "original": null,
+      "as2": 1.1
+    },
+    "init_state.default_joint_angles.piper_joint3": {
+      "original": null,
+      "as2": -0.55
+    },
+    "init_state.default_joint_angles.piper_joint4": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.piper_joint5": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.piper_joint6": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.z1_elbow": {
+      "original": -0.63,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_forearm_roll": {
+      "original": 0.0,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_jointGripper": {
+      "original": -0.785,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_shoulder": {
+      "original": 1.48,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_waist": {
+      "original": 0.0,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_wrist_angle": {
+      "original": -0.84,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_wrist_rotate": {
+      "original": 1.57,
+      "as2": null
+    }
+  },
+  "ppo_differences": {
+    "runner.experiment_name": {
+      "original": "b1z1_v2",
+      "as2": "as2piper_plate_only"
+    }
+  },
+  "all_rewards_exactly_equal": true,
+  "num_envs": 6144,
+  "max_iterations": 45000
+}

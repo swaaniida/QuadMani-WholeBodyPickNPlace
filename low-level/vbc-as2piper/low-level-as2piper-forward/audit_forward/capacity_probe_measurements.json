@@ -1,0 +1,20 @@
+{
+  "num_envs": 6144,
+  "num_dofs": 20,
+  "num_actions": 18,
+  "observations": [
+    6144,
+    799
+  ],
+  "total_MiB": 40192.0,
+  "free_before_forced_resample_MiB": 26460.375,
+  "forced_all_env_resample_s": 1.0875215488485992,
+  "forced_resample_fallback_count": 837,
+  "free_after_forced_resample_MiB": 26456.375,
+  "torch_peak_allocated_after_resample_MiB": 99.490234375,
+  "completed": true,
+  "wall_time_s": 158.01151696639135,
+  "torch_peak_allocated_MiB": 1820.70361328125,
+  "torch_peak_reserved_MiB": 2112.0,
+  "free_at_exit_MiB": 23788.375
+}

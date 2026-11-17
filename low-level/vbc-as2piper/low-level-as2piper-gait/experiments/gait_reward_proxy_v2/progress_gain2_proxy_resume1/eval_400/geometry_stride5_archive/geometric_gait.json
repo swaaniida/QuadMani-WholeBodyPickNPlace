@@ -1,0 +1,103 @@
+{
+  "reference": "Shortest distance to actual terrain triangles or dynamic oriented box minus sphere radius 0.028m. Geometric near-contact gap<2mm, not GRF. Excludes first 2s, done frames and abs roll/pitch>=0.35rad. Unsigned geometry is not a penetration-depth test.",
+  "slip_note": "Uses recorded v_COM + omega cross vertical sphere-bottom offset; approximate contact-point slip on rough terrain.",
+  "sampling_dt_s": 0.1,
+  "completed_updates": 401,
+  "conditions": "Terrain=trimesh, DR=True, deterministic history inference, random arm goals=True, 64 envs, 20.0s; 16 envs per command.",
+  "stand": {
+    "valid_fraction": 0.9909722222222223,
+    "gap_p95_per_foot_m": [
+      0.03346230015158653,
+      0.007941951788961833,
+      2.5616586208343447e-05,
+      0.00647190902382135
+    ],
+    "contact_fraction_per_foot": [
+      0.8244569025928521,
+      0.9428871758934828,
+      0.9793272599859846,
+      0.9390329362298528
+    ],
+    "contact_proxy_agreement": 0.9220392431674842,
+    "contact_proxy_precision": 0.9983438567436084,
+    "contact_proxy_recall": 0.9169122540165415,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.02342936582863331,
+    "contact_dominant_Hz": 1.0,
+    "closest_surface_tangent_slip_m_s": 0.025711540132761,
+    "grid_minus_contact_ground_abs_p95_m": 0.03349032886326313,
+    "counterfactual_grid_height_reward": 0.0,
+    "counterfactual_last_support_height_reward": 0.0
+  },
+  "forward": {
+    "valid_fraction": 0.95,
+    "gap_p95_per_foot_m": [
+      0.1235133670270443,
+      0.10073813796043396,
+      0.11734035611152649,
+      0.10637480020523071
+    ],
+    "contact_fraction_per_foot": [
+      0.4367690058479532,
+      0.48830409356725146,
+      0.6052631578947368,
+      0.6407163742690059
+    ],
+    "contact_proxy_agreement": 0.9564144736842105,
+    "contact_proxy_precision": 0.9922508560100919,
+    "contact_proxy_recall": 0.926936026936027,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.08403990417718887,
+    "contact_dominant_Hz": 2.0,
+    "closest_surface_tangent_slip_m_s": 0.08884735405445099,
+    "grid_minus_contact_ground_abs_p95_m": 0.040070775710046316,
+    "counterfactual_grid_height_reward": 0.18462464213371277,
+    "counterfactual_last_support_height_reward": 0.27212026715278625
+  },
+  "turn": {
+    "valid_fraction": 0.9767361111111111,
+    "gap_p95_per_foot_m": [
+      0.09019269049167633,
+      0.08578692674636845,
+      0.0952512681484223,
+      0.12101083397865296
+    ],
+    "contact_fraction_per_foot": [
+      0.5822964806256665,
+      0.5943832207607537,
+      0.6509065055101315,
+      0.6011375755421259
+    ],
+    "contact_proxy_agreement": 0.9515641663704231,
+    "contact_proxy_precision": 0.9901762045844379,
+    "contact_proxy_recall": 0.9294496487119438,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.09957907348871231,
+    "contact_dominant_Hz": 2.0,
+    "closest_surface_tangent_slip_m_s": 0.10628987103700638,
+    "grid_minus_contact_ground_abs_p95_m": 0.04499162267893553,
+    "counterfactual_grid_height_reward": 0.23422685265541077,
+    "counterfactual_last_support_height_reward": 0.3180513083934784
+  },
+  "forward_turn": {
+    "valid_fraction": 0.9677083333333333,
+    "gap_p95_per_foot_m": [
+      0.11828097105026242,
+      0.07979876101016994,
+      0.10930521637201299,
+      0.11064374595880508
+    ],
+    "contact_fraction_per_foot": [
+      0.5263724434876211,
+      0.6017222820236814,
+      0.6110513096519555,
+      0.6566200215285253
+    ],
+    "contact_proxy_agreement": 0.9556871187656979,
+    "contact_proxy_precision": 0.9915725870567658,
+    "contact_proxy_recall": 0.933952373820578,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.08501098304986954,
+    "contact_dominant_Hz": 2.0,
+    "closest_surface_tangent_slip_m_s": 0.08964758366346359,
+    "grid_minus_contact_ground_abs_p95_m": 0.0464910589158535,
+    "counterfactual_grid_height_reward": 0.20894809067249298,
+    "counterfactual_last_support_height_reward": 0.31694281101226807
+  }
+}

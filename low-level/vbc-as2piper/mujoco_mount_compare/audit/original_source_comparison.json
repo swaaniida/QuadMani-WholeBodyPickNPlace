@@ -1,0 +1,11 @@
+{
+  "AS2": {
+    "original_path": "/data/team/users/suhwan/robot-sources/unitree_ros/robots/as2_description/meshes/base_link.STL",
+    "local_mesh_matches_original": true
+  },
+  "PiPER": {
+    "original_path": "/data/team/users/suhwan/robot-sources/agx_arm_urdf/piper/meshes/base_link.stl",
+    "local_mesh_matches_original": true
+  },
+  "original_as2_base_visual": "<visual>\n      <origin xyz=\"0 0 0\" rpy=\"0 0 0\" />\n      <geometry>\n        <mesh filename=\"../meshes/base_link.STL\" />\n      </geometry>\n      <material name=\"\">\n        <color rgba=\"0.79216 0.81961 0.93333 1\" />\n      </material>\n    </visual>\n    "
+}

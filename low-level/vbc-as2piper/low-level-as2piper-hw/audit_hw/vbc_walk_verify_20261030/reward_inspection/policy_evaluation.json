@@ -1,0 +1,191 @@
+{
+  "stand": {
+    "command_vx_m_s": 0.0,
+    "command_yaw_rad_s": 0.0,
+    "command_above_walking_threshold": false,
+    "mean_vx_m_s": 0.42493683099746704,
+    "mean_yaw_rad_s": -0.18568329513072968,
+    "vx_abs_error_m_s": 0.4257580637931824,
+    "yaw_abs_error_rad_s": 0.28264838457107544,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.403125,
+      0.406875,
+      0.4728125,
+      0.485
+    ],
+    "foot_clearance_p95_m": [
+      0.04610932618379592,
+      0.08834742531180381,
+      0.05226786732673641,
+      0.09819054678082463
+    ],
+    "foot_clearance_p99_m": [
+      0.09223157033324224,
+      0.10150004372000694,
+      0.08107478678226457,
+      0.11242646038532253
+    ],
+    "per_foot_unloaded_fraction": [
+      0.596875,
+      0.593125,
+      0.5271875,
+      0.515
+    ],
+    "applied_leg_torque_abs_max_Nm": 60.828697204589844,
+    "ee_position_mean_m": 0.026401134207844734,
+    "ee_position_p95_m": 0.04665098227560519,
+    "ee_orientation_mean_deg": 4.103942394256592,
+    "arm_contact_gt_1N_fraction": 0.0,
+    "arm_contact_max_N": 0.0,
+    "stance_center_speed_mean_m_s": 0.08184459805488586,
+    "stance_slip_mean_m_s": 0.0661248117685318,
+    "midstance_slip_mean_m_s": 0.0,
+    "phase_contact_agreement": 0.558046875
+  },
+  "forward": {
+    "command_vx_m_s": 0.25,
+    "command_yaw_rad_s": 0.0,
+    "command_above_walking_threshold": true,
+    "mean_vx_m_s": 0.5535523891448975,
+    "mean_yaw_rad_s": -0.23855255544185638,
+    "vx_abs_error_m_s": 0.3150382339954376,
+    "yaw_abs_error_rad_s": 0.37981200218200684,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.4315625,
+      0.475625,
+      0.4021875,
+      0.4615625
+    ],
+    "foot_clearance_p95_m": [
+      0.06054992489516733,
+      0.0919672146439552,
+      0.06022826917469501,
+      0.0952651999890804
+    ],
+    "foot_clearance_p99_m": [
+      0.08150422006845467,
+      0.10975092545151696,
+      0.07784824356436727,
+      0.11432605952024459
+    ],
+    "per_foot_unloaded_fraction": [
+      0.5684375,
+      0.524375,
+      0.5978125,
+      0.5384375
+    ],
+    "applied_leg_torque_abs_max_Nm": 69.50467681884766,
+    "ee_position_mean_m": 0.026526691392064095,
+    "ee_position_p95_m": 0.050072694569826125,
+    "ee_orientation_mean_deg": 4.556340217590332,
+    "arm_contact_gt_1N_fraction": 0.0,
+    "arm_contact_max_N": 0.0,
+    "stance_center_speed_mean_m_s": 0.09405684471130371,
+    "stance_slip_mean_m_s": 0.06784284114837646,
+    "midstance_slip_mean_m_s": 0.0557686872780323,
+    "phase_contact_agreement": 0.536484375
+  },
+  "turn": {
+    "command_vx_m_s": 0.0,
+    "command_yaw_rad_s": 0.6000000238418579,
+    "command_above_walking_threshold": true,
+    "mean_vx_m_s": 0.5847837924957275,
+    "mean_yaw_rad_s": -0.07773156464099884,
+    "vx_abs_error_m_s": 0.5860903263092041,
+    "yaw_abs_error_rad_s": 0.6805946230888367,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.3878125,
+      0.515,
+      0.40875,
+      0.4878125
+    ],
+    "foot_clearance_p95_m": [
+      0.06501064151525496,
+      0.0869455881416797,
+      0.06003616340458393,
+      0.09239667952060698
+    ],
+    "foot_clearance_p99_m": [
+      0.08264902591705317,
+      0.10561542853713028,
+      0.07777744874358174,
+      0.1092653834819793
+    ],
+    "per_foot_unloaded_fraction": [
+      0.6121875,
+      0.485,
+      0.59125,
+      0.5121875
+    ],
+    "applied_leg_torque_abs_max_Nm": 59.28913879394531,
+    "ee_position_mean_m": 0.026248473674058914,
+    "ee_position_p95_m": 0.04950308911502361,
+    "ee_orientation_mean_deg": 4.527521133422852,
+    "arm_contact_gt_1N_fraction": 0.0,
+    "arm_contact_max_N": 0.0,
+    "stance_center_speed_mean_m_s": 0.10504759103059769,
+    "stance_slip_mean_m_s": 0.07881947606801987,
+    "midstance_slip_mean_m_s": 0.057713832706213,
+    "phase_contact_agreement": 0.5453125
+  },
+  "forward_turn": {
+    "command_vx_m_s": 0.25,
+    "command_yaw_rad_s": 0.6000000238418579,
+    "command_above_walking_threshold": true,
+    "mean_vx_m_s": 0.5891219973564148,
+    "mean_yaw_rad_s": -0.12406856566667557,
+    "vx_abs_error_m_s": 0.35429707169532776,
+    "yaw_abs_error_rad_s": 0.730126142501831,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.384375,
+      0.5290625,
+      0.389375,
+      0.48875
+    ],
+    "foot_clearance_p95_m": [
+      0.0660898350179195,
+      0.08720574453473086,
+      0.0626943044364452,
+      0.09551340416073795
+    ],
+    "foot_clearance_p99_m": [
+      0.08367929846048354,
+      0.10803239673376083,
+      0.0779411169886589,
+      0.1114902478456497
+    ],
+    "per_foot_unloaded_fraction": [
+      0.615625,
+      0.4709375,
+      0.610625,
+      0.51125
+    ],
+    "applied_leg_torque_abs_max_Nm": 63.29243469238281,
+    "ee_position_mean_m": 0.02611599490046501,
+    "ee_position_p95_m": 0.048133182153105726,
+    "ee_orientation_mean_deg": 4.652588367462158,
+    "arm_contact_gt_1N_fraction": 0.0,
+    "arm_contact_max_N": 0.0,
+    "stance_center_speed_mean_m_s": 0.10910981893539429,
+    "stance_slip_mean_m_s": 0.08200778067111969,
+    "midstance_slip_mean_m_s": 0.05886773392558098,
+    "phase_contact_agreement": 0.540234375
+  },
+  "conditions": "Terrain=plane, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+  "task_variant": "vbc_port",
+  "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-hw/logs/as2piper-low/vbc_port_walk_verify_extended_20261029_164834/model_313.pt",
+  "walking_thresholds": {
+    "lin_vel_x": 0.1585554544667664,
+    "ang_vel_yaw": 0.5
+  },
+  "clearance_reference": "Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.",
+  "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity."
+}

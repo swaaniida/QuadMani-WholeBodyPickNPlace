@@ -1,0 +1,29 @@
+from pathlib import Path
+import shutil,re,json
+R=Path(__file__).resolve().parents[1];P=R/'github-export/low-level/vbc-as2piper'
+skip={'.git','__pycache__','.venv','venv','.deps','.wandb_deps','.torch_extensions','.cache','wandb','node_modules'}
+added=[]
+for folder in ['low-level-as2piper/audit','low-level-as2piper-forward/audit_forward','low-level-as2piper-hw/audit_hw','low-level-as2piper-gait/experiments']:
+ for p in (R/folder).rglob('*'):
+  rel=p.relative_to(R);q=P/rel
+  if not p.is_file() or p.is_symlink() or q.exists() or any(v in skip for v in rel.parts):continue
+  if p.suffix.lower() in ['.pt','.pth','.so','.o','.pyc','.log','.wandb'] or p.name in ['auth.json','.env','.netrc','id_rsa','id_ed25519']:continue
+  if p.suffix.lower() in ['.pem','.key']:continue
+  q.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(p,q);added.append(str(rel))
+(P/'docs/historical_audits.json').write_text(json.dumps({'additional_files':len(added),'paths':added},indent=2))
+p=P/'tools/build_as2piper.py';s=p.read_text().replace('HOME = Path("/data/team/users/suhwan")\nREPO = HOME / "vbc-as2piper"\nSOURCES = HOME / "robot-sources"','REPO = Path(__file__).resolve().parents[1]\nHOME = REPO.parent\nSOURCES = REPO / "robot-sources"');p.write_text(s)
+p=P/'tools/check_mount_geometry.py';p.write_text(p.read_text().replace('Path("/data/team/users/suhwan/robot-sources")','Path(__file__).resolve().parents[1] / "robot-sources"'))
+for f in ['build_snapshot.py','finish_snapshot.py','preserve_audits.py']:
+ q=P/'docs/archive_packaging_tools'/(f+'.reference.txt');q.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(R/'github-export-tools'/f,q)
+# Preserve original commit identity without changing Git ownership/configuration.
+gitdir=R.parent/'vbc-legacy/.git';work=gitdir/'worktrees/vbc-as2piper';head=(work/'HEAD').read_text().strip();commit=None
+if head.startswith('ref: '):
+ ref=head[5:];f=gitdir/ref
+ if f.exists():commit=f.read_text().strip()
+ elif (gitdir/'packed-refs').exists():
+  for line in (gitdir/'packed-refs').read_text().splitlines():
+   if line.endswith(' '+ref):commit=line.split()[0]
+else:commit=head
+m=json.loads((P/'PROJECT_SNAPSHOT.json').read_text());m.update({'base_git_head':head,'base_git_commit':commit,'git_status_available':False,'git_note':'safe.directory ownership prevented git status; no Git configuration or metadata modified; snapshot hashes are authoritative'})
+idx=json.loads((P/'docs/checkpoint_index.json').read_text());m['principal_runs']={v:max(x['iteration'] for x in idx if x['variant']==v and 'run' in x) for v in ['low-level-as2piper-head-orin-deploy','low-level-as2piper-head-orin-nocontact']};(P/'PROJECT_SNAPSHOT.json').write_text(json.dumps(m,indent=2))
+print('Additional audit/effect-comparison files',len(added),'snapshot runs',m['principal_runs'])

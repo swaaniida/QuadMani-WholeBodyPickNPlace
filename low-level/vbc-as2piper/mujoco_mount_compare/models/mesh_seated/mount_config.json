@@ -1,0 +1,30 @@
+{
+  "description": "Mesh-seated candidate on upper shell; structural interface NOT verified",
+  "robot_mount_x_m": -0.02,
+  "robot_mount_y_m": 0.0,
+  "estimated_as2_mount_surface_z_m": 0.07602847821788371,
+  "plate_length_x_m": 0.14,
+  "plate_width_y_m": 0.12,
+  "plate_thickness_m": 0.006,
+  "aluminum_density_kg_m3": 2700.0,
+  "profile_length_m": 0.14,
+  "profile_width_m": 0.02,
+  "profile_height_m": 0.02,
+  "profile_center_y_m": 0.035,
+  "profile_mass_per_meter_kg": 0.5,
+  "gravity_m_s2": -9.81,
+  "time_step_s": 0.002,
+  "initial_body_height_m": 0.35,
+  "initial_thigh_rad": 0.8,
+  "initial_calf_rad": -1.6,
+  "initial_piper_joint_rad": [
+    0.0,
+    1.2,
+    -1.4,
+    0.0,
+    0.2,
+    0.0
+  ],
+  "initial_gripper_open_m": 0.05,
+  "comment": "Plate supported on existing AS2 load-bearing mounts assumed; plate hole pattern/torque limits and collision/friction require hardware calibration."
+}

@@ -1,0 +1,48 @@
+--- before/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ after/legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -105,6 +105,7 @@
+         base_height_target = .3244069024246581
+         # 0.30 m B1 target x approximately 0.60 geometric scale.
+         feet_height_target = 0.18
++        max_contact_force = 75.0  # PhysX net-contact-force norm threshold [N].
+ 
+         class scales(B1Z1RoughCfg.rewards.scales):
+             # This unused legacy term requires a foot-mounted force sensor.
+--- before/force_ablation/configs.py
++++ after/force_ablation/configs.py
+@@ -1,18 +1,20 @@
+ from legged_gym.envs.manip_loco.as2_head_orin_config import AS2HeadOrinCfg, AS2HeadOrinCfgPPO
+ 
+ class Force40Cfg(AS2HeadOrinCfg):
+-    pass
++    class rewards(AS2HeadOrinCfg.rewards):
++        max_contact_force = 40.
+ 
+-class Force200Cfg(AS2HeadOrinCfg):
++class Force75Cfg(AS2HeadOrinCfg):
+     class rewards(AS2HeadOrinCfg.rewards):
+-        max_contact_force = 200.
++        max_contact_force = 75.
+ 
+ class ForceOffCfg(AS2HeadOrinCfg):
+     class rewards(AS2HeadOrinCfg.rewards):
++        max_contact_force = 40.
+         class scales(AS2HeadOrinCfg.rewards.scales):
+             feet_contact_forces = 0.
+ 
+-CASES = {'A': Force40Cfg, 'B': Force200Cfg, 'C': ForceOffCfg}
++CASES = {'A': Force40Cfg, 'B': Force75Cfg, 'C': ForceOffCfg}
+ TASKS = {key: 'as2piper_nocontact_force_' + key.lower() for key in CASES}
+ 
+ def configs(case, seed=1):
+--- before/force_ablation/run.py
++++ after/force_ablation/run.py
+@@ -64,7 +64,7 @@
+             x['env']['rewards']['scales'].pop('feet_contact_forces')
+         assert left == right, 'Unintended difference in ' + c
+     assert manifests['A']['env']['rewards']['max_contact_force'] == 40
+-    assert manifests['B']['env']['rewards']['max_contact_force'] == 200
++    assert manifests['B']['env']['rewards']['max_contact_force'] == 75
+     assert manifests['C']['env']['rewards']['scales']['feet_contact_forces'] == 0
+     return manifests
+ 

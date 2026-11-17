@@ -1,0 +1,11 @@
+{
+  "non_history_tensors": 33,
+  "equal_to_original": {
+    "original": true,
+    "speed": true,
+    "stable": true
+  },
+  "asset_identical": true,
+  "terrain_identical": true,
+  "origins_identical": true
+}

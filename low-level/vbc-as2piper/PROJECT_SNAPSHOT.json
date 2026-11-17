@@ -1,0 +1,15 @@
+{
+  "created_utc": "2026-11-17T05:07:35.326314+00:00",
+  "source": "vbc-as2piper live workspace; source files untouched",
+  "principal_checkpoint_count": 386,
+  "redistributed_isaacgym": false,
+  "historical_asset_restoration": "baseline200 URDF restored from exact-byte trained_asset in export only",
+  "base_git_head": "ref: refs/heads/feat/as2-piper-dev",
+  "base_git_commit": "869104c31953718f30ad20675e5291fcb5c5ea23",
+  "git_status_available": false,
+  "git_note": "safe.directory ownership prevented git status; no Git configuration or metadata modified; snapshot hashes are authoritative",
+  "principal_runs": {
+    "low-level-as2piper-head-orin-deploy": 31800,
+    "low-level-as2piper-head-orin-nocontact": 45000
+  }
+}

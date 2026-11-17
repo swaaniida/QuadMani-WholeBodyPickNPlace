@@ -1,0 +1,43 @@
+{
+  "case": "port",
+  "noise": "similarity",
+  "physics_config": {
+    "dt": 0.005,
+    "gravity": [
+      0.0,
+      0.0,
+      -9.81
+    ],
+    "physx": {
+      "bounce_threshold_velocity": 0.5,
+      "contact_collection": 2,
+      "contact_offset": 0.01,
+      "default_buffer_size_multiplier": 5,
+      "max_depenetration_velocity": 1.0,
+      "max_gpu_contact_pairs": 8388608,
+      "num_position_iterations": 4,
+      "num_threads": 10,
+      "num_velocity_iterations": 0,
+      "rest_offset": 0.0,
+      "solver_type": 1
+    },
+    "substeps": 1,
+    "up_axis": 1
+  },
+  "noise_std": [
+    0.26511350274086,
+    0.36901506781578064,
+    0.2616177499294281
+  ],
+  "num_envs": 128,
+  "seconds": 4.0,
+  "resets_after_initial5steps": 0,
+  "roll_pitch_p95_rad": 0.1550795920193195,
+  "max_foot_force_N": 601.301025390625,
+  "max_foot_force_including_initial_N": 663.6851196289062,
+  "max_applied_leg_torque_Nm": 52.929161071777344,
+  "ee_position_mean_m": 0.023007843643426895,
+  "mean_root_z_m": 0.2962675988674164,
+  "wall_s": 22.37371338577941,
+  "conditions": "No trained policy/DR; Gaussian actions; first five samples excluded from aggregate."
+}

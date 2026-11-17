@@ -1,0 +1,63 @@
+{
+  "run": "b1z1-low/original-run01",
+  "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/experiments/b1z1_original_run_eval/logs/b1z1-low/original-run01/model_45000.pt",
+  "task": "B1Z1 original ManipLoco task copied read-only from vbc-legacy",
+  "source_config": "original run W&B config has --observe_gait_commands, seed=1",
+  "evaluation": "deterministic policy; one environment; original play.py test overrides (6x3 terrain grid, push off, base mass rand on, base CoM rand off); episode reset suppressed for continuous clips",
+  "terrain": "flat height range",
+  "dt_s": 0.019999999552965164,
+  "sample_rate_hz": 25,
+  "dof_names": [
+    "FL_hip_joint",
+    "FL_thigh_joint",
+    "FL_calf_joint",
+    "FR_hip_joint",
+    "FR_thigh_joint",
+    "FR_calf_joint",
+    "RL_hip_joint",
+    "RL_thigh_joint",
+    "RL_calf_joint",
+    "RR_hip_joint",
+    "RR_thigh_joint",
+    "RR_calf_joint",
+    "z1_waist",
+    "z1_shoulder",
+    "z1_elbow",
+    "z1_wrist_angle",
+    "z1_forearm_roll",
+    "z1_wrist_rotate",
+    "z1_jointGripper"
+  ],
+  "phases": [
+    {
+      "name": "stand + sampled EE poses",
+      "seconds": 12.0,
+      "command_vx_vy_yaw": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "first_sample": 0,
+      "last_sample_exclusive": 300
+    }
+  ],
+  "summary": [
+    {
+      "name": "stand + sampled EE poses",
+      "seconds": 12.0,
+      "command_vx_vy_yaw": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_base_vx_m_s": 0.019009655341506004,
+      "mean_base_vy_m_s": -0.03705574944615364,
+      "mean_yaw_rate_rad_s": 0.07476489990949631,
+      "mean_ee_error_m": 0.12268088012933731,
+      "ee_error_p95_m": 0.34193886667490003,
+      "upright_fraction": 0.8083333333333333,
+      "mean_loaded_feet": 3.158333333333333,
+      "done_samples": 0
+    }
+  ]
+}

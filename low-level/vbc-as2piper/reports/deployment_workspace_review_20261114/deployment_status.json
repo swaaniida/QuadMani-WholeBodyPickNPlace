@@ -1,0 +1,24 @@
+{
+  "deployment_ready": false,
+  "previous_28k_deployment_recommendation_withdrawn": true,
+  "observed_stop_RR_noncontact": true,
+  "requires_new_training_with_corrected_task_reward_and_hardware_contract": true,
+  "training_started": false,
+  "production_modified": false,
+  "candidate_goal_envelope_not_hardware_approved": {
+    "nominal_virtual_center": [
+      0.22435,
+      0,
+      0.4563069024246581
+    ],
+    "r_m": [
+      0.4,
+      0.85
+    ],
+    "position_pitch_rad": [
+      -1.15,
+      0.65
+    ],
+    "optional_farthest_r_m": 0.9
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "cached_velocity_change_max_m_s": 0.0,
+  "fresh_velocity_change_max_m_s": 3.9443564414978027,
+  "cached_vs_fresh_rms_m_s": 0.8845698833465576,
+  "cached_velocity_initial_env8": [
+    [
+      -5.294465518090874e-05,
+      2.7162086553289555e-06,
+      0.9995160698890686
+    ],
+    [
+      -0.0010981477098539472,
+      -0.0007713413215242326,
+      1.002148985862732
+    ],
+    [
+      -0.0035028872080147266,
+      -0.003165067173540592,
+      0.9987725615501404
+    ],
+    [
+      0.0021024199668318033,
+      0.0010547247948125005,
+      1.0003454685211182
+    ]
+  ],
+  "front_foot_position_cache_change_max_m": 0.0,
+  "recorded_feet_jerk_absolute_max": 0.0,
+  "weighted_velocity_term_current_mean": -0.9585525989532471,
+  "weighted_velocity_term_with_live_velocity_mean": -0.5361627340316772
+}

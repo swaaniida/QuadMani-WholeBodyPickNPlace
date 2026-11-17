@@ -1,0 +1,96 @@
+"""One-time, root-only cleanup/restart of the explicitly named B experiment."""
+import argparse,json,os,signal,subprocess,time,shutil
+from pathlib import Path
+from datetime import datetime,timezone
+ROOT=Path(__file__).resolve().parents[1]
+BASE=ROOT/'experiments/contact_force_ablation'
+NAME='as2piper_headpiper_orin_200N_0.18m'
+ENTITY='quadruped_capstone'
+PROJECT='as2piper-low'
+MARKER=ROOT/'force_ablation/push25_restart_launched.json'
+
+def processes():
+    result=[]
+    for p in Path('/proc').iterdir():
+        if not p.name.isdigit():continue
+        try:argv=(p/'cmdline').read_bytes().split(b'\0');argv=[x.decode() for x in argv if x]
+        except (OSError,UnicodeError):continue
+        def option(key,value):return key in argv and argv.index(key)+1<len(argv) and argv[argv.index(key)+1]==value
+        if 'force_ablation.run' in argv and option('--mode','train') and option('--condition','B') and option('--name',NAME):result.append(int(p.name))
+    return result
+
+def descendants(pid):
+    found=[]
+    try:children=(Path('/proc')/str(pid)/'task'/str(pid)/'children').read_text().split()
+    except OSError:return found
+    for child in children:
+        child=int(child);found+=descendants(child)+[child]
+    return found
+
+def alive(pid):
+    try:
+        stat=(Path('/proc')/str(pid)/'stat').read_text();return stat.rsplit(')',1)[1].strip().split()[0]!='Z'
+    except OSError:return False
+
+def main():
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--dry-run',action='store_true');args=parser.parse_args()
+    pids=processes()
+    target=BASE/'runs'/NAME
+    paths=([target] if target.exists() else [])+sorted((BASE/'failed_initializations').glob(NAME+'_*'))+sorted(BASE.glob('B_train_*.log'))
+    ids={NAME}
+    for p in paths:
+        f=p/'manifest.json'
+        if f.exists():
+            m=json.loads(f.read_text());assert m['condition']=='B';ids.add(m.get('wandb_run_id',NAME))
+    if args.dry_run:
+        print(json.dumps({'stop_pids':pids,'delete_local_paths':[str(p) for p in paths],'delete_wandb_runs':[ENTITY+'/'+PROJECT+'/'+x for x in sorted(ids)],'restart':'B only, seed1 shared initialization, iteration0, standing_push_multiplier2.5','preserve_initialization':str(BASE/'seed_1/initial_policy.pt')},indent=2));return
+    if os.geteuid()!=0:raise SystemExit('Run this command in the root terminal: the current training process is owned by root.')
+    if MARKER.exists():raise SystemExit('Restart was already launched; inspect '+str(MARKER)+' rather than deleting the new run again.')
+    os.umask(0o002)
+    # Stop only the exact named B process and its own logger children.
+    children=set()
+    for pid in pids:children.update(descendants(pid))
+    for pid in pids:
+        try:os.kill(pid,signal.SIGTERM)
+        except ProcessLookupError:pass
+    deadline=time.monotonic()+15
+    while any(alive(pid) for pid in pids) and time.monotonic()<deadline:time.sleep(.25)
+    if any(alive(pid) for pid in pids):raise SystemExit('B process did not terminate; nothing has been deleted.')
+    for pid in children:
+        if alive(pid):
+            try:os.kill(pid,signal.SIGTERM)
+            except ProcessLookupError:pass
+    deadline=time.monotonic()+10
+    while any(alive(pid) for pid in children) and time.monotonic()<deadline:time.sleep(.25)
+    if any(alive(pid) for pid in children):raise SystemExit('B logger child still alive; nothing has been deleted.')
+    import wandb
+    api=wandb.Api(timeout=30)
+    deleted=[]
+    for ident in sorted(ids):
+        remote=ENTITY+'/'+PROJECT+'/'+ident
+        try:run=api.run(remote)
+        except Exception as e:
+            text=str(e).lower()
+            if 'could not find run' in text or 'not found' in text or 'does not exist' in text:
+                deleted.append({'run':remote,'result':'not found'});continue
+            raise
+        assert run.project==PROJECT and run.entity==ENTITY
+        run.delete(delete_artifacts=False)  # SDK returns None on successful mutation.
+        deleted.append({'run':remote,'result':'deleted'})
+    # All selected files are confined to this B experiment; no broad rm/globs across projects.
+    for p in paths:
+        assert not p.is_symlink(), 'Refusing a top-level symlink: '+str(p)
+        assert BASE.resolve() in p.resolve().parents
+        if p.is_dir():shutil.rmtree(p)
+        elif p.exists():p.unlink()
+    stamp=datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    log=BASE/('B_push25_train_'+stamp+'.log')
+    env=os.environ.copy();env.update(WANDB_MODE='online',WANDB_BASE_URL='https://api.forge.coreweave.com',WANDB_ENTITY=ENTITY,PYTHONUNBUFFERED='1')
+    command=['bash',str(ROOT/'run_force_ablation.sh'),'--mode','train','--condition','B','--seed','1','--project',PROJECT,'--name',NAME]
+    with log.open('xb') as stream:
+        child=subprocess.Popen(command,cwd=str(ROOT.parent),stdin=subprocess.DEVNULL,stdout=stream,stderr=subprocess.STDOUT,env=env,start_new_session=True)
+    record={'stopped_pids':pids,'deleted_wandb':deleted,'deleted_local_paths':[str(p) for p in paths],'new_pid':child.pid,'new_log':str(log),'display_name':NAME,'standing_push_multiplier':2.5,'start_iteration':0,'status':'detached process launched; online initialization not yet verified'}
+    with MARKER.open('x') as f:json.dump(record,f,indent=2);f.write('\n')
+    print(json.dumps(record,indent=2));print('tail -n 80 -f '+str(log))
+
+if __name__=='__main__':main()

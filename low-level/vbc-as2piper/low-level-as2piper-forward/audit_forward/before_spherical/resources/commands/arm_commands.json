@@ -1,0 +1,89 @@
+{
+  "asset_sha256": "b103445cd5378c80db4cd244d7a6e70487afc477874001b223a69e1f854c648c",
+  "joint_names": [
+    "piper_joint1",
+    "piper_joint2",
+    "piper_joint3",
+    "piper_joint4",
+    "piper_joint5",
+    "piper_joint6"
+  ],
+  "count": 256,
+  "attempted": 771,
+  "reference_frame": "piper_base_link; full body rotation, not yaw-only",
+  "mount_body_xyz_m": [
+    0.005,
+    0,
+    0.08202847821788371
+  ],
+  "home_joint_rad": [
+    0.0,
+    1.1,
+    -0.55,
+    0.0,
+    0.0,
+    0.0
+  ],
+  "joint_sampling_bounds_rad": [
+    [
+      -0.45,
+      0.55,
+      -1.2000000000000002,
+      -0.35,
+      -0.45,
+      -0.35
+    ],
+    [
+      0.45,
+      1.6500000000000001,
+      -0.04,
+      0.35,
+      0.45,
+      0.35
+    ]
+  ],
+  "tcp_endpoint_bounds_arm_m": [
+    [
+      0.34016882794708925,
+      -0.21465403035451958,
+      0.060971182771230314
+    ],
+    [
+      0.5697998183994698,
+      0.21433482936682985,
+      0.3997885926038599
+    ]
+  ],
+  "screening_envelope_arm_m": {
+    "x": [
+      0.34,
+      0.58
+    ],
+    "y": [
+      -0.22,
+      0.22
+    ],
+    "z": [
+      0.06,
+      0.4
+    ]
+  },
+  "trajectory": "home -> sampled endpoint -> home; joint interpolation, FK positions and orientations coupled",
+  "path_samples": 41,
+  "max_arm_gravity_torque_Nm": 6.676916185861316,
+  "screening_torque_limit_assumed_Nm": 9.0,
+  "collision_tolerance_m": 0.0005,
+  "nominal_base_z_m": 0.3244069024246581,
+  "neutral_foot_radius_m": [
+    0.028,
+    0.028,
+    0.028,
+    0.028
+  ],
+  "limitations": [
+    "Nominal grounded leg pose only; rough terrain/moving legs can collide.",
+    "9 Nm is an inherited simulation screening assumption, not a verified hardware rating.",
+    "Finite path samples are not continuous collision or dynamic feasibility proof.",
+    "No grasped object/camera/cable mass or visibility guarantee."
+  ]
+}

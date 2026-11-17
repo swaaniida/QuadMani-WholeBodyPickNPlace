@@ -1,0 +1,390 @@
+{
+  "checkpoint": "/data/team/users/suhwan/vbc-legacy/low-level/logs/b1z1-low/original-run01/model_45000.pt",
+  "iteration": 45000,
+  "seed": 20261115,
+  "seconds": 20,
+  "warmup_seconds": 2,
+  "dt": 0.019999999552965164,
+  "envs": 4,
+  "command": [
+    0,
+    0,
+    0
+  ],
+  "device": "CPU PhysX + CPU deterministic history-encoder policy",
+  "observation": 799,
+  "DR_push": false,
+  "terrain": "original flat trimesh, height=0",
+  "episode_length_s": 60,
+  "foot_names": [
+    "FL_foot",
+    "FR_foot",
+    "RL_foot",
+    "RR_foot"
+  ],
+  "collision_radius_m": [
+    0.04,
+    0.04,
+    0.04,
+    0.04
+  ],
+  "visual_radius_m": [
+    0.03,
+    0.03,
+    0.03,
+    0.03
+  ],
+  "waypoints": [
+    [
+      "front",
+      [
+        0.65,
+        0.05,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    [
+      "left",
+      [
+        0.65,
+        0.25,
+        0.7
+      ],
+      [
+        0.15,
+        -0.12,
+        0.1
+      ]
+    ],
+    [
+      "right",
+      [
+        0.65,
+        0.25,
+        -0.7
+      ],
+      [
+        -0.15,
+        0.12,
+        -0.1
+      ]
+    ],
+    [
+      "upper",
+      [
+        0.6,
+        0.7,
+        0
+      ],
+      [
+        0.1,
+        -0.1,
+        0
+      ]
+    ],
+    [
+      "near ground",
+      [
+        0.8,
+        -0.95,
+        0
+      ],
+      [
+        0,
+        0,
+        0
+      ]
+    ],
+    [
+      "far low",
+      [
+        0.85,
+        -0.5,
+        0.25
+      ],
+      [
+        -0.12,
+        0.1,
+        0.12
+      ]
+    ]
+  ],
+  "dof_names": [
+    "FL_hip_joint",
+    "FL_thigh_joint",
+    "FL_calf_joint",
+    "FR_hip_joint",
+    "FR_thigh_joint",
+    "FR_calf_joint",
+    "RL_hip_joint",
+    "RL_thigh_joint",
+    "RL_calf_joint",
+    "RR_hip_joint",
+    "RR_thigh_joint",
+    "RR_calf_joint",
+    "z1_waist",
+    "z1_shoulder",
+    "z1_elbow",
+    "z1_wrist_angle",
+    "z1_forearm_roll",
+    "z1_wrist_rotate",
+    "z1_jointGripper"
+  ],
+  "summary": [
+    {
+      "env": 0,
+      "feet": [
+        {
+          "foot": "FL_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 178.65614318847656,
+          "clearance_mean_mm": 0.007232137024401786,
+          "clearance_p95_mm": 0.010206773877143027,
+          "clearance_max_mm": 0.029332041740416648,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "FR_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 153.6802520751953,
+          "clearance_mean_mm": 0.0055524185299865025,
+          "clearance_p95_mm": 0.008433535695075156,
+          "clearance_max_mm": 0.026098489761351706,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "RL_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 127.7728500366211,
+          "clearance_mean_mm": -0.07105854153633201,
+          "clearance_p95_mm": -0.055334120988846665,
+          "clearance_max_mm": -0.052959620952607034,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "RR_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 108.67633056640625,
+          "clearance_mean_mm": -0.05085168778896415,
+          "clearance_p95_mm": -0.039912164211274026,
+          "clearance_max_mm": -0.03879606723785484,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        }
+      ],
+      "ee_error_mean_m": 0.05953925475478172,
+      "ee_error_p95_m": 0.13185394033789632,
+      "mean_vx": 0.004049147944897413,
+      "mean_vy": -0.00029982798150740564,
+      "mean_yaw_rate": -0.001243177684955299,
+      "reset_count": 0,
+      "upright_fraction": 1.0
+    },
+    {
+      "env": 1,
+      "feet": [
+        {
+          "foot": "FL_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 184.35452270507812,
+          "clearance_mean_mm": 0.0051540359854689854,
+          "clearance_p95_mm": 0.016728267073630423,
+          "clearance_max_mm": 0.05107283592224038,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "FR_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 150.9119873046875,
+          "clearance_mean_mm": 0.0042496547102919835,
+          "clearance_p95_mm": 0.024877712130545727,
+          "clearance_max_mm": 0.03575444221496499,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "RL_foot",
+          "contact_Fz_gt2_fraction": 0.92,
+          "contact_force_norm_gt2_fraction": 0.92,
+          "Fz_mean_N": 103.73867797851562,
+          "clearance_mean_mm": 0.23797058314084923,
+          "clearance_p95_mm": 1.6246019303798651,
+          "clearance_max_mm": 12.185997366905212,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.05999999865889549,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "RR_foot",
+          "contact_Fz_gt2_fraction": 0.983,
+          "contact_force_norm_gt2_fraction": 0.983,
+          "Fz_mean_N": 129.3811492919922,
+          "clearance_mean_mm": -0.011585459113121865,
+          "clearance_p95_mm": -0.031232237815857773,
+          "clearance_max_mm": 7.641664743423461,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.019999999552965164,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        }
+      ],
+      "ee_error_mean_m": 0.06278575956821442,
+      "ee_error_p95_m": 0.15686193481087682,
+      "mean_vx": 0.01018714252859354,
+      "mean_vy": 0.0009230657597072423,
+      "mean_yaw_rate": 0.004410468973219395,
+      "reset_count": 0,
+      "upright_fraction": 1.0
+    },
+    {
+      "env": 2,
+      "feet": [
+        {
+          "foot": "FL_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 174.09814453125,
+          "clearance_mean_mm": 0.003969587385653617,
+          "clearance_p95_mm": 0.00790491700172341,
+          "clearance_max_mm": 0.0261282920837394,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "FR_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 172.08580017089844,
+          "clearance_mean_mm": 0.00654744356870568,
+          "clearance_p95_mm": 0.011861547827719808,
+          "clearance_max_mm": 0.018975734710692527,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "RL_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 115.21560668945312,
+          "clearance_mean_mm": -0.06500865519046867,
+          "clearance_p95_mm": -0.05740463733673179,
+          "clearance_max_mm": -0.055470466613770364,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "RR_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 107.42770385742188,
+          "clearance_mean_mm": -0.056937754154206155,
+          "clearance_p95_mm": -0.042356699705124734,
+          "clearance_max_mm": -0.035055875778199075,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        }
+      ],
+      "ee_error_mean_m": 0.06354522705078125,
+      "ee_error_p95_m": 0.14404467716813088,
+      "mean_vx": 0.004145133774727583,
+      "mean_vy": -0.0006710796733386815,
+      "mean_yaw_rate": -0.0018000762211158872,
+      "reset_count": 0,
+      "upright_fraction": 1.0
+    },
+    {
+      "env": 3,
+      "feet": [
+        {
+          "foot": "FL_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 174.4602813720703,
+          "clearance_mean_mm": -0.005524538457394479,
+          "clearance_p95_mm": 0.009843930602072835,
+          "clearance_max_mm": 0.03538936376571572,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "FR_foot",
+          "contact_Fz_gt2_fraction": 1.0,
+          "contact_force_norm_gt2_fraction": 1.0,
+          "Fz_mean_N": 165.2593994140625,
+          "clearance_mean_mm": 0.006961211562155845,
+          "clearance_p95_mm": 0.014372020959853293,
+          "clearance_max_mm": 0.020242333412169577,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.0,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "RL_foot",
+          "contact_Fz_gt2_fraction": 0.964,
+          "contact_force_norm_gt2_fraction": 0.964,
+          "Fz_mean_N": 114.30548858642578,
+          "clearance_mean_mm": 0.07528311014175332,
+          "clearance_p95_mm": -0.012472420930863348,
+          "clearance_max_mm": 9.15572702884674,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.03999999910593033,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        },
+        {
+          "foot": "RR_foot",
+          "contact_Fz_gt2_fraction": 0.987,
+          "contact_force_norm_gt2_fraction": 0.987,
+          "Fz_mean_N": 114.50492858886719,
+          "clearance_mean_mm": -0.03851626813411796,
+          "clearance_p95_mm": -0.0341245532035836,
+          "clearance_max_mm": 3.988853693008422,
+          "longest_gap20mm_and_no_contact_s": 0.0,
+          "longest_no_Fz_contact_s": 0.019999999552965164,
+          "persistent_min_gap5mm_last_halfsec_fraction": 0.0
+        }
+      ],
+      "ee_error_mean_m": 0.06294003129005432,
+      "ee_error_p95_m": 0.1482623159885406,
+      "mean_vx": 0.007826512679457664,
+      "mean_vy": 0.0004538174835033715,
+      "mean_yaw_rate": 0.0007849815301597118,
+      "reset_count": 0,
+      "upright_fraction": 1.0
+    }
+  ],
+  "protected_hashes": {
+    "/data/team/users/suhwan/vbc-legacy/low-level/logs/b1z1-low/original-run01/model_45000.pt": "b6f15d5df457c8ec704d7c8a40c72e64caa4982c09cfeaef27f3897c606b2df9",
+    "/data/team/users/suhwan/vbc-legacy/low-level/resources/robots/b1z1/urdf/b1z1.urdf": "5cfb59860f124c6bf6641ed5d32532b0d4f40a8ca88fd0ab538473ed65f80a69",
+    "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/manip_loco.py": "751bb31c84aad500fc081f9ffd54ae77188e70f7bb6b917ff355e60c6cb4440c",
+    "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/b1z1_config.py": "71d0cbd174c42cfbae937c2d38436e017bf8f5fe387576c9f94bfd55eae4a7ea"
+  },
+  "wall_seconds": 18.173571825027466,
+  "video_env": 1,
+  "note": "Original code and policy unchanged; only evaluation command sequence, no DR/push and timeout extension. Net-force measurements are simulation ground truth. Render is state replay, not MuJoCo re-simulation.",
+  "video_note": "Selected replica1 has the largest transient foot clearance among four; two fixed views of same measured rollout."
+}

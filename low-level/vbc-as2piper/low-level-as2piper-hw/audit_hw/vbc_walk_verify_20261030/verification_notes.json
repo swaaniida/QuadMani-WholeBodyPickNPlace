@@ -1,0 +1,30 @@
+{
+  "objective": "Verify whether restored AS2 VBC-port reward learns actual walking. No reward/environment tuning during this verification.",
+  "protected_existing_run_pid": 512627,
+  "protected_existing_run_user": "vbc",
+  "task": "as2piper_plate_vbc_port",
+  "training_envs": 6144,
+  "wandb": "disabled",
+  "first_run": "vbc_port_walk_verify_20261029_155856",
+  "first_stage": "0 -> 300 completed; final model_300.pt; initialized from scratch.",
+  "extended_run": "vbc_port_walk_verify_extended_20261029_164834",
+  "extended_stage": "Retry resumed from300; completed313 and saved model_313 after a complete update; stopped cooperatively. Earlier extension was interrupted at about379, unsaved updates lost. No full1000 verification performed.",
+  "evaluation": "32 env, 10s, 8 per condition; stand, forward .25m/s, turn +.6rad/s, forward+turn; history encoder; random EE goals. Nominal plane first, full training domain optional.",
+  "threshold_reason": "Original VBC walking clip yaw .5, vx .1586, so use yaw .6 and vx .25.",
+  "initial_eval": "eval_initial_matched: near-zero vx/yaw for all commands.",
+  "checkpoint200": "Movement but wrong commands/falls: forward .379m/s yaw-.377 with7falls, stand .221m/s17falls; privileged and arm-hold also fail.",
+  "checkpoint300": "No baseline pass: stand .435m/s0falls; forward .571m/s yaw-.197,2falls; turn vx.575 yaw-.046; mixed vx.614 yaw-.110,1fall. Arm contact>1N absent.",
+  "watcher": "Exited after cooperative stop marker.",
+  "cooperative_stop": "Create stop_after_update ONLY for our diagnostic after success/authorized stop. verify_walk_train.py saves current model at completed update and exits. Do not signal/stop vbc workload.",
+  "sessions": {},
+  "helpers_changed": [
+    "evaluate_hw.py: port selector, proper PPO config, seed/physics reset, nominal vs DR reset, walking threshold metadata, arm contact recording",
+    "render_gait.py: optional --start-seconds",
+    "plot_walk_verification.py",
+    "watch_walk_verification.py",
+    "verify_walk_train.py"
+  ],
+  "video200": "eval_200/learned_gait.mp4: actual PhysX states replayed in MuJoCo, full10s including resets. Irregular hopping/overspeed, not stable command gait.",
+  "next": "Verification bounded at313; no validated command-following gait yet.",
+  "final_checkpoint313": "No fall resets during evaluated interval; stand vx.425, forward .552, turn vx.585/yaw-.078, mixed vx.589/yaw-.124; mean EE error~2.6cm; command following not verified."
+}

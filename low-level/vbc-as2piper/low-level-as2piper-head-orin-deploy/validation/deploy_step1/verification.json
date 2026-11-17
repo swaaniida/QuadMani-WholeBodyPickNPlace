@@ -1,0 +1,37 @@
+{
+  "passed": true,
+  "body_poses": 1000,
+  "ground_and_upper_target_z_max_error_m": {
+    "0.02": 1.734723475976807e-17,
+    "0.8": 0.0
+  },
+  "actual_arm_height_span_m": 0.4447311178588914,
+  "rough_ground_offset_m": 0.2,
+  "source_files_unchanged": 226,
+  "external_asset_updates_since_step1": [
+    "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+    "resources/robots/as2piper/urdf/as2piper_head_umi_orin64_backmount.urdf",
+    "resources/robots/as2piper/wrist_camera/as2piper_head_umi_orin64_backmount_camera.json",
+    "resources/robots/as2piper/wrist_camera/rig.json",
+    "resources/robots/as2piper/wrist_camera/as2piper_head_orin_training_camera.json",
+    "legged_gym/resources/robots/as2piper/urdf/as2piper.urdf",
+    "legged_gym/resources/robots/as2piper/wrist_camera/rig.json",
+    "legged_gym/resources/robots/as2piper/wrist_camera/as2piper_camera.json"
+  ],
+  "checkpoints_stat_unchanged": 226,
+  "modified_cloned_files": [
+    "CHANGES_KO.md",
+    "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+    "resources/robots/as2piper/urdf/as2piper_head_umi_orin64_backmount.urdf",
+    "resources/robots/as2piper/wrist_camera/as2piper_head_umi_orin64_backmount_camera.json",
+    "resources/robots/as2piper/wrist_camera/rig.json",
+    "resources/robots/as2piper/wrist_camera/as2piper_head_orin_training_camera.json",
+    "legged_gym/resources/robots/as2piper/urdf/as2piper.urdf",
+    "legged_gym/resources/robots/as2piper/wrist_camera/rig.json",
+    "legged_gym/resources/robots/as2piper/wrist_camera/as2piper_camera.json",
+    "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+    "legged_gym/envs/manip_loco/manip_loco.py"
+  ],
+  "training_started": false,
+  "limitation": "CPU actual-method coordinate tests only; no dynamics/IK feasibility claim. XY/yaw still follow base, terrain from local grid."
+}

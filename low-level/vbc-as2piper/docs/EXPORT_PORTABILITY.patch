@@ -1,0 +1,191 @@
+--- server/low-level-as2piper/run_as2.sh
++++ export/low-level-as2piper/run_as2.sh
+@@ -1,10 +1,11 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
+ umask 0002
++export PYTHONUNBUFFERED=1
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+ export MAX_JOBS=2
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export WANDB_MODE="${WANDB_MODE:-online}"
+ export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_plate_C_orig_20261028_01}"
+ export WANDB_NAME="${WANDB_NAME:-plate_only_C_original_20261028}"
+--- server/low-level-as2piper-forward/run_as2.sh
++++ export/low-level-as2piper-forward/run_as2.sh
+@@ -1,10 +1,11 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
+ umask 0002
++export PYTHONUNBUFFERED=1
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+ export MAX_JOBS=2
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export WANDB_MODE="${WANDB_MODE:-online}"
+ run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
+ export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_forward_spherical_${run_stamp}}"
+--- server/low-level-as2piper-gait/launch_monitor_detached.sh
++++ export/low-level-as2piper-gait/launch_monitor_detached.sh
+@@ -6,7 +6,7 @@
+ shift
+ mkdir -p experiments/gait_reward_proxy_v2/resume_logs
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 MAX_JOBS=2 WANDB_MODE=disabled WANDB_CONSOLE=off WANDB_DISABLE_GIT=true
+ stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
+ logfile="$PWD/experiments/gait_reward_proxy_v2/resume_logs/eval_${case_name}_${stamp}.log"
+--- server/low-level-as2piper-gait/run_gait.sh
++++ export/low-level-as2piper-gait/run_gait.sh
+@@ -3,7 +3,7 @@
+ umask 0002
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
+ export WANDB_DISABLE_GIT=true
+ export WANDB_MODE="${WANDB_MODE:-disabled}"
+--- server/low-level-as2piper-gait/run_stable.sh
++++ export/low-level-as2piper-gait/run_stable.sh
+@@ -3,7 +3,7 @@
+ umask 0002
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
+ export WANDB_DISABLE_GIT=true
+ export WANDB_MODE="${WANDB_MODE:-online}"
+--- server/low-level-as2piper-hw/run_gait.sh
++++ export/low-level-as2piper-hw/run_gait.sh
+@@ -3,7 +3,7 @@
+ umask 0002
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
+ export WANDB_MODE="${WANDB_MODE:-online}"
+ run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
+--- server/low-level-as2piper-hw/run_hw.sh
++++ export/low-level-as2piper-hw/run_hw.sh
+@@ -3,7 +3,7 @@
+ umask 0002
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
+ export WANDB_MODE="${WANDB_MODE:-online}"
+ run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
+--- server/low-level-as2piper-head-orin/run_head.sh
++++ export/low-level-as2piper-head-orin/run_head.sh
+@@ -1,8 +1,9 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
+ umask 0002
++export PYTHONUNBUFFERED=1
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2
+ exec python legged_gym/scripts/train.py --task as2piper_head_orin --proj_name as2piper-low --headless "$@"
+--- server/low-level-as2piper-head-orin-nocontact/run_force_ablation.sh
++++ export/low-level-as2piper-head-orin-nocontact/run_force_ablation.sh
+@@ -1,10 +1,11 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
+ umask 0002
++export PYTHONUNBUFFERED=1
+ cd "$(dirname "$0")"
+ export PYTHONDONTWRITEBYTECODE=1
+ export PYTHONPATH="$PWD/.wandb_deps:$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/../low-level-as2piper-head-orin/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2
+ export WANDB_ENTITY="${WANDB_ENTITY:-quadruped_capstone}"
+ exec python -m force_ablation.run "$@"
+--- server/low-level-as2piper-head-orin-nocontact/run_head.sh
++++ export/low-level-as2piper-head-orin-nocontact/run_head.sh
+@@ -1,8 +1,9 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
+ umask 0002
++export PYTHONUNBUFFERED=1
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2
+ exec python legged_gym/scripts/train.py --task as2piper_head_orin_nocontact --proj_name as2piper-low --headless "$@"
+--- server/low-level-as2piper-head-orin-deploy/run_force_ablation.sh
++++ export/low-level-as2piper-head-orin-deploy/run_force_ablation.sh
+@@ -1,10 +1,11 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
+ umask 0002
++export PYTHONUNBUFFERED=1
+ cd "$(dirname "$0")"
+ export PYTHONDONTWRITEBYTECODE=1
+ export PYTHONPATH="$PWD/.wandb_deps:$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/../low-level-as2piper-head-orin/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2
+ export WANDB_ENTITY="${WANDB_ENTITY:-quadruped_capstone}"
+ exec python -m force_ablation.run "$@"
+--- server/low-level-as2piper-head-orin-deploy/run_head.sh
++++ export/low-level-as2piper-head-orin-deploy/run_head.sh
+@@ -1,8 +1,9 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
+ umask 0002
++export PYTHONUNBUFFERED=1
+ cd "$(dirname "$0")"
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export TORCH_EXTENSIONS_DIR="${TORCH_EXTENSIONS_DIR:-$PWD/.cache/torch_extensions}"
+ export MAX_JOBS=2
+ exec python legged_gym/scripts/train.py --task as2piper_head_orin_nocontact --proj_name as2piper-low --headless "$@"
+--- server/tools/build_as2piper.py
++++ export/tools/build_as2piper.py
+@@ -4,9 +4,9 @@
+ import shutil
+ import xml.etree.ElementTree as ET
+ 
+-HOME = Path("/data/team/users/suhwan")
+-REPO = HOME / "vbc-as2piper"
+-SOURCES = HOME / "robot-sources"
++REPO = Path(__file__).resolve().parents[1]
++HOME = REPO.parent
++SOURCES = REPO / "robot-sources"
+ 
+ AS2 = SOURCES / "unitree_ros/robots/as2_description"
+ PIPER = SOURCES / "agx_arm_urdf/piper"
+--- server/tools/build_head_orin_urdf.py
++++ export/tools/build_head_orin_urdf.py
+@@ -8,7 +8,7 @@
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ SOURCE = ROOT / "low-level-as2piper-hw/resources/robots/as2piper/urdf/as2piper_umi_actuated_v7.urdf"
+-ORIN_SOURCE = Path("/data/team/users/suhwan/deep-wbc-as2piper/as2piper/legged_gym/resources/robots/as2piper/urdf/as2piper_center_umi_orin64.urdf")
++ORIN_SOURCE = ROOT / "reference/orin_source/as2piper_center_umi_orin64.urdf"
+ OUTPUT = ROOT / "low-level-as2piper-hw/resources/robots/as2piper/urdf/as2piper_head_umi_orin64_backmount.urdf"
+ REPORT = ROOT / "mujoco_mount_compare/results/orin64_head_piper_preview/placement_validation.json"
+ HEAD_PIPER_XYZ = "0.22435 0 0.1319"
+--- server/tools/check_mount_geometry.py
++++ export/tools/check_mount_geometry.py
+@@ -2,7 +2,7 @@
+ import struct
+ import re
+ 
+-ROOT = Path("/data/team/users/suhwan/robot-sources")
++ROOT = Path(__file__).resolve().parents[1] / "robot-sources"
+ 
+ paths = {
+     "AS2 body": ROOT / "unitree_ros/robots/as2_description/meshes/base_link.STL",

@@ -1,0 +1,118 @@
+{
+  "decision": "6144-environment concurrent training fits memory, with substantial observed slowdown of the existing run; not a guarantee of long-run peak performance.",
+  "device": "A100 MIG 3g.40gb, 42 SMs",
+  "total_MiB": 40192,
+  "baseline_used_MiB": 8040,
+  "peak_combined_used_MiB": 16401,
+  "minimum_observed_free_MiB": 23791,
+  "gpu_utilization": "Not available for this MIG device; N/A is not zero utilization.",
+  "old_before": {
+    "iterations": [
+      4690,
+      4691,
+      4692,
+      4693,
+      4694,
+      4695,
+      4696,
+      4697,
+      4698,
+      4699,
+      4700,
+      4701,
+      4702,
+      4703,
+      4704,
+      4705,
+      4706,
+      4707,
+      4708,
+      4709
+    ],
+    "count": 20,
+    "mean_fps": 37404.4,
+    "mean_collection_s": 3.6355
+  },
+  "old_during": {
+    "iterations": [
+      4756,
+      4757,
+      4758,
+      4759,
+      4760,
+      4761,
+      4762,
+      4763
+    ],
+    "count": 8,
+    "mean_fps": 23000.5,
+    "mean_collection_s": 5.966
+  },
+  "old_after": {
+    "iterations": [
+      4802,
+      4803,
+      4804,
+      4805,
+      4806,
+      4807,
+      4808,
+      4809
+    ],
+    "count": 8,
+    "mean_fps": 37697.875,
+    "mean_collection_s": 3.597125
+  },
+  "old_fps_reduction_percent": 38.50857118413876,
+  "new_iterations": [
+    {
+      "fps": 12518,
+      "collection_s": 11.159,
+      "learning_s": 0.62
+    },
+    {
+      "fps": 12489,
+      "collection_s": 11.291,
+      "learning_s": 0.516
+    },
+    {
+      "fps": 12971,
+      "collection_s": 10.854,
+      "learning_s": 0.513
+    },
+    {
+      "fps": 6257,
+      "collection_s": 23.051,
+      "learning_s": 0.515
+    }
+  ],
+  "new_aggregate_fps": 10079.187956048465,
+  "cuda_measurements": {
+    "num_envs": 6144,
+    "num_dofs": 20,
+    "num_actions": 18,
+    "observations": [
+      6144,
+      799
+    ],
+    "total_MiB": 40192.0,
+    "free_before_forced_resample_MiB": 26460.375,
+    "forced_all_env_resample_s": 1.0875215488485992,
+    "forced_resample_fallback_count": 837,
+    "free_after_forced_resample_MiB": 26456.375,
+    "torch_peak_allocated_after_resample_MiB": 99.490234375,
+    "completed": true,
+    "wall_time_s": 158.01151696639135,
+    "torch_peak_allocated_MiB": 1820.70361328125,
+    "torch_peak_reserved_MiB": 2112.0,
+    "free_at_exit_MiB": 23788.375
+  },
+  "cgroup_CPU_quota_cores": 16,
+  "cgroup_memory_limit_GiB": 125,
+  "peak_observed_cgroup_memory_GiB": 24.95935821533203,
+  "evidence": "4 full-size PPO iterations, 589824 transitions, all-6144 collision resampling burst; W&B disabled; probe exited normally.",
+  "limitation": "Short initial-run test. Future collision/resampling load, episode length and training throughput can differ. Parent-GPU utilization/other MIG workloads are not visible.",
+  "full_training_started": false,
+  "existing_run_PID": 220646,
+  "existing_run_not_modified_or_stopped": true
+}

@@ -1,0 +1,17 @@
+{
+  "base_mesh_visual_origin": [
+    0,
+    0,
+    0
+  ],
+  "head_visual_front_x_m": 0.33470532298088074,
+  "old_box_front_base_x_m": 0.326,
+  "new_box_front_base_x_m": 0.346,
+  "extension_m": 0.02,
+  "front_clearance_m": 0.011294677019119237,
+  "arm_relative_old_x_max_m": 0.10165,
+  "arm_relative_new_x_max_m": 0.12165,
+  "other_faces_unchanged": true,
+  "urdf_unchanged_sha256": "7e37cadb8e55fddb50e6bcd10440c772997c72e11f72c7afddeef281954de02b",
+  "scope": "Deploy clone config only; feasible-bank branch currently bypasses legacy box. No algorithm toggle, no training, original 45k code/checkpoints untouched."
+}

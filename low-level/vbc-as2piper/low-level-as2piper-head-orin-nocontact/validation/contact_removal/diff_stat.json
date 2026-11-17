@@ -1,0 +1,27 @@
+[
+  {
+    "file": "legged_gym/envs/__init__.py",
+    "added": 1,
+    "removed": 1
+  },
+  {
+    "file": "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+    "added": 4,
+    "removed": 1
+  },
+  {
+    "file": "legged_gym/envs/manip_loco/manip_loco.py",
+    "added": 7,
+    "removed": 4
+  },
+  {
+    "file": "rsl_rl_local/rsl_rl/modules/actor_critic.py",
+    "added": 11,
+    "removed": 0
+  },
+  {
+    "file": "run_head.sh",
+    "added": 1,
+    "removed": 1
+  }
+]

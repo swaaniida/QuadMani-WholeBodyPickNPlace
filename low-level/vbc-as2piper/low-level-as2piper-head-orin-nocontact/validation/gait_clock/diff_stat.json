@@ -1,0 +1,22 @@
+[
+  {
+    "file": "audit_observations.py",
+    "added": 67,
+    "removed": 11
+  },
+  {
+    "file": "audit_ppo_path.py",
+    "added": 22,
+    "removed": 12
+  },
+  {
+    "file": "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+    "added": 6,
+    "removed": 1
+  },
+  {
+    "file": "legged_gym/envs/manip_loco/manip_loco.py",
+    "added": 4,
+    "removed": 5
+  }
+]

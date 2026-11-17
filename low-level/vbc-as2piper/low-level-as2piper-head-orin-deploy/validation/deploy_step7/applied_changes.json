@@ -1,0 +1,7 @@
+[
+  "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+  "legged_gym/envs/manip_loco/manip_loco.py",
+  "legged_gym/utils/piper_control.py",
+  "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+  "CHANGES_KO.md"
+]

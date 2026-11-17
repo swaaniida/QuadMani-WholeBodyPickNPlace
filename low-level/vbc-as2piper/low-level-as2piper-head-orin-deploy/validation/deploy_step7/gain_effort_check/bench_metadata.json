@@ -1,0 +1,2115 @@
+{
+  "envs": 140,
+  "seconds": 7,
+  "physics_hz": 200,
+  "target_update_hz": 50,
+  "fixed_base": true,
+  "self_collisions": false,
+  "effort_profiles_are_assumptions": true,
+  "cases": [
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "home",
+      "pose_idx": 0,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "mid",
+      "pose_idx": 1,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "floor",
+      "pose_idx": 2,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "far_floor",
+      "pose_idx": 3,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 100,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 200,
+      "kd": 20,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 280,
+      "kd": 28,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 400,
+      "kd": 40,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 520,
+      "kd": 52,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 800,
+      "kd": 80,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "legacy100",
+      "effort": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic32_8",
+      "effort": [
+        32,
+        32,
+        32,
+        8,
+        8,
+        8
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic16_4",
+      "effort": [
+        16,
+        16,
+        16,
+        4,
+        4,
+        4
+      ]
+    },
+    {
+      "pose": "upper",
+      "pose_idx": 4,
+      "kp": 400,
+      "kd": 10,
+      "effort_name": "diagnostic8_2",
+      "effort": [
+        8,
+        8,
+        8,
+        2,
+        2,
+        2
+      ]
+    }
+  ],
+  "urdf_sha256": "7e37cadb8e55fddb50e6bcd10440c772997c72e11f72c7afddeef281954de02b",
+  "optimizer_updates": 0,
+  "elapsed_s": 7.395320177078247,
+  "force_note": "Raw PhysX DOF generalized-force sensor; drive-torque interpretation must be checked against gain law and effort clamp before reporting as motor torque."
+}

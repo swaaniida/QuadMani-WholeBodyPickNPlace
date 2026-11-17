@@ -1,0 +1,169 @@
+{
+  "iterations_completed": 100,
+  "control_steps": 2400,
+  "sampled_envs": 512,
+  "groups": {
+    "all": {
+      "count": 1228800,
+      "position_mean_m": 0.08361002802848816,
+      "position_p50_m": 0.06420762464404106,
+      "position_p95_m": 0.20123936086893088,
+      "orientation_mean_deg": 14.885387420654297,
+      "orientation_p95_deg": 33.41148338317871,
+      "position_lt_2cm_fraction": 0.04600911458333334,
+      "position_lt_5cm_fraction": 0.36273030598958333,
+      "pose_lt_5cm_10deg_fraction": 0.30701578776041666,
+      "contact_gt_1N_fraction": 0.0003361002604166667,
+      "force_max_p95_Nm": 23.28854427337647
+    },
+    "upright_late": {
+      "count": 30702,
+      "position_mean_m": 0.05780118331313133,
+      "position_p50_m": 0.05520646274089813,
+      "position_p95_m": 0.10580429844558227,
+      "orientation_mean_deg": 10.338865280151367,
+      "orientation_p95_deg": 18.28834276199341,
+      "position_lt_2cm_fraction": 0.06901830499641717,
+      "position_lt_5cm_fraction": 0.4273011530193473,
+      "pose_lt_5cm_10deg_fraction": 0.34189955051788157,
+      "contact_gt_1N_fraction": 0.0003582828480229301,
+      "force_max_p95_Nm": 22.194507122039777
+    },
+    "upright_random_late": {
+      "count": 434,
+      "position_mean_m": 0.042829547077417374,
+      "position_p50_m": 0.03508542664349079,
+      "position_p95_m": 0.09368052110075947,
+      "orientation_mean_deg": 10.965964317321777,
+      "orientation_p95_deg": 25.94218435287475,
+      "position_lt_2cm_fraction": 0.16820276497695852,
+      "position_lt_5cm_fraction": 0.7211981566820277,
+      "pose_lt_5cm_10deg_fraction": 0.5161290322580645,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 21.93097515106201
+    },
+    "upright_random_hold": {
+      "count": 98,
+      "position_mean_m": 0.03132804483175278,
+      "position_p50_m": 0.030407724902033806,
+      "position_p95_m": 0.05708256997168064,
+      "orientation_mean_deg": 8.291834831237793,
+      "orientation_p95_deg": 15.042002916336058,
+      "position_lt_2cm_fraction": 0.2755102040816326,
+      "position_lt_5cm_fraction": 0.8673469387755102,
+      "pose_lt_5cm_10deg_fraction": 0.7040816326530612,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 25.770645713806136
+    },
+    "fallen": {
+      "count": 583841,
+      "position_mean_m": 0.12273380160331726,
+      "position_p50_m": 0.11692145466804504,
+      "position_p95_m": 0.2315560281276703,
+      "orientation_mean_deg": 21.558555603027344,
+      "orientation_p95_deg": 37.53657913208008,
+      "position_lt_2cm_fraction": 0.015779981193509877,
+      "position_lt_5cm_fraction": 0.10562293501141579,
+      "pose_lt_5cm_10deg_fraction": 0.07417944269073258,
+      "contact_gt_1N_fraction": 0.0006885436274602161,
+      "force_max_p95_Nm": 23.73058319091797
+    },
+    "post_reset_first_0p1s": {
+      "count": 230522,
+      "position_mean_m": 0.044991277158260345,
+      "position_p50_m": 0.04466819763183594,
+      "position_p95_m": 0.07023225240409374,
+      "orientation_mean_deg": 7.031915664672852,
+      "orientation_p95_deg": 11.915516471862793,
+      "position_lt_2cm_fraction": 0.05531793060965982,
+      "position_lt_5cm_fraction": 0.6399823010385126,
+      "pose_lt_5cm_10deg_fraction": 0.624335204449033,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 23.184005546569818
+    }
+  },
+  "random_exposure_fraction": 0.002986653645833333,
+  "upright_fraction": 0.5248689778645833,
+  "age_note": "Age reconstructed from captured reset events; original startup episode_length_buf was randomized by the PPO runner.",
+  "all_iterations": {
+    "reset_counts": {
+      "done": 543540.0,
+      "roll": 408970.0,
+      "pitch": 144421.0,
+      "height": 6.0,
+      "timeout": 826.0,
+      "roll_exclusive": 408970.0,
+      "pitch_exclusive": 133749.0,
+      "height_exclusive": 6.0,
+      "timeout_exclusive": 815.0,
+      "episode_steps_sum": 16165823.0
+    },
+    "sampling": {
+      "requested": 1453.0,
+      "accepted": 622.0,
+      "fallback": 831.0,
+      "candidate_count": 9437.0,
+      "candidate_rejected": 8815.0,
+      "candidate_ik_rejected": 7369.0,
+      "candidate_body_rejected": 6341.0,
+      "fallback_fraction": 0.5719201651754989
+    }
+  },
+  "last_20_iterations": {
+    "reset_counts": {
+      "done": 104139.0,
+      "roll": 91676.0,
+      "pitch": 13651.0,
+      "height": 0.0,
+      "timeout": 0.0,
+      "roll_exclusive": 91676.0,
+      "pitch_exclusive": 12463.0,
+      "height_exclusive": 0.0,
+      "timeout_exclusive": 0.0,
+      "episode_steps_sum": 2934132.0
+    },
+    "sampling": {
+      "requested": 56.0,
+      "accepted": 3.0,
+      "fallback": 53.0,
+      "candidate_count": 534.0,
+      "candidate_rejected": 531.0,
+      "candidate_ik_rejected": 323.0,
+      "candidate_body_rejected": 477.0,
+      "fallback_fraction": 0.9464285714285714
+    }
+  },
+  "last_logged_mean_episode_s": 0.6018,
+  "fixed_base": {
+    "random_all": {
+      "count": 83200,
+      "position_mean_m": 0.015735460445284843,
+      "position_p95_m": 0.028177185170352465,
+      "orientation_mean_deg": 4.272462368011475,
+      "orientation_p95_deg": 8.221234321594238,
+      "contact_gt_1N_fraction": 0.0,
+      "force_abs_max_p95_Nm": 0.770374882221222
+    },
+    "random_hold": {
+      "count": 33151,
+      "position_mean_m": 0.014204020611941814,
+      "position_p95_m": 0.020098671317100525,
+      "orientation_mean_deg": 3.986095905303955,
+      "orientation_p95_deg": 5.725728750228882,
+      "contact_gt_1N_fraction": 0.0,
+      "force_abs_max_p95_Nm": 0.26505911350250244
+    },
+    "pose_fallback_count": 195,
+    "conditions": "Fixed torso, nominal mass/COM, gravity on; same URDF, spherical sampler, DLS IK, 400/40 arm and 1800/35 gripper drives. Not locomotion.",
+    "early_mixed": {
+      "count": 3200,
+      "position_mean_m": 0.013231751509010792,
+      "position_p95_m": 0.01535109914839267,
+      "orientation_mean_deg": 3.204521417617798,
+      "orientation_p95_deg": 3.124955415725708,
+      "contact_gt_1N_fraction": 0.0,
+      "force_abs_max_p95_Nm": 0.5067500114440913
+    },
+    "early_window_note": "B1 timers can resample before 3s; early_mixed is not a pure home-only test. Main random statistics use time >=4s."
+  }
+}

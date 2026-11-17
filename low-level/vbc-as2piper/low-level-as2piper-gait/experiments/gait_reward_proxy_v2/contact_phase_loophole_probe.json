@@ -1,0 +1,56 @@
+{
+  "results": {
+    "progress201": {
+      "missing_contact_during_stance_per_foot": [
+        0.1681857638888889,
+        0.1430121527777778,
+        0.09874131944444445,
+        0.07465277777777778
+      ],
+      "unwanted_contact_during_swing_per_foot": [
+        0.22157118055555555,
+        0.3498263888888889,
+        0.3893229166666667,
+        0.3125
+      ],
+      "reported_two_or_more_support_fraction": 0.9210416666666666,
+      "current_force_presence_cost": 0.20462366938591003,
+      "counterfactual_symmetric_presence_cost": 0.31065353751182556
+    },
+    "progress301": {
+      "missing_contact_during_stance_per_foot": [
+        0.2907986111111111,
+        0.2886284722222222,
+        0.09483506944444445,
+        0.0939670138888889
+      ],
+      "unwanted_contact_during_swing_per_foot": [
+        0.2849392361111111,
+        0.3515625,
+        0.3092447916666667,
+        0.189453125
+      ],
+      "reported_two_or_more_support_fraction": 0.8197222222222222,
+      "current_force_presence_cost": 0.17692960798740387,
+      "counterfactual_symmetric_presence_cost": 0.3259425461292267
+    },
+    "progress401": {
+      "missing_contact_during_stance_per_foot": [
+        0.3546006944444444,
+        0.2977430555555556,
+        0.10026041666666667,
+        0.09505208333333333
+      ],
+      "unwanted_contact_during_swing_per_foot": [
+        0.2649739583333333,
+        0.3904079861111111,
+        0.2328559027777778,
+        0.20247395833333334
+      ],
+      "reported_two_or_more_support_fraction": 0.7844444444444445,
+      "current_force_presence_cost": 0.17128154635429382,
+      "counterfactual_symmetric_presence_cost": 0.3298026919364929
+    }
+  },
+  "interpretation": "Existing contact bits are proxies with false negatives. These are counterfactual scores on recorded poses, not proof of training improvement. Geometric401 support check is pending; no new stance-contact reward adopted."
+}

@@ -1,0 +1,304 @@
+{
+  "passed": true,
+  "changed_core_files": [
+    "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+    "legged_gym/envs/manip_loco/manip_loco.py",
+    "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf"
+  ],
+  "new_helper": "legged_gym/utils/piper_control.py",
+  "urdf_only_velocity_changed": true,
+  "reward_ppo_actor_unchanged": true,
+  "optimizer_updates": 0,
+  "unit_test": {
+    "passed": true,
+    "command_slew_limit_rad_s": 3,
+    "per_step_delta_max_rad": 0.06000000238418579,
+    "partial_reset_clean": true,
+    "arm_delay_test_steps": 2,
+    "leg_delay_tests": [
+      0,
+      1,
+      3
+    ],
+    "arm_policy_actions_masked": true,
+    "drive_stiffness_DR": [
+      280,
+      520
+    ],
+    "drive_damping_DR": [
+      28,
+      52
+    ],
+    "effort_saturation_unchanged": true,
+    "official_basic_joint_limits_match": true,
+    "firmware_speed_units_tested": true,
+    "training_started": false
+  },
+  "physx_test": {
+    "passed": true,
+    "backend": "PhysX CPU",
+    "envs": 4,
+    "steps": 100,
+    "seconds": 1.9999999552965164,
+    "obs": 755,
+    "action": 18,
+    "dof": 20,
+    "optimizer_updates": 0,
+    "max_command_slew_rad_s": 3.000000238418579,
+    "max_measured_joint_velocity_rad_s": 1.1501389741897583,
+    "reset_count": 0,
+    "reset_events": [],
+    "actual_arm_stiffness": [
+      [
+        325.7905578613281,
+        502.4302978515625,
+        407.1728210449219,
+        302.7911682128906,
+        418.9272766113281,
+        499.1526184082031
+      ],
+      [
+        286.60003662109375,
+        319.2112731933594,
+        352.2081298828125,
+        404.8165283203125,
+        372.0124816894531,
+        386.8130798339844
+      ],
+      [
+        283.01318359375,
+        456.1934814453125,
+        505.3292236328125,
+        473.3486328125,
+        315.02410888671875,
+        303.2676086425781
+      ],
+      [
+        449.8302917480469,
+        402.6950378417969,
+        449.19171142578125,
+        282.7418212890625,
+        392.8452453613281,
+        484.6292419433594
+      ]
+    ],
+    "actual_arm_damping": [
+      [
+        32.57905578613281,
+        50.2430305480957,
+        40.717281341552734,
+        30.279117584228516,
+        41.892730712890625,
+        49.915260314941406
+      ],
+      [
+        28.660003662109375,
+        31.921127319335938,
+        35.2208137512207,
+        40.481651306152344,
+        37.20124816894531,
+        38.681304931640625
+      ],
+      [
+        28.30131721496582,
+        45.61935043334961,
+        50.532920837402344,
+        47.334861755371094,
+        31.502410888671875,
+        30.326759338378906
+      ],
+      [
+        44.983028411865234,
+        40.26950454711914,
+        44.91917037963867,
+        28.27418327331543,
+        39.284523010253906,
+        48.46292495727539
+      ]
+    ],
+    "motor_strength": [
+      [
+        0.8144764304161072,
+        1.2560757398605347,
+        1.0179320573806763,
+        0.756977915763855,
+        1.0473182201385498,
+        1.247881531715393
+      ],
+      [
+        0.7165001034736633,
+        0.7980281710624695,
+        0.8805203437805176,
+        1.0120413303375244,
+        0.9300311803817749,
+        0.9670326709747314
+      ],
+      [
+        0.7075329422950745,
+        1.1404837369918823,
+        1.2633230686187744,
+        1.1833715438842773,
+        0.7875602841377258,
+        0.7581689953804016
+      ],
+      [
+        1.1245757341384888,
+        1.0067375898361206,
+        1.1229792833328247,
+        0.7068545818328857,
+        0.9821131229400635,
+        1.2115731239318848
+      ]
+    ],
+    "all_finite": true,
+    "base_positions": [
+      [
+        [
+          0.3338095247745514,
+          0.3743264675140381,
+          0.3286159038543701
+        ],
+        [
+          -0.03449986129999161,
+          2.6177589893341064,
+          0.32746806740760803
+        ],
+        [
+          2.993849277496338,
+          0.0940709114074707,
+          0.3280627131462097
+        ],
+        [
+          2.6604042053222656,
+          2.712702989578247,
+          0.3269384205341339
+        ]
+      ],
+      [
+        [
+          0.3263689875602722,
+          0.4336775541305542,
+          0.3029535412788391
+        ],
+        [
+          -0.07607455551624298,
+          2.6484031677246094,
+          0.3049463629722595
+        ],
+        [
+          2.975320339202881,
+          0.014989875257015228,
+          0.3008730411529541
+        ],
+        [
+          2.626739501953125,
+          2.706888437271118,
+          0.30612269043922424
+        ]
+      ],
+      [
+        [
+          0.33039507269859314,
+          0.40489253401756287,
+          0.3103591501712799
+        ],
+        [
+          -0.06271259486675262,
+          2.637923240661621,
+          0.3096311092376709
+        ],
+        [
+          2.9837422370910645,
+          0.058183349668979645,
+          0.31178975105285645
+        ],
+        [
+          2.646576166152954,
+          2.7091097831726074,
+          0.31110265851020813
+        ]
+      ],
+      [
+        [
+          0.32813993096351624,
+          0.41459259390830994,
+          0.3082687258720398
+        ],
+        [
+          -0.06257584691047668,
+          2.638317346572876,
+          0.30945760011672974
+        ],
+        [
+          2.9801626205444336,
+          0.039430245757102966,
+          0.30813708901405334
+        ],
+        [
+          2.640146017074585,
+          2.707890272140503,
+          0.30978357791900635
+        ]
+      ]
+    ],
+    "note": "Short untrained zero-action hold; no calibrated arm model, locomotion success or deployment claim."
+  },
+  "unverified": [
+    "firmware version",
+    "continuous/peak/thermal torque",
+    "identified gain",
+    "actual velocity/acceleration readback",
+    "actual latency"
+  ],
+  "no_writes_to_original_code_or_checkpoints": true,
+  "external_asset_updates_since_step1": [
+    {
+      "path": "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+      "step1_sha256": "8df7eb7b18d68bb376eca680bd09f256f8bd6f8cdfd9083d2fe5028fc0733139",
+      "observed_original_sha256": "e091ee55b02783d129ff7d90b2220e767cf08350bd10993112d38e1b8661a300",
+      "observed_clone_sha256": "7e37cadb8e55fddb50e6bcd10440c772997c72e11f72c7afddeef281954de02b"
+    },
+    {
+      "path": "resources/robots/as2piper/urdf/as2piper_head_umi_orin64_backmount.urdf",
+      "step1_sha256": "8fe6a43e5019f43859dfa3e2369f68949a0efc5d7fa30abd14f7f76b018ccbfa",
+      "observed_original_sha256": "fdbeed266d535e15f245b438a5e857b3745f5431cb486d901344f1fa146fc68f",
+      "observed_clone_sha256": "fdbeed266d535e15f245b438a5e857b3745f5431cb486d901344f1fa146fc68f"
+    },
+    {
+      "path": "resources/robots/as2piper/wrist_camera/as2piper_head_umi_orin64_backmount_camera.json",
+      "step1_sha256": "4d10ae469845c996e1d40f39c3e3cd8a9ee6feaf471813b1dacf3854e89cb599",
+      "observed_original_sha256": "2dab6a24c0889d46e87b8259e6f48d92463bb95af2594d05a8a2bfd8d215dcff",
+      "observed_clone_sha256": "1ddb4af4bd3afb6db1fc5b956f7f85c6f8a3ab76ce9f3d6908836a31bc1be781"
+    },
+    {
+      "path": "resources/robots/as2piper/wrist_camera/rig.json",
+      "step1_sha256": "a0e4ea6c86637249bff1d62e227f819f84e05aa784c78102ae9bd8f43561440a",
+      "observed_original_sha256": "be99f8863f1eb8fe2b62e46cb59af002812e3e55fbe8f960d76c5248512677cb",
+      "observed_clone_sha256": "be99f8863f1eb8fe2b62e46cb59af002812e3e55fbe8f960d76c5248512677cb"
+    },
+    {
+      "path": "resources/robots/as2piper/wrist_camera/as2piper_head_orin_training_camera.json",
+      "step1_sha256": "a351382136e41a04d7fb4d8ffe9a344999e628554653aeb444d64a28907ca85e",
+      "observed_original_sha256": "aa3e71477db4dcf322016ed14f4642497542b6cd8ce25d9dba9bc6068918ea5a",
+      "observed_clone_sha256": "81de0fa23b2735f2b59fd0aec748f86d1d61444a78aa6aed6bd71cde61694559"
+    },
+    {
+      "path": "legged_gym/resources/robots/as2piper/urdf/as2piper.urdf",
+      "step1_sha256": "13e5451987a12bc6b25787a4ab3a60779705c94e6a1f59c91b375a503a59f7db",
+      "observed_original_sha256": "8f6536c795971634eb30e6eda8165a6d21af25d08ac73c1bd63150d6184107da",
+      "observed_clone_sha256": "8f6536c795971634eb30e6eda8165a6d21af25d08ac73c1bd63150d6184107da"
+    },
+    {
+      "path": "legged_gym/resources/robots/as2piper/wrist_camera/rig.json",
+      "step1_sha256": "a0e4ea6c86637249bff1d62e227f819f84e05aa784c78102ae9bd8f43561440a",
+      "observed_original_sha256": "be99f8863f1eb8fe2b62e46cb59af002812e3e55fbe8f960d76c5248512677cb",
+      "observed_clone_sha256": "be99f8863f1eb8fe2b62e46cb59af002812e3e55fbe8f960d76c5248512677cb"
+    },
+    {
+      "path": "legged_gym/resources/robots/as2piper/wrist_camera/as2piper_camera.json",
+      "step1_sha256": "df257dd2a1fdbeb213f3a93e704f72201ba510115e44b7bfeb838362d0edcc16",
+      "observed_original_sha256": "474aa1435418385ba12dad94969e5445ef2485548a44c8b62fe885c4b5df6179",
+      "observed_clone_sha256": "a7a5486c53b5bcb3d2cb6504ce658748da922fced7c87d82baec994e093aff11"
+    }
+  ]
+}

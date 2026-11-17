@@ -1,0 +1,39 @@
+{
+  "stand": {
+    "mean_vx_m_s": 0.003757706144824624,
+    "mean_yaw_rad_s": 0.0001421144261257723,
+    "vx_abs_error_m_s": 0.03753732144832611,
+    "yaw_abs_error_rad_s": 0.026099441573023796,
+    "fall_resets_total": 2,
+    "ee_position_mean_m": 0.018656913191080093
+  },
+  "forward": {
+    "mean_vx_m_s": 0.011668090708553791,
+    "mean_yaw_rad_s": 0.0034469100646674633,
+    "vx_abs_error_m_s": 0.2385811060667038,
+    "yaw_abs_error_rad_s": 0.08890067040920258,
+    "fall_resets_total": 2,
+    "ee_position_mean_m": 0.018845638260245323
+  },
+  "turn": {
+    "mean_vx_m_s": 0.0125271650031209,
+    "mean_yaw_rad_s": 0.03887183219194412,
+    "vx_abs_error_m_s": 0.04359915107488632,
+    "yaw_abs_error_rad_s": 0.5629701614379883,
+    "fall_resets_total": 2,
+    "ee_position_mean_m": 0.01950649917125702
+  },
+  "forward_turn": {
+    "mean_vx_m_s": 0.005342921242117882,
+    "mean_yaw_rad_s": 0.026108838617801666,
+    "vx_abs_error_m_s": 0.2451467365026474,
+    "yaw_abs_error_rad_s": 0.5751146674156189,
+    "fall_resets_total": 1,
+    "ee_position_mean_m": 0.01855161413550377
+  },
+  "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_contactmatch_vbcdeadband_fresh_s7_v5/model_100.pt",
+  "completed_updates": 101,
+  "local_acceptance_pass": false,
+  "full_environment_baseline_pass": false,
+  "passed": false
+}

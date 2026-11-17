@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "samples": 122880,
+  "nominal_x_min_m": 0.4500000476837158,
+  "nominal_x_max_m": 0.974998950958252,
+  "ground_z_min_m": 0.020002692937850952,
+  "ground_z_max_m": 0.9999984502792358,
+  "configured_z_max_m": 1.0,
+  "radius_outer_max_m": 0.926864395071399,
+  "elevation_max_rad": 1.177398919915009,
+  "bank": false,
+  "IK_validity_checks": 0,
+  "optimizer_updates": 0,
+  "note": "Geometric generation boundaries only, not reachability or dynamic performance certification."
+}

@@ -1,0 +1,39 @@
+{
+  "robot": "basic PiPER",
+  "firmware": "S-V1.5-8",
+  "piper_sdk": "0.6.1",
+  "source": "user-confirmed",
+  "SDK_package_installed_by_agent": false,
+  "torque_limit_verified": false,
+  "position_mode_speed_ceiling_rad_s": 3.0,
+  "speed_raw_unit_rad_s_for_confirmed_firmware": 0.01,
+  "acceleration_raw_unit_confirmed": false,
+  "notes": [
+    "0.6.1 MIT encoder uses wire t_ref [-8,8] without per-joint SI conversion; not a continuous motor rating.",
+    "0.6.1 comments retain 0.001rad/s speed units; official later correction states >=V1.5-8 uses 0.01rad/s.",
+    "0.6.1 transmit joint6 table includes +-120deg while newer basic-PiPER presets use +-170deg. Existing geometry not changed; actual limit readback needed.",
+    "Published VBC simulation IK update 50Hz differs from paper real deployment independent arm controller 800Hz; interpolation-only implementation not established."
+  ],
+  "user_selected_simulation_parameters": {
+    "arm_drive_stiffness": 400.0,
+    "arm_drive_damping": 40.0,
+    "urdf_arm_effort_Nm": [
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0,
+      100.0
+    ],
+    "source": "User selected retention of VBC nominal gains and official PiPER URDF effort",
+    "hardware_rating_verified": false,
+    "DR_changed_by_this_instruction": true,
+    "acceleration_limiter": "not applied per user",
+    "arm_gain_DR_enabled": false,
+    "arm_gain_multiplier": [
+      1.0,
+      1.0
+    ],
+    "leg_DR_unchanged": true
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_stable_rough_contact_s7_v2/model_321.pt",
+  "passed": false,
+  "criteria": {
+    "stop": true,
+    "forward": false,
+    "turn": false,
+    "combined": false,
+    "no_fall": false,
+    "upright": false
+  },
+  "error_score": 108.80918619967997
+}

@@ -1,0 +1,14 @@
+{
+  "same_static_DR_and_terrain_hashes": true,
+  "realization": {
+    "terrain_sha256": "ed6dd28a3ff516f10d54d1f2ab16f2930b3ca7240583176be38780dde64f0990",
+    "env_origins_sha256": "ffa492782f6b12348a10cc9d54224f9a3ba8b53033a4b059a8520d7f371f2f5f",
+    "dr_sha256": "275e0be8ae81cbdfa79011b63fdb43cea7f8f5ee5bd7ac29c29a012e80a83c52",
+    "triangle_mesh_sha256": "b0b80c7d71b5d89252c75f26c80621c6ad99f586f225f7e556945781298c77b0"
+  },
+  "caveat": "Not all trajectory-dependent RNG draws or GPU physics are identical.",
+  "completed_iterations": [
+    201,
+    201
+  ]
+}

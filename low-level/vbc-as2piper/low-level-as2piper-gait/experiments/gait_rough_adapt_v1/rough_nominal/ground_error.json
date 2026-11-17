@@ -1,0 +1,9 @@
+{
+  "loaded_samples": 3767,
+  "contact_minus_grid_mean_m": 0.011532749980688095,
+  "abs_error_p50_m": 0.007567450404167175,
+  "abs_error_p95_m": 0.04347082301974296,
+  "abs_error_max_m": 0.10109885036945343,
+  "fraction_gt_025_m": 0.1348553225378285,
+  "fraction_gt_05_m": 0.02893549243429785
+}

@@ -1,0 +1,29 @@
+{
+  "center": [
+    0.28,
+    0.0,
+    0.5
+  ],
+  "radius_min": 0.35,
+  "current_radius_max": 0.65,
+  "candidate_radius_max": 0.8,
+  "current_yaw": 0.3,
+  "candidate_yaw": 1.2,
+  "candidate_elevation": [
+    -0.6435011087932844,
+    0.6751315329370317
+  ],
+  "height": [
+    0.02,
+    1.0
+  ],
+  "radius_only_height_if_elevation_unchanged": [
+    -0.09076923076923071,
+    1.1153846153846154
+  ],
+  "candidate_ground_forward_x": 0.9200000000000002,
+  "candidate_upper_forward_x": 0.90449979983984,
+  "config_hash_before_after": "0f48e0a74ede56ae3da41dd062dc52109751b3f163de9ea8126b311c02e7e7da",
+  "IK_checks": 0,
+  "training_started": false
+}

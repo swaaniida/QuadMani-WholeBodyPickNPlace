@@ -1,0 +1,136 @@
+{
+  "iterations_completed": 20,
+  "control_steps": 480,
+  "sampled_envs": 512,
+  "groups": {
+    "all": {
+      "count": 245760,
+      "position_mean_m": 0.01890452764928341,
+      "position_p50_m": 0.017054451629519463,
+      "position_p95_m": 0.03325135968625545,
+      "orientation_mean_deg": 3.8683018684387207,
+      "orientation_p95_deg": 7.087969851493833,
+      "position_lt_2cm_fraction": 0.6989339192708334,
+      "position_lt_5cm_fraction": 0.9890584309895833,
+      "pose_lt_5cm_10deg_fraction": 0.97869873046875,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 6.112132787704466
+    },
+    "upright_late": {
+      "count": 221418,
+      "position_mean_m": 0.018341541290283203,
+      "position_p50_m": 0.016904429532587528,
+      "position_p95_m": 0.030346550978720185,
+      "orientation_mean_deg": 3.917370319366455,
+      "orientation_p95_deg": 6.98114593029022,
+      "position_lt_2cm_fraction": 0.7167755105727628,
+      "position_lt_5cm_fraction": 0.9935235617700457,
+      "pose_lt_5cm_10deg_fraction": 0.9824494846850753,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 5.99797716140747
+    },
+    "upright_random_late": {
+      "count": 110151,
+      "position_mean_m": 0.02013181895017624,
+      "position_p50_m": 0.018415752798318863,
+      "position_p95_m": 0.03597699850797653,
+      "orientation_mean_deg": 4.6546630859375,
+      "orientation_p95_deg": 8.40805435180664,
+      "position_lt_2cm_fraction": 0.5887645141669163,
+      "position_lt_5cm_fraction": 0.987517135568447,
+      "pose_lt_5cm_10deg_fraction": 0.9653657252317274,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 5.939051628112793
+    },
+    "upright_random_hold": {
+      "count": 31058,
+      "position_mean_m": 0.017728880047798157,
+      "position_p50_m": 0.016675901599228382,
+      "position_p95_m": 0.028517092671245334,
+      "orientation_mean_deg": 4.026651859283447,
+      "orientation_p95_deg": 6.048652815818785,
+      "position_lt_2cm_fraction": 0.7153712409041149,
+      "position_lt_5cm_fraction": 0.994816150428231,
+      "pose_lt_5cm_10deg_fraction": 0.9902118616781506,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 5.865531349182126
+    },
+    "fallen": {
+      "count": 376,
+      "position_mean_m": 0.07182581722736359,
+      "position_p50_m": 0.0652928501367569,
+      "position_p95_m": 0.1486102230846882,
+      "orientation_mean_deg": 14.601019859313965,
+      "orientation_p95_deg": 24.440069675445557,
+      "position_lt_2cm_fraction": 0.013297872340425532,
+      "position_lt_5cm_fraction": 0.36436170212765956,
+      "pose_lt_5cm_10deg_fraction": 0.13031914893617022,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 6.489866375923157
+    },
+    "post_reset_first_0p1s": {
+      "count": 5100,
+      "position_mean_m": 0.03843186795711517,
+      "position_p50_m": 0.03782477416098118,
+      "position_p95_m": 0.06008256599307061,
+      "orientation_mean_deg": 5.6095781326293945,
+      "orientation_p95_deg": 8.407952213287354,
+      "position_lt_2cm_fraction": 0.07156862745098039,
+      "position_lt_5cm_fraction": 0.8058823529411765,
+      "pose_lt_5cm_10deg_fraction": 0.8050980392156862,
+      "contact_gt_1N_fraction": 0.0,
+      "force_max_p95_Nm": 10.007024812698369
+    }
+  },
+  "random_exposure_fraction": 0.4496053059895833,
+  "upright_fraction": 0.9984700520833333,
+  "age_note": "Age reconstructed from captured reset events; original startup episode_length_buf was randomized by the PPO runner.",
+  "all_iterations": {
+    "reset_counts": {
+      "done": 1017.0,
+      "roll": 17.0,
+      "pitch": 19.0,
+      "height": 0.0,
+      "timeout": 981.0,
+      "roll_exclusive": 17.0,
+      "pitch_exclusive": 19.0,
+      "height_exclusive": 0.0,
+      "timeout_exclusive": 981.0,
+      "episode_steps_sum": 502970.0
+    },
+    "sampling": {
+      "requested": 2212.0,
+      "accepted": 2209.0,
+      "fallback": 3.0,
+      "candidate_count": 3384.0,
+      "candidate_rejected": 1175.0,
+      "candidate_ik_rejected": 353.0,
+      "candidate_body_rejected": 961.0,
+      "fallback_fraction": 0.00135623869801085
+    }
+  },
+  "last_20_iterations": {
+    "reset_counts": {
+      "done": 1017.0,
+      "roll": 17.0,
+      "pitch": 19.0,
+      "height": 0.0,
+      "timeout": 981.0,
+      "roll_exclusive": 17.0,
+      "pitch_exclusive": 19.0,
+      "height_exclusive": 0.0,
+      "timeout_exclusive": 981.0,
+      "episode_steps_sum": 502970.0
+    },
+    "sampling": {
+      "requested": 2212.0,
+      "accepted": 2209.0,
+      "fallback": 3.0,
+      "candidate_count": 3384.0,
+      "candidate_rejected": 1175.0,
+      "candidate_ik_rejected": 353.0,
+      "candidate_body_rejected": 961.0,
+      "fallback_fraction": 0.00135623869801085
+    }
+  }
+}

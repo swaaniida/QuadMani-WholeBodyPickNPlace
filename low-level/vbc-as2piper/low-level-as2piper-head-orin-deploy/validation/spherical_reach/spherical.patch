@@ -1,0 +1,75 @@
+--- before/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -59,32 +59,31 @@
+         floor_pitch_x = [.55, .975]
+         floor_pitch_deg = [175., 150.]
+         floor_pitch_blend_z = [.10, .25]
+-        arm_induced_pitch = 2.455216137744035
++        arm_induced_pitch = 2.407684686936221  # preserve the original initial EE direction
+         orientation_roll_offset = 0.
+         # Conservative body/head + Orin bounds, relative to the arm origin.
+         collision_lower_limits = [-.32435, -.112, -.1959]
+         # Extend forward face 20 mm: cover the visual head tip with ~11 mm margin.
+         collision_upper_limits = [.12165, .112, .0158]
+-        underground_limit = -.4563069024246581
++        underground_limit = -.50
+ 
+         class sphere_center:
+-            # Virtual yaw frame: nominal arm origin, independent of body z/roll/pitch.
+-            # Nominal base height 0.3244069024246581 + mount height 0.1319.
++            # Virtual yaw frame, independent of body height/roll/pitch.
++            # Offline URDF design: independent spherical radius/elevation/yaw bounds.
+             height_roll_pitch_invariant = True
+-            x_offset = .22435
++            x_offset = .28
+             y_offset = 0.
+-            z_invariant_offset = .4563069024246581
++            z_invariant_offset = .50
+ 
+         class ranges:
+-            init_pos_start = [.427898468676838, .421686284147847, 0.]
+-            init_pos_end = [.427898468676838, .421686284147847, 0.]
+-            # Original continuous spherical sampler; no IK feasibility rejection.
+-            # Outer spherical bounds; radius is conditional on elevation so
+-            # x_nominal=0.45..0.975 and ground-relative z=0.02..1.00 stay bounded.
+-            pos_l = [.22565, .926864395071399]
+-            pos_p = [-1.0934979298811465, 1.177398919915009]
++            init_pos_start = [.3596460256041662, .37415483334003286, 0.]
++            init_pos_end = [.3596460256041662, .37415483334003286, 0.]
++            # Independent continuous spherical sampling, as in original VBC.
++            # At outer radius: lower/upper elevations give ground z=0.02/1.00m.
++            # Finite offline IK checks; no online IK feasibility filter or bank.
++            pos_l = [.35, .65]
++            pos_p = [-.8307859154737011, .8776364192181427]
+             pos_y = [-.30, .30]
+-            horizontal_reach = [.22565, .75065]
+             height_above_ground = [.02, 1.00]
+             delta_orn_r = [-.08, .08]
+             delta_orn_p = [-.08, .08]
+--- before/legged_gym/envs/manip_loco/manip_loco.py
++++ legged_gym/envs/manip_loco/manip_loco.py
+@@ -1295,24 +1295,6 @@
+         return torch.clip(torques, -self.torque_limits, self.torque_limits)
+     
+     def _resample_ee_goal_sphere_once(self, env_ids):
+-        if 'horizontal_reach' in self.goal_ee_ranges:
+-            # Continuous spherical sampling with analytic geometric bounds only.
+-            # No IK, body-pose, CoM, torque or bank-based acceptance test.
+-            phi = torch_rand_float(*self.goal_ee_ranges['pos_p'], (len(env_ids), 1), device=self.device).squeeze(1)
+-            rho_min, rho_max = self.goal_ee_ranges['horizontal_reach']
+-            z_min, z_max = self.goal_ee_ranges['height_above_ground']
+-            center_z = self.cfg.goal_ee.sphere_center.z_invariant_offset
+-            lower = torch.clamp(rho_min / torch.cos(phi), min=self.goal_ee_ranges['pos_l'][0])
+-            upper = torch.clamp(rho_max / torch.cos(phi), max=self.goal_ee_ranges['pos_l'][1])
+-            sin_phi = torch.sin(phi)
+-            vertical_max = torch.where(sin_phi >= 0.,
+-                (z_max - center_z) / torch.clamp(sin_phi, min=1e-8),
+-                (center_z - z_min) / torch.clamp(-sin_phi, min=1e-8))
+-            upper = torch.minimum(upper, vertical_max)
+-            self.ee_goal_sphere[env_ids, 0] = lower + torch.rand_like(lower) * torch.clamp(upper - lower, min=0.)
+-            self.ee_goal_sphere[env_ids, 1] = phi
+-            self.ee_goal_sphere[env_ids, 2] = torch_rand_float(*self.goal_ee_ranges['pos_y'], (len(env_ids), 1), device=self.device).squeeze(1)
+-            return
+         self.ee_goal_sphere[env_ids, 0] = torch_rand_float(self.goal_ee_ranges["pos_l"][0], self.goal_ee_ranges["pos_l"][1], (len(env_ids), 1), device=self.device).squeeze(1)
+         self.ee_goal_sphere[env_ids, 1] = torch_rand_float(self.goal_ee_ranges["pos_p"][0], self.goal_ee_ranges["pos_p"][1], (len(env_ids), 1), device=self.device).squeeze(1)
+         self.ee_goal_sphere[env_ids, 2] = torch_rand_float(self.goal_ee_ranges["pos_y"][0], self.goal_ee_ranges["pos_y"][1], (len(env_ids), 1), device=self.device).squeeze(1)

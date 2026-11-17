@@ -1,0 +1,7 @@
+{
+  "baseline200_45000_strict_load": true,
+  "history_forward": true,
+  "jit737_parity": true,
+  "optimizer_steps": 0,
+  "relocated_code": "/data/team/users/suhwan/vbc-as2piper/github-export/low-level/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/__init__.py"
+}

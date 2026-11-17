@@ -1,0 +1,23 @@
+{
+  "mode": "port",
+  "terrain": "trimesh",
+  "dr": "off",
+  "num_envs": 6144,
+  "steps": 24,
+  "wall_s": 11.798006342258304,
+  "equivalent_collection_24steps_s": 11.798006342258304,
+  "seconds": {
+    "goal_sampling_inclusive": 0.482705544680357,
+    "candidate_check_inclusive": 0.15083859767764807
+  },
+  "calls": {
+    "goal_sampling_inclusive": 41,
+    "candidate_check_inclusive": 230
+  },
+  "items": {
+    "goal_sampling_inclusive": 5927,
+    "candidate_check_inclusive": 7653
+  },
+  "non_sampling_s": 11.315300797577947,
+  "note": "CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time."
+}

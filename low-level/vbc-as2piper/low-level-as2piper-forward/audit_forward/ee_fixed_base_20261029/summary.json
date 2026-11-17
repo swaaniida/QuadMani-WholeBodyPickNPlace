@@ -1,0 +1,32 @@
+{
+  "random_all": {
+    "count": 83200,
+    "position_mean_m": 0.015735460445284843,
+    "position_p95_m": 0.028177185170352465,
+    "orientation_mean_deg": 4.272462368011475,
+    "orientation_p95_deg": 8.221234321594238,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.770374882221222
+  },
+  "random_hold": {
+    "count": 33151,
+    "position_mean_m": 0.014204020611941814,
+    "position_p95_m": 0.020098671317100525,
+    "orientation_mean_deg": 3.986095905303955,
+    "orientation_p95_deg": 5.725728750228882,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.26505911350250244
+  },
+  "pose_fallback_count": 195,
+  "conditions": "Fixed torso, nominal mass/COM, gravity on; same URDF, spherical sampler, DLS IK, 400/40 arm and 1800/35 gripper drives. Not locomotion.",
+  "early_mixed": {
+    "count": 3200,
+    "position_mean_m": 0.013231751509010792,
+    "position_p95_m": 0.01535109914839267,
+    "orientation_mean_deg": 3.204521417617798,
+    "orientation_p95_deg": 3.124955415725708,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.5067500114440913
+  },
+  "early_window_note": "B1 timers can resample before 3s; early_mixed is not a pure home-only test. Main random statistics use time >=4s."
+}

@@ -1,0 +1,224 @@
+[
+  {
+    "name": "plate_only_current",
+    "duration_s": 2.999999999999891,
+    "controller": "Joint PD + actuated gravity feedforward; no base forces; not trained locomotion",
+    "upright": true,
+    "max_abs_roll_pitch_deg": [
+      0.02525610606473662,
+      0.8511841287707462
+    ],
+    "final_base_z_m": 0.2975190983454439,
+    "late_mean_foot_normal_N": [
+      54.38506120341717,
+      54.65547574672579,
+      56.82545237959514,
+      57.094613297282784
+    ],
+    "late_min_foot_normal_N": [
+      54.35939898717116,
+      54.62998084674707,
+      56.753454846940016,
+      57.02267942254889
+    ],
+    "max_abs_control_Nm_or_N": 11.43275417397355,
+    "final_mass_properties": {
+      "mass_kg": 22.72772408133,
+      "com_world_m": [
+        -0.0071582328811240735,
+        -0.00045261230646855563,
+        0.3569466849135902
+      ],
+      "inertia_diag_kg_m2": [
+        0.7441379544236313,
+        1.2138088484360854,
+        0.8282476410158457
+      ]
+    }
+  },
+  {
+    "name": "plate_only_forward",
+    "duration_s": 2.999999999999891,
+    "controller": "Joint PD + actuated gravity feedforward; no base forces; not trained locomotion",
+    "upright": true,
+    "max_abs_roll_pitch_deg": [
+      0.02520176063537076,
+      0.9209870835954252
+    ],
+    "final_base_z_m": 0.2977038380100116,
+    "late_mean_foot_normal_N": [
+      56.309543289261214,
+      56.578191002842814,
+      54.901862686511414,
+      55.17120299784398
+    ],
+    "late_min_foot_normal_N": [
+      56.28524340220844,
+      56.554020278425156,
+      54.836688018443354,
+      55.1061190099
+    ],
+    "max_abs_control_Nm_or_N": 11.635693711922084,
+    "final_mass_properties": {
+      "mass_kg": 22.72772408133,
+      "com_world_m": [
+        0.00030104359251900974,
+        -0.0004520837372561944,
+        0.3570606750233619
+      ],
+      "inertia_diag_kg_m2": [
+        0.7440915726786917,
+        1.2199213789719836,
+        0.8343957670930929
+      ]
+    }
+  },
+  {
+    "name": "profiles_plate_current",
+    "duration_s": 2.999999999999891,
+    "controller": "Joint PD + actuated gravity feedforward; no base forces; not trained locomotion",
+    "upright": true,
+    "max_abs_roll_pitch_deg": [
+      0.025594712385360662,
+      0.8525557529501128
+    ],
+    "final_base_z_m": 0.2973141863220719,
+    "late_mean_foot_normal_N": [
+      54.59376637949542,
+      54.865869731023835,
+      57.30165498343287,
+      57.5723799063716
+    ],
+    "late_min_foot_normal_N": [
+      54.566149505763285,
+      54.83840881618731,
+      57.225680744649395,
+      57.496533012090964
+    ],
+    "max_abs_control_Nm_or_N": 11.51955658307539,
+    "final_mass_properties": {
+      "mass_kg": 22.86772408133,
+      "com_world_m": [
+        -0.007661960636692629,
+        -0.0004528771580844112,
+        0.3613709002027926
+      ],
+      "inertia_diag_kg_m2": [
+        0.7926194710069826,
+        1.2624174453049088,
+        0.8288332170134484
+      ]
+    }
+  },
+  {
+    "name": "profiles_plate_forward",
+    "duration_s": 2.999999999999891,
+    "controller": "Joint PD + actuated gravity feedforward; no base forces; not trained locomotion",
+    "upright": true,
+    "max_abs_roll_pitch_deg": [
+      0.025536331821930824,
+      0.9213353602444753
+    ],
+    "final_base_z_m": 0.29750409572703357,
+    "late_mean_foot_normal_N": [
+      56.535298946953745,
+      56.80558056225932,
+      55.361084443128426,
+      55.631971534925036
+    ],
+    "late_min_foot_normal_N": [
+      56.50938507716421,
+      56.77980027772886,
+      55.291186978212274,
+      55.56223001489969
+    ],
+    "max_abs_control_Nm_or_N": 11.721601251884021,
+    "final_mass_properties": {
+      "mass_kg": 22.86772408133,
+      "com_world_m": [
+        -0.00018232437526958853,
+        -0.0004523040191199928,
+        0.36149212331771746
+      ],
+      "inertia_diag_kg_m2": [
+        0.7925706853313987,
+        1.2685842400002578,
+        0.8350375022712985
+      ]
+    }
+  },
+  {
+    "name": "profiles_cantilever",
+    "duration_s": 2.999999999999891,
+    "controller": "Joint PD + actuated gravity feedforward; no base forces; not trained locomotion",
+    "upright": true,
+    "max_abs_roll_pitch_deg": [
+      0.025437143095032422,
+      1.1311360619763209
+    ],
+    "final_base_z_m": 0.29767647492346483,
+    "late_mean_foot_normal_N": [
+      60.560747691224776,
+      60.82790546118057,
+      51.80433992174343,
+      52.07579097191548
+    ],
+    "late_min_foot_normal_N": [
+      60.53755842320659,
+      60.80475565243596,
+      51.745715606172084,
+      52.01738165673653
+    ],
+    "max_abs_control_Nm_or_N": 12.188072015753779,
+    "final_mass_properties": {
+      "mass_kg": 22.96298008133,
+      "com_world_m": [
+        0.014458798107608738,
+        -0.000449977706107656,
+        0.3615284204950484
+      ],
+      "inertia_diag_kg_m2": [
+        0.7926756326166592,
+        1.294689842669589,
+        0.8613289442219945
+      ]
+    }
+  },
+  {
+    "name": "b1z1",
+    "duration_s": 2.999999999999891,
+    "controller": "Joint PD + actuated gravity feedforward; no base forces; not trained locomotion",
+    "upright": true,
+    "max_abs_roll_pitch_deg": [
+      0.24169106056471396,
+      10.272769676129341
+    ],
+    "final_base_z_m": 0.25982739507486274,
+    "late_mean_foot_normal_N": [
+      98.88230869058675,
+      98.33184554122887,
+      148.45624129899605,
+      148.19164154096265
+    ],
+    "late_min_foot_normal_N": [
+      97.61385093374062,
+      96.98944783472817,
+      147.12027714438756,
+      147.15097720612374
+    ],
+    "max_abs_control_Nm_or_N": 65.36492002337687,
+    "final_mass_properties": {
+      "mass_kg": 57.98697083,
+      "com_world_m": [
+        -0.2094638083622041,
+        0.0011619467446238308,
+        0.2898363169030759
+      ],
+      "inertia_diag_kg_m2": [
+        2.2381831028795744,
+        6.036672005663958,
+        6.22808080159901
+      ]
+    }
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "standing_push_multiplier": 2.5,
+  "only_config_change": "domain_rand.standing_push_multiplier1->2.5",
+  "moving_push_unchanged": true,
+  "test": "actual push function with fixed sampled velocities; no simulation/optimizer",
+  "stop_delete_restart_requires_root": true
+}

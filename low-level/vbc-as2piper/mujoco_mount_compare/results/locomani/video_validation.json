@@ -1,0 +1,142 @@
+{
+  "profiles_plate_standing": {
+    "frames": 74,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 6.17,
+    "bytes": 293965
+  },
+  "profiles_plate_tilt_in_place": {
+    "frames": 110,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 9.17,
+    "bytes": 814799
+  },
+  "profiles_plate_stand_walk_omni": {
+    "frames": 220,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 18.33,
+    "bytes": 1975450
+  },
+  "profiles_plate_tilt_walk_omni": {
+    "frames": 244,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 20.33,
+    "bytes": 2503951
+  },
+  "profiles_plate_pick_recover": {
+    "frames": 196,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 16.33,
+    "bytes": 1609213
+  },
+  "profiles_plate_pick_drag": {
+    "frames": 196,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 16.33,
+    "bytes": 1617877
+  },
+  "profiles_plate_pick_lift_drag": {
+    "frames": 196,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 16.33,
+    "bytes": 1722336
+  },
+  "plate_only_standing": {
+    "frames": 74,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 6.17,
+    "bytes": 294510
+  },
+  "plate_only_tilt_in_place": {
+    "frames": 110,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 9.17,
+    "bytes": 813472
+  },
+  "plate_only_stand_walk_omni": {
+    "frames": 220,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 18.33,
+    "bytes": 1969918
+  },
+  "plate_only_tilt_walk_omni": {
+    "frames": 244,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 20.33,
+    "bytes": 2511665
+  },
+  "plate_only_pick_recover": {
+    "frames": 196,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 16.33,
+    "bytes": 1600107
+  },
+  "plate_only_pick_drag": {
+    "frames": 196,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 16.33,
+    "bytes": 1588863
+  },
+  "plate_only_pick_lift_drag": {
+    "frames": 196,
+    "fps": 12.0,
+    "size": [
+      640,
+      360
+    ],
+    "duration_s": 16.33,
+    "bytes": 1648751
+  }
+}

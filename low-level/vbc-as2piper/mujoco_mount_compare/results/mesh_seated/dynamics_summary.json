@@ -1,0 +1,368 @@
+{
+  "profiles_plate_stand": {
+    "duration_s": 4.993999999999672,
+    "base_min_z_m": 0.2934852280000937,
+    "base_final_z_m": 0.2938934294077936,
+    "com_mean_z_m": 0.3701299915276655,
+    "pitch_rms_deg": 0.18773399134919225,
+    "max_abs_roll_deg": 0.03797128479858143,
+    "mean_sum_abs_joint_torque_Nm": 75.41745624326921,
+    "tcp_min_z_m": 0.703562509459908,
+    "tpu_min_z_m": 0.6931863279525592,
+    "tpu_final_z_m": 0.752037511981356,
+    "all_four_feet_loaded_fraction_after_1s": 1.0,
+    "foot_force_ranges_N_after_1s": {
+      "FL": [
+        56.08013577178157,
+        56.90864299560809
+      ],
+      "FR": [
+        56.333270311462286,
+        57.22800302082083
+      ],
+      "RL": [
+        54.767769676933774,
+        56.38469331794152
+      ],
+      "RR": [
+        55.08479322832685,
+        56.65392420926416
+      ]
+    },
+    "max_self_contact_count": 0.0,
+    "min_self_contact_distance_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "actuator_saturation_fraction": {
+      "u_FL_hip_joint": 0.0,
+      "u_FL_thigh_joint": 0.0,
+      "u_FL_calf_joint": 0.0,
+      "u_FR_hip_joint": 0.0,
+      "u_FR_thigh_joint": 0.0,
+      "u_FR_calf_joint": 0.0,
+      "u_RL_hip_joint": 0.0,
+      "u_RL_thigh_joint": 0.0,
+      "u_RL_calf_joint": 0.0,
+      "u_RR_hip_joint": 0.0,
+      "u_RR_thigh_joint": 0.0,
+      "u_RR_calf_joint": 0.0,
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0,
+      "u_piper_gripper_joint1": 0.0,
+      "u_piper_gripper_joint2": 0.0
+    },
+    "max_joint_limit_violation_m_or_rad": 0,
+    "joint_limit_violations": {}
+  },
+  "profiles_plate_crouch": {
+    "duration_s": 4.993999999999672,
+    "base_min_z_m": 0.21482710961556178,
+    "base_final_z_m": 0.21509400099792134,
+    "com_mean_z_m": 0.3301516423178835,
+    "pitch_rms_deg": 0.2710292459505499,
+    "max_abs_roll_deg": 0.03797128479858143,
+    "mean_sum_abs_joint_torque_Nm": 77.67125255048974,
+    "tcp_min_z_m": 0.6804154384530225,
+    "tpu_min_z_m": 0.6696824479532902,
+    "tpu_final_z_m": 0.6712987257778971,
+    "all_four_feet_loaded_fraction_after_1s": 1.0,
+    "foot_force_ranges_N_after_1s": {
+      "FL": [
+        55.810443959294744,
+        57.95415826408474
+      ],
+      "FR": [
+        56.084256634964895,
+        58.27215109834634
+      ],
+      "RL": [
+        54.21567576586355,
+        56.28723288668279
+      ],
+      "RR": [
+        54.531886249882916,
+        56.551717133936556
+      ]
+    },
+    "max_self_contact_count": 0.0,
+    "min_self_contact_distance_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "actuator_saturation_fraction": {
+      "u_FL_hip_joint": 0.0,
+      "u_FL_thigh_joint": 0.0,
+      "u_FL_calf_joint": 0.0,
+      "u_FR_hip_joint": 0.0,
+      "u_FR_thigh_joint": 0.0,
+      "u_FR_calf_joint": 0.0,
+      "u_RL_hip_joint": 0.0,
+      "u_RL_thigh_joint": 0.0,
+      "u_RL_calf_joint": 0.0,
+      "u_RR_hip_joint": 0.0,
+      "u_RR_thigh_joint": 0.0,
+      "u_RR_calf_joint": 0.0,
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0,
+      "u_piper_gripper_joint1": 0.0,
+      "u_piper_gripper_joint2": 0.0
+    },
+    "max_joint_limit_violation_m_or_rad": 0,
+    "joint_limit_violations": {}
+  },
+  "profiles_plate_arm": {
+    "duration_s": 4.993999999999672,
+    "base_min_z_m": 0.2934852280000937,
+    "base_final_z_m": 0.2937954595899226,
+    "com_mean_z_m": 0.3700835116981529,
+    "pitch_rms_deg": 0.17242928198361093,
+    "max_abs_roll_deg": 0.800482343310921,
+    "mean_sum_abs_joint_torque_Nm": 75.72264244745199,
+    "tcp_min_z_m": 0.703562509459908,
+    "tpu_min_z_m": 0.6931863279525592,
+    "tpu_final_z_m": 0.7476241734610884,
+    "all_four_feet_loaded_fraction_after_1s": 1.0,
+    "foot_force_ranges_N_after_1s": {
+      "FL": [
+        52.82606528387139,
+        61.390129659292356
+      ],
+      "FR": [
+        50.821619658863405,
+        59.682237812467704
+      ],
+      "RL": [
+        52.6208327729955,
+        60.505255300673824
+      ],
+      "RR": [
+        51.8229856455982,
+        59.233254284135285
+      ]
+    },
+    "max_self_contact_count": 0.0,
+    "min_self_contact_distance_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "actuator_saturation_fraction": {
+      "u_FL_hip_joint": 0.0,
+      "u_FL_thigh_joint": 0.0,
+      "u_FL_calf_joint": 0.0,
+      "u_FR_hip_joint": 0.0,
+      "u_FR_thigh_joint": 0.0,
+      "u_FR_calf_joint": 0.0,
+      "u_RL_hip_joint": 0.0,
+      "u_RL_thigh_joint": 0.0,
+      "u_RL_calf_joint": 0.0,
+      "u_RR_hip_joint": 0.0,
+      "u_RR_thigh_joint": 0.0,
+      "u_RR_calf_joint": 0.0,
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0,
+      "u_piper_gripper_joint1": 0.0,
+      "u_piper_gripper_joint2": 0.0
+    },
+    "max_joint_limit_violation_m_or_rad": 4.021519374028393e-05,
+    "joint_limit_violations": {
+      "u_piper_gripper_joint1": {
+        "maximum": 4.021519374028393e-05,
+        "unit": "m"
+      },
+      "u_piper_gripper_joint2": {
+        "maximum": 1.633628386323721e-05,
+        "unit": "m"
+      }
+    }
+  },
+  "plate_only_stand": {
+    "duration_s": 4.993999999999672,
+    "base_min_z_m": 0.2937180056940551,
+    "base_final_z_m": 0.2941385926855714,
+    "com_mean_z_m": 0.3657996952989486,
+    "pitch_rms_deg": 0.20621449878771195,
+    "max_abs_roll_deg": 0.03743768307488455,
+    "mean_sum_abs_joint_torque_Nm": 74.87976663338047,
+    "tcp_min_z_m": 0.6841651342509208,
+    "tpu_min_z_m": 0.6737861216225194,
+    "tpu_final_z_m": 0.7320036940316241,
+    "all_four_feet_loaded_fraction_after_1s": 1.0,
+    "foot_force_ranges_N_after_1s": {
+      "FL": [
+        55.8544839615506,
+        56.717657092438095
+      ],
+      "FR": [
+        56.11038153778037,
+        57.03134965473817
+      ],
+      "RL": [
+        54.28188536874866,
+        55.917653890178755
+      ],
+      "RR": [
+        54.59474725197235,
+        56.187249040506536
+      ]
+    },
+    "max_self_contact_count": 0.0,
+    "min_self_contact_distance_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "actuator_saturation_fraction": {
+      "u_FL_hip_joint": 0.0,
+      "u_FL_thigh_joint": 0.0,
+      "u_FL_calf_joint": 0.0,
+      "u_FR_hip_joint": 0.0,
+      "u_FR_thigh_joint": 0.0,
+      "u_FR_calf_joint": 0.0,
+      "u_RL_hip_joint": 0.0,
+      "u_RL_thigh_joint": 0.0,
+      "u_RL_calf_joint": 0.0,
+      "u_RR_hip_joint": 0.0,
+      "u_RR_thigh_joint": 0.0,
+      "u_RR_calf_joint": 0.0,
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0,
+      "u_piper_gripper_joint1": 0.0,
+      "u_piper_gripper_joint2": 0.0
+    },
+    "max_joint_limit_violation_m_or_rad": 0,
+    "joint_limit_violations": {}
+  },
+  "plate_only_crouch": {
+    "duration_s": 4.993999999999672,
+    "base_min_z_m": 0.21508847682906043,
+    "base_final_z_m": 0.2153524436305065,
+    "com_mean_z_m": 0.32584586376927577,
+    "pitch_rms_deg": 0.28877082012992394,
+    "max_abs_roll_deg": 0.03743768307488455,
+    "mean_sum_abs_joint_torque_Nm": 77.14623219836662,
+    "tcp_min_z_m": 0.660469541027214,
+    "tpu_min_z_m": 0.64973788543677,
+    "tpu_final_z_m": 0.6513516252674235,
+    "all_four_feet_loaded_fraction_after_1s": 1.0,
+    "foot_force_ranges_N_after_1s": {
+      "FL": [
+        55.58579209036146,
+        57.709885104472626
+      ],
+      "FR": [
+        55.862904463852615,
+        58.02468280755271
+      ],
+      "RL": [
+        53.77497136179777,
+        55.82252395499934
+      ],
+      "RR": [
+        54.088039777964156,
+        56.087928123049785
+      ]
+    },
+    "max_self_contact_count": 0.0,
+    "min_self_contact_distance_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "actuator_saturation_fraction": {
+      "u_FL_hip_joint": 0.0,
+      "u_FL_thigh_joint": 0.0,
+      "u_FL_calf_joint": 0.0,
+      "u_FR_hip_joint": 0.0,
+      "u_FR_thigh_joint": 0.0,
+      "u_FR_calf_joint": 0.0,
+      "u_RL_hip_joint": 0.0,
+      "u_RL_thigh_joint": 0.0,
+      "u_RL_calf_joint": 0.0,
+      "u_RR_hip_joint": 0.0,
+      "u_RR_thigh_joint": 0.0,
+      "u_RR_calf_joint": 0.0,
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0,
+      "u_piper_gripper_joint1": 0.0,
+      "u_piper_gripper_joint2": 0.0
+    },
+    "max_joint_limit_violation_m_or_rad": 0,
+    "joint_limit_violations": {}
+  },
+  "plate_only_arm": {
+    "duration_s": 4.993999999999672,
+    "base_min_z_m": 0.2937180056940551,
+    "base_final_z_m": 0.2940437173051902,
+    "com_mean_z_m": 0.3657545009976199,
+    "pitch_rms_deg": 0.18878630373892452,
+    "max_abs_roll_deg": 0.7819185503342905,
+    "mean_sum_abs_joint_torque_Nm": 75.18293459665323,
+    "tcp_min_z_m": 0.6841651342509208,
+    "tpu_min_z_m": 0.6737861216225194,
+    "tpu_final_z_m": 0.7276142218239571,
+    "all_four_feet_loaded_fraction_after_1s": 1.0,
+    "foot_force_ranges_N_after_1s": {
+      "FL": [
+        52.67515223912713,
+        61.0845723700062
+      ],
+      "FR": [
+        50.755602973135225,
+        59.455333679192904
+      ],
+      "RL": [
+        52.156708219589994,
+        59.89527743195306
+      ],
+      "RR": [
+        51.42714010162956,
+        58.69962994926966
+      ]
+    },
+    "max_self_contact_count": 0.0,
+    "min_self_contact_distance_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "actuator_saturation_fraction": {
+      "u_FL_hip_joint": 0.0,
+      "u_FL_thigh_joint": 0.0,
+      "u_FL_calf_joint": 0.0,
+      "u_FR_hip_joint": 0.0,
+      "u_FR_thigh_joint": 0.0,
+      "u_FR_calf_joint": 0.0,
+      "u_RL_hip_joint": 0.0,
+      "u_RL_thigh_joint": 0.0,
+      "u_RL_calf_joint": 0.0,
+      "u_RR_hip_joint": 0.0,
+      "u_RR_thigh_joint": 0.0,
+      "u_RR_calf_joint": 0.0,
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0,
+      "u_piper_gripper_joint1": 0.0,
+      "u_piper_gripper_joint2": 0.0
+    },
+    "max_joint_limit_violation_m_or_rad": 4.025534988719853e-05,
+    "joint_limit_violations": {
+      "u_piper_gripper_joint1": {
+        "maximum": 4.025534988719853e-05,
+        "unit": "m"
+      },
+      "u_piper_gripper_joint2": {
+        "maximum": 1.6401295835286045e-05,
+        "unit": "m"
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+[
+  {
+    "iteration": 18000,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 70.87979578971863
+  },
+  {
+    "iteration": 18000,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 107.19560360908508
+  },
+  {
+    "iteration": 20000,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 115.8135461807251
+  },
+  {
+    "iteration": 20000,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 131.70750331878662
+  },
+  {
+    "iteration": 24000,
+    "terrain": "flat",
+    "existing_complete": true
+  },
+  {
+    "iteration": 24000,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 129.76477575302124
+  },
+  {
+    "iteration": 28000,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 121.38083624839783
+  },
+  {
+    "iteration": 28000,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 129.18997478485107
+  },
+  {
+    "iteration": 30000,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 119.54641151428223
+  },
+  {
+    "iteration": 30000,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 130.32930064201355
+  },
+  {
+    "iteration": 34000,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 122.37022519111633
+  },
+  {
+    "iteration": 34000,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 93.70329165458679
+  }
+]

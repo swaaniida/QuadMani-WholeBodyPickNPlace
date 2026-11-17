@@ -1,0 +1,13 @@
+{
+  "snapshot_count": 921,
+  "source": "Fixed-base actual hold states; previous goal position held fixed; new orientation delta independently sampled",
+  "start_ik_reject_12": 258,
+  "start_body_reject_12": 121,
+  "start_reject_12": 317,
+  "start_ik_reject_64": 172,
+  "start_body_reject_64": 101,
+  "start_reject_64": 231,
+  "rejected_12_but_passed_64": 88,
+  "consequence": "At t=0, destination position cancels out of torch.lerp. Destination-only retries cannot change this failure. Orientation delta is held across all ten original B1 retries.",
+  "limitation": "Conservative boxes and iterative IK; rejection is not a proof of physical impossibility. Snapshots are not an exact resampling-event distribution."
+}

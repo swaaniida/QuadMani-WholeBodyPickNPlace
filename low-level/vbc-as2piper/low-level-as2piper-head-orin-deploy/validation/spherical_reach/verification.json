@@ -1,0 +1,16 @@
+{
+  "samples": 122880,
+  "passed": true,
+  "initial_world_xyz": [
+    0.6147645809813638,
+    0.0,
+    0.6314455744909068
+  ],
+  "initial_pitch_rad": 2.033529853596188,
+  "empirical_height_min_m": 0.020692646503448486,
+  "empirical_height_max_m": 0.9994632005691528,
+  "radius_elevation_correlation": -0.0016994870966300368,
+  "runtime_IK_validity_checks": 0,
+  "optimizer_updates": 0,
+  "scope": "Offline finite IK tests do not certify every continuous pose, trajectory, torque or rough terrain."
+}

@@ -1,0 +1,5 @@
+{
+  "comparison": "First saved checkpoints after the initial history-only update; non-history network parameters",
+  "tensors_checked": 33,
+  "different": {}
+}

@@ -1,0 +1,10 @@
+{
+  "fps": 12.5,
+  "duration_s": 10.0,
+  "frames": 125,
+  "size": [
+    1024,
+    576
+  ],
+  "source": "Actual PhysX states, MuJoCo kinematic replay, real-time duration; every second25Hz state at12.5fps"
+}

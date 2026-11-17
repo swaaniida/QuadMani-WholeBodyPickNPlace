@@ -1,0 +1,106 @@
+[
+  {
+    "condition": "arm_center_actuator_step",
+    "arm_moves_forward": false,
+    "initial_arm_base_x_relative_to_as2_m": 0.005,
+    "final_arm_base_x_relative_to_as2_m": 0.005,
+    "arm_base_z_relative_to_as2_m": 0.18,
+    "rail_travel_m": 0.0,
+    "head_x_from_original_base_mesh_m": 0.33470532,
+    "rail_lower_surface_clearance_above_base_mesh_max_z_m": 0.036217239999999984,
+    "piper_base_bottom_clearance_above_base_mesh_max_z_m": 0.04521723999999999,
+    "computer_mass_assumption_kg": 1.0,
+    "computer_com_position_relative_to_base_m": [
+      0,
+      0,
+      0.155
+    ],
+    "rail_pair_mass_assumption_kg": 0.5,
+    "carriage_mass_assumption_kg": 0.5,
+    "total_model_mass_kg": 24.89215310580431,
+    "com_xyz_min_m": [
+      -0.03394983151471008,
+      -0.0034156287656287175,
+      0.3728767835039965
+    ],
+    "com_xyz_max_m": [
+      0.011377384605957542,
+      0.0026110641868664344,
+      0.41881992033337007
+    ],
+    "com_xyz_mean_m": [
+      -0.021658564125516346,
+      -0.00044925110662824243,
+      0.383207493732715
+    ],
+    "com_x_relative_to_base_at_rail_release_m": 0.013597463527383044,
+    "com_x_relative_to_base_mean_during_scripted_step_m": 0.010851552970781993,
+    "com_z_relative_to_base_mean_after_settle_m": 0.09570281163226371,
+    "base_vertical_settle_drop_m": 0.03570716629092607,
+    "base_x_drift_m": -0.04324747042219462,
+    "pitch_abs_max_deg": 1.780966833335931,
+    "roll_abs_max_deg": 0.5636370127776573,
+    "support_margin_min_when_at_least_three_feet_loaded_m": 0.16638652358922687,
+    "support_margin_mean_when_at_least_three_feet_loaded_m": 0.1857234729618061,
+    "support_margin_invalid_sample_count": 1,
+    "frames_with_less_than_three_loaded_feet_fraction": 0.0024937655860349127,
+    "duration_s": 8.0,
+    "timestep_s": 0.002,
+    "render_fps": 12,
+    "controller": "PD + joint gravity feedforward; no base wrench or learned gait policy",
+    "video": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/results/head_overhead_stability/arm_center_actuator_step.mp4",
+    "timeseries": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/results/head_overhead_stability/arm_center_actuator_step.csv"
+  },
+  {
+    "condition": "arm_over_head_actuator_step",
+    "arm_moves_forward": true,
+    "initial_arm_base_x_relative_to_as2_m": 0.005,
+    "final_arm_base_x_relative_to_as2_m": 0.33470532,
+    "arm_base_z_relative_to_as2_m": 0.18,
+    "rail_travel_m": 0.32970531999999997,
+    "head_x_from_original_base_mesh_m": 0.33470532,
+    "rail_lower_surface_clearance_above_base_mesh_max_z_m": 0.036217239999999984,
+    "piper_base_bottom_clearance_above_base_mesh_max_z_m": 0.04521723999999999,
+    "computer_mass_assumption_kg": 1.0,
+    "computer_com_position_relative_to_base_m": [
+      0,
+      0,
+      0.155
+    ],
+    "rail_pair_mass_assumption_kg": 0.5,
+    "carriage_mass_assumption_kg": 0.5,
+    "total_model_mass_kg": 24.89215310580431,
+    "com_xyz_min_m": [
+      -0.023525349504785353,
+      -0.010997486780293483,
+      0.36967013736791876
+    ],
+    "com_xyz_max_m": [
+      0.09785318719247345,
+      0.010072135398176372,
+      0.41881992033337007
+    ],
+    "com_xyz_mean_m": [
+      0.0598796475840682,
+      -0.0005685129816749743,
+      0.3808125020447292
+    ],
+    "com_x_relative_to_base_at_rail_release_m": 0.09166801430842003,
+    "com_x_relative_to_base_mean_during_scripted_step_m": 0.08917984690229774,
+    "com_z_relative_to_base_mean_after_settle_m": 0.0896278081598233,
+    "base_vertical_settle_drop_m": 0.03472990146719129,
+    "base_x_drift_m": -0.00361455642519048,
+    "pitch_abs_max_deg": 4.527262451400118,
+    "roll_abs_max_deg": 1.2685330204322902,
+    "support_margin_min_when_at_least_three_feet_loaded_m": 0.12078452411338805,
+    "support_margin_mean_when_at_least_three_feet_loaded_m": 0.14723121826124907,
+    "support_margin_invalid_sample_count": 1,
+    "frames_with_less_than_three_loaded_feet_fraction": 0.0024937655860349127,
+    "duration_s": 8.0,
+    "timestep_s": 0.002,
+    "render_fps": 12,
+    "controller": "PD + joint gravity feedforward; no base wrench or learned gait policy",
+    "video": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/results/head_overhead_stability/arm_over_head_actuator_step.mp4",
+    "timeseries": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/results/head_overhead_stability/arm_over_head_actuator_step.csv"
+  }
+]

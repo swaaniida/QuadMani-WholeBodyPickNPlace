@@ -1,0 +1,32 @@
+[
+  {
+    "file": "legged_gym/envs/manip_loco/manip_loco.py",
+    "added": 11,
+    "removed": 5
+  },
+  {
+    "file": "legged_gym/scripts/b1z1_interface.py",
+    "added": 6,
+    "removed": 2
+  },
+  {
+    "file": "legged_gym/scripts/play.py",
+    "added": 4,
+    "removed": 0
+  },
+  {
+    "file": "legged_gym/utils/helpers.py",
+    "added": 14,
+    "removed": 1
+  },
+  {
+    "file": "rsl_rl_local/rsl_rl/modules/actor_critic.py",
+    "added": 1,
+    "removed": 1
+  },
+  {
+    "file": "rsl_rl_local/rsl_rl/runners/on_policy_runner.py",
+    "added": 4,
+    "removed": 3
+  }
+]

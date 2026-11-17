@@ -1,0 +1,41 @@
+--- before/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -59,30 +59,30 @@
+         floor_pitch_x = [.55, .975]
+         floor_pitch_deg = [175., 150.]
+         floor_pitch_blend_z = [.10, .25]
+-        arm_induced_pitch = 2.407684686936221  # preserve the original initial EE direction
++        arm_induced_pitch = 2.455216137744035  # standing-arm-base coordinates; initial direction preserved
+         orientation_roll_offset = 0.
+         # Conservative body/head + Orin bounds, relative to the arm origin.
+         collision_lower_limits = [-.32435, -.112, -.1959]
+         # Extend forward face 20 mm: cover the visual head tip with ~11 mm margin.
+         collision_upper_limits = [.12165, .112, .0158]
+-        underground_limit = -.50
++        underground_limit = -.4563069024246581
+ 
+         class sphere_center:
+             # Virtual yaw frame, independent of body height/roll/pitch.
+-            # Offline URDF design: independent spherical radius/elevation/yaw bounds.
++            # Center equals actual arm base at nominal standing height (not reset height).
+             height_roll_pitch_invariant = True
+-            x_offset = .28
++            x_offset = .22435
+             y_offset = 0.
+-            z_invariant_offset = .50
++            z_invariant_offset = .4563069024246581
+ 
+         class ranges:
+-            init_pos_start = [.3596460256041662, .37415483334003286, 0.]
+-            init_pos_end = [.3596460256041662, .37415483334003286, 0.]
++            init_pos_start = [.427898468676838, .421686284147847, 0.]
++            init_pos_end = [.427898468676838, .421686284147847, 0.]
+             # Independent continuous spherical sampling, as in original VBC.
+             # At outer radius: lower/upper elevations give ground z=0.02/1.00m.
+             # Finite offline IK checks; no online IK feasibility filter or bank.
+             pos_l = [.35, .65]
+-            pos_p = [-.8307859154737011, .8776364192181427]
++            pos_p = [-0.7358822683358291, 0.9907749219326265]
+             pos_y = [-.30, .30]
+             height_above_ground = [.02, 1.00]
+             delta_orn_r = [-.08, .08]

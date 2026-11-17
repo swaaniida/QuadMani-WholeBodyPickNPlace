@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "changed_sources": [
+    "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+    "legged_gym/envs/manip_loco/manip_loco.py"
+  ],
+  "all_other_source_and_urdf_hashes_unchanged": true,
+  "original_sources_preserved": 39,
+  "checkpoint_metadata_preserved": 226,
+  "training_started": false
+}

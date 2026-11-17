@@ -1,0 +1,26 @@
+{
+  "fields": [
+    {
+      "field": "env.num_observations",
+      "before": 700,
+      "after": 755
+    },
+    {
+      "field": "env.num_proprio",
+      "before": 62,
+      "after": 67
+    },
+    {
+      "field": "env.observe_gait_commands",
+      "before": false,
+      "after": true
+    },
+    {
+      "field": "rewards.scales.foot_contacts_z",
+      "before": null,
+      "after": 0.0
+    }
+  ],
+  "other_reward_settings_identical": true,
+  "ppo_settings_identical": true
+}

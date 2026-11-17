@@ -1,0 +1,70 @@
+{
+  "duration_s": 36,
+  "frames": 900,
+  "vy_command_nonzero_count": 0,
+  "vx_yaw_schedule_identical_to_previous": true,
+  "metrics": [
+    {
+      "iteration": 10000,
+      "ee_mean_cm": 10.85669919848442,
+      "ee_p95_cm": 43.29476907849311,
+      "orientation_mean_deg": 15.161360740661621,
+      "vx_rmse": 0.40150320529937744,
+      "vy_rmse": 0.46009525656700134,
+      "yaw_rmse": 0.9063538908958435,
+      "failures_all8": 104,
+      "failures_video": 12
+    },
+    {
+      "iteration": 20000,
+      "ee_mean_cm": 3.2560784369707108,
+      "ee_p95_cm": 8.240623623132668,
+      "orientation_mean_deg": 5.137283802032471,
+      "vx_rmse": 0.1933000236749649,
+      "vy_rmse": 0.14325891435146332,
+      "yaw_rmse": 0.10952707380056381,
+      "failures_all8": 0,
+      "failures_video": 0
+    },
+    {
+      "iteration": 30000,
+      "ee_mean_cm": 3.5455573350191116,
+      "ee_p95_cm": 10.551258102059355,
+      "orientation_mean_deg": 5.491136074066162,
+      "vx_rmse": 0.19506703317165375,
+      "vy_rmse": 0.17337371408939362,
+      "yaw_rmse": 0.11873148381710052,
+      "failures_all8": 0,
+      "failures_video": 0
+    },
+    {
+      "iteration": 45000,
+      "ee_mean_cm": 2.3852908983826637,
+      "ee_p95_cm": 5.262769963592291,
+      "orientation_mean_deg": 5.539403915405273,
+      "vx_rmse": 0.22119760513305664,
+      "vy_rmse": 0.14267538487911224,
+      "yaw_rmse": 0.11596984416246414,
+      "failures_all8": 0,
+      "failures_video": 0
+    }
+  ],
+  "viewer_url": "http://localhost:8774/?scenario=motion36_vy0",
+  "command_min": [
+    -0.3499999940395355,
+    0.0,
+    -0.699999988079071
+  ],
+  "command_max": [
+    0.3499999940395355,
+    0.0,
+    0.699999988079071
+  ],
+  "actual_vy_is_measured_not_forced": true,
+  "training_changed": false,
+  "optimizer_updates": 0,
+  "video_frames": 450,
+  "video_duration_s": 36.0,
+  "video_fps": 12.5,
+  "video_sha256": "bdcb1079efb0aea400ad5b5a84cf328a35a9b365d380fee4d1eb732d1c5bf09c"
+}

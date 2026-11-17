@@ -1,0 +1,435 @@
+--- /dev/null
++++ hardware/legged_gym/envs/manip_loco/as2piper_gait.py
+@@ -0,0 +1,84 @@
++"""Locomotion curriculum: learn a measured gait before simultaneous arm goals."""
++import torch
++from isaacgym.torch_utils import torch_rand_float
++from .as2piper_hw import AS2PiPERHardware
++from .as2piper_hw_config import AS2PiPERHardwareCfg,AS2PiPERHardwareCfgPPO
++
++
++class AS2PiPERGaitCfg(AS2PiPERHardwareCfg):
++    class domain_rand(AS2PiPERHardwareCfg.domain_rand):
++        randomize_base_mass=False
++        randomize_base_com=False
++        randomize_gripper_mass=False
++        push_robots=False
++    class goal_ee(AS2PiPERHardwareCfg.goal_ee):
++        class ranges(AS2PiPERHardwareCfg.goal_ee.ranges):
++            init_pos_end=AS2PiPERHardwareCfg.goal_ee.ranges.init_pos_start
++    class rewards(AS2PiPERHardwareCfg.rewards):
++        tracking_sigma=.04
++        swing_clearance=.04
++        class scales(AS2PiPERHardwareCfg.rewards.scales):
++            walking_dof=0.
++            tracking_lin_vel_max=0.
++            tracking_lin_vel=3.
++            tracking_ang_vel=1.
++            feet_air_time=.5
++    class commands(AS2PiPERHardwareCfg.commands):
++        class ranges:
++            lin_vel_x=[-.4,.4]
++            ang_vel_yaw=[-.5,.5]
++
++
++class AS2PiPERGaitCfgPPO(AS2PiPERHardwareCfgPPO):
++    class policy(AS2PiPERHardwareCfgPPO.policy):
++        init_std=[[.6,.6,.6]*4+[1.]*6]
++    class runner(AS2PiPERHardwareCfgPPO.runner):
++        experiment_name='as2piper_gait_curriculum'
++        save_interval=100
++
++
++class AS2PiPERGait(AS2PiPERHardware):
++    def _resample_ee_goal(self,ids,is_init=False):
++        # Arm pose and finger geometry stay physically present, with normal IK.
++        # No costly random manipulation goals while learning to place the feet.
++        return super()._resample_ee_goal(ids,is_init=True)
++
++    def _resample_commands(self,ids):
++        if self.cfg.env.teleop_mode or not len(ids):return
++        self.commands[ids,0]=torch_rand_float(.15,.4,(len(ids),1),device=self.device).flatten()
++        self.commands[ids,1]=0
++        self.commands[ids,2]=torch_rand_float(-.5,.5,(len(ids),1),device=self.device).flatten()
++        kind=torch.rand(len(ids),device=self.device)
++        self.commands[ids[kind<.15]]=0
++        self.commands[ids[(kind>=.15)&(kind<.35)],0]=0
++        self.commands[ids[kind>.65],2]=0
++
++    def _prepare_reward_function(self):
++        super()._prepare_reward_function()
++        replacements={'feet_air_time':self._air_time,'feet_height':self._phase_height,
++                      'tracking_ang_vel':self._yaw_tracking}
++        for i,name in enumerate(self.reward_names):
++            if name in replacements:self.reward_functions[i]=replacements[name]
++
++    def _air_time(self):
++        contact=self.foot_contacts_from_sensor
++        first=(self.feet_air_time>0)&contact
++        self.feet_air_time+=self.dt
++        target=.5/self.cfg.env.frequencies
++        value=((self.feet_air_time-target)*first).sum(-1)*self._get_walking_cmd_mask()
++        self.feet_air_time*=~contact
++        return value,value
++
++    def _phase_height(self):
++        phase=self.foot_indices
++        swing=torch.clamp(torch.sin(2*torch.pi*(phase-.5)),min=0)
++        desired=self.cfg.rewards.swing_clearance*swing
++        actual=self.rigid_body_state[:,self.feet_indices,2]-self.env_origins[:,2:3]-.028
++        error=((actual-desired)/.025).square().mean(-1)
++        value=torch.exp(-error)
++        value*=self._get_walking_cmd_mask()
++        return value,error
++
++    def _yaw_tracking(self):
++        error=(self.commands[:,2]-self.base_ang_vel[:,2]).square()
++        return torch.exp(-error/.0625),torch.sqrt(error)
+--- /dev/null
++++ hardware/legged_gym/envs/manip_loco/as2piper_walk_wbc.py
+@@ -0,0 +1,33 @@
++"""Continue a walking policy with random EE goals and hardware-sized DR."""
++from .as2piper_gait import AS2PiPERGait,AS2PiPERGaitCfg,AS2PiPERGaitCfgPPO
++from .as2piper_hw import AS2PiPERHardware
++from .as2piper_hw_config import AS2PiPERHardwareCfg
++
++
++class AS2PiPERWalkWBCCfg(AS2PiPERGaitCfg):
++    class goal_ee(AS2PiPERHardwareCfg.goal_ee):
++        pass
++    class domain_rand(AS2PiPERHardwareCfg.domain_rand):
++        pass
++
++
++class AS2PiPERWalkWBCCfgPPO(AS2PiPERGaitCfgPPO):
++    class runner(AS2PiPERGaitCfgPPO.runner):
++        experiment_name='as2piper_walk_wbc'
++
++
++class AS2PiPERWalkWBCNominalCfg(AS2PiPERWalkWBCCfg):
++    # Learn the newly varying arm-state inputs before adding payload/COM shifts.
++    class domain_rand(AS2PiPERGaitCfg.domain_rand):
++        pass
++
++
++class AS2PiPERWalkWBC(AS2PiPERGait):
++    def _resample_ee_goal(self,ids,is_init=False):
++        return AS2PiPERHardware._resample_ee_goal(self,ids,is_init)
++
++    def _step_contact_targets(self):
++        super()._step_contact_targets()
++        # A stationary command asks for four supporting feet, not a frozen
++        # transition between trot phases (which would give contact target .5).
++        self.desired_contact_states[~self._get_walking_cmd_mask()]=1.
+--- forward/legged_gym/envs/__init__.py
++++ hardware/legged_gym/envs/__init__.py
+@@ -38,3 +38,12 @@
+ from .manip_loco.as2piper_config import AS2PiPERPlateCfg, AS2PiPERPlateCfgPPO
+ from .manip_loco.as2piper_forward import AS2PiPERForward
+ task_registry.register('as2piper_plate_forward', AS2PiPERForward, AS2PiPERPlateCfg(), AS2PiPERPlateCfgPPO(), 'manip_loco')
++from .manip_loco.as2piper_hw import AS2PiPERHardware
++from .manip_loco.as2piper_hw_config import AS2PiPERHardwareCfg,AS2PiPERHardwareCfgPPO
++task_registry.register('as2piper_plate_hw',AS2PiPERHardware,AS2PiPERHardwareCfg(),AS2PiPERHardwareCfgPPO(),'manip_loco')
++from .manip_loco.as2piper_gait import AS2PiPERGait,AS2PiPERGaitCfg,AS2PiPERGaitCfgPPO
++task_registry.register('as2piper_plate_gait',AS2PiPERGait,AS2PiPERGaitCfg(),AS2PiPERGaitCfgPPO(),'manip_loco')
++from .manip_loco.as2piper_walk_wbc import AS2PiPERWalkWBC,AS2PiPERWalkWBCCfg,AS2PiPERWalkWBCCfgPPO
++task_registry.register('as2piper_plate_walk_wbc',AS2PiPERWalkWBC,AS2PiPERWalkWBCCfg(),AS2PiPERWalkWBCCfgPPO(),'manip_loco')
++from .manip_loco.as2piper_walk_wbc import AS2PiPERWalkWBCNominalCfg
++task_registry.register('as2piper_plate_walk_wbc_nominal',AS2PiPERWalkWBC,AS2PiPERWalkWBCNominalCfg(),AS2PiPERWalkWBCCfgPPO(),'manip_loco')
+--- /dev/null
++++ hardware/legged_gym/scripts/train_hw.py
+@@ -0,0 +1,46 @@
++"""Hardware task entry, runtime snapshots and extended checkpoint restoration."""
++import os,json,hashlib,importlib
++from pathlib import Path
++import isaacgym
++import torch,wandb
++from legged_gym import LEGGED_GYM_ROOT_DIR
++from legged_gym.envs import *
++from legged_gym.utils import get_args,task_registry
++from legged_gym.utils.helpers import class_to_dict
++from legged_gym.utils.hw_runner import HardwareRunner
++
++
++def main():
++    args=get_args();root=Path(LEGGED_GYM_ROOT_DIR)
++    out=root/'logs'/args.proj_name/args.exptid;out.mkdir(parents=True,exist_ok=True)
++    wandb.init(project=args.proj_name,name=args.exptid,id=os.environ.get('WANDB_RUN_ID'),
++        resume=os.environ.get('WANDB_RESUME','never'),mode=os.environ.get('WANDB_MODE','online'),dir=str(out))
++    cfg,train_cfg=task_registry.get_cfgs(args.task)
++    env,cfg=task_registry.make_env(name=args.task,args=args,env_cfg=cfg)
++    assert env.num_dofs==20 and env.num_actions==18 and env.obs_buf.shape==(env.num_envs,799)
++    assert env.ee_j_eef.shape==(env.num_envs,6,6)
++    importlib.import_module('legged_gym.utils.task_registry').OnPolicyRunner=HardwareRunner
++    runner,train_cfg,_=task_registry.make_alg_runner(log_root=str(out),env=env,name=args.task,args=args)
++    # Registry's historical set_it(checkpoint filename) must not undo next_iteration.
++    if args.resumeid:
++        runner.set_it(runner.alg.counter)
++        env._resample_commands(torch.arange(env.num_envs,device=env.device))
++    asset=Path(cfg.asset.file.format(LEGGED_GYM_ROOT_DIR=str(root)))
++    snapshot=dict(environment=class_to_dict(cfg),ppo=class_to_dict(train_cfg),
++        hardware=json.loads((root/'resources/commands/hardware.json').read_text()),
++        asset_sha256=hashlib.sha256(asset.read_bytes()).hexdigest(),
++        source_sha256={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest()
++            for folder in ['legged_gym','rsl_rl_local/rsl_rl'] for p in (root/folder).rglob('*.py')},
++        initial_iteration=runner.current_learning_iteration)
++    (out/'runtime_snapshot.json').write_text(json.dumps(snapshot,indent=2,default=lambda v:v.tolist()))
++    wandb.config.update({'hardware_task':args.task,'observations':799,'num_envs':env.num_envs,
++        'leg_kp':cfg.control.stiffness,'leg_kd':cfg.control.damping,'gait_hz':cfg.env.frequencies,
++        'terrain':cfg.terrain.mesh_type,'asset_sha256':snapshot['asset_sha256']})
++    target=args.max_iterations or train_cfg.runner.max_iterations
++    remaining=target-runner.current_learning_iteration
++    if remaining<=0:raise ValueError('Target iteration is not after the checkpoint')
++    runner.learn(num_learning_iterations=remaining,init_at_random_ep_len=True)
++    print('AS2 hardware training completed',flush=True);wandb.finish()
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ hardware/run_gait.sh
+@@ -0,0 +1,14 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
++export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
++export WANDB_MODE="${WANDB_MODE:-online}"
++run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_gait_${run_stamp}}"
++export WANDB_NAME="${WANDB_NAME:-plate_gait_${run_stamp}}"
++export WANDB_DISABLE_GIT=true
++python prepare_asset.py
++exec python legged_gym/scripts/train_hw.py --task as2piper_plate_gait --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
+--- /dev/null
++++ hardware/launch_gait.sh
+@@ -0,0 +1,7 @@
++#!/usr/bin/env bash
++set -euo pipefail
++export AS2_TASK=as2piper_plate_gait
++gait_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_gait_${gait_stamp}}"
++export WANDB_NAME="${WANDB_NAME:-plate_gait_${gait_stamp}}"
++exec bash "$(dirname "$0")/launch_hw.sh" "$@"
+--- /dev/null
++++ hardware/run_hw.sh
+@@ -0,0 +1,14 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
++export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
++export WANDB_MODE="${WANDB_MODE:-online}"
++run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_walk_wbc_${run_stamp}}"
++export WANDB_NAME="${WANDB_NAME:-plate_walk_wbc_${run_stamp}}"
++export WANDB_DISABLE_GIT=true
++python prepare_asset.py
++exec python legged_gym/scripts/train_hw.py --task "${AS2_TASK:-as2piper_plate_walk_wbc}" --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
+--- /dev/null
++++ hardware/evaluate_hw.py
+@@ -0,0 +1,89 @@
++"""Measure learned velocity tracking; standing alone is not gait validation."""
++import argparse,json
++from pathlib import Path
++import isaacgym
++from isaacgym import gymapi
++import torch,numpy as np
++from legged_gym.envs.manip_loco.as2piper_hw import AS2PiPERHardware
++from legged_gym.envs.manip_loco.as2piper_hw_config import AS2PiPERHardwareCfg,AS2PiPERHardwareCfgPPO
++from legged_gym.utils.helpers import class_to_dict
++from legged_gym.utils.hw_runner import HardwareRunner
++
++ROOT=Path(__file__).resolve().parent
++
++
++def main():
++    parser=argparse.ArgumentParser();parser.add_argument('checkpoint')
++    parser.add_argument('--output');parser.add_argument('--encoder',choices=['history','privileged'],default='history')
++    parser.add_argument('--vx',type=float,default=.15);parser.add_argument('--yaw',type=float,default=.25)
++    parser.add_argument('--seconds',type=float,default=10.)
++    parser.add_argument('--arm-goals',action='store_true')
++    parser.add_argument('--domain-rand',action='store_true')
++    args=parser.parse_args()
++    cfg=AS2PiPERHardwareCfg();cfg.env.num_envs=32
++    cfg.init_state.leg_reset_fraction=0;cfg.init_state.init_vel_perturb_range=0
++    if not args.domain_rand:
++        for k in ['randomize_friction','randomize_base_mass','randomize_base_com','randomize_motor','randomize_gripper_mass','push_robots']:setattr(cfg.domain_rand,k,False)
++    params=gymapi.SimParams();params.dt=cfg.sim.dt;params.up_axis=gymapi.UP_AXIS_Z;params.gravity=gymapi.Vec3(0,0,-9.81);params.use_gpu_pipeline=True;params.physx.use_gpu=True
++    for k in ['num_position_iterations','num_velocity_iterations','contact_offset','rest_offset','bounce_threshold_velocity','max_depenetration_velocity']:setattr(params.physx,k,getattr(cfg.sim.physx,k))
++    e=AS2PiPERHardware(cfg,params,gymapi.SIM_PHYSX,'cuda:0',True)
++    r=HardwareRunner(e,class_to_dict(AS2PiPERHardwareCfgPPO()),None,'cuda:0');r.load(args.checkpoint);r.alg.actor_critic.eval()
++    targets=torch.tensor([[0,0,0],[args.vx,0,0],[0,0,args.yaw],[args.vx,0,args.yaw]],device=e.device).repeat_interleave(8,0)
++    e._resample_commands=lambda ids:e.commands.__setitem__(ids,targets[ids])
++    e.commands[:]=targets;e.compute_observations();rows=[];frames=[];original=e.check_termination
++    def check():
++        original();rp=e._get_body_orientation();height=e.root_states[:,2]-e.env_origins[:,2]
++        foot_state=e.rigid_body_state[:,e.feet_indices]
++        offset=torch.zeros_like(foot_state[:,:,7:10]);offset[:,:,2]=-.028
++        point_speed=(foot_state[:,:,7:10]+torch.cross(foot_state[:,:,10:13],offset,dim=-1))[:,:,:2].norm(dim=-1)
++        rows.append(torch.cat((e.base_lin_vel[:,0:1],e.base_ang_vel[:,2:3],e.reset_buf[:,None],e.time_out_buf[:,None],
++            ((rp.abs().max(-1).values<.35)&(height>.22))[:,None],e.contact_forces[:,e.feet_indices,2],
++            e.rigid_body_state[:,e.feet_indices,2]-e.env_origins[:,2:3]-.028,
++            e.rigid_body_state[:,e.feet_indices,7:9].norm(dim=-1),e.desired_contact_states,
++            e.torques[:,:12],(e.ee_pos-applied_goal).norm(dim=-1)[:,None],
++            torch.rad2deg(2*torch.acos((e.ee_orn*applied_orientation).sum(-1).abs().clamp(0,1)))[:,None],point_speed),dim=-1).cpu().numpy())
++        if len(rows)%2==0:
++            ids=torch.tensor([0,8,16,24],device=e.device)
++            frames.append(dict(root=(e.root_states[ids,:7]-torch.cat((e.env_origins[ids],torch.zeros(4,4,device=e.device)),dim=-1)).cpu().numpy(),q=e.dof_pos[ids].cpu().numpy(),
++                target=(applied_goal[ids]-e.env_origins[ids]).cpu().numpy(),ee=(e.ee_pos[ids]-e.env_origins[ids]).cpu().numpy(),
++                step=len(rows),iteration=r.current_learning_iteration,random=applied_random[ids].cpu().numpy(),
++                upright=((rp[ids].abs().max(-1).values<.35)&(height[ids]>.22)).cpu().numpy(),
++                position_error=(e.ee_pos[ids]-applied_goal[ids]).norm(dim=-1).cpu().numpy(),
++                vx=e.base_lin_vel[ids,0].cpu().numpy(),yaw_rate=e.base_ang_vel[ids,2].cpu().numpy(),commands=e.commands[ids].cpu().numpy()))
++    e.check_termination=check
++    with torch.no_grad():
++        for _ in range(int(args.seconds/e.dt)):
++            if not args.arm_goals:e.goal_timer.zero_()
++            e.commands[:]=targets
++            applied_goal=e.curr_ee_goal_cart_world.clone();applied_orientation=e.ee_goal_orn_quat.clone()
++            applied_random=(e.ee_goal_sphere-e.init_end_ee_sphere).norm(dim=-1)>1e-4
++            action=r.alg.actor_critic.act_inference(e.obs_buf,hist_encoding=args.encoder=='history')
++            e.step(action)
++    x=np.stack(rows);result={}
++    for i,name in enumerate(['stand','forward','turn','forward_turn']):
++        v=x[100:,i*8:(i+1)*8];t=targets[i*8].cpu().numpy()
++        result[name]=dict(command_vx_m_s=float(t[0]),command_yaw_rad_s=float(t[2]),
++            mean_vx_m_s=float(v[:,:,0].mean()),mean_yaw_rad_s=float(v[:,:,1].mean()),
++            vx_abs_error_m_s=float(abs(v[:,:,0]-t[0]).mean()),yaw_abs_error_rad_s=float(abs(v[:,:,1]-t[2]).mean()),
++            upright_fraction=float(v[:,:,4].mean()),fall_resets=int(((v[:,:,2]>.5)&(v[:,:,3]<.5)).sum()),
++            per_foot_loaded_fraction=(v[:,:,5:9]>5).mean((0,1)).tolist(),
++            foot_clearance_p95_m=np.quantile(v[:,:,9:13],.95,axis=(0,1)).tolist(),
++            applied_leg_torque_abs_max_Nm=float(abs(v[:,:,21:33]).max()),
++            ee_position_mean_m=float(v[:,:,33].mean()),ee_position_p95_m=float(np.quantile(v[:,:,33],.95)),
++            ee_orientation_mean_deg=float(v[:,:,34].mean()),
++            stance_center_speed_mean_m_s=float(v[:,:,13:17][v[:,:,5:9]>5].mean()) if (v[:,:,5:9]>5).any() else 0.,
++            stance_slip_mean_m_s=float(v[:,:,35:39][v[:,:,5:9]>5].mean()) if (v[:,:,5:9]>5).any() else 0.,
++            midstance_slip_mean_m_s=float(v[:,:,35:39][(v[:,:,5:9]>20)&(v[:,:,17:21]>.9)].mean()) if ((v[:,:,5:9]>20)&(v[:,:,17:21]>.9)).any() else 0.,
++            phase_contact_agreement=float(((v[:,:,5:9]>5)==(v[:,:,17:21]>.5)).mean()))
++    result['conditions']=f'Flat, DR={args.domain_rand}, deterministic {args.encoder} inference, random arm goals={args.arm_goals}, 32 envs, {args.seconds}s; 8 envs per command.'
++    result['slip_definition']='Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.'
++    out=Path(args.output) if args.output else ROOT/'audit_hw';out.mkdir(parents=True,exist_ok=True)
++    np.savez_compressed(str(out/'policy_evaluation.npz'),samples=x)
++    if frames:
++        np.savez_compressed(str(out/'trajectories.npz'),**{k:np.stack([v[k] for v in frames]) for k in frames[0]})
++        (out/'metadata.json').write_text(json.dumps(dict(video_ids=[0,8,16,24],dof_names=e.dof_names,encoder=args.encoder)))
++    (out/'policy_evaluation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
++    e.gym.destroy_sim(e.sim)
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ hardware/render_gait.py
+@@ -0,0 +1,40 @@
++"""Render actual policy evaluation states; never integrate or script motion."""
++import argparse,json,xml.etree.ElementTree as ET
++from pathlib import Path
++import numpy as np,mujoco,imageio.v2 as imageio
++from PIL import Image,ImageDraw
++
++ROOT=Path(__file__).resolve().parent
++
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('evaluation');p.add_argument('--seconds',type=float,default=3.);a=p.parse_args();out=Path(a.evaluation)
++    trace=np.load(str(out/'trajectories.npz'));meta=json.loads((out/'metadata.json').read_text())
++    xml=ET.parse(ROOT/'resources/commands/plate_forward.xml').getroot();asset=xml.find('asset')
++    for mesh in asset.findall('mesh'):
++        mesh.set('file',str((ROOT/'resources/commands'/mesh.get('file')).resolve()))
++    ET.SubElement(asset,'texture',name='gait_grid',type='2d',builtin='checker',rgb1='.22 .27 .30',rgb2='.35 .4 .43',width='512',height='512')
++    ET.SubElement(asset,'material',name='gait_floor',texture='gait_grid',texrepeat='6 6',reflectance='0')
++    xml.find("./worldbody/geom[@name='ground']").set('material','gait_floor')
++    m=mujoco.MjModel.from_xml_string(ET.tostring(xml,encoding='unicode'));d=mujoco.MjData(m)
++    m.vis.headlight.ambient[:]=[.6,.6,.6];m.vis.headlight.diffuse[:]=[.8,.8,.8]
++    renderer=mujoco.Renderer(m,height=288,width=512);camera=mujoco.MjvCamera();camera.distance=1.9;camera.elevation=-20
++    ids=[int(m.joint(n).qposadr) for n in meta['dof_names']]
++    def frame(i,env,title):
++        state=trace['root'][i,env];d.qpos[:3]=state[:3];d.qpos[3:7]=state[[6,3,4,5]];d.qpos[ids]=trace['q'][i,env]
++        mujoco.mj_forward(m,d);R=d.xmat[1].reshape(3,3)
++        camera.azimuth=120+np.rad2deg(np.arctan2(R[1,0],R[0,0]));camera.lookat[:]=state[:3]+[.08,0,.15]
++        renderer.update_scene(d,camera=camera);im=Image.fromarray(renderer.render().copy());draw=ImageDraw.Draw(im)
++        draw.rectangle((0,0,512,43),fill=(245,245,245));command=trace['commands'][i,env]
++        draw.text((7,5),title+' | RL policy '+str(int(trace['iteration'][i])),fill='black')
++        draw.text((7,22),'vx %.2f / %.2f m/s | yaw %.2f / %.2f rad/s'%(trace['vx'][i,env],command[0],trace['yaw_rate'][i,env],command[2]),fill='black')
++        return np.asarray(im)
++    end=len(trace['step']);start=max(0,end-int(25*a.seconds))
++    with imageio.get_writer(str(out/'learned_gait.mp4'),fps=25,codec='libx264',quality=8,macro_block_size=1) as w:
++        for i in range(start,end):
++            joined=np.concatenate([frame(i,1,'Forward'),frame(i,3,'Forward + turn')],axis=1);w.append_data(joined)
++            if i==(start+end)//2:Image.fromarray(joined).save(str(out/'learned_gait.jpg'),quality=94)
++    renderer.close();print('Rendered actual PhysX policy states; no physical reintegration or scripted joint motion.')
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ hardware/initialize_arm_transfer.py
+@@ -0,0 +1,53 @@
++"""Initialize newly varying arm inputs without masking observations or gradients."""
++import copy,hashlib,json
++from pathlib import Path
++import numpy as np,torch
++from scipy.spatial.transform import Rotation
++
++ROOT=Path(__file__).resolve().parent
++
++
++def main():
++    source=ROOT/'logs/as2piper-low/gait_pilot500_20261029/model_500.pt'
++    d=torch.load(source,map_location='cpu');m=d['model_state_dict']
++    trace=np.load(str(ROOT/'audit_hw/gait_eval500_history/trajectories.npz'))
++    q=trace['q'].reshape(-1,20);root=trace['root'].reshape(-1,7)
++    target=trace['target'].reshape(-1,3);R=Rotation.from_quat(root[:,3:7]).as_matrix()
++    origin=root[:,:3]+np.einsum('nij,j->ni',R,[.005,0,.08202847821788371])
++    local=np.einsum('nji,nj->ni',R,target-origin)
++    ref=torch.zeros(71);ref[17:23]=torch.tensor(q[:,12:18].mean(0)-[0,1.1,-.55,0,0,0])
++    ref[60:63]=torch.tensor(local.mean(0))
++    cols=list(range(17,23))+list(range(35,41))+[60,61,62]
++    prefixes=['actor.actor_backbone.0','actor.history_encoder.encoder.0','critic.critic_backbone.0']
++    changes={}
++    for prefix in prefixes:
++        w=m[prefix+'.weight'];b=m[prefix+'.bias'];old=w.clone();old_b=b.clone()
++        b+=w[:,cols]@ref[cols];w[:,cols]=0
++        # Exact first-layer output preservation at the selected reference input.
++        x=torch.randn(128,w.shape[1]);x[:,cols]=ref[cols]
++        error=((x@old.T+old_b)-(x@w.T+b)).abs().max().item()
++        assert error<2e-5,(prefix,error)
++        changes[prefix]=dict(reference_output_max_error=error)
++    # Do not let old Adam moments reintroduce the removed random sensitivity.
++    for opt_key,names in [('optimizer_state_dict',list(m)),('history_optimizer_state_dict',[k for k in m if k.startswith('actor.history_encoder.')])]:
++        opt=d[opt_key];ids=[i for g in opt['param_groups'] for i in g['params']]
++        assert len(ids)==len(names)
++        for name,i in zip(names,ids):
++            if i not in opt['state']:continue
++            state=opt['state'][i]
++            assert state['exp_avg'].shape==m[name].shape,(name,i)
++            if any(name==p+'.weight' for p in prefixes):
++                for key in ['exp_avg','exp_avg_sq']:state[key][:,cols]=0
++            if any(name==p+'.bias' for p in prefixes):
++                for key in ['exp_avg','exp_avg_sq']:state[key].zero_()
++    notes=dict(source=str(source),source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
++        initialized_input_columns=cols,reference_proprio=ref.tolist(),changed_layers=changes,
++        observations_masked=False,gradient_masked=False,
++        meaning='Arm/EE inputs remain observed and trainable. First-layer effect at the gait reference is preserved; responses away from that reference are deliberately reinitialized.')
++    d['infos']=notes
++    out=ROOT/'logs/as2piper-low/gait_arm_transfer500_20261029';out.mkdir(parents=True,exist_ok=True)
++    torch.save(d,out/'model_500.pt');(out/'transfer_initialization.json').write_text(json.dumps(notes,indent=2))
++    print(json.dumps(notes['changed_layers'],indent=2))
++
++
++if __name__=='__main__':main()
+--- forward/rsl_rl_local/rsl_rl/runners/on_policy_runner.py
++++ hardware/rsl_rl_local/rsl_rl/runners/on_policy_runner.py
+@@ -275,8 +275,8 @@
+                        f"""{'Total timesteps:':>{pad}} {self.tot_timesteps}\n"""
+                        f"""{'Iteration time:':>{pad}} {iteration_time:.2f}s\n"""
+                        f"""{'Total time:':>{pad}} {self.tot_time:.2f}s\n"""
+-                       f"""{'ETA:':>{pad}} {self.tot_time / (locs['it'] + 1) * (
+-                               locs['num_learning_iterations'] - locs['it']):.1f}s\n""")
++                       f"""{'ETA:':>{pad}} {iteration_time * (
++                               self.current_learning_iteration + locs['num_learning_iterations'] - locs['it'] - 1):.1f}s\n""")
+         print(log_string)
+ 
+     def save(self, path, it, infos=None):

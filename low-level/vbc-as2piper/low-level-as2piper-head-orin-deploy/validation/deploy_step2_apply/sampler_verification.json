@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "nodes": 70,
+  "undirected_edges": 1749,
+  "directed_edges": 3498,
+  "draws": 1228800,
+  "all_nodes_reached": true,
+  "partial_reset_pass": true,
+  "stale_asset_rejected": true,
+  "disconnected_bank_rejected": true,
+  "orientation_max_error_rad": 8.881784197001252e-16,
+  "goal_ground_z_min_m": 0.02,
+  "goal_ground_z_max_m": 0.85,
+  "seconds": 0.5131962299346924,
+  "optimizer_updates": 0
+}

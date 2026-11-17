@@ -1,0 +1,98 @@
+{
+  "virtual_anchor_world_relative_root_xy": [
+    0.22435,
+    0.0,
+    0.4563069024246581
+  ],
+  "ground_targets": [
+    {
+      "target_x_from_base_m": 0.45,
+      "target_z_m": 0.02,
+      "virtual_r_m": 0.49120427075036727,
+      "virtual_pitch_rad": -1.0934979298811465,
+      "virtual_pitch_deg": -62.65281628848212,
+      "old_orientation_law_beta_deg": 203.3263387736259,
+      "delta_to_tool160_rad": -0.7561872644342542,
+      "delta_to_tool175_rad": -0.49438787663510464
+    },
+    {
+      "target_x_from_base_m": 0.6,
+      "target_z_m": 0.02,
+      "virtual_r_m": 0.5757400764263333,
+      "virtual_pitch_rad": -0.8599642408232218,
+      "virtual_pitch_deg": -49.27232153134254,
+      "old_orientation_law_beta_deg": 189.94584401648632,
+      "delta_to_tool160_rad": -0.5226535753763293,
+      "delta_to_tool175_rad": -0.2608541875771797
+    },
+    {
+      "target_x_from_base_m": 0.75,
+      "target_z_m": 0.02,
+      "virtual_r_m": 0.6831336879435826,
+      "virtual_pitch_rad": -0.6927874374741654,
+      "virtual_pitch_deg": -39.693796266953086,
+      "old_orientation_law_beta_deg": 180.36731875209688,
+      "delta_to_tool160_rad": -0.3554767720272731,
+      "delta_to_tool175_rad": -0.09367738422812355
+    },
+    {
+      "target_x_from_base_m": 0.85,
+      "target_z_m": 0.02,
+      "virtual_r_m": 0.7627592251840682,
+      "virtual_pitch_rad": -0.6089558450614311,
+      "virtual_pitch_deg": -34.89059983184248,
+      "old_orientation_law_beta_deg": 175.56412231698624,
+      "delta_to_tool160_rad": -0.2716451796145387,
+      "delta_to_tool175_rad": -0.009845791815389138
+    },
+    {
+      "target_x_from_base_m": 0.9,
+      "target_z_m": 0.02,
+      "virtual_r_m": 0.8042801971970964,
+      "virtual_pitch_rad": -0.5733878965517749,
+      "virtual_pitch_deg": -32.85270649630055,
+      "old_orientation_law_beta_deg": 173.52622898144432,
+      "delta_to_tool160_rad": -0.23607723110488266,
+      "delta_to_tool175_rad": 0.025722156694266918
+    },
+    {
+      "target_x_from_base_m": 0.925,
+      "target_z_m": 0.02,
+      "virtual_r_m": 0.8253933217584208,
+      "virtual_pitch_rad": -0.556956165822057,
+      "virtual_pitch_deg": -31.911237675392293,
+      "old_orientation_law_beta_deg": 172.58476016053606,
+      "delta_to_tool160_rad": -0.21964550037516473,
+      "delta_to_tool175_rad": 0.04215388742398485
+    },
+    {
+      "target_x_from_base_m": 0.95,
+      "target_z_m": 0.02,
+      "virtual_r_m": 0.8467181559429323,
+      "virtual_pitch_rad": -0.5413480707165851,
+      "virtual_pitch_deg": -31.016959699609956,
+      "old_orientation_law_beta_deg": 171.69048218475373,
+      "delta_to_tool160_rad": -0.20403740526969294,
+      "delta_to_tool175_rad": 0.057761982529456635
+    },
+    {
+      "target_x_from_base_m": 1.0,
+      "target_z_m": 0.02,
+      "virtual_r_m": 0.8899419282197013,
+      "virtual_pitch_rad": -0.5123931597778838,
+      "virtual_pitch_deg": -29.357965506645193,
+      "old_orientation_law_beta_deg": 170.03148799178896,
+      "delta_to_tool160_rad": -0.17508249433099143,
+      "delta_to_tool175_rad": 0.08671689346815814
+    }
+  ],
+  "b1_original_sampled_far_x_z2cm_m": 0.9634003316248794,
+  "as2_r085_sampled_far_x_z2cm_m": 0.9538267212849221,
+  "as2_r090_sampled_far_x_z2cm_m": 1.0115197954676614,
+  "moving_center_failure_example": {
+    "standing_arm_z_m": 0.4563069024246581,
+    "tilt25_same_baseheight_arm_z_m": 0.3491344925132663,
+    "goal_z_if_center_follows_tilt_after_sampling_floor2cm": -0.0871724099113918
+  },
+  "note": "B1 values are original command envelope, not verified realized reach; AS2 static IK/collision results separately recorded."
+}

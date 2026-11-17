@@ -1,0 +1,59 @@
+{
+  "stable_proxy": {
+    "config_differences": [],
+    "non_reward_config_differences": [],
+    "ppo_identical": true,
+    "asset_identical": true,
+    "terrain_identical": true,
+    "origins_identical": true
+  },
+  "progress_gain2_proxy": {
+    "config_differences": [
+      [
+        ".rewards.scales.tracking_ang_vel",
+        1.0,
+        2.0
+      ],
+      [
+        ".rewards.scales.tracking_lin_vel_max",
+        2.0,
+        4.0
+      ],
+      [
+        ".study.preset",
+        "stable_proxy",
+        "progress_gain2_proxy"
+      ],
+      [
+        ".study.progress_mix",
+        0.0,
+        0.5
+      ]
+    ],
+    "non_reward_config_differences": [],
+    "ppo_identical": true,
+    "asset_identical": true,
+    "terrain_identical": true,
+    "origins_identical": true
+  },
+  "stable_proxy_ground": {
+    "config_differences": [
+      [
+        ".study.preset",
+        "stable_proxy",
+        "stable_proxy_ground"
+      ],
+      [
+        ".study.terrain_height_mode",
+        "grid",
+        "proxy"
+      ]
+    ],
+    "non_reward_config_differences": [],
+    "ppo_identical": true,
+    "asset_identical": true,
+    "terrain_identical": true,
+    "origins_identical": true
+  },
+  "caveat": "Same distributions/asset/terrain/PPO, not bitwise identical GPU physics. Resume points differ: see resume_plan.json."
+}

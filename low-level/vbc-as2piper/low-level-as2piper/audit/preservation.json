@@ -1,0 +1,6 @@
+{
+  "reward_module_byte_identical": true,
+  "reward_aggregation_ast_identical": true,
+  "baseline_config_byte_identical": true,
+  "ppo_copy_byte_identical": true
+}

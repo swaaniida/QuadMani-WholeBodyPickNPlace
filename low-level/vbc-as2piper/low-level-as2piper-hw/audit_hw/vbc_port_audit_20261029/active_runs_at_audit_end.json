@@ -1,0 +1,18 @@
+[
+  {
+    "pid": 512627,
+    "arguments": [
+      "python",
+      "legged_gym/scripts/train_hw.py",
+      "--task",
+      "as2piper_plate_walk_wbc_vbc",
+      "--proj_name",
+      "as2piper-low",
+      "--exptid",
+      "as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701",
+      "--headless",
+      "--max_iterations",
+      "45000"
+    ]
+  }
+]

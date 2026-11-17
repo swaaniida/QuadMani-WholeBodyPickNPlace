@@ -1,0 +1,6 @@
+{
+  "original_source_unchanged": true,
+  "source_files_checked": 55,
+  "new_long_training_started": false,
+  "sampler": "B1 spherical + AS2 collision rejection"
+}

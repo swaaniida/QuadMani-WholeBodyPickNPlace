@@ -1,0 +1,17 @@
+{
+  "window": [
+    19500,
+    20000
+  ],
+  "n": 501,
+  "means": {
+    "Tracking/vx_rmse_m_s": 0.23123263816038767,
+    "Tracking/yaw_rmse_rad_s": 0.3431901482645861,
+    "EE/position_mean_m": 0.04472531666031141,
+    "Reset/failures_per_1000_env_steps": 0.004494050094255913,
+    "Force/norm_p95_N": 166.049905677232,
+    "Force/norm_p99_N": 290.7096541627441,
+    "RewardWeighted/leg/feet_contact_forces": -0.0430205185598361,
+    "RewardRaw/leg/roll": 0.017576567787758842
+  }
+}

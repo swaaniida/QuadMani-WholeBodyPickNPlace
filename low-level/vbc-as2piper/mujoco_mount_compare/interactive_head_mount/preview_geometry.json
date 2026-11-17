@@ -1,0 +1,471 @@
+{
+  "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_head_actual_link_inertia.xml",
+  "coordinate_frame": "AS2 base_link; x forward, y left, z up",
+  "base_origin_world_xyz_m": [
+    0.0,
+    0.0,
+    0.3264069024246581
+  ],
+  "arm_pose_rad": [
+    0.0,
+    0.76,
+    -0.89,
+    0.0,
+    0.45,
+    0.0
+  ],
+  "meshes": [
+    {
+      "name": "v_base_link_0",
+      "group": "robot",
+      "positionOffset": 0,
+      "vertexCount": 64144,
+      "indexOffset": 0,
+      "indexCount": 378666,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_FL_hip_0",
+      "group": "robot",
+      "positionOffset": 769728,
+      "vertexCount": 13887,
+      "indexOffset": 1514664,
+      "indexCount": 83016,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_FL_thigh_0",
+      "group": "robot",
+      "positionOffset": 936372,
+      "vertexCount": 6358,
+      "indexOffset": 1846728,
+      "indexCount": 38052,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_FL_calf_0",
+      "group": "robot",
+      "positionOffset": 1012668,
+      "vertexCount": 7211,
+      "indexOffset": 1998936,
+      "indexCount": 43296,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_FL_foot_0",
+      "group": "robot",
+      "positionOffset": 1099200,
+      "vertexCount": 34661,
+      "indexOffset": 2172120,
+      "indexCount": 207912,
+      "rgba": [
+        0.6980400085449219,
+        0.6980400085449219,
+        0.6980400085449219,
+        1.0
+      ]
+    },
+    {
+      "name": "v_FR_hip_0",
+      "group": "robot",
+      "positionOffset": 1515132,
+      "vertexCount": 13888,
+      "indexOffset": 3003768,
+      "indexCount": 82998,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_FR_thigh_0",
+      "group": "robot",
+      "positionOffset": 1681788,
+      "vertexCount": 6419,
+      "indexOffset": 3335760,
+      "indexCount": 38418,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_FR_calf_0",
+      "group": "robot",
+      "positionOffset": 1758816,
+      "vertexCount": 7160,
+      "indexOffset": 3489432,
+      "indexCount": 42846,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_FR_foot_0",
+      "group": "robot",
+      "positionOffset": 1844736,
+      "vertexCount": 34694,
+      "indexOffset": 3660816,
+      "indexCount": 208104,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_RL_hip_0",
+      "group": "robot",
+      "positionOffset": 2261064,
+      "vertexCount": 13862,
+      "indexOffset": 4493232,
+      "indexCount": 82836,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_RL_thigh_0",
+      "group": "robot",
+      "positionOffset": 2427408,
+      "vertexCount": 4799,
+      "indexOffset": 4824576,
+      "indexCount": 28782,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_RL_calf_0",
+      "group": "robot",
+      "positionOffset": 2484996,
+      "vertexCount": 7222,
+      "indexOffset": 4939704,
+      "indexCount": 43362,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_RL_foot_0",
+      "group": "robot",
+      "positionOffset": 2571660,
+      "vertexCount": 34661,
+      "indexOffset": 5113152,
+      "indexCount": 207912,
+      "rgba": [
+        0.6980400085449219,
+        0.6980400085449219,
+        0.6980400085449219,
+        1.0
+      ]
+    },
+    {
+      "name": "v_RR_hip_0",
+      "group": "robot",
+      "positionOffset": 2987592,
+      "vertexCount": 13883,
+      "indexOffset": 5944800,
+      "indexCount": 82974,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_RR_thigh_0",
+      "group": "robot",
+      "positionOffset": 3154188,
+      "vertexCount": 4794,
+      "indexOffset": 6276696,
+      "indexCount": 28752,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_RR_calf_0",
+      "group": "robot",
+      "positionOffset": 3211716,
+      "vertexCount": 7176,
+      "indexOffset": 6391704,
+      "indexCount": 42942,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_RR_foot_0",
+      "group": "robot",
+      "positionOffset": 3297828,
+      "vertexCount": 34694,
+      "indexOffset": 6563472,
+      "indexCount": 208104,
+      "rgba": [
+        0.7921599745750427,
+        0.8196099996566772,
+        0.9333299994468689,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_base_link_0",
+      "group": "arm",
+      "positionOffset": 3714156,
+      "vertexCount": 6172,
+      "indexOffset": 7395888,
+      "indexCount": 36438,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_link1_0",
+      "group": "arm",
+      "positionOffset": 3788220,
+      "vertexCount": 4457,
+      "indexOffset": 7541640,
+      "indexCount": 26862,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_link2_0",
+      "group": "arm",
+      "positionOffset": 3841704,
+      "vertexCount": 40307,
+      "indexOffset": 7649088,
+      "indexCount": 219498,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_link3_0",
+      "group": "arm",
+      "positionOffset": 4325388,
+      "vertexCount": 18492,
+      "indexOffset": 8527080,
+      "indexCount": 110742,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_link4_0",
+      "group": "arm",
+      "positionOffset": 4547292,
+      "vertexCount": 8761,
+      "indexOffset": 8970048,
+      "indexCount": 52674,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_link5_0",
+      "group": "arm",
+      "positionOffset": 4652424,
+      "vertexCount": 8332,
+      "indexOffset": 9180744,
+      "indexCount": 50016,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_link6_0",
+      "group": "arm",
+      "positionOffset": 4752408,
+      "vertexCount": 566,
+      "indexOffset": 9380808,
+      "indexCount": 3528,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_flange_link_0",
+      "group": "arm",
+      "positionOffset": 4759200,
+      "vertexCount": 2339,
+      "indexOffset": 9394920,
+      "indexCount": 12270,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_gripper_base_0",
+      "group": "arm",
+      "positionOffset": 4787268,
+      "vertexCount": 18333,
+      "indexOffset": 9444000,
+      "indexCount": 110268,
+      "rgba": [
+        0.20000000298023224,
+        0.2199999988079071,
+        0.25,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_gripper_link1_0",
+      "group": "arm",
+      "positionOffset": 5007264,
+      "vertexCount": 384,
+      "indexOffset": 9885072,
+      "indexCount": 2412,
+      "rgba": [
+        0.18000000715255737,
+        0.18000000715255737,
+        0.20000000298023224,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_gripper_link1_1",
+      "group": "arm",
+      "positionOffset": 5011872,
+      "vertexCount": 622,
+      "indexOffset": 9894720,
+      "indexCount": 3996,
+      "rgba": [
+        0.05999999865889549,
+        0.05999999865889549,
+        0.07000000029802322,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_gripper_link2_0",
+      "group": "arm",
+      "positionOffset": 5019336,
+      "vertexCount": 384,
+      "indexOffset": 9910704,
+      "indexCount": 2412,
+      "rgba": [
+        0.18000000715255737,
+        0.18000000715255737,
+        0.20000000298023224,
+        1.0
+      ]
+    },
+    {
+      "name": "v_piper_gripper_link2_1",
+      "group": "arm",
+      "positionOffset": 5023944,
+      "vertexCount": 622,
+      "indexOffset": 9920352,
+      "indexCount": 3996,
+      "rgba": [
+        0.05999999865889549,
+        0.05999999865889549,
+        0.07000000029802322,
+        1.0
+      ]
+    }
+  ],
+  "binary_layout": "separate position and index streams; positions are float32 xyz, indices are uint32; offsets are byte offsets",
+  "position_stream_bytes": 5031408,
+  "index_stream_bytes": 9936336,
+  "arm_base_mesh_local_aabb_m": [
+    [
+      -0.0585,
+      -0.04,
+      0.0
+    ],
+    [
+      0.04,
+      0.04,
+      0.086
+    ]
+  ],
+  "base_underside_center_local_xyz_m": [
+    -0.00925,
+    0.0,
+    0.0
+  ],
+  "selected_underside_center_xyz_base_link_m": [
+    0.2151,
+    0.0,
+    0.1319
+  ],
+  "selected_piper_base_link_origin_xyz_base_link_m": [
+    0.22435,
+    0.0,
+    0.1319
+  ],
+  "mount_pose": "upright; no alignment to local surface normal",
+  "warning": "Placement preview only. A click defines PiPER base underside-footprint center. Confirm holes, structural support, collision, cable clearance, mass and inertial effects before fabrication or dynamics."
+}

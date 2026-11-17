@@ -1,0 +1,1 @@
+This directory intentionally contains NO Isaac Gym SDK. Obtain Preview4 under NVIDIA terms at https://developer.nvidia.com/isaac-gym/download and extract so python/isaacgym exists here. Keep SDK private; never git add it.

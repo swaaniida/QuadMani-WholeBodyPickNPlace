@@ -1,0 +1,18 @@
+{
+  "wandb_mode": "disabled",
+  "num_envs": 6144,
+  "iterations": 100,
+  "transitions": 14745600,
+  "original_source_unchanged": true,
+  "source_files_verified": 55,
+  "active_files_sha256": {
+    "legged_gym/envs/manip_loco/as2piper_config.py": "e6c8201cd0a791e2756232c5803b9ab5c78b7fc1ed23b39c75bda87cf5945bbe",
+    "legged_gym/envs/manip_loco/as2piper_forward.py": "62934f0d133dd94331564a810deab84e9fca6c2bf478a3ffc54a642fca7c81b2",
+    "legged_gym/envs/manip_loco/manip_loco.py": "4bbc6c0bd071dfd0e79967e3ce54f446b52830a861c7cccab441a366fa07bb94",
+    "legged_gym/envs/rewards/maniploco_rewards.py": "6a170885da50f383daaf3c9af5daf68e2be621cf6ac5e3eaed22ed56a7aa4344",
+    "resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf": "b103445cd5378c80db4cd244d7a6e70487afc477874001b223a69e1f854c648c"
+  },
+  "verdict": "Nominal tracking works; not ready to approve whole-body EE command design. See REPORT_KO.md.",
+  "test_configuration_changed_during_run": false,
+  "proposal_applied": false
+}

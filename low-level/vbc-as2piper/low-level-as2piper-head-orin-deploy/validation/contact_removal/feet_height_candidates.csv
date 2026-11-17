@@ -1,0 +1,43 @@
+source,terrain,condition,target_m,mean_raw_hinge,target_reached_fraction,projected_pair_norm_p95_m,B1_pair_norm_p95_m
+B1 geometrically projected to AS2,flat,forward,0.15,-0.09730444103479385,0.0,0.07853754013776779,0.12143906652927397
+B1 geometrically projected to AS2,flat,forward,0.18,-0.12730443477630615,0.0,0.07853754013776779,0.12143906652927397
+B1 geometrically projected to AS2,flat,forward,0.3,-0.24730443954467773,0.0,0.07853754013776779,0.12143906652927397
+B1 geometrically projected to AS2,flat,turn,0.15,-0.10450015217065811,0.0,0.061839177273213856,0.09362711384892462
+B1 geometrically projected to AS2,flat,turn,0.18,-0.1345001459121704,0.0,0.061839177273213856,0.09362711384892462
+B1 geometrically projected to AS2,flat,turn,0.3,-0.254500150680542,0.0,0.061839177273213856,0.09362711384892462
+B1 geometrically projected to AS2,flat,forward_turn,0.15,-0.09824613481760025,0.0,0.08016723729670047,0.1241488043218851
+B1 geometrically projected to AS2,flat,forward_turn,0.18,-0.12824612855911255,0.0,0.08016723729670047,0.1241488043218851
+B1 geometrically projected to AS2,flat,forward_turn,0.3,-0.24824613332748413,0.0,0.08016723729670047,0.1241488043218851
+B1 geometrically projected to AS2,rough,forward,0.15,-0.07858683913946152,0.0003125,0.1116650328040123,0.17570222094655036
+B1 geometrically projected to AS2,rough,forward,0.18,-0.10858608037233353,0.0,0.1116650328040123,0.17570222094655036
+B1 geometrically projected to AS2,rough,forward,0.3,-0.2285860776901245,0.0,0.1116650328040123,0.17570222094655036
+B1 geometrically projected to AS2,rough,turn,0.15,-0.09820827841758728,0.0,0.07089246399700641,0.10836443454027174
+B1 geometrically projected to AS2,rough,turn,0.18,-0.12820827960968018,0.0,0.07089246399700641,0.10836443454027174
+B1 geometrically projected to AS2,rough,turn,0.3,-0.24820826947689056,0.0,0.07089246399700641,0.10836443454027174
+B1 geometrically projected to AS2,rough,forward_turn,0.15,-0.09400016069412231,0.0,0.08528864346444606,0.1324807547032833
+B1 geometrically projected to AS2,rough,forward_turn,0.18,-0.12400016188621521,0.0,0.08528864346444606,0.1324807547032833
+B1 geometrically projected to AS2,rough,forward_turn,0.3,-0.24400018155574799,0.0,0.08528864346444606,0.1324807547032833
+actual AS2 zero-action PD states; NOT trained gait,plane,stand,0.15,0.0,0.0,0.03953028842806816,
+actual AS2 zero-action PD states; NOT trained gait,plane,stand,0.18,0.0,0.0,0.03953028842806816,
+actual AS2 zero-action PD states; NOT trained gait,plane,stand,0.3,0.0,0.0,0.03953028842806816,
+actual AS2 zero-action PD states; NOT trained gait,plane,forward,0.15,-0.11047309637069702,0.0,0.039530083537101746,
+actual AS2 zero-action PD states; NOT trained gait,plane,forward,0.18,-0.14047309756278992,0.0,0.039530083537101746,
+actual AS2 zero-action PD states; NOT trained gait,plane,forward,0.3,-0.2604731023311615,0.0,0.039530083537101746,
+actual AS2 zero-action PD states; NOT trained gait,plane,turn,0.15,-0.11047372967004776,0.0,0.039529543928802015,
+actual AS2 zero-action PD states; NOT trained gait,plane,turn,0.18,-0.14047372341156006,0.0,0.039529543928802015,
+actual AS2 zero-action PD states; NOT trained gait,plane,turn,0.3,-0.26047372817993164,0.0,0.039529543928802015,
+actual AS2 zero-action PD states; NOT trained gait,plane,forward_turn,0.15,-0.11047396063804626,0.0,0.039529037103056906,
+actual AS2 zero-action PD states; NOT trained gait,plane,forward_turn,0.18,-0.14047396183013916,0.0,0.039529037103056906,
+actual AS2 zero-action PD states; NOT trained gait,plane,forward_turn,0.3,-0.26047396659851074,0.0,0.039529037103056906,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,stand,0.15,0.0,0.0,0.06214070916175842,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,stand,0.18,0.0,0.0,0.06214070916175842,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,stand,0.3,0.0,0.0,0.06214070916175842,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,forward,0.15,-0.10004287958145142,0.0,0.06211846563965082,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,forward,0.18,-0.1300428807735443,0.0,0.06211846563965082,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,forward,0.3,-0.2500428855419159,0.0,0.06211846563965082,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,turn,0.15,-0.10109670460224152,0.0,0.062267951853573325,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,turn,0.18,-0.1310967206954956,0.0,0.062267951853573325,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,turn,0.3,-0.2510967254638672,0.0,0.062267951853573325,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,forward_turn,0.15,-0.10657117515802383,0.0,0.04640276283025742,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,forward_turn,0.18,-0.13657118380069733,0.0,0.04640276283025742,
+actual AS2 zero-action PD states; NOT trained gait,trimesh,forward_turn,0.3,-0.2565711736679077,0.0,0.04640276283025742,

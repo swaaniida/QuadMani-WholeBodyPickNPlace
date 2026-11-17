@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "pose_count": 6,
+  "all_position_errors_below_0_01_mm": true,
+  "all_orientation_errors_below_0_001_deg": true,
+  "original_sources_preserved": 39,
+  "checkpoint_metadata_preserved": 226,
+  "runtime_sampler_unchanged": true,
+  "training_started": false
+}

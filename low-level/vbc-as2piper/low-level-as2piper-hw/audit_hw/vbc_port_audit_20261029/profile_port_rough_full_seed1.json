@@ -1,0 +1,47 @@
+{
+  "mode": "port",
+  "seed": 1,
+  "terrain": "trimesh",
+  "dr": "full",
+  "physics_config": {
+    "dt": 0.005,
+    "gravity": [
+      0.0,
+      0.0,
+      -9.81
+    ],
+    "physx": {
+      "bounce_threshold_velocity": 0.5,
+      "contact_collection": 2,
+      "contact_offset": 0.01,
+      "default_buffer_size_multiplier": 5,
+      "max_depenetration_velocity": 1.0,
+      "max_gpu_contact_pairs": 8388608,
+      "num_position_iterations": 4,
+      "num_threads": 10,
+      "num_velocity_iterations": 0,
+      "rest_offset": 0.0,
+      "solver_type": 1
+    },
+    "substeps": 1,
+    "up_axis": 1
+  },
+  "num_envs": 6144,
+  "steps": 24,
+  "wall_s": 5.582110194955021,
+  "equivalent_collection_24steps_s": 5.582110194955021,
+  "seconds": {
+    "goal_sampling_inclusive": 0.07133145537227392,
+    "candidate_check_inclusive": 0.0118480259552598
+  },
+  "calls": {
+    "goal_sampling_inclusive": 34,
+    "candidate_check_inclusive": 23
+  },
+  "items": {
+    "goal_sampling_inclusive": 5932,
+    "candidate_check_inclusive": 5885
+  },
+  "non_sampling_s": 5.510778739582747,
+  "note": "CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time."
+}

@@ -1,0 +1,290 @@
+[
+  {
+    "name": "plate_only_current",
+    "command_frame": "piper_base_link",
+    "T_body_arm_at_standing": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -0.02
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.08202847822000003
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "initial_tcp_arm_m": [
+      0.390414580982423,
+      2.3185990438655914e-08,
+      0.17513867208680778
+    ],
+    "sampled_tcp_arm_bounds_m": [
+      [
+        -0.7634533711508976,
+        -0.8098216464256639,
+        -0.3861920380610766
+      ],
+      [
+        0.7962127888698021,
+        0.7993299169872587,
+        0.938661258108368
+      ]
+    ],
+    "warning": "Bounds are not a collision-free command box. Use reachable joint samples or IK-filtered goals. Transform full body roll/pitch/yaw."
+  },
+  {
+    "name": "plate_only_forward",
+    "command_frame": "piper_base_link",
+    "T_body_arm_at_standing": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.005000000889999998
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.08202847822000003
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "initial_tcp_arm_m": [
+      0.39041458098242293,
+      2.3185990438655914e-08,
+      0.17513867208680778
+    ],
+    "sampled_tcp_arm_bounds_m": [
+      [
+        -0.7634533711508976,
+        -0.8098216464256639,
+        -0.3861920380610766
+      ],
+      [
+        0.7962127888698023,
+        0.7993299169872587,
+        0.938661258108368
+      ]
+    ],
+    "warning": "Bounds are not a collision-free command box. Use reachable joint samples or IK-filtered goals. Transform full body roll/pitch/yaw."
+  },
+  {
+    "name": "profiles_plate_current",
+    "command_frame": "piper_base_link",
+    "T_body_arm_at_standing": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        -0.02
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.10202847822000005
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "initial_tcp_arm_m": [
+      0.390414580982423,
+      2.3185990438655914e-08,
+      0.17513867208680778
+    ],
+    "sampled_tcp_arm_bounds_m": [
+      [
+        -0.7634533711508976,
+        -0.8098216464256639,
+        -0.4044568743919258
+      ],
+      [
+        0.7962127888698021,
+        0.7993299169872587,
+        0.938661258108368
+      ]
+    ],
+    "warning": "Bounds are not a collision-free command box. Use reachable joint samples or IK-filtered goals. Transform full body roll/pitch/yaw."
+  },
+  {
+    "name": "profiles_plate_forward",
+    "command_frame": "piper_base_link",
+    "T_body_arm_at_standing": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.005000000889999998
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.10202847822000005
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "initial_tcp_arm_m": [
+      0.39041458098242293,
+      2.3185990438655914e-08,
+      0.17513867208680778
+    ],
+    "sampled_tcp_arm_bounds_m": [
+      [
+        -0.7634533711508976,
+        -0.8098216464256639,
+        -0.4044568743919258
+      ],
+      [
+        0.7962127888698023,
+        0.7993299169872587,
+        0.938661258108368
+      ]
+    ],
+    "warning": "Bounds are not a collision-free command box. Use reachable joint samples or IK-filtered goals. Transform full body roll/pitch/yaw."
+  },
+  {
+    "name": "profiles_cantilever",
+    "command_frame": "piper_base_link",
+    "T_body_arm_at_standing": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.05400000089
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.10202847822000005
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "initial_tcp_arm_m": [
+      0.39041458098242293,
+      2.3185990438655914e-08,
+      0.17513867208680778
+    ],
+    "sampled_tcp_arm_bounds_m": [
+      [
+        -0.7634533711508976,
+        -0.8098216464256639,
+        -0.4050943600002624
+      ],
+      [
+        0.7962127888698022,
+        0.7993299169872587,
+        0.938661258108368
+      ]
+    ],
+    "warning": "Bounds are not a collision-free command box. Use reachable joint samples or IK-filtered goals. Transform full body roll/pitch/yaw."
+  },
+  {
+    "name": "b1z1",
+    "command_frame": "link00",
+    "T_body_arm_at_standing": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.3
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.08999999999999997
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "initial_tcp_arm_m": [
+      0.46014898046058056,
+      0.0,
+      0.3228462574494467
+    ],
+    "sampled_tcp_arm_bounds_m": [
+      [
+        -0.8705793944441029,
+        -0.8671479769212778,
+        -0.39744175833159434
+      ],
+      [
+        0.8412123001532059,
+        0.8656495224514904,
+        0.9780650027827907
+      ]
+    ],
+    "warning": "Bounds are not a collision-free command box. Use reachable joint samples or IK-filtered goals. Transform full body roll/pitch/yaw."
+  }
+]

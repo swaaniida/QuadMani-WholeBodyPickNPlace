@@ -1,0 +1,87 @@
+{
+  "comparison": "Same301-completed-iteration actor, exact same terrain/DR hash,64 environments, first10s/2s warm-up excluded velocity errors. Different teacher/history inference; no deterministic GPU replay claim.",
+  "environment_realization": {
+    "terrain_sha256": "ed6dd28a3ff516f10d54d1f2ab16f2930b3ca7240583176be38780dde64f0990",
+    "env_origins_sha256": "ffa492782f6b12348a10cc9d54224f9a3ba8b53033a4b059a8520d7f371f2f5f",
+    "dr_sha256": "275e0be8ae81cbdfa79011b63fdb43cea7f8f5ee5bd7ac29c29a012e80a83c52",
+    "triangle_mesh_sha256": "b0b80c7d71b5d89252c75f26c80621c6ad99f586f225f7e556945781298c77b0"
+  },
+  "results": {
+    "history": {
+      "stand": {
+        "mean_vx": 0.004505430348217487,
+        "mean_yaw": -0.0002974882663693279,
+        "vx_MAE": 0.0289128590375185,
+        "yaw_MAE": 0.03936060518026352,
+        "vy_MAE": 0.029123486950993538,
+        "yaw_std": 0.09874560683965683,
+        "falls_10s": 0
+      },
+      "forward": {
+        "mean_vx": 0.20288486778736115,
+        "mean_yaw": -0.022071171551942825,
+        "vx_MAE": 0.13904599845409393,
+        "yaw_MAE": 0.367209792137146,
+        "vy_MAE": 0.12469714134931564,
+        "yaw_std": 0.45145383477211,
+        "falls_10s": 11
+      },
+      "turn": {
+        "mean_vx": 0.1467927098274231,
+        "mean_yaw": 0.20479172468185425,
+        "vx_MAE": 0.18603068590164185,
+        "yaw_MAE": 0.5318934917449951,
+        "vy_MAE": 0.10492730885744095,
+        "yaw_std": 0.4740053713321686,
+        "falls_10s": 6
+      },
+      "forward_turn": {
+        "mean_vx": 0.13059765100479126,
+        "mean_yaw": 0.1799028068780899,
+        "vx_MAE": 0.1635308414697647,
+        "yaw_MAE": 0.5305474996566772,
+        "vy_MAE": 0.097608283162117,
+        "yaw_std": 0.4395737946033478,
+        "falls_10s": 6
+      }
+    },
+    "privileged": {
+      "stand": {
+        "mean_vx": -0.0004007965326309204,
+        "mean_yaw": -0.001317127957008779,
+        "vx_MAE": 0.03198449686169624,
+        "yaw_MAE": 0.0405382476747036,
+        "vy_MAE": 0.029273400083184242,
+        "yaw_std": 0.1050541028380394,
+        "falls_10s": 4
+      },
+      "forward": {
+        "mean_vx": 0.20472335815429688,
+        "mean_yaw": -0.02531900256872177,
+        "vx_MAE": 0.13319887220859528,
+        "yaw_MAE": 0.3700109124183655,
+        "vy_MAE": 0.12872929871082306,
+        "yaw_std": 0.4569706916809082,
+        "falls_10s": 12
+      },
+      "turn": {
+        "mean_vx": 0.17443886399269104,
+        "mean_yaw": 0.21044185757637024,
+        "vx_MAE": 0.201298326253891,
+        "yaw_MAE": 0.5251131057739258,
+        "vy_MAE": 0.11166252195835114,
+        "yaw_std": 0.47460222244262695,
+        "falls_10s": 8
+      },
+      "forward_turn": {
+        "mean_vx": 0.13301892578601837,
+        "mean_yaw": 0.1742846667766571,
+        "vx_MAE": 0.156846821308136,
+        "yaw_MAE": 0.5420297980308533,
+        "vy_MAE": 0.11113681644201279,
+        "yaw_std": 0.47282248735427856,
+        "falls_10s": 8
+      }
+    }
+  }
+}

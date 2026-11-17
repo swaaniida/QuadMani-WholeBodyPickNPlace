@@ -1,0 +1,138 @@
+{
+  "Loss/arm_torques_loss": {
+    "n": 1001,
+    "mean": 0.0,
+    "min": 0,
+    "max": 0,
+    "last": 0,
+    "finite": true
+  },
+  "Loss/hist_latent_loss": {
+    "n": 1001,
+    "mean": 0.013529361865262754,
+    "min": 0.01247564167715609,
+    "max": 0.014466159977018833,
+    "last": 0.01303831716068089,
+    "finite": true
+  },
+  "Loss/learning_rate": {
+    "n": 1001,
+    "mean": 0.00020000000000000367,
+    "min": 0.0002,
+    "max": 0.0002,
+    "last": 0.0002,
+    "finite": true
+  },
+  "Loss/priv_ref_lambda": {
+    "n": 1001,
+    "mean": 0.09999999999999859,
+    "min": 0.1,
+    "max": 0.1,
+    "last": 0.1,
+    "finite": true
+  },
+  "Loss/priv_reg_loss": {
+    "n": 1001,
+    "mean": 0.013101481606339014,
+    "min": 0.011820871895179153,
+    "max": 0.014849004801362753,
+    "last": 0.012827187683433295,
+    "finite": true
+  },
+  "Loss/surrogate": {
+    "n": 1001,
+    "mean": -0.0033475350820072057,
+    "min": -0.004656879509275314,
+    "max": -0.0014536689239321276,
+    "last": -0.004529209704196546,
+    "finite": true
+  },
+  "Loss/torque_supervision_weight": {
+    "n": 1001,
+    "mean": 0.0,
+    "min": 0,
+    "max": 0,
+    "last": 0,
+    "finite": true
+  },
+  "Loss/value_function": {
+    "n": 1001,
+    "mean": 0.006045861150111104,
+    "min": 0.00473753665573895,
+    "max": 0.012385639315471052,
+    "last": 0.006186969392001629,
+    "finite": true
+  },
+  "Loss/value_mixing_ratio": {
+    "n": 1001,
+    "mean": 1.0,
+    "min": 1,
+    "max": 1,
+    "last": 1,
+    "finite": true
+  },
+  "Perf/collection time": {
+    "n": 1001,
+    "mean": 3.9947293631204,
+    "min": 3.7920570373535156,
+    "max": 4.341493844985962,
+    "last": 4.0198869705200195,
+    "finite": true
+  },
+  "Perf/learning_time": {
+    "n": 1001,
+    "mean": 0.30957181065470785,
+    "min": 0.2301924228668213,
+    "max": 0.31914472579956055,
+    "last": 0.23037028312683105,
+    "finite": true
+  },
+  "Perf/total_fps": {
+    "n": 1001,
+    "mean": 34271.77622377622,
+    "min": 31663,
+    "max": 35942,
+    "last": 34693,
+    "finite": true
+  },
+  "Train/dones": {
+    "n": 1001,
+    "mean": 0.00199399721372378,
+    "min": 0.0016666666666666668,
+    "max": 0.0024951171875,
+    "last": 0.0018489583333333333,
+    "finite": true
+  },
+  "Train/mean_arm_reward": {
+    "n": 1001,
+    "mean": 3.5487410877406815,
+    "min": 3.4563527268171312,
+    "max": 3.6057823705673218,
+    "last": 3.5586949372291565,
+    "finite": true
+  },
+  "Train/mean_episode_length": {
+    "n": 1001,
+    "mean": 501.44805194805184,
+    "min": 493.91,
+    "max": 502,
+    "last": 501.56,
+    "finite": true
+  },
+  "Train/mean_reward": {
+    "n": 1001,
+    "mean": 14.359099044002072,
+    "min": 13.472781360149384,
+    "max": 15.145009155273437,
+    "last": 14.368545824885368,
+    "finite": true
+  },
+  "_step": {
+    "n": 1001,
+    "mean": 14500.0,
+    "min": 14000,
+    "max": 15000,
+    "last": 15000,
+    "finite": true
+  }
+}

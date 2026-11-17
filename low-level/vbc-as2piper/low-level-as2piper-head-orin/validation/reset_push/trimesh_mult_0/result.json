@@ -1,0 +1,97 @@
+{
+  "terrain": "trimesh",
+  "envs": 32,
+  "seconds": 12,
+  "seed": 20261111,
+  "multiplier": 0.0,
+  "base_max_velocity_m_s": 0.39638863616568415,
+  "effective_axis_limit_m_s": 0.0,
+  "reset_start_height_m": 0.3264069024246581,
+  "termination_thresholds": {
+    "roll_rad": 0.8,
+    "pitch_rad": 0.8,
+    "height_m": 0.1,
+    "height_reference": "terrain",
+    "contact_N": 1.0
+  },
+  "active_contact_termination_bodies": [],
+  "initial_state_and_dr_sha256": "11aff909023225c1da2d4bd0741d7cf350e31e02bdd7ec2fb5f2a0be693a2614",
+  "terrain_sha256": "1bb1bd48c287cf197945a7a525f3334822615eda393d6e64d636b25ea794c90f",
+  "reset_count": 0,
+  "failed_environments": 0,
+  "survived_environments": 32,
+  "pre_push_resets": 0,
+  "events": [],
+  "trace_columns": [
+    "roll_rad",
+    "pitch_rad",
+    "world_z_m",
+    "ground_z_m",
+    "height_above_ground_m",
+    "contact",
+    "roll",
+    "pitch",
+    "height",
+    "timeout"
+  ],
+  "push": null,
+  "threshold_probes": {
+    "normal": {
+      "contact": false,
+      "roll": false,
+      "pitch": false,
+      "height": false,
+      "timeout": false
+    },
+    "roll": {
+      "contact": false,
+      "roll": true,
+      "pitch": false,
+      "height": false,
+      "timeout": false
+    },
+    "pitch": {
+      "contact": false,
+      "roll": false,
+      "pitch": true,
+      "height": false,
+      "timeout": false
+    },
+    "height": {
+      "contact": false,
+      "roll": false,
+      "pitch": false,
+      "height": true,
+      "timeout": false
+    },
+    "timeout": {
+      "contact": false,
+      "roll": false,
+      "pitch": false,
+      "height": false,
+      "timeout": true
+    },
+    "contact": {
+      "contact": true,
+      "roll": false,
+      "pitch": false,
+      "height": false,
+      "timeout": false
+    },
+    "configured_roll": {
+      "contact": false,
+      "roll": true,
+      "pitch": false,
+      "height": false,
+      "timeout": false
+    },
+    "ground_offset": {
+      "contact": false,
+      "roll": false,
+      "pitch": false,
+      "height": true,
+      "timeout": false
+    }
+  },
+  "controller": "nominal leg PD, random EE DLS position drive, no learned policy"
+}

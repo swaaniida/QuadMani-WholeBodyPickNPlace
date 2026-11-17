@@ -1,0 +1,94 @@
+--- 744-original/legged_gym/envs/__init__.py
++++ 700-nocontact/legged_gym/envs/__init__.py
+@@ -2,4 +2,4 @@
+ from .manip_loco.as2_head_orin_config import AS2HeadOrinCfg, AS2HeadOrinCfgPPO
+ from legged_gym.utils.task_registry import task_registry
+ 
+-task_registry.register('as2piper_head_orin', ManipLoco, AS2HeadOrinCfg(), AS2HeadOrinCfgPPO(), 'as2piper_head_orin')
++task_registry.register('as2piper_head_orin_nocontact', ManipLoco, AS2HeadOrinCfg(), AS2HeadOrinCfgPPO(), 'as2piper_head_orin_nocontact')
+--- 744-original/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ 700-nocontact/legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -8,6 +8,9 @@
+ 
+ class AS2HeadOrinCfg(B1Z1RoughCfg):
+     class env(B1Z1RoughCfg.env):
++        observe_foot_contacts = False
++        num_proprio = 62
++        num_observations = num_proprio * (B1Z1RoughCfg.env.history_len + 1) + B1Z1RoughCfg.env.num_priv
+         num_gripper_joints = 2
+         env_spacing = 3.
+         stop_update_goal = False
+@@ -78,5 +81,5 @@
+ 
+ class AS2HeadOrinCfgPPO(B1Z1RoughCfgPPO):
+     class runner(B1Z1RoughCfgPPO.runner):
+-        experiment_name = 'as2piper_head_orin'
++        experiment_name = 'as2piper_head_orin_nocontact'
+         resume = False
+--- 744-original/legged_gym/envs/manip_loco/manip_loco.py
++++ 700-nocontact/legged_gym/envs/manip_loco/manip_loco.py
+@@ -230,12 +230,14 @@
+                                     self._reindex_all((self.dof_pos - self.default_dof_pos) * self.obs_scales.dof_pos)[:, :-self.cfg.env.num_gripper_joints],  # dim 18
+                                     self._reindex_all(self.dof_vel * self.obs_scales.dof_vel)[:, :-self.cfg.env.num_gripper_joints],  # dim 18
+                                     self._reindex_all(self.action_history_buf[:, -1])[:, :12],  # dim 12
+-                                    self._reindex_feet(self.foot_contacts_from_sensor),  # dim 4
+                                     self.commands[:, :3] * self.commands_scale,  # dim 3
+                                     # self.curr_ee_goal_sphere,  # dim 3 position
+                                     ee_goal_local_cart,  # dim 3 position
+                                     0*self.curr_ee_goal_sphere  # dim 3 orientation
+                                     ),dim=-1)
++        if getattr(self.cfg.env, "observe_foot_contacts", True):
++            obs_buf = torch.cat((obs_buf[:, :53], self._reindex_feet(self.foot_contacts_from_sensor), obs_buf[:, 53:]), dim=-1)
++        assert obs_buf.shape[1] == self.cfg.env.num_proprio - (5 if self.cfg.env.observe_gait_commands else 0)
+         if self.cfg.env.observe_gait_commands:
+             obs_buf = torch.cat((obs_buf,
+                                       self.gait_indices.unsqueeze(1), self.clock_inputs), dim=-1)
+@@ -1136,9 +1138,10 @@
+         noise_vec[idx:idx+12] = 0  # Assuming no noise for action history
+         idx += 12
+ 
+-        # Foot contacts (dim 4)
+-        noise_vec[idx:idx+4] = 0  # Assuming no noise for foot contacts
+-        idx += 4
++        # Optional foot contact input is absent from the AS2 deployment contract.
++        if getattr(cfg.env, "observe_foot_contacts", True):
++            noise_vec[idx:idx+4] = 0
++            idx += 4
+ 
+         # Commands (dim 3)
+         noise_vec[idx:idx+3] = 0  # Assuming no noise for commands
+--- 744-original/rsl_rl_local/rsl_rl/modules/actor_critic.py
++++ 700-nocontact/rsl_rl_local/rsl_rl/modules/actor_critic.py
+@@ -204,6 +204,15 @@
+                 self.actor_arm_control_head = nn.Sequential(*actor_arm_layers)
+             
+             def forward(self, obs, hist_encoding: bool = False):
++                deployment_width = self.num_prop * (self.num_hist + 1)
++                training_width = deployment_width + self.num_priv
++                if obs.dim() != 2:
++                    raise ValueError("Actor observation must be a batch matrix")
++                if hist_encoding:
++                    if obs.size(1) != training_width and obs.size(1) != deployment_width:
++                        raise ValueError("History actor observation width does not match configured inputs")
++                elif obs.size(1) != training_width:
++                    raise ValueError("Privileged actor requires the configured training observation")
+                 obs_prop = obs[:, :self.num_prop]
+                 if hist_encoding:
+                     latent = self.infer_hist_latent(obs)
+@@ -281,6 +290,8 @@
+                 self.critic_arm_control_head = nn.Sequential(*critic_arm_layers)
+             
+             def forward(self, obs):
++                if obs.dim() != 2 or obs.size(1) != self.num_prop * (self.num_hist + 1) + self.num_priv:
++                    raise ValueError("Critic observation width does not match configured inputs")
+                 prop_and_priv = obs[:, :self.num_prop + self.num_priv]
+                 backbone_output = self.critic_backbone(prop_and_priv)
+                 leg_output = self.critic_leg_control_head(backbone_output)
+--- 744-original/run_head.sh
++++ 700-nocontact/run_head.sh
+@@ -5,4 +5,4 @@
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+ export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
+ export MAX_JOBS=2
+-exec python legged_gym/scripts/train.py --task as2piper_head_orin --proj_name as2piper-low --headless "$@"
++exec python legged_gym/scripts/train.py --task as2piper_head_orin_nocontact --proj_name as2piper-low --headless "$@"

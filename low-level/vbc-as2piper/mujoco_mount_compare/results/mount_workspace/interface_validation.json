@@ -1,0 +1,203 @@
+[
+  {
+    "name": "plate_only_current",
+    "plate_as2": {
+      "footprint_xy_m": [
+        -0.09000000000000001,
+        0.05,
+        -0.06,
+        0.06
+      ],
+      "bottom_z_m": 0.07602847822000003,
+      "exact_top_max_m": 0.07602847821788371,
+      "min_gap_mm": 2.1163210073282812e-09,
+      "max_sampled_gap_mm": 2.1083066980151637,
+      "supported_sample_fraction_1mm": 0.9889196675900277,
+      "sampled_rays": 361,
+      "mesh_penetration_mm": 0.0
+    },
+    "plate_to_piper_gap_mm": 0.0,
+    "structural_fastening_verified": false,
+    "umi_links_joints_unchanged": true
+  },
+  {
+    "name": "plate_only_forward",
+    "plate_as2": {
+      "footprint_xy_m": [
+        -0.09000000000000001,
+        0.05,
+        -0.06,
+        0.06
+      ],
+      "bottom_z_m": 0.07602847822000003,
+      "exact_top_max_m": 0.07602847821788371,
+      "min_gap_mm": 2.1163210073282812e-09,
+      "max_sampled_gap_mm": 2.1083066980151637,
+      "supported_sample_fraction_1mm": 0.9889196675900277,
+      "sampled_rays": 361,
+      "mesh_penetration_mm": 0.0
+    },
+    "plate_to_piper_gap_mm": 0.0,
+    "structural_fastening_verified": false,
+    "umi_links_joints_unchanged": true
+  },
+  {
+    "name": "profiles_plate_current",
+    "plate_as2": {
+      "footprint_xy_m": [
+        -0.09000000000000001,
+        0.05,
+        -0.06,
+        0.06
+      ],
+      "bottom_z_m": 0.09602847822000005,
+      "exact_top_max_m": 0.07602847821788371,
+      "min_gap_mm": 20.000000002116337,
+      "max_sampled_gap_mm": 22.10830669801518,
+      "supported_sample_fraction_1mm": 0.0,
+      "sampled_rays": 361,
+      "mesh_penetration_mm": 0.0
+    },
+    "plate_to_piper_gap_mm": 0.0,
+    "structural_fastening_verified": false,
+    "profile_as2": [
+      {
+        "footprint_xy_m": [
+          -0.09000000000000001,
+          0.05,
+          0.025,
+          0.045000000000000005
+        ],
+        "bottom_z_m": 0.07602847822000004,
+        "exact_top_max_m": 0.07601202436613057,
+        "min_gap_mm": 0.016453853869474733,
+        "max_sampled_gap_mm": 0.028335056727404884,
+        "supported_sample_fraction_1mm": 1.0,
+        "sampled_rays": 361,
+        "mesh_penetration_mm": 0.0
+      },
+      {
+        "footprint_xy_m": [
+          -0.09000000000000001,
+          0.05,
+          -0.045000000000000005,
+          -0.025
+        ],
+        "bottom_z_m": 0.07602847822000004,
+        "exact_top_max_m": 0.07601202436613057,
+        "min_gap_mm": 0.016453853869474733,
+        "max_sampled_gap_mm": 0.028403600818641128,
+        "supported_sample_fraction_1mm": 1.0,
+        "sampled_rays": 361,
+        "mesh_penetration_mm": 0.0
+      }
+    ],
+    "umi_links_joints_unchanged": true
+  },
+  {
+    "name": "profiles_plate_forward",
+    "plate_as2": {
+      "footprint_xy_m": [
+        -0.09000000000000001,
+        0.05,
+        -0.06,
+        0.06
+      ],
+      "bottom_z_m": 0.09602847822000005,
+      "exact_top_max_m": 0.07602847821788371,
+      "min_gap_mm": 20.000000002116337,
+      "max_sampled_gap_mm": 22.10830669801518,
+      "supported_sample_fraction_1mm": 0.0,
+      "sampled_rays": 361,
+      "mesh_penetration_mm": 0.0
+    },
+    "plate_to_piper_gap_mm": 0.0,
+    "structural_fastening_verified": false,
+    "profile_as2": [
+      {
+        "footprint_xy_m": [
+          -0.09000000000000001,
+          0.05,
+          0.025,
+          0.045000000000000005
+        ],
+        "bottom_z_m": 0.07602847822000004,
+        "exact_top_max_m": 0.07601202436613057,
+        "min_gap_mm": 0.016453853869474733,
+        "max_sampled_gap_mm": 0.028335056727404884,
+        "supported_sample_fraction_1mm": 1.0,
+        "sampled_rays": 361,
+        "mesh_penetration_mm": 0.0
+      },
+      {
+        "footprint_xy_m": [
+          -0.09000000000000001,
+          0.05,
+          -0.045000000000000005,
+          -0.025
+        ],
+        "bottom_z_m": 0.07602847822000004,
+        "exact_top_max_m": 0.07601202436613057,
+        "min_gap_mm": 0.016453853869474733,
+        "max_sampled_gap_mm": 0.028403600818641128,
+        "supported_sample_fraction_1mm": 1.0,
+        "sampled_rays": 361,
+        "mesh_penetration_mm": 0.0
+      }
+    ],
+    "umi_links_joints_unchanged": true
+  },
+  {
+    "name": "profiles_cantilever",
+    "plate_as2": {
+      "footprint_xy_m": [
+        -0.09,
+        0.099,
+        -0.06,
+        0.06
+      ],
+      "bottom_z_m": 0.09602847822000005,
+      "exact_top_max_m": 0.09080120737032436,
+      "min_gap_mm": 5.2272708496756835,
+      "max_sampled_gap_mm": 22.10830669801518,
+      "supported_sample_fraction_1mm": 0.0,
+      "sampled_rays": 361,
+      "mesh_penetration_mm": 0.0
+    },
+    "plate_to_piper_gap_mm": 0.0,
+    "structural_fastening_verified": false,
+    "profile_as2": [
+      {
+        "footprint_xy_m": [
+          -0.09000000000000001,
+          0.05,
+          0.025,
+          0.045000000000000005
+        ],
+        "bottom_z_m": 0.07602847822000004,
+        "exact_top_max_m": 0.07601202436613057,
+        "min_gap_mm": 0.016453853869474733,
+        "max_sampled_gap_mm": 0.028335056727404884,
+        "supported_sample_fraction_1mm": 1.0,
+        "sampled_rays": 361,
+        "mesh_penetration_mm": 0.0
+      },
+      {
+        "footprint_xy_m": [
+          -0.09000000000000001,
+          0.05,
+          -0.045000000000000005,
+          -0.025
+        ],
+        "bottom_z_m": 0.07602847822000004,
+        "exact_top_max_m": 0.07601202436613057,
+        "min_gap_mm": 0.016453853869474733,
+        "max_sampled_gap_mm": 0.028403600818641128,
+        "supported_sample_fraction_1mm": 1.0,
+        "sampled_rays": 361,
+        "mesh_penetration_mm": 0.0
+      }
+    ],
+    "umi_links_joints_unchanged": true
+  }
+]

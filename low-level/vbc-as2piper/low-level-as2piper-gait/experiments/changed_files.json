@@ -1,0 +1,188 @@
+[
+  {
+    "path": "CAUSES_FULL_ENV_KO.md",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 60
+  },
+  {
+    "path": "CAUSES_KO.md",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 50
+  },
+  {
+    "path": "README.md",
+    "baseline_existed": true,
+    "baseline_lines": 91,
+    "new_lines": 64
+  },
+  {
+    "path": "RESULTS_KO.md",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 112
+  },
+  {
+    "path": "REWARD_CHANGES_KO.md",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 87
+  },
+  {
+    "path": "check_gait_geometry.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 77
+  },
+  {
+    "path": "check_study_config.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 91
+  },
+  {
+    "path": "evaluate_hw.py",
+    "baseline_existed": true,
+    "baseline_lines": 125,
+    "new_lines": 219
+  },
+  {
+    "path": "gait_geometry.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 42
+  },
+  {
+    "path": "launch_monitor_detached.sh",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 16
+  },
+  {
+    "path": "launch_stable.sh",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 21
+  },
+  {
+    "path": "launch_study_detached.sh",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 21
+  },
+  {
+    "path": "legged_gym/envs/__init__.py",
+    "baseline_existed": true,
+    "baseline_lines": 53,
+    "new_lines": 55
+  },
+  {
+    "path": "legged_gym/envs/manip_loco/as2piper_gait_study.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 256
+  },
+  {
+    "path": "make_study_report.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 38
+  },
+  {
+    "path": "monitor_full_env.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 45
+  },
+  {
+    "path": "plot_comparison.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 24
+  },
+  {
+    "path": "plot_full_env.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 27
+  },
+  {
+    "path": "plot_proxy_v2.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 29
+  },
+  {
+    "path": "plot_tracking_traces.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 26
+  },
+  {
+    "path": "probe_smooth_tracking.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 51
+  },
+  {
+    "path": "render_gait.py",
+    "baseline_existed": true,
+    "baseline_lines": 44,
+    "new_lines": 81
+  },
+  {
+    "path": "report_full_env.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 46
+  },
+  {
+    "path": "report_proxy_v2.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 70
+  },
+  {
+    "path": "run_ablation_suite.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 51
+  },
+  {
+    "path": "run_gait.sh",
+    "baseline_existed": true,
+    "baseline_lines": 14,
+    "new_lines": 10
+  },
+  {
+    "path": "run_stable.sh",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 19
+  },
+  {
+    "path": "summarize_gait.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 69
+  },
+  {
+    "path": "train_gait.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 75
+  },
+  {
+    "path": "watch_fresh.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 37
+  },
+  {
+    "path": "watch_proxy_study.py",
+    "baseline_existed": false,
+    "baseline_lines": 0,
+    "new_lines": 23
+  }
+]

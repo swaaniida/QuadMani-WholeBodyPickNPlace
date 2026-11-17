@@ -1,0 +1,103 @@
+{
+  "stable_proxy": {
+    "unexpected_configuration_differences": [],
+    "derived_runtime_fields": [
+      [
+        ".env.num_observations",
+        744,
+        799
+      ],
+      [
+        ".env.num_proprio",
+        66,
+        71
+      ],
+      [
+        ".terrain.num_sub_terrains",
+        null,
+        200
+      ]
+    ]
+  },
+  "progress_gain2_proxy": {
+    "unexpected_configuration_differences": [],
+    "derived_runtime_fields": [
+      [
+        ".env.num_observations",
+        744,
+        799
+      ],
+      [
+        ".env.num_proprio",
+        66,
+        71
+      ],
+      [
+        ".terrain.num_sub_terrains",
+        null,
+        200
+      ]
+    ]
+  },
+  "stable_proxy_ground": {
+    "unexpected_configuration_differences": [],
+    "derived_runtime_fields": [
+      [
+        ".env.num_observations",
+        744,
+        799
+      ],
+      [
+        ".env.num_proprio",
+        66,
+        71
+      ],
+      [
+        ".terrain.num_sub_terrains",
+        null,
+        200
+      ]
+    ]
+  },
+  "combined_candidate_only_height_reference_changes": [
+    [
+      ".study.preset",
+      "progress_gain2_proxy",
+      "progress_gain2_proxy_ground"
+    ],
+    [
+      ".study.terrain_height_mode",
+      "grid",
+      "proxy"
+    ]
+  ],
+  "yaw4_candidate_only_yaw_weight_changes": [
+    [
+      ".rewards.scales.tracking_ang_vel",
+      2.0,
+      4.0
+    ],
+    [
+      ".study.preset",
+      "progress_gain2_proxy",
+      "progress_gain2_proxy_yaw4"
+    ]
+  ],
+  "ground_floor_candidate_reward_group_changes": [
+    [
+      ".study.penalize_excess_swing",
+      null,
+      false
+    ],
+    [
+      ".study.preset",
+      "progress_gain2_proxy",
+      "progress_gain2_proxy_ground_floor"
+    ],
+    [
+      ".study.terrain_height_mode",
+      "grid",
+      "proxy"
+    ]
+  ]
+}

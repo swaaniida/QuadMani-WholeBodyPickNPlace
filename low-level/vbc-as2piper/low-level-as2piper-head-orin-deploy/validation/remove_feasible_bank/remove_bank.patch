@@ -1,0 +1,84 @@
+--- before/legged_gym/envs/manip_loco/manip_loco.py
++++ legged_gym/envs/manip_loco/manip_loco.py
+@@ -44,7 +44,6 @@
+ from legged_gym.utils.helpers import class_to_dict
+ from legged_gym.utils.terrain import Terrain, Terrain_Perlin
+ from legged_gym.utils.piper_control import ArmCommandFilter, arm_drive_properties
+-from legged_gym.utils.feasible_workspace import FeasibleWorkspaceSampler
+ from .b1z1_config import B1Z1RoughCfg
+ 
+ import sys
+@@ -854,20 +853,6 @@
+         self.init_start_ee_sphere = torch.tensor(self.cfg.goal_ee.ranges.init_pos_start, device=self.device).unsqueeze(0)
+         self.init_end_ee_sphere = torch.tensor(self.cfg.goal_ee.ranges.init_pos_end, device=self.device).unsqueeze(0)
+         
+-        self.feasible_workspace = None
+-        bank_file = getattr(self.cfg.goal_ee, 'feasible_bank_file', None)
+-        if bank_file and not self.cfg.env.teleop_mode:
+-            if self.cfg.goal_ee.command_mode != 'sphere' or not getattr(self.cfg.goal_ee.sphere_center, 'height_roll_pitch_invariant', False):
+-                raise ValueError('Feasible workspace requires the invariant virtual sphere frame')
+-            center_cfg = self.cfg.goal_ee.sphere_center
+-            if self.cfg.goal_ee.orientation_roll_offset != 0. or self.cfg.goal_ee.ranges.init_pos_start != self.cfg.goal_ee.ranges.init_pos_end:
+-                raise ValueError('Feasible workspace reset/orientation contract mismatch')
+-            self.feasible_workspace = FeasibleWorkspaceSampler(
+-                bank_file.format(LEGGED_GYM_ROOT_DIR=LEGGED_GYM_ROOT_DIR),
+-                LEGGED_GYM_ROOT_DIR, self.num_envs, self.device,
+-                [center_cfg.x_offset, center_cfg.y_offset, center_cfg.z_invariant_offset],
+-                self.cfg.goal_ee.ranges.init_pos_start, self.cfg.goal_ee.arm_induced_pitch)
+-
+         #noise
+         self.noise_scale_vec = self._get_noise_scale_vec(self.cfg)
+         self.add_noise = self.cfg.noise.add_noise
+@@ -1327,22 +1312,6 @@
+         elif self.cfg.env.teleop_mode:
+             return
+ 
+-        if len(env_ids) > 0 and self.feasible_workspace is not None:
+-            # Goal state follows only offline-screened edges. No IK/body pose is
+-            # commanded here; the policy must learn the whole-body response.
+-            self.ee_goal_orn_delta_rpy[env_ids] = 0.
+-            if is_init:
+-                home = self.feasible_workspace.reset(env_ids)
+-                self.ee_start_sphere[env_ids] = home
+-                self.ee_goal_sphere[env_ids] = home
+-                self.curr_ee_goal_sphere[env_ids] = home
+-            else:
+-                self.ee_start_sphere[env_ids] = self.ee_goal_sphere[env_ids].clone()
+-                self.ee_goal_sphere[env_ids] = self.feasible_workspace.sample(env_ids)
+-            self.ee_goal_cart[env_ids] = sphere2cart(self.ee_goal_sphere[env_ids])
+-            self.goal_timer[env_ids] = 0.
+-            return
+-
+         if len(env_ids) > 0:
+             init_env_ids = env_ids.clone()
+             
+@@ -1396,8 +1365,6 @@
+         # TODO: for the teleop mode, we need to directly update self.ee_goal_orn_quat using VR controller.
+         default_yaw = torch.atan2(ee_goal_cart_yaw_global[:, 1], ee_goal_cart_yaw_global[:, 0])
+         default_pitch = -self.curr_ee_goal_sphere[:, 1] + self.cfg.goal_ee.arm_induced_pitch
+-        if self.feasible_workspace is not None:
+-            default_pitch = self.feasible_workspace.pitch(self.curr_ee_goal_sphere)
+         self.ee_goal_orn_quat = quat_from_euler_xyz(self.ee_goal_orn_delta_rpy[:, 0] + self.cfg.goal_ee.orientation_roll_offset, default_pitch + self.ee_goal_orn_delta_rpy[:, 1], self.ee_goal_orn_delta_rpy[:, 2] + default_yaw)
+         
+         self.goal_timer += 1
+--- before/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -55,8 +55,6 @@
+         arm_effort_limit_verified = False
+ 
+     class goal_ee(B1Z1RoughCfg.goal_ee):
+-        # Static nominal flat-ground witness graph; no online IK rejection loop.
+-        feasible_bank_file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/as2piper/workspace/head_orin_feasible.json'
+         arm_induced_pitch = 2.455216137744035
+         orientation_roll_offset = 0.
+         # Conservative body/head + Orin bounds, relative to the arm origin.
+@@ -76,8 +74,7 @@
+         class ranges:
+             init_pos_start = [.427898468676838, .421686284147847, 0.]
+             init_pos_end = [.427898468676838, .421686284147847, 0.]
+-            # Legacy ranges below are inactive when feasible_bank_file is configured.
+-            # Bank nodes and screened edges define position + orientation sampling.
++            # Original continuous spherical sampler; no IK feasibility rejection.
+             pos_l = [.40, .48]
+             pos_p = [.10, .50]
+             pos_y = [-.25, .25]

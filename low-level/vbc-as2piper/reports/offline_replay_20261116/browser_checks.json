@@ -1,0 +1,62 @@
+{
+  "file_protocol": true,
+  "offline_context": true,
+  "scenarios": [
+    "motion36_vy0",
+    "ground64"
+  ],
+  "mesh_count": 31,
+  "render_triangles": 828618,
+  "seek": true,
+  "checkpoint_switch": true,
+  "four_views": true,
+  "camera_preset": true,
+  "orbit_zoom": true,
+  "display_controls": true,
+  "play_pause": true,
+  "ground64_switch_seek": true,
+  "font_loaded": true,
+  "external_requests": [],
+  "page_errors": [],
+  "ground_state": {
+    "scenario": "ground64",
+    "duration": 64,
+    "root": [
+      -0.03217315673828125,
+      -0.01873779296875,
+      0.2840822637081146
+    ],
+    "command": [
+      0,
+      0,
+      0
+    ],
+    "actualVelocity": [
+      0.008983123116195202,
+      null,
+      -0.00801284983754158
+    ],
+    "ready": true,
+    "frame": 449,
+    "time": 18,
+    "selected": 3,
+    "compare": false,
+    "playing": false,
+    "meshCount": 31,
+    "camera": [
+      1.4000000000000001,
+      -1.7499999999999964,
+      1.3399999999999972
+    ],
+    "target": [
+      0.5499992370605469,
+      0.18000030517578125,
+      0.019999969750642776
+    ],
+    "actual": [
+      0.5405178070068359,
+      0.17029762268066406,
+      0.010013237595558167
+    ]
+  }
+}

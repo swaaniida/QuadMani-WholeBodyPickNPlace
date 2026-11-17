@@ -1,0 +1,90 @@
+[
+  {
+    "terrain": "flat",
+    "condition": "stand",
+    "sensor6_vs_net_pearson": 0.7716266550218225,
+    "sensor_force3_vs_net_pearson": 0.7717110257164889,
+    "sensor_contact_fraction": 0.9965625,
+    "net_contact_fraction": 0.9977138157894737,
+    "disagreement_fraction": 0.001743421052631579,
+    "sensor_contact_precision_vs_net": 0.9997029261771551,
+    "sensor_contact_recall_vs_net": 0.9985493150459109
+  },
+  {
+    "terrain": "flat",
+    "condition": "forward",
+    "sensor6_vs_net_pearson": 0.971001352009196,
+    "sensor_force3_vs_net_pearson": 0.9710288895970022,
+    "sensor_contact_fraction": 0.6768585526315789,
+    "net_contact_fraction": 0.6814144736842105,
+    "disagreement_fraction": 0.005180921052631579,
+    "sensor_contact_precision_vs_net": 0.999538308264282,
+    "sensor_contact_recall_vs_net": 0.9928554187786628
+  },
+  {
+    "terrain": "flat",
+    "condition": "turn",
+    "sensor6_vs_net_pearson": 0.9773673331915876,
+    "sensor_force3_vs_net_pearson": 0.9773855197809339,
+    "sensor_contact_fraction": 0.6965131578947369,
+    "net_contact_fraction": 0.7128125,
+    "disagreement_fraction": 0.01675986842105263,
+    "sensor_contact_precision_vs_net": 0.9996694058751299,
+    "sensor_contact_recall_vs_net": 0.9768107247513786
+  },
+  {
+    "terrain": "flat",
+    "condition": "forward_turn",
+    "sensor6_vs_net_pearson": 0.9656165237103812,
+    "sensor_force3_vs_net_pearson": 0.9656445809898546,
+    "sensor_contact_fraction": 0.6753782894736842,
+    "net_contact_fraction": 0.6821052631578948,
+    "disagreement_fraction": 0.007220394736842105,
+    "sensor_contact_precision_vs_net": 0.9996347076443514,
+    "sensor_contact_recall_vs_net": 0.9897762345679012
+  },
+  {
+    "terrain": "rough",
+    "condition": "stand",
+    "sensor6_vs_net_pearson": 0.16293208741258014,
+    "sensor_force3_vs_net_pearson": 0.16294934059133934,
+    "sensor_contact_fraction": 0.9816282894736842,
+    "net_contact_fraction": 0.5306085526315789,
+    "disagreement_fraction": 0.46851973684210524,
+    "sensor_contact_precision_vs_net": 0.5316254209741468,
+    "sensor_contact_recall_vs_net": 0.9835095006354422
+  },
+  {
+    "terrain": "rough",
+    "condition": "forward",
+    "sensor6_vs_net_pearson": 0.4177885513109309,
+    "sensor_force3_vs_net_pearson": 0.41779870458821783,
+    "sensor_contact_fraction": 0.6902467105263158,
+    "net_contact_fraction": 0.42164473684210524,
+    "disagreement_fraction": 0.3010690789473684,
+    "sensor_contact_precision_vs_net": 0.5873424357233064,
+    "sensor_contact_recall_vs_net": 0.961499453892963
+  },
+  {
+    "terrain": "rough",
+    "condition": "turn",
+    "sensor6_vs_net_pearson": 0.44835343332671984,
+    "sensor_force3_vs_net_pearson": 0.4483605696127916,
+    "sensor_contact_fraction": 0.6995230263157894,
+    "net_contact_fraction": 0.4476480263157895,
+    "disagreement_fraction": 0.3096052631578947,
+    "sensor_contact_precision_vs_net": 0.5986692059909242,
+    "sensor_contact_recall_vs_net": 0.9355182422750487
+  },
+  {
+    "terrain": "rough",
+    "condition": "forward_turn",
+    "sensor6_vs_net_pearson": 0.39418654263564884,
+    "sensor_force3_vs_net_pearson": 0.3941954825508124,
+    "sensor_contact_fraction": 0.679375,
+    "net_contact_fraction": 0.37450657894736844,
+    "disagreement_fraction": 0.3288486842105263,
+    "sensor_contact_precision_vs_net": 0.5336028664116593,
+    "sensor_contact_recall_vs_net": 0.9679841897233201
+  }
+]

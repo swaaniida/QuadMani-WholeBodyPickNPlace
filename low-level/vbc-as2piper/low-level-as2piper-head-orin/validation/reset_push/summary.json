@@ -1,0 +1,78 @@
+[
+  {
+    "terrain": "plane",
+    "multiplier": 0.0,
+    "effective_axis_limit_m_s": 0.0,
+    "reset_count": 0,
+    "failed_environments": 0,
+    "survived_environments": 32,
+    "pre_push_resets": 0,
+    "causes": {}
+  },
+  {
+    "terrain": "plane",
+    "multiplier": 1.0,
+    "effective_axis_limit_m_s": 0.39638863616568415,
+    "reset_count": 0,
+    "failed_environments": 0,
+    "survived_environments": 32,
+    "pre_push_resets": 0,
+    "causes": {}
+  },
+  {
+    "terrain": "plane",
+    "multiplier": 1.5,
+    "effective_axis_limit_m_s": 0.5945829542485263,
+    "reset_count": 0,
+    "failed_environments": 0,
+    "survived_environments": 32,
+    "pre_push_resets": 0,
+    "causes": {}
+  },
+  {
+    "terrain": "plane",
+    "multiplier": 2.5,
+    "effective_axis_limit_m_s": 0.9909715904142103,
+    "reset_count": 4,
+    "failed_environments": 4,
+    "survived_environments": 28,
+    "pre_push_resets": 0,
+    "causes": {
+      "pitch": 3,
+      "roll": 1
+    }
+  },
+  {
+    "terrain": "trimesh",
+    "multiplier": 0.0,
+    "effective_axis_limit_m_s": 0.0,
+    "reset_count": 0,
+    "failed_environments": 0,
+    "survived_environments": 32,
+    "pre_push_resets": 0,
+    "causes": {}
+  },
+  {
+    "terrain": "trimesh",
+    "multiplier": 1.0,
+    "effective_axis_limit_m_s": 0.39638863616568415,
+    "reset_count": 0,
+    "failed_environments": 0,
+    "survived_environments": 32,
+    "pre_push_resets": 0,
+    "causes": {}
+  },
+  {
+    "terrain": "trimesh",
+    "multiplier": 2.5,
+    "effective_axis_limit_m_s": 0.9909715904142103,
+    "reset_count": 6,
+    "failed_environments": 6,
+    "survived_environments": 26,
+    "pre_push_resets": 0,
+    "causes": {
+      "roll": 5,
+      "pitch": 1
+    }
+  }
+]

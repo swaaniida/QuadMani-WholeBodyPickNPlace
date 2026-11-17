@@ -1,0 +1,106 @@
+{
+  "terrain": "plane",
+  "case": "dr",
+  "envs": 16,
+  "seconds": 12.0,
+  "controller": "zero leg policy actions + original VBC EE DLS position drive; no learned policy",
+  "resets": 3,
+  "height_mean_m": 0.3084057569503784,
+  "roll_pitch_p95_deg": 2.181042024520341,
+  "ee_position_mean_m": 0.017164073884487152,
+  "ee_position_p95_m": 0.029859174042940126,
+  "ee_angle_p95_deg": 6.295836067199707,
+  "feet_loaded_fraction": [
+    0.986625,
+    0.995125,
+    0.957125,
+    0.97025
+  ],
+  "leg_torque_peak_Nm": 32.60654830932617,
+  "arm_contact_peak_N": 0.0,
+  "observation_shape": [
+    16,
+    744
+  ],
+  "dof_order": [
+    "FL_hip_joint",
+    "FL_thigh_joint",
+    "FL_calf_joint",
+    "FR_hip_joint",
+    "FR_thigh_joint",
+    "FR_calf_joint",
+    "RL_hip_joint",
+    "RL_thigh_joint",
+    "RL_calf_joint",
+    "RR_hip_joint",
+    "RR_thigh_joint",
+    "RR_calf_joint",
+    "piper_joint1",
+    "piper_joint2",
+    "piper_joint3",
+    "piper_joint4",
+    "piper_joint5",
+    "piper_joint6",
+    "piper_gripper_joint1",
+    "piper_gripper_joint2"
+  ],
+  "rigid_bodies": [
+    "base_link",
+    "FL_hip",
+    "FL_thigh",
+    "FL_calf",
+    "FL_foot",
+    "FR_hip",
+    "FR_thigh",
+    "FR_calf",
+    "FR_foot",
+    "RL_hip",
+    "RL_thigh",
+    "RL_calf",
+    "RL_foot",
+    "RR_hip",
+    "RR_thigh",
+    "RR_calf",
+    "RR_foot",
+    "piper_link1",
+    "piper_link2",
+    "piper_link3",
+    "piper_link4",
+    "piper_link5",
+    "piper_link6",
+    "piper_gripper_link1",
+    "piper_gripper_link2",
+    "piper_umi_nominal_tcp"
+  ],
+  "arm_measured_effort_peak_abs_Nm": [
+    2.2865004539489746,
+    8.81125259399414,
+    5.166539669036865,
+    0.39260655641555786,
+    3.223510265350342,
+    0.12761050462722778
+  ],
+  "arm_effort_limit_Nm": [
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+  ],
+  "arm_effort_saturation_fraction": 0.0,
+  "reset_events": [
+    {
+      "time_s": 8.639999806880951,
+      "env": 12
+    },
+    {
+      "time_s": 9.539999786764383,
+      "env": 4
+    },
+    {
+      "time_s": 9.67999978363514,
+      "env": 9
+    }
+  ]
+}

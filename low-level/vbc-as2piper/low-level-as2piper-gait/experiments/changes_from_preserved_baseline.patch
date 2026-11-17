@@ -1,0 +1,2011 @@
+--- /dev/null
++++ new_gait/CAUSES_FULL_ENV_KO.md
+@@ -0,0 +1,60 @@
++# VBC 동일 환경 보상 비교: 확인한 원인과 남은 검증
++
++학습 환경은 기존 AS2 VBC 포트의 rough trimesh·전체 DR·6144환경·random EE·reset·command schedule·PPO를 유지한다. AS2 질량·길이 비례값을 사용한다. B1 원본과 AS2 원복판은 수정하지 않는다. [실행 조건·재개 이력](experiments/gait_reward_proxy_v2/PROTOCOL_KO.md), [최신 평가표](experiments/gait_reward_proxy_v2/RESULTS_KO.md)를 기준으로 판단한다.
++
++## 확인한 코드 및 측정 문제
++
++| 항목 | 근거 | 수정 및 해석 |
++|---|---|---|
++| 발 속도 갱신 누락 | tensor advanced indexing 결과는 복사본이며 기존 값이 초기 상태에 머묾 | PhysX refresh 후 현재 발 속도를 다시 선택. 수정 단독으로 안정적 보행을 입증하지는 못함 |
++| feet_jerk가 항상0 | 이전 wrench를 확인하는 객체와 저장하는 객체가 다름 | 같은 객체에 이전 값을 보관. 접촉력 변화는 발 링크 wrench 변화이며 실제 GRF와 구분 |
++| 정지 접촉 목표0.5 | AS2 포트의 부호 보정 후 네 발 접지가 penalty가 됨 | 정지 목표를 네 발 모두1로 변경. force penalty0. 단독 보행 개선 효과는 부족 |
++| 전진 보상 포화 | 기존 함수는 목표보다 빠른 속도도 같은 최고값 | 대칭 Gaussian으로 과속·저속을 모두 구분. 평지 비교에서 과속 감소 |
++| world-z 기반 앞발 높이 | 앞발2개 world-z의 norm은 발별 지면 clearance가 아님 | 네 발의 위상별 지면 기준 높이로 변경. rough에서는 기준 높이와 목표 손실을 추가 비교 중 |
++| 체공시간과2Hz 위상 불일치 | 원래 앞발2개·0.5초 기준. 2Hz/duty0.5의 swing은0.25초 | 네 발·0.25초, credit 상한, weight2→0.5 |
++| home 근접 유인 | walking_dof는 실제 이동이 아니라 초기 관절 자세 근접도 | weight1.5→0.5. 이 항이 크다고 보행이 잘 되는 것이 아님 |
++| triangle-mesh contact force 보고 누락 | SDK 문서, 평지 중량비≈1.0/rough 보고값≈0.30, 실제 메시 근접 접촉 검사 | 기존 관측용 contact bit를 force shaping 입력으로 비교. 센서/관측/물리는 유지. 정상반력 N을 복원한 것이 아님 |
++
++센서 flag 변경 및 새 contact filter는 측정 결과가 부족하여 채택하지 않았다. 기본 물리 소스 `manip_loco.py`는 보존한 원복판과 같다. contact bit 입력으로 바꾼 것만으로 보행 개선이 입증되지는 않았다.
++
++## 원인 분리 결과
++
++| 가능 원인 | 측정 | 판단 범위 |
++|---|---|---|
++| 토크 포화 | 강화 후보201회 평가에서 limit90% 초과 샘플0% | 해당 평가의 주원인으로 지지되지 않음 |
++| 발 순서/위상 오류 | 실제 순서FL,FR,RL,RR; 목표FL–RR / FR–RL 대각선 | 인덱스 오류 확인 안 됨. 실제 몸통 yaw는2Hz로 흔들림 |
++| history 적응 지연 | 동일301회 정책·같은 정적 DR의 teacher/history 첫10초 비교: 회전 평균0.210/0.205rad/s, 표준편차 약0.474rad/s | 적응 지연만으로 현재 문제를 설명하기 어려움 |
++| 상자에 걸려 종료 | 강화 후보301회 종료47건의 직전0.5초에 발–상자 거리2cm 이내 사례0건 | 해당 종료에서 상자 걸림을 주원인으로 지지하지 않음 |
++| EE guard/reset 규칙 오류 | 동일47건 모두 roll/pitch>0.8rad. 현재 termination contact 목록은 비어 있음 | 해당 평가는 실제 자세 한계로 종료. 관절/EE 유효성 검사로 종료된 것이 아님 |
++| 높이 기준만 변경하면 해결 | ground 후보301회: 전진0.039/목표0.25m/s, 회전0.122/목표0.6rad/s | 높이 기준 변경 단독으로 충분한 추종이 나오지 않음 |
++| 진행 방향 유인 부족 | 강화 후보201→301→401회 전진0.164→0.193→0.226m/s | 이동은 증가하나 넘어짐39→47→63회. 속도 증가를 안정화로 해석하지 않음 |
++| 회전 추종 유인 부족 | 강화 후보401회 회전0.237/목표0.6rad/s; 전진 중 yaw MAE0.369rad/s | 같은301회 비교에서 전진 중 yaw MAE0.360→0.254, 넘어짐47→32.401회도 추종·안정성 기준은 미충족 |
++| rough에 과도한 swing 높이 감점 | 4cm 대칭 목표가7–11cm 실제 발 들림도 감점. 기록 궤적의 높이 기준/손실 반사실 계산 | ground_floor301회 넘어짐72회로 control47회보다 악화. 채택하지 않음 |
++
++raw body contact force도 SDK 보고 문제를 받을 수 있다. 그 값이0이라는 사실만으로 몸통 무접촉이나 실물 안전성을 보증하지 않는다.
++
++## 비교군 구성
++
++| 후보 | 공통 상태와 변경 | 상태 |
++|---|---|---|
++| 기존 AS2 VBC 포트 보상 | 원래 보상 | scratch600회 완료, 명령 추종·안정성 기준 미충족 |
++| Gaussian + 위상 보상 | 기본 데이터/정지 수정, 대칭 속도 추종,4cm 발 높이 | full-environment에서 이동 부족. 평지 성공과 구분 |
++| contact proxy | force shaping 입력만 기존 contact bit로 변경 |301회 평가에서도 전진0.012m/s.335회 상태 저장 후 종료 |
++| last-support ground | contact proxy + 마지막 접촉 높이 기준 |301회 평가 후305회 상태 저장하고 종료 |
++| progress gain2 | Gaussian+진행도, 속도/yaw weight4/2 | 실제 이동은 나오지만 균형 기준 미충족 |
++| yaw4 | progress gain2의 동일201회 정책·Adam/history에서 yaw weight만4로 변경 |401회까지 평가,433회 상태 저장 후 종료 |
++| ground_floor | 동일201회에서 높이 보상 그룹 변경: 마지막 접촉 기준 + rough swing 최소 높이 |301회 실패,332회 저장 후 종료 |
++
++모든 분기는 물리 환경을 재초기화한다. 정적 지형·질량·CoM·마찰·모터 해시가 같더라도 reset·push·EE의 모든 난수 경로와 GPU 물리까지 같다는 뜻은 아니다. warm start 분기를 scratch 성공으로 표시하지 않는다.
++
++## 채택 기준
++
++평균 전진속도만 보지 않는다. 명령별 속도 MAE, 회전 중 전진 이탈, 옆 방향 속도, roll/pitch, 전체20초의 종료, 실제 메시 기준 발 들림·미끄러짐, 정책 재생 영상을 함께 확인한다. 서 있는 모델을 성공으로 분류하지 않는다. 평지·명목 조건 평가는 원인 진단이며 full-environment 통과를 대신하지 않는다.
++
++실험은 W&B 비활성 상태이며 기존 온라인 PID512627과 별개다. 후보 통과와 scratch 학습 검증 전에는 새45000회 production run을 시작하거나 공개 기본 보상을 최종 검증 버전으로 표시하지 않는다.
++
++## 추가 확인: 작은 명령에서 새 진행도 항의 문제
++
++추가했던 constant progress mix는0.001 부근에서 불연속이 있었고 작은 명령에서도 빠른 이동을 상당히 보상했다.401회 정책은 명목 평지에서도 제자리 회전 시0.435m/s로 전진했다. 작은 command에서 mix를0으로 부드럽게 줄이는 수정은 실제 함수 수치 검사를 통과했다. 기존 command 생성 범위를 좁히지 않았다.
++
++현재 `smooth_yaw4`와 `smooth_yaw4_contactmatch`를 모두0에서 시작했다. 새 두 run의 차이는 필요한 stance 접촉이 빠졌을 때의 감점 하나다. 높이 그룹은 동일하게 유지했다. 초기화·환경 동일성은 `matched_fresh_v3.json`, 실제 소스는 `source_snapshots/`에 기록했다. 새 후보의 실제 보행은 학습·holdout·geometry 평가를 통해 판단하며, 수식 검사만으로 통과 처리하지 않는다.
+--- /dev/null
++++ new_gait/CAUSES_KO.md
+@@ -0,0 +1,50 @@
++# AS2 gait 원인 가설 및 비교 범위
++
++| 원인 후보 | 확인한 사실 | 비교 방법 |
++|---|---|---|
++| 발 속도 캐시 고정 | 초기 tensor-index 복사본이 갱신되지 않음. 실제 속도가 변해도 캐시 변화0 | velocity 단독 |
++| 충격 변화 패널티 비활성 | 상태를 저장/확인하는 객체가 다름. 기존 항목은0 | jerk 단독 |
++| 정지 contact 목표 불일치 | 정지 desired contact가 네 발 모두0.5. 부호 보정된 force penalty와 충돌 | stop 단독, data_stop 조합 |
++| 초과 속도 보상 포화 | 목표0.25와 실제0.55m/s 모두 거의 최대 보상 | data_stop 대비 speed |
++| yaw 추종 유인 부족 | 기존 weight0.5, Gaussian denominator0.2 | speed에서 yaw weight1.0, sigma0.35rad/s와 함께 비교 |
++| 발 높이 기준 | 앞발2개 world-z norm이며 개별 발 위상·반지름·지면을 반영하지 않음 | speed 대비 stable 조합 |
++| 체공시간과 gait 주기 불일치 | 앞발만0.5초 기준.2Hz/duty0.5의 swing 시간은0.25초 | stable 조합: 네 발,0.25초, credit 상한 |
++| 초기 자세 근접 보상 | walking_dof는 발 디딤이 아니라 home 관절 근접도를 보상 | stable 조합: weight1.5→0.5 |
++| 초기 학습 부족 | 기존313회 정책은3.25Hz였으나 원래 보상으로 평지120회 추가 학습 후2Hz | 공통 초기 정책 및 동일 추가 학습량의 대조군 |
++| 거친 지면·강한 DR | 초기 학습을 어렵게 할 수 있으나, 평지·DR off 대조군에서도 과속/정지 실패가 남음 | 비교군은 공통 controlled 환경. 선정안은 별도 rough/DR 평가 |
++| torque clipping | 기존 전진 평가의 limit90% 초과 샘플0%, 최대사용비율71.3% | 주원인으로 지지되지 않음. 모든 조건에서 하드웨어 동일 |
++| PD/armature 및 CoM | 모델에 영향을 주지만 이번 비교에서는 변경하지 않음 | 보상 효과와 섞지 않음. 최적 게인·구조라는 주장 없음 |
++| 팔 동작 | 모든 비교 조건에서 동일한 full random EE command 사용 | 선정안의 EE 오차도 확인. 팔 목표 범위를 줄여 결과를 숨기지 않음 |
++| 발 인덱스/영상 변환 | FL,FR,RL,RR 순서 및 trot pair 확인. PhysX↔MuJoCo 발 z 오차2.38e-7m | 영상 원인으로 배제 |
++
++`data_stop`은 세 코드 수정의 조합이다. `speed`와 `stable` 역시 명시된
++여러 변경을 묶은 조건이므로, 조합 내부의 개별 weight 효과를 분리했다고
++주장하지 않는다. 단일 seed120회 회복 실험의 결과는 장시간 scratch 수렴이나
++실물 안정성의 증명이 아니다.
++
++실제 수치는 `experiments/gait_ablation_v1/PAIRED_COMPARISON_KO.md`에 기록한다.
++
++## 거친 지면의 높이 기준 추가 진단
++
++하중 20N 초과의 발 접촉 3,767개 샘플에서, 발 바닥 높이와 3이웃 grid
++추정치의 절대 차이는 중앙값 0.76cm, P95 4.35cm, 최대 10.11cm였다.
++샘플의 13.49%는 2.5cm보다 컸다. 기존 clearance sigma 2.5cm와 비교할 때
++보상 오차에 영향을 주는 크기다. 접촉 높이도 구형 발 반지름과 경사면 때문에
++근사이므로 이 수치를 정확한 CAD 표면 오차로 해석하지 않는다.
++
++v2는 접촉 높이 캐시와 거친 지면의 최소 clearance 조건을 조합해 비교한다.
++기존 평지 검증의 보상 식, 관측, EE 범위, 하드웨어는 바꾸지 않는다.
++
++## VBC 환경의 초기 정지 편향
++
++full rough/DR에서 Gaussian 수정안은101/201회 시점에 이동 명령에도 몸통 속도가
++거의0이었다. 2Hz 접촉 성분이나 긴 episode만으로 보행 성공을 판단할 수 없다.
++같은101회 정책의 privileged/history 경로를 처음10초로 맞춰 비교해도 둘 다
++거의 움직이지 않았으므로 이 시점의 실패를 history 적응만으로 설명하기 어렵다.
++목표 속도가0.6m/s일 때 sigma0.2m/s Gaussian의 정지 보상은 exp(-9)로 작다.
++작은 이동에서 보상 차이를 더 명확히 주는 `progress` 조합을 같은 환경에서 비교한다.
++이는 초기 학습 가설이며600회 이후 Gaussian의 성능도 별도로 추적한다.
++
++초기 두 진단 평가에서 최종 `/100`을 빠뜨린 검증식 때문에 저장이 중단됐고,
++원시 물리 로그에서 복구한 결과는 partial artifact로 구분했다. 이 오류는 학습에
++영향을 주지 않았다. 수정 후 본 평가의 보상 합산 오차는6e-8 이하다.
+--- preserved_baseline/README.md
++++ new_gait/README.md
+@@ -1,91 +1,64 @@
+-# AS2+PiPER: audited VBC hardware port
++# AS2 + PiPER gait reward study
+ 
+-Current default: **`as2piper_plate_vbc_port`**, from iteration 0. See
+-[VBC_PORT_AUDIT_KO.md](VBC_PORT_AUDIT_KO.md) for the full source audit, restored
+-rough terrain/domain randomization/reward settings, VBC coordinate convention,
+-expanded EE ranges, hardware-derived exploration, and controlled checks.
++Independent copy of `../low-level-as2piper-hw`. The preserved baseline task is
++`as2piper_plate_vbc_port` in that directory; see its `BASELINE_VBC_PORT.md`.
++The baseline includes the documented contact sign correction and inherited
++defects. It is not identical to upstream B1 VBC.
++
++Public training entry: `run_stable.sh --max_iterations 45000`, task
++`as2piper_plate_gait_stable`, project `as2piper-low`. This entry uses the original
++rough/full-DR defaults and target-iteration semantics. W&B is online by default;
++the local ablation/fresh studies below use W&B disabled.
++
++## Matched reward ablations
++
++| Preset | Live foot velocity | Working contact-change penalty | Four-foot stop target | Symmetric speed/yaw tracking | Phase clearance/air time |
++|---|---|---|---|---|---|
++| original | No | No | No | No | No |
++| velocity | Yes | No | No | No | No |
++| jerk | No | Yes | No | No | No |
++| stop | No | No | Yes | No | No |
++| data_stop | Yes | Yes | Yes | No | No |
++| speed | Yes | Yes | Yes | Yes | No |
++| stable | Yes | Yes | Yes | Yes | Yes |
++
++Each paired trial starts with the same copied model313, Adam/history optimizer,
++seed7,1024 environments and120 additional updates. The controlled environment
++uses a plane with DR disabled; original +/-20% joint reset and original random
++EE goals/command distribution remain. This is a recovery ablation, not seven
++independent scratch-training convergence demonstrations. The selected candidate
++also needs separate scratch and terrain/DR verification.
++
++`speed` changes the velocity term to symmetric planar error (sigma0.20m/s),
++and yaw to sigma0.35rad/s with weight1.0. The weight of planar tracking remains2.
++`stable` additionally replaces front-foot world-height norm with four-foot,
++phase-dependent4cm clearance; uses all four feet with0.25s swing timing at2Hz
++and bounded air-time credit; reduces air-time weight2→0.5 and walking_dof1.5→0.5.
++These bundled groups test combinations, not the isolated effect of each weight.
++
++Plane clearance uses foot center minus 28mm radius. Experimental `stable_contact` uses cached
++loaded-foot support heights and a smoothed mean support height for the body;
++clearance is a lower bound on rough ground to allow higher viable steps.
++These are contact-based approximations, not terrain ray casts. `stable_grid`
++preserves the grid-based terrain reward, also used by the final `stable` default.
++Contact v2 was rejected as the default after worse matched rough-terrain results.
++See `RESULTS_KO.md` for measured results and remaining full-DR limitations.
++
++## Commands
++
++No W&B authentication is required for the local study. W&B project remains
++`as2piper-low` when explicitly enabled through `WANDB_MODE=online`.
+ 
+ ```bash
+-# Authenticated vbc account, project root. Preserve the prior run for comparison.
+-python low-level-as2piper-hw/restart_fresh.py \
+-  --old-run-id as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701 \
+-  --keep-old-run
++# Scratch training; iterations is the number of NEW updates.
++bash run_gait.sh --preset stable --controlled --num-envs 1024 \
++  --iterations 1000 --run as2piper_gait_stable_scratch_example
+ 
+-# Fresh independent 0 -> 45000 launch; no checkpoint/transfer initialization.
+-WANDB_BASE_URL=https://api.wandb.ai bash low-level-as2piper-hw/launch_hw.sh \
+-  --max_iterations 45000
++# Default environment without --controlled retains rough terrain and full DR.
++# Existing run directories are never overwritten; --checkpoint restores Adam.
+ ```
+ 
+-W&B project `as2piper-low`, new IDs `as2piper_vbcport_scratch_<UTC time>_<PID>`.
+-The 20-iteration smoke model is not used to initialize the long run.
+-
+-## Superseded restricted sampler experiment
+-
+-The following section records the previous plane/nominal/narrow-workspace task.
+-It is retained for comparison and is not the current default.
+-
+-Independent copy of `low-level-as2piper-forward`. B1 baseline, old AS2 training,
+-and the forward test configuration are preserved. This is a new training task,
+-not a resume of the old 7000-iteration model.
+-
+-That experiment started **from iteration 0**, without a gait checkpoint or arm
+-input transfer initialization. Default task: `as2piper_plate_walk_wbc_vbc`.
+-EE pose IK/body collision screening runs offline in `audit_ee_range.py`.
+-Training uses the original VBC spherical sampler and its ten-point EE box/floor
+-checker; it does not instantiate or call the additional iterative IK/OBB guard.
+-See [VBC_SAMPLER_FIX_KO.md](VBC_SAMPLER_FIX_KO.md) for measurements and range limits.
+-
+-```bash
+-# Fresh 0 -> 45000 run, from the project root in the authenticated vbc account.
+-WANDB_BASE_URL=https://api.wandb.ai bash low-level-as2piper-hw/launch_hw.sh \
+-  --max_iterations 45000
+-
+-# Replace only the superseded slow run (stop + remove its local/W&B records).
+-python low-level-as2piper-hw/restart_fresh.py \
+-  --old-run-id as2piper_hw_gaitfix_ee_scratch_20261029_130112
+-```
+-
+-W&B project: `as2piper-low`. New default ID:
+-`as2piper_hw_gaitfix_vbcsampler_scratch_<UTC timestamp>_<PID>`.
+-The flat nominal task retains friction/leg-strength randomization and disables
+-payload/COM/gripper-mass/push randomization. It is not a ground-picking task.
+-
+-## Historical gait/transfer diagnostics (not the current launch recipe)
+-
+-The measured arm-held walking checkpoint is
+-`logs/as2piper-low/gait_pilot500_20261029/model_500.pt`.
+-The measured walking+arm-goal starter is
+-`logs/as2piper-low/walk_wbc_transfer520_20261029/model_520.pt`.
+-See [GAIT_FIX_KO.md](GAIT_FIX_KO.md) for actual velocity/contact measurements.
+-
+-```bash
+-# Historical transfer diagnostic, not the current fresh-start experiment.
+-# Run from the project root, using an environment already authenticated to W&B.
+-AS2_TASK=as2piper_plate_walk_wbc_nominal bash low-level-as2piper-hw/launch_hw.sh \
+-  --resumeid walk_wbc_transfer520_20261029 --checkpoint 520 --max_iterations 45000
+-
+-# Optional: reproduce the initial arm-held locomotion curriculum from scratch.
+-bash low-level-as2piper-hw/launch_gait.sh --num_envs 2048 --max_iterations 500
+-```
+-
+-W&B project `as2piper-low`, WBC task `as2piper_plate_walk_wbc`, name
+-`plate_walk_wbc_<UTC timestamp>_<PID>`, fresh ID `as2piper_walk_wbc_<...>`.
+-The launcher prints its PID/log path and rejects immediate startup failures.
+-`as2piper_plate_gait` holds the arm while learning locomotion;
+-`as2piper_plate_walk_wbc_nominal` adds arm commands before payload/COM/push DR.
+-Select `AS2_TASK=as2piper_plate_walk_wbc` explicitly for the full scaled DR stage.
+-The naive `walk_wbc_nominal600_20261029` transfer is an unsuccessful diagnostic
+-branch and should not replace the validated transfer-initialized starter.
+-Authenticate W&B using your existing environment. No authentication material is
+-copied by these scripts. There is no pretrained locomotion policy in this task.
+-The base gait is learned, without scripted joint trajectories. This first stage
+-uses a physical flat plane; rough-terrain robustness and real-hardware gait are
+-not implied by the simulated velocity/contact evaluations.
+-
+-`derive_hardware.py` creates `resources/commands/hardware.json` from the model's
+-mass/inertia/support loads and the available official AS2 simulation preset.
+-The calibration report explains equations, assumptions and implementation changes.
+-`train_hw.py` saves the actual runtime config, hardware specification, source and
+-URDF hashes for each run. Extended checkpoints also save history-encoder Adam,
+-learning counters and RNG states. On restart, simulator/contact/episode state is
+-new; extended checkpoints are not a bit-exact PhysX restart.
++Results and runtime snapshots are in `experiments/gait_ablation_v1` and
++`logs/as2piper-low`. Every run stores full config, asset hash and source hashes.
++PPO/network/storage and AS2 hardware/URDF are unchanged. Only the new subclass
++overrides the selected reward functions and contact target.
+--- /dev/null
++++ new_gait/RESULTS_KO.md
+@@ -0,0 +1,112 @@
++# AS2 + PiPER gait 보상 비교 결과
++
++[최신 원인 분리와 수정 근거](CAUSES_FULL_ENV_KO.md). Fresh v3 두 후보를 원래 rough/전체DR에서0회부터 비교 중이다. 기존 warm-start 후보의 성능을 fresh 성공으로 표시하지 않는다.
++
++> 후속 검증: VBC의 rough terrain·전체 DR·6144환경에서 보상만 바꾼 비교를 진행 중이다.
++> [최신 접촉·높이 보상 비교](experiments/gait_reward_proxy_v2/RESULTS_KO.md), [첫 full-environment 결과](experiments/gait_full_env_v1/RESULTS_KO.md),
++> [공통 조건과 동일 counter 비교](experiments/gait_full_env_v1/PROTOCOL_KO.md)를 우선 확인한다.
++> 초기 201회에서 Gaussian 수정안은 균형을 유지하지만 이동을 거의 하지 않아 보행 성공이 아니다.
++> 아래 평지 결과를 full-DR 성공으로 해석하지 않는다.
++
++## 판단
++
++수정 보상으로 중간 속도의 평지 보행이 학습되는 것을 확인했다. 동일 초기화·동일 학습량의 기존 보상보다 과속과 회전 중 전진 이탈이 크게 감소했다. 거친 지면과 전체 DR의 안정화는 아직 충족하지 못했으며, 평지 결과를 실물 또는 전체 환경의 안정성으로 확대하지 않는다.
++
++## 코드 보존 및 분리
++
++| 구분 | 경로 / task | 상태 |
++|---|---|---|
++| 보존한 AS2 VBC 원복판 | `../low-level-as2piper-hw`, `as2piper_plate_vbc_port` | 기존 소스 51개 SHA256 동일. `BASELINE_VBC_PORT.md`로 표시 |
++| 신규 gait 복제본 | 현재 디렉터리, `as2piper_plate_gait_stable` | 별도 subclass로 보상 수정 |
++| B1 원본 | `/data/team/users/suhwan/vbc-legacy` | 기록된 Python 소스 19개 SHA256 동일 |
++| 기존 실행 중 학습 | PID 512627 | 유지. 신규 실험과 별개 |
++
++원복판은 B1 소스 그대로라는 의미가 아니다. AS2 하드웨어 포팅과 contact shaping 부호 보정을 포함하며, 상속된 버그도 보존되어 있다. `experiments/preservation.json`과 `experiments/changes_from_preserved_baseline.patch`에서 확인할 수 있다.
++
++## 확인한 원인과 변경
++
++| 원인 | 변경 | 확인 결과 |
++|---|---|---|
++| tensor advanced indexing으로 복사된 발 속도가 갱신되지 않음 | PhysX 갱신 후 현재 발 속도를 다시 선택 | 실제 stance 이동이 contact velocity penalty에 반영 |
++| feet_jerk 상태의 저장·검사 객체 불일치 | 동일 객체에 이전 wrench 저장 | 기존 0 항목 활성화. 단독 수정만으로 개선되지 않음 |
++| 정지 contact 목표 0.5와 부호 보정된 force penalty 불일치 | 정지 시 네 발 목표 1 | 네 발 지지 시 force penalty 제거. 단독 효과는 불충분 |
++| 목표보다 빨라도 속도 보상이 포화 | 대칭 planar Gaussian, sigma 0.20m/s | 과속 감소에 가장 큰 조합 효과 |
++| 회전 추종 유인이 상대적으로 약함 | yaw sigma 0.35rad/s, weight 0.5→1 | 속도 수정과 함께 회전 명령 추종 개선 |
++| 앞발 두 개의 world-z norm을 높이 목표로 사용 | 네 발의 위상별 clearance, 평지 swing 최대 4cm | 발 높이와 위상을 직접 연결 |
++| 2Hz gait와 체공시간 0.5초 목표 불일치 | 목표 0.25초, 네 발 적용, credit 상한, weight 2→0.5 | 긴 비행의 유인 완화 |
++| home 관절 근접 보상이 강함 | walking_dof weight 1.5→0.5 | 발 디딤과 충돌하는 유인 완화 |
++
++PD, armature, 질량·관성, URDF, PPO/network, 799관측, 정책18출력/시뮬레이션20DOF, EE 목표 생성 범위는 바꾸지 않았다. 온라인 IK/충돌 유효성 검사를 추가하지 않았다. 음수 패널티라는 이유만으로 제거한 것이 아니다.
++
++토크 limit 90% 초과 샘플은 기존 전진 평가에서 0%였고, 최대 사용비율은 71.3%였다. 발 인덱스와 PhysX→MuJoCo 발 높이 차이도 검증했으므로 토크 포화·렌더링 변환을 주원인으로 지지하는 증거는 없었다.
++
++## 원인별 회복 실험
++
++공통 model313, Adam/history optimizer, seed7, 1024환경에서 120회 추가 학습했다. 평지·robot DR off이며 원래 관절 reset 범위, random EE, command 분포와 상자 actor는 유지했다.
++
++| 변경 조합 | 정지 시 전진속도 | 전진 시 속도 | 회전 시 전진속도 |
++|---|---:|---:|---:|
++| 기존 | 0.542 | 0.537 | 0.574 |
++| 발 속도 갱신만 | 0.370 | 0.438 | 0.447 |
++| jerk만 | 0.655 | 0.560 | 0.602 |
++| 정지 contact만 | 0.708 | 0.595 | 0.680 |
++| 세 수정 조합 | 0.382 | 0.443 | 0.456 |
++| 위 조합 + 속도/yaw 추종 | 0.246 | 0.281 | 0.292 |
++| 위 조합 + 발 높이/체공시간/posture | 0.254 | 0.272 | 0.255 |
++
++속도 단위 m/s, 전진 목표 0.25m/s. 어느 조건도 이 짧은 회복 실험만으로 전체 합격하지 않았다. 기존 정책도 추가 학습 후 접촉 주파수가 3.25Hz에서 2Hz가 되었으므로, 초기의 빠른 발놀림을 특정 보상 버그 하나로만 설명할 수 없다. 조합 내부 weight의 개별 효과까지 분리한 실험은 아니다.
++
++## 처음부터 동일하게 학습한 비교
++
++4096환경·seed7·201회 업데이트. checkpoint 없이 시작했으며, 첫 저장 시 history 외 network tensor 33개의 초기값이 정확히 일치했다. 동일한 평지·robot DR off 조건이다.
++
++평가: 정지/전진/회전/전진+회전 각각 8환경, 10초. 속도는 초기 2초 제외 평균, 넘어짐은 전체 10초에서 집계했다. 목표 전진 0.25m/s, 회전 +0.6rad/s.
++
++| 동작 | 기존 전진속도 | 수정 전진속도 | 기존 yaw | 수정 yaw | 수정 넘어짐 |
++|---|---:|---:|---:|---:|---:|
++| 정지 | -0.001 | -0.001 | 0.003 | 0.001 | 0 |
++| 전진 | 0.497 | 0.286 | 0.016 | 0.010 | 0 |
++| 제자리 회전 | 0.438 | 0.039 | 0.240 | 0.559 | 0 |
++| 전진+회전 | 0.540 | 0.267 | 0.256 | 0.613 | 0 |
++
++수정안의 전진 속도 MAE는 0.037m/s, 전진+회전은 0.021m/s였다. 전진 접촉 주파수는 2Hz, roll RMS는 대표 환경에서 1.13도, 발 clearance P95는 발별 2.35~5.01cm, EE 위치 평균 오차는 약 1.6~1.8cm였다. 회전에서 좌우/앞뒤 다리 사용이 완벽하게 대칭인 것은 아니며 gait 최적성까지 주장하지 않는다.
++
++다른 seed와 전진 0.35m/s, 반대 회전 -0.6rad/s에서도 같은 평가 기준을 통과했다. 전진 실측은 0.381m/s, 제자리 회전 yaw는 -0.552rad/s, 전진+회전은 0.366m/s / -0.583rad/s였고 넘어짐은 0회였다. 다수 seed의 학습 재현성 검증은 아니다.
++
++선정 체크포인트: `logs/as2piper-low/gait_stable_fresh_s7_v1/model_200.pt`. 파일명과 달리 저장 metadata 기준 201회 업데이트 완료 상태다. 평가 통과 후 학습은 217회에서 정상 종료했으며 최종 model217도 별도로 보존했다. 장시간 수렴 결과는 아니다.
++
++## 영상
++
++`experiments/gait_fresh_v1/eval_200/learned_gait.mp4`
++
++정지/전진/회전/전진+회전의 실제 PhysX 학습 정책 상태를 MuJoCo에서 재생했다. Scripted gait 또는 PD 데모가 아니다. 125프레임, 12.5fps, 10초로 실제 시간과 같으며 느리게 재생한 영상이 아니다. `walking_evidence.png`에 속도·접촉력·발 높이 근거를 함께 저장했다.
++
++## 거친 지면과 DR
++
++기본 공개 task는 원래 rough terrain과 전체 robot DR를 유지한다. 평지 비교를 위해 사용한 `--controlled` 설정이 기본 학습 환경으로 고정된 것은 아니다.
++
++초기 평지 정책을 전체 rough+DR에서 평가하면 총 38회의 넘어짐 reset이 발생했다. 같은 정책/Adam에서 120회 적응한 grid v1은 27회로 줄었지만 여전히 불합격이었다. 접지된 발 바닥과 grid 높이 추정의 차이가 P95 4.35cm였으므로, v2는 실제 하중 접촉 높이를 저장하고 거친 지면에서는 clearance를 최소 조건으로 사용한다. 몸통 지면 높이는 네 발 지지 높이 평균의 EMA로 갱신한다. 평지의 보상 식은 유지한다.
++
++접촉 높이 v2의 전체 넘어짐은 36회(정지 4, 전진 14, 회전 2, 전진+회전 16)로
++같은 조건의 grid v1 27회보다 나빴다. 원인 가설이 타당해 보여도 실제 개선이
++확인되지 않았으므로 기본값에서 제외했다. 최종 `stable`은 grid v1이며,
++`stable_contact`는 재현용 실험 preset으로만 보존한다. 기존 v2 runtime_snapshot의
++preset 이름 `stable`은 당시 contact mode였으므로 재현 시 `stable_contact`를 쓴다.
++
++지형 적응 후 평지에서도 회전 중 전진 이탈이 증가했다. 따라서 검증된 평지 정책을 지형 적응 checkpoint로 대체하지 않는다. 전체 DR의 짧은 학습·평가는 실물 안전성이나 45,000회 수렴을 보증하지 않는다. 거친 지면 평가의 발 높이·upright 높이 판정은 환경 원점 기준 근사이므로 정확한 국소 clearance로 해석하지 않는다.
++
++## 재실행
++
++```bash
++cd /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait
++
++# 평지 reward 검증을 처음부터 재현. W&B 비활성.
++bash run_gait.sh --preset stable --controlled --num-envs 4096 \
++  --iterations 201 --seed 7 --run gait_stable_fresh_reproduction_unique
++
++# 원래 rough/full-DR 환경의 장시간 학습 진입점. 자동 실행하지 않았음.
++# W&B project: as2piper-low, 매번 고유 run ID, 기존 run 덮어쓰기 거부.
++bash run_stable.sh --max_iterations 45000
++```
++
++세부 수식은 `REWARD_CHANGES_KO.md`, 원인 가설은 `CAUSES_KO.md`, 전체 7조건 결과는 `experiments/gait_ablation_v1/PAIRED_COMPARISON_KO.md`에 기록했다. 실행별 runtime_snapshot에는 config·소스·asset hash를 저장했다.
+--- /dev/null
++++ new_gait/REWARD_CHANGES_KO.md
+@@ -0,0 +1,87 @@
++# AS2 + PiPER gait 보상 수정 명세
++
++## 보존 및 분리
++
++- 기존 AS2 VBC 원복판: `../low-level-as2piper-hw`, task `as2piper_plate_vbc_port`.
++- 새 gait 코드: 현재 디렉터리, public task `as2piper_plate_gait_stable`.
++- 원본 B1: `/data/team/users/suhwan/vbc-legacy`. 읽기 전용이며 수정하지 않음.
++- 정책18출력/시뮬레이션20DOF,799관측, AS2 URDF·질량·관성·PD·armature, PPO/network/storage는 유지.
++- 새 task는 `AS2PiPERVBCPort`의 별도 subclass에서만 보상과 contact target을 바꿈.
++
++## 항목별 변경
++
++| 항목 | 기존 | 신규 | 의도 |
++|---|---|---|---|
++| 발 속도 | 초기 tensor-index 복사본 | 매 PhysX refresh 이후 현재 발 속도 선택 | stance 중 실제 발 이동이 penalty에 반영 |
++| feet_jerk | 확인 객체와 저장 객체 불일치, 항상0 | 같은 environment에 이전 wrench 보관, 초기1초 제외 | 접촉력 변화에 대한 기존 의도 복구 |
++| 정지 접촉 | desired contact 네 발 모두0.5 | 정지 시 모두1 | 네 발 지지 시 force penalty0 |
++| planar tracking | 목표 이상 속도에서 포화 | `exp(-||v_xy-cmd_xy||² / 0.20²)`, weight2 유지 | 과속·저속·옆방향 이탈 모두 감소 |
++| yaw tracking | denominator0.2, weight0.5 | sigma0.35rad/s, weight1 | 명령에 따른 회전 추종 유인 강화 |
++| feet_height | 앞발2개 world-z norm | 네 발, stance0/swing sinusoid 최대4cm, sigma2.5cm | 위상에 맞춰 적당히 들어 올림 |
++| feet_air_time | 앞발2개,0.5초 기준, weight2 | 네 발, `0.5/frequency=0.25초`, credit 상한+0.10초, weight0.5 | 2Hz/duty0.5와 시간 기준 일치, 긴 비행의 유인 제한 |
++| walking_dof | home 근접 보상 weight1.5 | weight0.5 | home 유지가 실제 발 디딤을 과도하게 억제하지 않도록 완화 |
++| base_height | world z와 고정 target 비교 | 지면 높이를 뺀 root 높이와 기존 AS2 target 비교 | 지면의 절대 고도가 바뀌어도 같은 높이를 평가 |
++
++base height의 지면 기준 수정은7조건 평지 비교 완료 후 추가했다. 평지에서
++ground height는0이므로 기존 식과 동일하며, 비교 결과를 바꾸지 않는다.
++거친 지면의 초기 v1은 height grid의 보수적 3이웃 추정치를 사용했다.
++하중이 걸린 발 바닥과 grid 추정치의 차이가 P95 4.35cm로 확인되어,
++v2에서는 수직 접촉력 5N 초과 시 발 중심 높이에서 반지름 28mm를 뺀 값을
++발별 지지 높이로 저장한다. 비접촉 중에는 마지막 접촉 높이를 유지한다.
++몸통 기준 지면은 네 발 지지 높이 평균을 EMA 계수 0.2로 갱신한다.
++Reset 시 해당 환경의 지면 원점 높이로 캐시를 초기화한다.
++이는 접촉 기반 근사이며 경사면의 정확한 ray cast나 미래 착지 지형 관측이 아니다.
++
++거친 지면에서는 swing clearance를 최소 높이 조건으로 바꿔 필요한 높은 발걸음을
++벌하지 않는다. 평지에서는 기존의 대칭 Gaussian과 4cm 목표를 그대로 사용한다.
++이 두 변경을 묶은 v2와 기존 grid v1을 같은 초기 checkpoint/Adam/seed,
++4096환경/120회 추가 학습으로 비교한다. `stable_grid` preset은 v1 재현용이다. v2는 36회 넘어짐으로 v1의 27회보다
++나빴으므로 기본값에서 제외했다. 최종 `stable`은 grid 방식이고
++`stable_contact`로 v2 실험을 별도 재현할 수 있다.
++
++기타 reward weight와 기능은 유지한다. `speed`는 tracking 두 항목까지,
++`stable`은 clearance/air-time/posture/terrain-height 조합까지 적용한 조건이다.
++각 조합 내부의 개별 weight가 최적이라는 주장은 하지 않는다.
++
++## 환경 및 command 범위
++
++Public task 기본값은 원복판의 rough terrain, robot DR, command sampler,
++random EE sphere 범위를 유지한다. 온라인 후보 IK/충돌 guard를 다시 추가하지 않았다.
++비교 및 첫 gait 학습의 `--controlled`는 평지·robot DR off이며,
++원래 +/-20% joint reset·random EE·command 분포·상자 actor는 그대로다.
++상자 질량 sampler도 원래 설정이다. 이 조건을 full-DR 수렴으로 표현하지 않는다.
++
++## 로그 해석
++
++호환성을 위해 기존 reward key를 유지한다. 새 task에서는:
++
++- `rew_tracking_lin_vel_max`: 이름과 달리 symmetric planar Gaussian 보상.
++- `metric_tracking_lin_vel_max`: planar 속도 오차 norm(m/s).
++- `metric_tracking_ang_vel`: yaw 절대 오차(rad/s).
++- `metric_feet_height`: 네 발의 목표 clearance 절대 오차 평균(m).
++- `metric_base_height`: 지면 기준 root 높이(m).
++
++episode metric은 기존 logger가 누적/정규화하므로 원시 물리량의 단순 평균과
++혼동하지 않는다. 실제 속도·오차는 평가 JSON과 NPZ에서 직접 계산한다.
++
++## 공개 실행 경로
++
++`run_stable.sh`는 기존 VBC training entry와 target iteration 방식을 사용한다.
++W&B project는 `as2piper-low`, 기본 host는 기존 CoreWeave host다.
++`run_gait.sh`는 원인 비교용 explicit preset entry이며 `--iterations`는 새 업데이트 수다.
++두 entry 모두 기존 run 디렉터리나 기존 프로세스를 지우지 않는다.
++
++## Full-environment 추가 후보: progress (검증 중)
++
++`stable`과 동일한 환경·보상 weight·phase 설정에서 planar/yaw tracking의 raw 값만
++`0.5*Gaussian + 0.5*clip(실제 속도·명령 내적 / 명령 norm², -1, 1)`로 바꾼다.
++정지 명령에는 기존 Gaussian을 사용한다. 목표에서 최대이고 과속에서는 Gaussian이
++감소한다. 목표에서 먼 초기 속도에도 방향 진행에 따른 보상 차이를 제공하는 가설이다.
++원래 VBC 총보상의 최종 `/100`, PPO, 관측, reset, EE sampling은 유지한다.
++현재 기본 task에는 아직 적용하지 않았다. full-DR 학습·평가 후 채택 여부를 결정한다.
++
++## 후속 접촉 입력·지지 높이 비교 (진행 중)
++
++생산용 센서·관측·물리 설정은 원복판과 같다. 공식 force sensor flag나 새 contact filter는 측정 결과가 불충분하여 채택하지 않았다. `stable_proxy`는 force shaping 항의 입력만 기존 관측용 접촉 bit로 바꾼다. 이 bit는 힘의 크기가 아니다. `stable_proxy_ground`는 같은 bit로 마지막 접촉 발 높이를 기억하며, 거친 지면에서도 대칭 Gaussian clearance를 사용한다. 앞서 설명한 5N/단측 높이 v2와 별개다.
++
++현재 공개 task의 기본 보상은 평지에서만 보행을 확인한 stable/grid다. full-environment 후보 채택 전이므로 이를 거친 지면·전체 DR의 검증 완료 버전으로 해석하지 않는다. [최신 조건·중단 및 재개 이력](experiments/gait_reward_proxy_v2/PROTOCOL_KO.md), [측정 결과](experiments/gait_reward_proxy_v2/RESULTS_KO.md)를 우선한다.
+--- /dev/null
++++ new_gait/check_gait_geometry.py
+@@ -0,0 +1,77 @@
++"""Measure learned foot lift and slip using actual mesh and box geometry."""
++import argparse,json
++from pathlib import Path
++import numpy as np
++from gait_geometry import distances,box_distances
++
++NAMES=['stand','forward','turn','forward_turn']
++
++def measure(folder,stride=4):
++    folder=Path(folder);meta=json.loads((folder/'policy_evaluation.json').read_text())
++    extra=json.loads((folder/'metadata.json').read_text())
++    x=np.load(folder/'policy_evaluation.npz')['samples']
++    if x.shape[-1]<82:raise ValueError('Full world foot positions and dynamic box poses required')
++    terrain=np.load(meta['actual_terrain_cache']);vertices=terrain['vertices'].copy()
++    vertices[:,:2]-=float(terrain['border_size']);indices=terrain['triangles']
++    sample_indices=np.arange(100,len(x),stride);v=x[sample_indices];feet=v[:,:,49:61].reshape(*v.shape[:2],4,3)
++    gap=np.empty(feet.shape[:-1],dtype=np.float32)
++    tangent_slip=np.full_like(gap,np.nan)
++    for env in range(v.shape[1]):
++        points=feet[:,env].reshape(-1,3)
++        lo=points[:,:2].min(0)-.06;hi=points[:,:2].max(0)+.06;local=[]
++        for offset in range(0,len(indices),200000):
++            tri=vertices[indices[offset:offset+200000]]
++            keep=((tri[:,:,:2].min(1)<=hi)&(tri[:,:,:2].max(1)>=lo)).all(-1)
++            if keep.any():local.append(tri[keep])
++        if not local:raise ValueError('No actual triangles near recorded foot trajectory')
++        triangle_distance,triangle_closest=distances(points,np.concatenate(local),return_closest=True)
++        box_pose=np.repeat(v[:,env,75:82],4,axis=0)
++        box_distance,box_closest=box_distances(points,box_pose,extra['box_size_m'],return_closest=True)
++        use_box=box_distance<triangle_distance
++        distance=np.minimum(triangle_distance,box_distance)
++        gap[:,env]=distance.reshape(len(v),4)-.028
++        if v.shape[-1]>=120:
++            nearest=np.where(use_box[:,None],box_closest,triangle_closest)
++            direction=(nearest-points)/np.maximum(distance[:,None],1e-9)
++            velocity=v[:,env,90:114].reshape(-1,6)
++            foot_velocity=velocity[:,:3]+np.cross(velocity[:,3:6],.028*direction)
++            box_velocity=np.repeat(v[:,env,114:120],4,axis=0)
++            surface_velocity=box_velocity[:,:3]+np.cross(box_velocity[:,3:6],nearest-box_pose[:,:3])
++            relative=foot_velocity-np.where(use_box[:,None],surface_velocity,0.)
++            tangent=relative-(relative*direction).sum(-1)[:,None]*direction
++            tangent_slip[:,env]=np.linalg.norm(tangent,axis=-1).reshape(len(v),4)
++        if env%16==0:print('Checked environment',env,flush=True)
++    valid=(v[:,:,2]<.5)&(np.abs(v[:,:,40:42]).max(-1)<.35)
++    reference=gap<.002;proxy=v[:,:,45:49]>.5;group=meta['envs_per_command']
++    result={'reference':'Shortest distance to actual terrain triangles or dynamic oriented box minus sphere radius 0.028m. Geometric near-contact gap<2mm, not GRF. Excludes first 2s, done frames and abs roll/pitch>=0.35rad. Unsigned geometry is not a penetration-depth test.',
++            'slip_note':'Uses recorded v_COM + omega cross vertical sphere-bottom offset; approximate contact-point slip on rough terrain.',
++            'sampling_dt_s':stride*.02,'completed_updates':meta['completed_updates'],'conditions':meta['conditions']}
++    for i,name in enumerate(NAMES):
++        sl=slice(i*group,(i+1)*group);ok=valid[:,sl];g=gap[:,sl];r=reference[:,sl];p=proxy[:,sl]
++        loaded=ok[...,None]&r
++        slip=v[:,sl,35:39]
++        freq=np.fft.rfftfreq(len(g),stride*.02);spectrum=abs(np.fft.rfft(r-r.mean(0),axis=0))**2
++        band=(freq>.5)&(freq<5);psd=spectrum.mean((1,2))
++        result[name]={'valid_fraction':float(ok.mean()),'gap_p95_per_foot_m':[float(np.quantile(g[:,:,k][ok],.95)) for k in range(4)],
++            'contact_fraction_per_foot':[(float(r[:,:,k][ok].mean())) for k in range(4)],
++            'contact_proxy_agreement':float((p[ok]==r[ok]).mean()),
++            'contact_proxy_precision':float((p[ok]&r[ok]).sum()/max(1,p[ok].sum())),
++            'contact_proxy_recall':float((p[ok]&r[ok]).sum()/max(1,r[ok].sum())),
++            'geometric_contact_estimated_bottom_point_slip_m_s':float(slip[loaded].mean()) if loaded.any() else None,
++            'contact_dominant_Hz':float(freq[band][psd[band].argmax()]),
++            'geometric_two_or_more_contact_fraction':float((r.sum(-1)>=2)[ok].mean()),
++            'geometric_no_contact_fraction':float((r.sum(-1)==0)[ok].mean()),
++            'geometric_phase_contact_agreement':float((r==(v[:,sl,17:21]>.5))[ok].mean()),
++            'missing_geometric_stance_per_foot':[float((~r[:,:,k])[(v[:,sl,17+k]>.9)&ok].mean()) for k in range(4)],
++            'missing_proxy_stance_same_samples':[float((~p[:,:,k])[(v[:,sl,17+k]>.9)&ok].mean()) for k in range(4)],
++            'closest_surface_tangent_slip_m_s':float(tangent_slip[:,sl][loaded].mean()) if v.shape[-1]>=120 and loaded.any() else None,
++            'grid_minus_contact_ground_abs_p95_m':float(np.quantile(np.abs(v[:,sl,61:65]-v[:,sl,65:69])[loaded],.95)) if loaded.any() else None,
++            'counterfactual_grid_height_reward':float(v[:,sl,73][ok].mean()),
++            'counterfactual_last_support_height_reward':float(v[:,sl,74][ok].mean())}
++    np.savez_compressed(folder/'geometric_contact.npz',gap=gap,valid=valid,sample_indices=sample_indices,tangent_slip=tangent_slip)
++    (folder/'geometric_gait.json').write_text(json.dumps(result,indent=2)+'\n')
++    return result
++
++if __name__=='__main__':
++    p=argparse.ArgumentParser();p.add_argument('evaluation');p.add_argument('--stride',type=int,default=4);a=p.parse_args()
++    print(json.dumps(measure(a.evaluation,a.stride),indent=2))
+--- /dev/null
++++ new_gait/check_study_config.py
+@@ -0,0 +1,91 @@
++"""Audit current reward presets against saved, actually executed configurations."""
++import isaacgym
++import json
++from pathlib import Path
++from legged_gym.envs.manip_loco.as2piper_gait_study import AS2PiPERGaitStudyCfg,configure
++from legged_gym.utils.helpers import class_to_dict
++ROOT=Path(__file__).resolve().parent
++
++def differences(a,b,path=''):
++    if isinstance(a,dict) and isinstance(b,dict):
++        result=[]
++        for key in sorted(set(a)|set(b)):
++            if key not in a or key not in b:result.append((path+'.'+key,a.get(key),b.get(key)))
++            else:result.extend(differences(a[key],b[key],path+'.'+key))
++        return result
++    return [] if a==b else [(path,a,b)]
++
++results={}
++for name in ['stable_proxy','progress_gain2_proxy','stable_proxy_ground']:
++    cfg=configure(AS2PiPERGaitStudyCfg(),name)
++    current=json.loads(json.dumps(class_to_dict(cfg),default=lambda x:x.tolist()))
++    executed=json.loads((ROOT/'logs/as2piper-low'/('gait_reward_'+name+'_s7_v2')/'runtime_snapshot.json').read_text())['environment']
++    current['env']['num_envs']=6144;current['seed']=7
++    rows=differences(current,executed)
++    expected={'.env.num_observations':(744,799),'.env.num_proprio':(66,71),'.terrain.num_sub_terrains':(None,200)}
++    unexpected=[row for row in rows if row[0] not in expected or tuple(row[1:])!=expected[row[0]]]
++    assert not unexpected,(name,unexpected)
++    results[name]={'unexpected_configuration_differences':unexpected,'derived_runtime_fields':rows}
++a=class_to_dict(configure(AS2PiPERGaitStudyCfg(),'progress_gain2_proxy'))
++b=class_to_dict(configure(AS2PiPERGaitStudyCfg(),'progress_gain2_proxy_ground'))
++a=json.loads(json.dumps(a,default=lambda x:x.tolist()));b=json.loads(json.dumps(b,default=lambda x:x.tolist()))
++rows=differences(a,b)
++assert {r[0] for r in rows}=={'.study.preset','.study.terrain_height_mode'},rows
++results['combined_candidate_only_height_reference_changes']=rows
++c=class_to_dict(configure(AS2PiPERGaitStudyCfg(),'progress_gain2_proxy_yaw4'))
++c=json.loads(json.dumps(c,default=lambda x:x.tolist()))
++yaw_rows=differences(a,c)
++assert {r[0] for r in yaw_rows}=={'.study.preset','.rewards.scales.tracking_ang_vel'},yaw_rows
++assert c['rewards']['scales']['tracking_ang_vel']==4.0
++results['yaw4_candidate_only_yaw_weight_changes']=yaw_rows
++floor_cfg=class_to_dict(configure(AS2PiPERGaitStudyCfg(),'progress_gain2_proxy_ground_floor'))
++floor_cfg=json.loads(json.dumps(floor_cfg,default=lambda x:x.tolist()))
++floor_rows=differences(a,floor_cfg)
++assert {r[0] for r in floor_rows}=={'.study.preset','.study.terrain_height_mode','.study.penalize_excess_swing'},floor_rows
++results['ground_floor_candidate_reward_group_changes']=floor_rows
++(ROOT/'experiments/gait_reward_proxy_v2/current_config_validation.json').write_text(json.dumps(results,indent=2)+'\n')
++print('Executed presets unchanged; planned ground/yaw branches each change only their declared reward setting.')
++
++# Contract: higher swing is allowed on rough ground; stance and plane stay strict.
++import torch
++from types import SimpleNamespace
++from legged_gym.envs.manip_loco.as2piper_gait_study import AS2PiPERGaitStudy
++cfg=configure(AS2PiPERGaitStudyCfg(),'progress_gain2_proxy_ground_floor')
++e=SimpleNamespace(cfg=cfg,foot_indices=torch.full((3,4),.75),feet_indices=torch.arange(4),rigid_body_state=torch.zeros(3,4,13))
++e._get_walking_cmd_mask=lambda:torch.ones(3,dtype=torch.bool)
++e._foot_ground_height=lambda:torch.zeros(3,4)
++e.rigid_body_state[:,:,2]=torch.tensor([.028+.04,.028+.08,.028])[:,None]
++r,_=AS2PiPERGaitStudy._phase_clearance(e)
++assert torch.allclose(r[:2],torch.ones(2)) and r[2]<.1
++# During stance a lifted foot must still lose height reward.
++e.foot_indices.fill_(.25)
++r,_=AS2PiPERGaitStudy._phase_clearance(e)
++assert r[0]<.1 and torch.isclose(r[2],torch.tensor(1.))
++# Preserve nominal-plane Gaussian, including overshoot cost.
++e.foot_indices.fill_(.75);cfg.terrain.mesh_type='plane'
++r,_=AS2PiPERGaitStudy._phase_clearance(e)
++assert torch.isclose(r[0],torch.tensor(1.)) and r[1]<.1
++print('Rough-swing, stance-contact and nominal-plane height reward contracts passed.')
++
++# Smooth pair differs only by the previously declared height reward group.
++d=class_to_dict(configure(AS2PiPERGaitStudyCfg(),'progress_gain2_proxy_smooth_yaw4'))
++f=class_to_dict(configure(AS2PiPERGaitStudyCfg(),'progress_gain2_proxy_smooth_ground_floor_yaw4'))
++d=json.loads(json.dumps(d,default=lambda x:x.tolist()));f=json.loads(json.dumps(f,default=lambda x:x.tolist()))
++assert {r[0] for r in differences(c,d)}=={'.study.preset','.study.smooth_progress_mix'}
++assert {r[0] for r in differences(d,f)}=={'.study.preset','.study.terrain_height_mode','.study.penalize_excess_swing'}
++print('Fresh smooth pair: common yaw4/progress settings; only height reward group differs.')
++
++matched=configure(AS2PiPERGaitStudyCfg(),'progress_gain2_proxy_smooth_yaw4_contactmatch')
++matched_dict=json.loads(json.dumps(class_to_dict(matched),default=lambda x:x.tolist()))
++assert {r[0] for r in differences(d,matched_dict)}=={'.study.preset','.study.symmetric_contact'}
++# Contact contract: matched diagonal pair beats one-foot or no-foot support.
++target=torch.tensor([[1.,0.,0.,1.]]).repeat(5,1)
++presence=torch.tensor([[1,0,0,1],[0,0,0,1],[0,0,0,0],[1,1,1,1],[0,1,1,0]],dtype=torch.bool)
++e=SimpleNamespace(cfg=matched,desired_contact_states=target,foot_contacts_from_sensor=presence)
++reward,metric=AS2PiPERGaitStudy._proxy_contact_force(e)
++np_expected=torch.tensor([0.,.25,.5,.5,1.])
++assert torch.allclose(reward,np_expected) and torch.allclose(metric,-np_expected)
++e.desired_contact_states.fill_(1.)
++e.foot_contacts_from_sensor=torch.ones(5,4,dtype=torch.bool)
++assert torch.allclose(AS2PiPERGaitStudy._proxy_contact_force(e)[0],torch.zeros(5))
++print('Fresh contact pair differs only by stance-missing-contact penalty; contact contracts passed.')
+--- preserved_baseline/evaluate_hw.py
++++ new_gait/evaluate_hw.py
+@@ -1,5 +1,5 @@
+ """Measure learned velocity tracking; standing alone is not gait validation."""
+-import argparse,json
++import argparse,json,hashlib,fcntl,os
+ from pathlib import Path
+ import isaacgym
+ from isaacgym import gymapi,gymutil,gymtorch
+@@ -21,9 +21,16 @@
+     parser.add_argument('--domain-rand',action='store_true')
+     parser.add_argument('--vbc-sampler', action='store_true')
+     parser.add_argument('--vbc-port', action='store_true')
++    parser.add_argument('--gait-preset',choices=['original','velocity','jerk','stop','data_stop','speed','stable','stable_grid','stable_contact','progress','progress_gain2','gaussian_gain2','original_proxy','stable_proxy','progress_gain2_proxy','stable_proxy_ground','progress_gain2_proxy_ground','progress_gain2_proxy_yaw4','progress_gain2_proxy_ground_floor','progress_gain2_proxy_smooth_yaw4','progress_gain2_proxy_smooth_ground_floor_yaw4','progress_gain2_proxy_smooth_yaw4_contactmatch'])
+     parser.add_argument('--terrain',choices=['plane','trimesh'],default='plane')
+     parser.add_argument('--seed',type=int,default=20261030)
++    parser.add_argument('--envs-per-command',type=int,default=8)
++    parser.add_argument('--export-terrain',action='store_true')
+     args=parser.parse_args()
++    evaluation_lock=None
++    if args.output and any(part in str(args.output) for part in ['gait_full_env_v1','gait_reward_proxy_v2']):
++        evaluation_lock=(ROOT/'experiments/gait_full_env_v1/gpu_evaluation.lock').open('a')
++        fcntl.flock(evaluation_lock,fcntl.LOCK_EX)
+     if args.vx is None:args.vx=.25 if args.vbc_port else .15
+     if args.yaw is None:args.yaw=.6 if args.vbc_port else .25
+     if args.vbc_sampler and args.vbc_port:parser.error('Choose one task variant')
+@@ -36,7 +43,13 @@
+     if args.vbc_port:
+         from legged_gym.envs.manip_loco.as2piper_vbc_port import AS2PiPERVBCPort,AS2PiPERVBCPortCfg,AS2PiPERVBCPortCfgPPO
+         env_class=AS2PiPERVBCPort;cfg=AS2PiPERVBCPortCfg();ppo_cfg=AS2PiPERVBCPortCfgPPO()
+-    cfg.env.num_envs=32
++    if args.gait_preset:
++        from legged_gym.envs.manip_loco.as2piper_gait_study import AS2PiPERGaitStudy,AS2PiPERGaitStudyCfg,AS2PiPERGaitStudyCfgPPO,configure
++        env_class=AS2PiPERGaitStudy;cfg=configure(AS2PiPERGaitStudyCfg(),args.gait_preset)
++        ppo_cfg=AS2PiPERGaitStudyCfgPPO()
++    group=args.envs_per_command
++    if group<1:parser.error("--envs-per-command must be positive")
++    cfg.env.num_envs=4*group
+     cfg.terrain.mesh_type=args.terrain;cfg.terrain.measure_heights=args.terrain=='trimesh'
+     if not args.domain_rand:
+         cfg.init_state.leg_reset_fraction=0;cfg.init_state.init_vel_perturb_range=0
+@@ -45,7 +58,7 @@
+     for k in ['num_position_iterations','num_velocity_iterations','contact_offset','rest_offset','bounce_threshold_velocity','max_depenetration_velocity']:setattr(params.physx,k,getattr(cfg.sim.physx,k))
+     gymutil.parse_sim_config(class_to_dict(cfg.sim),params)
+     e=env_class(cfg,params,gymapi.SIM_PHYSX,'cuda:0',True)
+-    if args.vbc_port and not args.domain_rand:
++    if (args.vbc_port or args.gait_preset) and not args.domain_rand:
+         # Evaluation-only nominal reset; leave the production +/-20% reset intact.
+         def nominal_reset(ids):
+             e.dof_pos[ids]=e.default_dof_pos;e.dof_vel[ids]=0
+@@ -53,45 +66,82 @@
+         e._reset_dofs=nominal_reset
+     r=HardwareRunner(e,class_to_dict(ppo_cfg),None,'cuda:0');r.load(args.checkpoint);r.alg.actor_critic.eval()
+     set_seed(args.seed)  # Loading a checkpoint restores training RNG; use a holdout sequence.
+-    targets=torch.tensor([[0,0,0],[args.vx,0,0],[0,0,args.yaw],[args.vx,0,args.yaw]],device=e.device).repeat_interleave(8,0)
++    targets=torch.tensor([[0,0,0],[args.vx,0,0],[0,0,args.yaw],[args.vx,0,args.yaw]],device=e.device).repeat_interleave(group,0)
+     e._resample_commands=lambda ids:e.commands.__setitem__(ids,targets[ids])
+     e.commands[:]=targets;e.compute_observations();rows=[];frames=[];original=e.check_termination
+     arm_bodies=[i for i,name in enumerate(e.body_names) if name.startswith('piper_') and name not in ('piper_base_link','piper_link1')]
++    shadow_support=(e._support_ground.clone() if hasattr(e,'_support_ground') else
++        torch.where(e.foot_contacts_from_sensor,e.rigid_body_state[:,e.feet_indices,2]-.028,e.env_origins[:,2:3].repeat(1,4)))
+     def check():
+         original();rp=e._get_body_orientation();height=e.root_states[:,2]-e.env_origins[:,2]
+         foot_state=e.rigid_body_state[:,e.feet_indices]
+         offset=torch.zeros_like(foot_state[:,:,7:10]);offset[:,:,2]=-.028
+         point_speed=(foot_state[:,:,7:10]+torch.cross(foot_state[:,:,10:13],offset,dim=-1))[:,:,:2].norm(dim=-1)
++        foot_z=e.rigid_body_state[:,e.feet_indices,2]
++        shadow_support.copy_(torch.where(e.foot_contacts_from_sensor,foot_z-.028,shadow_support))
++        if args.terrain=='trimesh':
++            ij=((e.rigid_body_state[:,e.feet_indices,:2]+e.terrain.cfg.border_size)/e.terrain.cfg.horizontal_scale).long()
++            ix=ij[...,0].clamp(0,e.height_samples.shape[0]-2);iy=ij[...,1].clamp(0,e.height_samples.shape[1]-2)
++            grid_ground=torch.minimum(torch.minimum(e.height_samples[ix,iy],e.height_samples[ix+1,iy]),e.height_samples[ix,iy+1])*e.terrain.cfg.vertical_scale
++            support_ground=shadow_support
++        else:grid_ground=torch.zeros_like(foot_z);support_ground=grid_ground
++        target_lift=.04*torch.sin(2*torch.pi*(e.foot_indices-.5)).clamp(min=0) if hasattr(e,'foot_indices') else torch.zeros_like(foot_z)
++        grid_height_reward=torch.exp(-(((foot_z-grid_ground-.028-target_lift)/.025)**2).mean(-1))*e._get_walking_cmd_mask()
++        support_height_reward=torch.exp(-(((foot_z-support_ground-.028-target_lift)/.025)**2).mean(-1))*e._get_walking_cmd_mask()
+         rows.append(torch.cat((e.base_lin_vel[:,0:1],e.base_ang_vel[:,2:3],e.reset_buf[:,None],e.time_out_buf[:,None],
+             ((rp.abs().max(-1).values<.35)&(height>.22))[:,None],e.contact_forces[:,e.feet_indices,2],
+             e.rigid_body_state[:,e.feet_indices,2]-e.env_origins[:,2:3]-.028,
+             e.rigid_body_state[:,e.feet_indices,7:9].norm(dim=-1),e.desired_contact_states,
+             e.torques[:,:12],(e.ee_pos-applied_goal).norm(dim=-1)[:,None],
+             torch.rad2deg(2*torch.acos((e.ee_orn*applied_orientation).sum(-1).abs().clamp(0,1)))[:,None],point_speed,
+-            e.contact_forces[:,arm_bodies].norm(dim=-1).max(-1).values[:,None]),dim=-1).cpu().numpy())
++            e.contact_forces[:,arm_bodies].norm(dim=-1).max(-1).values[:,None],
++            rp,e.root_states[:,2:3],height[:,None],
++            e.contact_forces[:,e.body_names.index('base_link')].norm(dim=-1)[:,None],e.foot_contacts_from_sensor.float(),e.rigid_body_state[:,e.feet_indices,:3].reshape(e.num_envs,-1),grid_ground,support_ground,target_lift,grid_height_reward[:,None],support_height_reward[:,None],e.box_root_state[:,:7],e.base_lin_vel[:,1:2],e.root_states[:,:7],foot_state[:,:,7:13].reshape(e.num_envs,-1),e.box_root_state[:,7:13]),dim=-1).cpu().numpy())
+         if len(rows)%2==0:
+-            ids=torch.tensor([0,8,16,24],device=e.device)
++            ids=torch.tensor([0,group,2*group,3*group],device=e.device)
+             frames.append(dict(root=(e.root_states[ids,:7]-torch.cat((e.env_origins[ids],torch.zeros(4,4,device=e.device)),dim=-1)).cpu().numpy(),q=e.dof_pos[ids].cpu().numpy(),
++                box=(e.box_root_state[ids,:7]-torch.cat((e.env_origins[ids],torch.zeros(4,4,device=e.device)),dim=-1)).cpu().numpy(),
+                 target=(applied_goal[ids]-e.env_origins[ids]).cpu().numpy(),ee=(e.ee_pos[ids]-e.env_origins[ids]).cpu().numpy(),
+                 step=len(rows),iteration=r.current_learning_iteration,random=applied_random[ids].cpu().numpy(),
+                 upright=((rp[ids].abs().max(-1).values<.35)&(height[ids]>.22)).cpu().numpy(),
+                 position_error=(e.ee_pos[ids]-applied_goal[ids]).norm(dim=-1).cpu().numpy(),
+                 vx=e.base_lin_vel[ids,0].cpu().numpy(),yaw_rate=e.base_ang_vel[ids,2].cpu().numpy(),commands=e.commands[ids].cpu().numpy()))
+     e.check_termination=check
++    reward_rows=[];reward_values={};reward_reconstruction_error=[0.]
++    if args.output and any(part in str(args.output) for part in ['gait_full_env_v1','gait_reward_proxy_v2']):
++        for index,name in enumerate(e.reward_names):
++            fn=e.reward_functions[index]
++            def captured(fn=fn,name=name):
++                result=fn();value=result[0]
++                if not torch.is_tensor(value):value=torch.full((e.num_envs,),float(value),device=e.device)
++                reward_values[name]=value.detach()*e.reward_scales[name]
++                return result
++            e.reward_functions[index]=captured
++        compute=e.compute_reward
++        def measured_reward():
++            compute()
++            batch=torch.stack([reward_values[name] for name in e.reward_names]+[e.rew_buf],dim=-1).cpu().numpy()
++            reward_reconstruction_error[0]=max(reward_reconstruction_error[0],float(np.abs(batch[:,:-1].sum(-1)/100.-batch[:,-1]).max()))
++            reward_rows.append(batch[:,:-1])
++        e.compute_reward=measured_reward
+     with torch.no_grad():
+-        for _ in range(int(args.seconds/e.dt)):
++        for evaluation_step in range(int(args.seconds/e.dt)):
++            if evaluation_step%250==0:print('Evaluation simulation seconds %.1f / %.1f'%(evaluation_step*e.dt,args.seconds),flush=True)
+             if not args.arm_goals:e.goal_timer.zero_()
+             e.commands[:]=targets
+             applied_goal=e.curr_ee_goal_cart_world.clone();applied_orientation=e.ee_goal_orn_quat.clone()
+             applied_random=(e.ee_goal_sphere-e.init_end_ee_sphere).norm(dim=-1)>1e-4
+             action=r.alg.actor_critic.act_inference(e.obs_buf,hist_encoding=args.encoder=='history')
+             e.step(action)
++            reset_ids=e.reset_buf.nonzero(as_tuple=False).flatten()
++            shadow_support[reset_ids]=e.env_origins[reset_ids,2:3]
+     x=np.stack(rows);result={}
+     for i,name in enumerate(['stand','forward','turn','forward_turn']):
+-        v=x[100:,i*8:(i+1)*8];t=targets[i*8].cpu().numpy()
++        v=x[100:,i*group:(i+1)*group];t=targets[i*group].cpu().numpy()
+         result[name]=dict(command_vx_m_s=float(t[0]),command_yaw_rad_s=float(t[2]),
+             command_above_walking_threshold=bool(abs(float(t[0]))>cfg.commands.lin_vel_x_clip or abs(float(t[2]))>cfg.commands.ang_vel_yaw_clip),
+             mean_vx_m_s=float(v[:,:,0].mean()),mean_yaw_rad_s=float(v[:,:,1].mean()),
++            mean_vy_m_s=float(v[:,:,82].mean()),vy_abs_error_m_s=float(abs(v[:,:,82]).mean()),
+             vx_abs_error_m_s=float(abs(v[:,:,0]-t[0]).mean()),yaw_abs_error_rad_s=float(abs(v[:,:,1]-t[2]).mean()),
+             upright_fraction=float(v[:,:,4].mean()),fall_resets=int(((v[:,:,2]>.5)&(v[:,:,3]<.5)).sum()),
+             per_foot_loaded_fraction=(v[:,:,5:9]>5).mean((0,1)).tolist(),
+@@ -99,6 +149,7 @@
+             foot_clearance_p99_m=np.quantile(v[:,:,9:13],.99,axis=(0,1)).tolist(),
+             per_foot_unloaded_fraction=(v[:,:,5:9]<5).mean((0,1)).tolist(),
+             applied_leg_torque_abs_max_Nm=float(abs(v[:,:,21:33]).max()),
++            leg_torque_above_90pct_fraction=float((abs(v[:,:,21:33])>.9*e.torque_limits[:12].cpu().numpy()).mean()),
+             ee_position_mean_m=float(v[:,:,33].mean()),ee_position_p95_m=float(np.quantile(v[:,:,33],.95)),
+             ee_orientation_mean_deg=float(v[:,:,34].mean()),
+             arm_contact_gt_1N_fraction=float((v[:,:,39]>1).mean()),
+@@ -107,19 +158,62 @@
+             stance_slip_mean_m_s=float(v[:,:,35:39][v[:,:,5:9]>5].mean()) if (v[:,:,5:9]>5).any() else 0.,
+             midstance_slip_mean_m_s=float(v[:,:,35:39][(v[:,:,5:9]>20)&(v[:,:,17:21]>.9)].mean()) if ((v[:,:,5:9]>20)&(v[:,:,17:21]>.9)).any() else 0.,
+             phase_contact_agreement=float(((v[:,:,5:9]>5)==(v[:,:,17:21]>.5)).mean()))
+-    result['conditions']=f'Terrain={args.terrain}, DR={args.domain_rand}, deterministic {args.encoder} inference, random arm goals={args.arm_goals}, 32 envs, {args.seconds}s; 8 envs per command.'
++    result['conditions']=f'Terrain={args.terrain}, DR={args.domain_rand}, deterministic {args.encoder} inference, random arm goals={args.arm_goals}, {cfg.env.num_envs} envs, {args.seconds}s; {group} envs per command.'
+     result['task_variant']='vbc_port' if args.vbc_port else ('restricted_vbc_sampler' if args.vbc_sampler else 'hardware')
++    if args.gait_preset:result['task_variant']='gait_study_'+args.gait_preset
++    result['envs_per_command']=group
++    result['environment_realization']=dict(terrain_sha256=hashlib.sha256(e.height_samples.cpu().numpy().tobytes()).hexdigest() if getattr(e,'height_samples',None) is not None else None, env_origins_sha256=hashlib.sha256(e.env_origins.cpu().numpy().tobytes()).hexdigest())
++    result['environment_realization']['dr_sha256']=hashlib.sha256(b''.join(getattr(e,k).detach().cpu().numpy().tobytes() for k in ['mass_params_tensor','friction_coeffs_tensor','motor_strength'])).hexdigest()
++    if args.terrain=='trimesh':
++        h=hashlib.sha256();h.update(e.terrain.vertices.tobytes());h.update(e.terrain.triangles.tobytes());result['environment_realization']['triangle_mesh_sha256']=h.hexdigest()
++    result['sample_columns_extra']=dict(contact_presence_proxy=[45,49],foot_world_positions=[49,61],grid_ground_z=[61,65],last_support_ground_z=[65,69],target_lift=[69,73],counterfactual_grid_height_reward=73,counterfactual_support_height_reward=74,box_world_pose=[75,82],base_vy=82,root_world_pose=[83,90],foot_world_linear_angular_velocity=[90,114],box_world_linear_angular_velocity=[114,120])
++    result['leg_torque_limits_Nm']=e.torque_limits[:12].cpu().numpy().tolist()
++    result['sample_schema_width']=int(x.shape[-1])
++    result['completed_updates']=r.current_learning_iteration
+     result['checkpoint']=str(Path(args.checkpoint).resolve())
+     result['walking_thresholds']=dict(lin_vel_x=cfg.commands.lin_vel_x_clip,ang_vel_yaw=cfg.commands.ang_vel_yaw_clip)
+     result['clearance_reference']='Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.'
++    result['force_reporting_note']='Raw net contact forces can be missed on triangle-mesh terrain. Existing foot sensor contact bits are presence proxies, not calibrated ground reaction forces.'
+     result['slip_definition']='Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.'
+     out=Path(args.output) if args.output else ROOT/'audit_hw';out.mkdir(parents=True,exist_ok=True)
+     np.savez_compressed(str(out/'policy_evaluation.npz'),samples=x)
++    if reward_rows:
++        result['reward_breakdown_reconstruction_max_abs_error']=reward_reconstruction_error[0]
++        values=np.stack(reward_rows)
++        np.savez_compressed(str(out/'reward_breakdown.npz'),weighted_rewards=values,names=np.array(e.reward_names))
++        breakdown={name:{reward:float(values[100:,i*group:(i+1)*group,j].mean()) for j,reward in enumerate(e.reward_names)}
++                   for i,name in enumerate(['stand','forward','turn','forward_turn'])}
++        (out/'reward_breakdown.json').write_text(json.dumps(breakdown,indent=2))
++    np.savez_compressed(str(out/'evaluation_dr.npz'),mass_params=e.mass_params_tensor.cpu().numpy(),friction=e.friction_coeffs_tensor.cpu().numpy(),motor_strength=e.motor_strength.cpu().numpy(),env_origins=e.env_origins.cpu().numpy())
+     if frames:
+         np.savez_compressed(str(out/'trajectories.npz'),**{k:np.stack([v[k] for v in frames]) for k in frames[0]})
+-        (out/'metadata.json').write_text(json.dumps(dict(video_ids=[0,8,16,24],dof_names=e.dof_names,encoder=args.encoder)))
++        (out/'metadata.json').write_text(json.dumps(dict(video_ids=[0,group,2*group,3*group],dof_names=e.dof_names,encoder=args.encoder,box_size_m=cfg.box.box_size)))
++    if args.output and 'gait_reward_proxy_v2' in str(args.output) and args.terrain=='trimesh':
++        cache=ROOT/'experiments/gait_reward_proxy_v2/terrain_cache'/(result['environment_realization']['triangle_mesh_sha256']+'.npz')
++        cache.parent.mkdir(parents=True,exist_ok=True)
++        if not cache.exists():
++            temporary=cache.with_suffix('.tmp')
++            with temporary.open('wb') as file:np.savez_compressed(file,vertices=e.terrain.vertices,triangles=e.terrain.triangles,border_size=np.array(e.terrain.cfg.border_size))
++            os.replace(str(temporary),str(cache))
++        result['actual_terrain_cache']=str(cache)
++    if args.export_terrain and args.terrain=='trimesh':
++        vertices=e.terrain.vertices.copy();vertices[:,:2]-=e.terrain.cfg.border_size
++        triangles=e.terrain.triangles
++        for panel,env_id in enumerate([0,group,2*group,3*group]):
++            origin=e.env_origins[env_id].cpu().numpy();v=vertices-origin
++            xy=np.stack([frame['root'][panel,:2] for frame in frames])
++            lower=xy.min(0)-2.5;upper=xy.max(0)+2.5
++            inside=((v[:,:2]>=lower)&(v[:,:2]<=upper)).all(-1)
++            selected=triangles[inside[triangles].any(axis=1)]
++            used,indices=np.unique(selected,return_inverse=True)
++            mesh=out/('terrain_panel_%d.obj'%panel)
++            with mesh.open('w') as f:
++                np.savetxt(f,v[used],fmt='v %.7f %.7f %.7f')
++                np.savetxt(f,indices.reshape(-1,3)+1,fmt='f %d %d %d')
++        result['terrain_replay']='Actual simulator triangles, cropped around the entire recorded trajectory plus 2.5m margin, relative to initial environment origin.'
+     (out/'policy_evaluation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
+     e.gym.destroy_sim(e.sim)
++    if reward_rows:assert reward_reconstruction_error[0]<1e-4,'Reward instrumentation failed to reconstruct the original reward buffer'
+ 
+ 
+ if __name__=='__main__':main()
+--- /dev/null
++++ new_gait/gait_geometry.py
+@@ -0,0 +1,42 @@
++"""CPU-only checks against recorded simulator collision surfaces."""
++import numpy as np
++
++
++def distances(points,triangles,return_closest=False):
++    a,b,c=triangles[:,0],triangles[:,1],triangles[:,2]
++    ab=b-a;ac=c-a;n=np.cross(ab,ac);nn=(n*n).sum(-1)
++    good=nn>1e-16;a,b,c,ab,ac,n,nn=[z[good] for z in [a,b,c,ab,ac,n,nn]]
++    aa=(ab*ab).sum(-1);bb=(ab*ac).sum(-1);cc=(ac*ac).sum(-1);denom=aa*cc-bb*bb
++    result=[];closest=[]
++    for offset in range(0,len(points),32):
++        p=points[offset:offset+32,None,:];ap=p-a
++        d0=(ap*ab).sum(-1);d1=(ap*ac).sum(-1)
++        u=(cc*d0-bb*d1)/np.maximum(denom,1e-20);v=(aa*d1-bb*d0)/np.maximum(denom,1e-20)
++        inside=(u>=0)&(v>=0)&(u+v<=1)
++        d=np.where(inside,(ap*n).sum(-1)**2/nn,np.inf)
++        if return_closest:
++            nearest=p-((ap*n).sum(-1)/nn)[...,None]*n
++        for first,last in [(a,b),(b,c),(c,a)]:
++            edge=last-first;t=np.clip(((p-first)*edge).sum(-1)/np.maximum((edge*edge).sum(-1),1e-20),0,1)
++            candidate=first+t[...,None]*edge
++            distance=((p-candidate)**2).sum(-1)
++            if return_closest:nearest=np.where((distance<d)[...,None],candidate,nearest)
++            d=np.minimum(d,distance)
++        index=d.argmin(-1);rows=np.arange(len(index))
++        result.append(np.sqrt(d[rows,index]))
++        if return_closest:closest.append(nearest[rows,index])
++    result=np.concatenate(result)
++    return (result,np.concatenate(closest)) if return_closest else result
++
++
++def box_distances(points,poses,size,return_closest=False):
++    """Point to solid oriented cube; quaternion xyzw, size is edge length."""
++    delta=points-poses[:,:3];xyz=poses[:,3:6];w=poses[:,6:7]
++    t=2*np.cross(-xyz,delta)
++    local=delta+w*t+np.cross(-xyz,t)
++    clipped=np.clip(local,-size/2,size/2)
++    distance=np.linalg.norm(local-clipped,axis=-1)
++    if not return_closest:return distance
++    t=2*np.cross(xyz,clipped)
++    closest=clipped+w*t+np.cross(xyz,t)+poses[:,:3]
++    return distance,closest
+--- /dev/null
++++ new_gait/launch_monitor_detached.sh
+@@ -0,0 +1,16 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++case_name="$1"
++shift
++mkdir -p experiments/gait_reward_proxy_v2/resume_logs
++export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
++export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 MAX_JOBS=2 WANDB_MODE=disabled WANDB_CONSOLE=off WANDB_DISABLE_GIT=true
++stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++logfile="$PWD/experiments/gait_reward_proxy_v2/resume_logs/eval_${case_name}_${stamp}.log"
++nohup setsid python -u monitor_full_env.py "$@" >"$logfile" 2>&1 < /dev/null &
++monitor_pid=$!
++printf '%s\n' "$monitor_pid" >"$PWD/experiments/gait_reward_proxy_v2/resume_logs/eval_${case_name}_${stamp}.pid"
++printf 'PID: %s\nLog: %s\n' "$monitor_pid" "$logfile"
+--- /dev/null
++++ new_gait/launch_stable.sh
+@@ -0,0 +1,21 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++mkdir -p launch_logs
++stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++logfile="$PWD/launch_logs/train_${stamp}.log"
++nohup setsid bash "$PWD/run_stable.sh" "$@" >"$logfile" 2>&1 < /dev/null &
++training_pid=$!
++printf '%s\n' "$training_pid" >"$PWD/launch_logs/train_${stamp}.pid"
++# Report immediate initialization failures instead of presenting a stale PID.
++for check in 1 2 3 4 5 6 7 8; do
++    sleep 1
++    training_state="$(ps -p "$training_pid" -o stat= || true)"
++    if [[ -z "$training_state" || "$training_state" == Z* ]]; then
++        printf 'Training exited during initialization. Log: %s\n' "$logfile" >&2
++        tail -n 12 "$logfile" >&2
++        exit 1
++    fi
++done
++printf 'PID: %s\nLog: %s\n' "$training_pid" "$logfile"
+--- /dev/null
++++ new_gait/launch_study_detached.sh
+@@ -0,0 +1,21 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++case_name="$1"
++shift
++mkdir -p experiments/gait_reward_proxy_v2/resume_logs
++stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++logfile="$PWD/experiments/gait_reward_proxy_v2/resume_logs/${case_name}_${stamp}.log"
++nohup setsid bash "$PWD/run_gait.sh" "$@" >"$logfile" 2>&1 < /dev/null &
++study_pid=$!
++printf '%s\n' "$study_pid" >"$PWD/experiments/gait_reward_proxy_v2/resume_logs/${case_name}_${stamp}.pid"
++for check in 1 2 3 4; do
++    sleep 1
++    state="$(ps -p "$study_pid" -o stat= || true)"
++    if [[ -z "$state" || "$state" == Z* ]]; then
++        tail -n 12 "$logfile" >&2
++        exit 1
++    fi
++done
++printf 'PID: %s\nLog: %s\n' "$study_pid" "$logfile"
+--- preserved_baseline/legged_gym/envs/__init__.py
++++ new_gait/legged_gym/envs/__init__.py
+@@ -51,3 +51,5 @@
+ task_registry.register('as2piper_plate_walk_wbc_vbc',AS2PiPERWalkWBCVBC,AS2PiPERWalkWBCVBCCfg(),AS2PiPERWalkWBCVBCCfgPPO(),'manip_loco')
+ from .manip_loco.as2piper_vbc_port import AS2PiPERVBCPort,AS2PiPERVBCPortCfg,AS2PiPERVBCPortCfgPPO
+ task_registry.register('as2piper_plate_vbc_port',AS2PiPERVBCPort,AS2PiPERVBCPortCfg(),AS2PiPERVBCPortCfgPPO(),'manip_loco')
++from .manip_loco.as2piper_gait_study import AS2PiPERGaitStudy,AS2PiPERStableGaitCfg,AS2PiPERGaitStudyCfgPPO
++task_registry.register('as2piper_plate_gait_stable',AS2PiPERGaitStudy,AS2PiPERStableGaitCfg(),AS2PiPERGaitStudyCfgPPO(),'manip_loco')
+--- /dev/null
++++ new_gait/legged_gym/envs/manip_loco/as2piper_gait_study.py
+@@ -0,0 +1,256 @@
++"""Isolated reward ablations; the preserved hardware/VBC port is never edited."""
++import torch
++from .as2piper_vbc_port import AS2PiPERVBCPort, AS2PiPERVBCPortCfg, AS2PiPERVBCPortCfgPPO
++
++PRESETS = {
++    'original': (False, False, False, False, False),
++    'velocity': (True, False, False, False, False),
++    'jerk': (False, True, False, False, False),
++    'stop': (False, False, True, False, False),
++    'data_stop': (True, True, True, False, False),
++    'speed': (True, True, True, True, False),
++    'stable': (True, True, True, True, True),
++    'stable_grid': (True, True, True, True, True),
++    'stable_contact': (True, True, True, True, True),
++    'progress': (True, True, True, True, True),
++    'progress_gain2': (True, True, True, True, True),
++    'gaussian_gain2': (True, True, True, True, True),
++    'original_proxy': (False, False, False, False, False),
++    'stable_proxy': (True, True, True, True, True),
++    'progress_gain2_proxy': (True, True, True, True, True),
++    'stable_proxy_ground': (True, True, True, True, True),
++    'progress_gain2_proxy_ground': (True, True, True, True, True),
++    'progress_gain2_proxy_yaw4': (True, True, True, True, True),
++    'progress_gain2_proxy_ground_floor': (True, True, True, True, True),
++    'progress_gain2_proxy_smooth_yaw4': (True, True, True, True, True),
++    'progress_gain2_proxy_smooth_ground_floor_yaw4': (True, True, True, True, True),
++    'progress_gain2_proxy_smooth_yaw4_contactmatch': (True, True, True, True, True),
++}
++
++
++class AS2PiPERGaitStudyCfg(AS2PiPERVBCPortCfg):
++    class rewards(AS2PiPERVBCPortCfg.rewards):
++        class scales(AS2PiPERVBCPortCfg.rewards.scales):
++            pass
++    class study:
++        preset = 'stable'
++        velocity_fix = True
++        jerk_fix = True
++        stop_fix = True
++        speed_fix = True
++        phase_fix = True
++        velocity_sigma_m_s = .20
++        yaw_sigma_rad_s = .35
++        swing_clearance_m = .04
++        clearance_sigma_m = .025
++        foot_radius_m = .028
++        terrain_height_mode = 'grid'
++        ground_ema = .2
++        progress_mix = 0.
++        contact_force_proxy = False
++
++
++class AS2PiPERGaitStudyCfgPPO(AS2PiPERVBCPortCfgPPO):
++    class runner(AS2PiPERVBCPortCfgPPO.runner):
++        experiment_name = 'as2piper_gait_study'
++        save_interval = 100
++
++
++def configure(cfg, preset='stable', controlled=False):
++    """Every paired ablation has the same environment, commands and PPO."""
++    flags = PRESETS[preset]
++    cfg.study.preset = preset
++    cfg.study.contact_force_proxy = preset.endswith('_proxy') or preset in ('stable_proxy_ground','progress_gain2_proxy_ground','progress_gain2_proxy_yaw4','progress_gain2_proxy_ground_floor','progress_gain2_proxy_smooth_yaw4','progress_gain2_proxy_smooth_ground_floor_yaw4','progress_gain2_proxy_smooth_yaw4_contactmatch')
++    cfg.study.progress_mix = .5 if preset in ('progress','progress_gain2','progress_gain2_proxy','progress_gain2_proxy_ground','progress_gain2_proxy_yaw4','progress_gain2_proxy_ground_floor','progress_gain2_proxy_smooth_yaw4','progress_gain2_proxy_smooth_ground_floor_yaw4','progress_gain2_proxy_smooth_yaw4_contactmatch') else 0.
++    cfg.study.terrain_height_mode = 'proxy' if preset in ('stable_proxy_ground','progress_gain2_proxy_ground','progress_gain2_proxy_ground_floor','progress_gain2_proxy_smooth_ground_floor_yaw4') else ('contact' if preset == 'stable_contact' else 'grid')
++    for name, value in zip(('velocity_fix','jerk_fix','stop_fix','speed_fix','phase_fix'), flags):
++        setattr(cfg.study, name, value)
++    if flags[3]:
++        cfg.rewards.scales.tracking_ang_vel = 1.0
++    if flags[4]:
++        cfg.rewards.scales.walking_dof = .5
++        cfg.rewards.scales.feet_air_time = .5
++    if preset in ('progress_gain2','gaussian_gain2','progress_gain2_proxy','progress_gain2_proxy_ground','progress_gain2_proxy_yaw4','progress_gain2_proxy_ground_floor','progress_gain2_proxy_smooth_yaw4','progress_gain2_proxy_smooth_ground_floor_yaw4','progress_gain2_proxy_smooth_yaw4_contactmatch'):
++        cfg.rewards.scales.tracking_lin_vel_max = 4.0
++        cfg.rewards.scales.tracking_ang_vel = 2.0
++    if preset in ('progress_gain2_proxy_yaw4','progress_gain2_proxy_smooth_yaw4','progress_gain2_proxy_smooth_ground_floor_yaw4','progress_gain2_proxy_smooth_yaw4_contactmatch'):
++        cfg.rewards.scales.tracking_ang_vel = 4.0
++    if preset in ('progress_gain2_proxy_ground_floor','progress_gain2_proxy_smooth_ground_floor_yaw4'):
++        cfg.study.penalize_excess_swing = False
++    if preset in ('progress_gain2_proxy_smooth_yaw4','progress_gain2_proxy_smooth_ground_floor_yaw4','progress_gain2_proxy_smooth_yaw4_contactmatch'):
++        cfg.study.smooth_progress_mix = True
++    if preset == 'progress_gain2_proxy_smooth_yaw4_contactmatch':
++        cfg.study.symmetric_contact = True
++    if controlled:
++        cfg.terrain.mesh_type = 'plane'
++        cfg.terrain.measure_heights = False
++        cfg.init_state.init_vel_perturb_range = 0.
++        for key in ('randomize_friction','randomize_base_mass','randomize_base_com',
++                    'randomize_motor','randomize_gripper_mass','push_robots'):
++            setattr(cfg.domain_rand, key, False)
++    return cfg
++
++
++class AS2PiPERGaitStudy(AS2PiPERVBCPort):
++    def _post_physics_step_callback(self):
++        super()._post_physics_step_callback()
++        if self.cfg.study.velocity_fix:
++            # Tensor-index selection is a copy: gather AFTER every PhysX refresh.
++            self.foot_velocities = self.rigid_body_state[:, self.feet_indices, 7:10]
++            self.foot_positions = self.rigid_body_state[:, self.feet_indices, :3]
++        if (self.cfg.study.phase_fix and self.cfg.terrain.mesh_type != 'plane'
++                and self.cfg.study.terrain_height_mode in ('contact','proxy')):
++            self._update_support_ground()
++
++    def _reset_root_states(self, ids):
++        super()._reset_root_states(ids)
++        if hasattr(self, '_support_ground'):
++            self._support_ground[ids] = self.env_origins[ids, 2:3]
++            self._body_ground[ids] = self.env_origins[ids, 2]
++
++    def _update_support_ground(self):
++        if not hasattr(self, '_support_ground'):
++            self._support_ground = self.env_origins[:, 2:3].repeat(1, 4)
++            self._body_ground = self.env_origins[:, 2].clone()
++        loaded = self.foot_contacts_from_sensor if self.cfg.study.terrain_height_mode == 'proxy' else (self.contact_forces[:, self.feet_indices, 2] > 5.)
++        measured = self.rigid_body_state[:, self.feet_indices, 2]-self.cfg.study.foot_radius_m
++        self._support_ground = torch.where(loaded, measured, self._support_ground)
++        self._body_ground += self.cfg.study.ground_ema*(self._support_ground.mean(-1)-self._body_ground)
++
++    def _step_contact_targets(self):
++        super()._step_contact_targets()
++        if self.cfg.study.stop_fix:
++            self.desired_contact_states[~self._get_walking_cmd_mask()] = 1.
++
++    def _prepare_reward_function(self):
++        super()._prepare_reward_function()
++        replacements = {}
++        if self.cfg.study.contact_force_proxy:
++            replacements['tracking_contacts_shaped_force']=self._proxy_contact_force
++        if self.cfg.study.jerk_fix:
++            replacements['feet_jerk'] = self._contact_change
++        if self.cfg.study.speed_fix:
++            replacements.update(tracking_lin_vel_max=self._speed_tracking,
++                                tracking_ang_vel=self._yaw_tracking)
++        if self.cfg.study.phase_fix:
++            replacements.update(feet_height=self._phase_clearance,
++                                feet_air_time=self._phase_air_time,
++                                base_height=self._terrain_relative_base_height)
++        for i, name in enumerate(self.reward_names):
++            if name in replacements:
++                self.reward_functions[i] = replacements[name]
++
++    def _proxy_contact_force(self):
++        # Existing VBC presence bit, not a calibrated normal force.
++        if not self.cfg.env.observe_gait_commands:return 0.,0.
++        presence=self.foot_contacts_from_sensor.float()
++        cost=(1-self.desired_contact_states)*presence
++        if getattr(self.cfg.study,'symmetric_contact',False):
++            # Missing stance contact must not make the force cost disappear.
++            cost=cost+self.desired_contact_states*(1-presence)
++        cost=cost.mean(-1)
++        return cost,-cost
++
++    def _contact_change(self):
++        forces = self.force_sensor_tensor
++        if not hasattr(self, '_previous_foot_wrench'):
++            value = torch.zeros(self.num_envs, device=self.device)
++        else:
++            value = (forces-self._previous_foot_wrench).norm(dim=-1).sum(-1)
++        self._previous_foot_wrench = forces.clone()
++        value[self.episode_length_buf < 50] = 0.
++        return value, value
++
++    def _speed_tracking(self):
++        error = self.base_lin_vel[:, :2]-self.commands[:, :2]
++        value = torch.exp(-error.square().sum(-1)/self.cfg.study.velocity_sigma_m_s**2)
++        if self.cfg.study.progress_mix:
++            command=self.commands[:,:2];norm2=command.square().sum(-1)
++            mix=self.cfg.study.progress_mix
++            if getattr(self.cfg.study,'smooth_progress_mix',False):
++                # Bounded directional credit; continuous at zero command.
++                # Large commands keep the original exploration incentive.
++                mix=mix*(norm2.sqrt()/self.cfg.study.velocity_sigma_m_s).clamp(max=1.)
++                progress=((self.base_lin_vel[:,:2]*command).sum(-1)/norm2.clamp(min=1e-12)).clamp(-1.,1.)
++            else:
++                progress=((self.base_lin_vel[:,:2]*command).sum(-1)/norm2.clamp(min=1e-6)).clamp(-1.,1.)
++                progress=torch.where(norm2>1e-6,progress,value)
++            value=(1-mix)*value+mix*progress
++        return value, error.norm(dim=-1)
++
++    def _yaw_tracking(self):
++        error = self.base_ang_vel[:, 2]-self.commands[:, 2]
++        value=torch.exp(-error.square()/self.cfg.study.yaw_sigma_rad_s**2)
++        if self.cfg.study.progress_mix:
++            command=self.commands[:,2];mix=self.cfg.study.progress_mix
++            if getattr(self.cfg.study,'smooth_progress_mix',False):
++                mix=mix*(command.abs()/self.cfg.study.yaw_sigma_rad_s).clamp(max=1.)
++                progress=(self.base_ang_vel[:,2]*command/command.square().clamp(min=1e-12)).clamp(-1.,1.)
++            else:
++                progress=(self.base_ang_vel[:,2]*command/command.square().clamp(min=1e-6)).clamp(-1.,1.)
++                progress=torch.where(command.abs()>1e-3,progress,value)
++            value=(1-mix)*value+mix*progress
++        return value,error.abs()
++
++    def _foot_ground_height(self):
++        if self.cfg.terrain.mesh_type == 'plane':
++            return torch.zeros(self.num_envs, 4, device=self.device)
++        if self.cfg.study.terrain_height_mode in ('contact','proxy'):
++            if not hasattr(self, '_support_ground'):self._update_support_ground()
++            return self._support_ground
++        # Same conservative three-neighbour grid estimator used by legged_gym;
++        # an approximation to the simplified trimesh, not a mesh ray cast.
++        xy = self.rigid_body_state[:, self.feet_indices, :2]
++        ij = ((xy+self.terrain.cfg.border_size)/self.terrain.cfg.horizontal_scale).long()
++        ix = ij[..., 0].clamp(0, self.height_samples.shape[0]-2)
++        iy = ij[..., 1].clamp(0, self.height_samples.shape[1]-2)
++        heights = torch.minimum(self.height_samples[ix, iy], self.height_samples[ix+1, iy])
++        heights = torch.minimum(heights, self.height_samples[ix, iy+1])
++        return heights*self.terrain.cfg.vertical_scale
++
++    def _phase_clearance(self):
++        swing = torch.sin(2*torch.pi*(self.foot_indices-.5)).clamp(min=0.)
++        desired = self.cfg.study.swing_clearance_m*swing
++        clearance = (self.rigid_body_state[:, self.feet_indices, 2]
++                     - self._foot_ground_height()-self.cfg.study.foot_radius_m)
++        delta = clearance-desired
++        if self.cfg.terrain.mesh_type != 'plane' and self.cfg.study.terrain_height_mode == 'contact':
++            # On unobserved uneven ground, a higher viable step is allowed.
++            # Stance motion/contact penalties still use actual current physics.
++            delta = delta.clamp(max=0.)
++        if (self.cfg.terrain.mesh_type != 'plane'
++                and not getattr(self.cfg.study, 'penalize_excess_swing', True)):
++            # Permit higher swing over rough ground, retain a zero-height
++            # stance target. This does not relax physical joint/collision limits.
++            delta = torch.where(swing > 0., delta.clamp(max=0.), delta)
++        error = (delta/self.cfg.study.clearance_sigma_m).square().mean(-1)
++        value = torch.exp(-error)*self._get_walking_cmd_mask()
++        return value, (clearance-desired).abs().mean(-1)
++
++    def _terrain_relative_base_height(self):
++        # On a plane this is exactly the inherited world-z expression. On
++        # terrain, changing ground elevation must not change the height error.
++        ground=self._foot_ground_height().mean(-1)
++        if self.cfg.terrain.mesh_type != 'plane' and self.cfg.study.terrain_height_mode in ('contact','proxy'):
++            ground=self._body_ground
++        height=self.root_states[:, 2]-ground
++        return (height-self.cfg.rewards.base_height_target).abs(), height
++
++    def _phase_air_time(self):
++        contact = self.foot_contacts_from_sensor
++        first = (self.feet_air_time > 0.) & contact
++        self.feet_air_time += self.dt
++        target = .5/self.cfg.env.frequencies
++        value = ((self.feet_air_time.clamp(max=target+.10)-target)*first).sum(-1)
++        value *= self._get_walking_cmd_mask()
++        self.feet_air_time *= ~contact
++        return value, value
++
++
++class AS2PiPERStableGaitCfg(AS2PiPERGaitStudyCfg):
++    """Nominal-plane validated reward; full rough-terrain/DR selection still pending."""
++    class rewards(AS2PiPERGaitStudyCfg.rewards):
++        class scales(AS2PiPERGaitStudyCfg.rewards.scales):
++            tracking_ang_vel=1.0
++            walking_dof=.5
++            feet_air_time=.5
+--- /dev/null
++++ new_gait/make_study_report.py
+@@ -0,0 +1,38 @@
++"""Produce a comparison table from completed paired experiments only."""
++import json
++from pathlib import Path
++from summarize_gait import summarize
++
++ROOT=Path(__file__).resolve().parent
++OUT=ROOT/'experiments/gait_ablation_v1'
++PRESETS=['original','velocity','jerk','stop','data_stop','speed','stable']
++
++
++def main():
++    results={}
++    for preset in PRESETS:
++        folder=OUT/(preset+'_eval')
++        if (folder/'policy_evaluation.json').exists():results[preset]=summarize(folder)
++    rows=[]
++    for preset,d in results.items():
++        stand,forward,turn,mixed=[d[k] for k in ['stand','forward','turn','forward_turn']]
++        rows.append('| %s | %.3f | %.3f | %.3f | %.3f | %.1f | %.3f | %d | %s |'%(
++            preset,stand['mean_vx_m_s'],forward['mean_vx_m_s'],turn['mean_vx_m_s'],turn['mean_yaw_rad_s'],
++            forward['contact_dominant_Hz'],forward['stance_slip_mean_m_s'],
++            sum(v['fall_resets_total'] for v in [stand,forward,turn,mixed]),'PASS' if d['local_acceptance_pass'] else 'FAIL'))
++    text='''# 동일 초기 정책에서 보상 원인 비교
++
++공통 초기값: model313 + Adam/history optimizer, seed7,1024환경, 각120회 추가 학습.
++공통 환경: 평지·DR off, 기존 랜덤 EE 목표/명령 및 +/-20% 관절 reset 유지.
++평가: 조건별8환경×10초, 최초2초 제외한 속도·미끄러짐; 넘어짐은 초기2초를 포함한 전체 횟수.
++단일 seed의 짧은 재학습 비교이며, scratch 수렴 및 거친 지면 성능을 대신하지 않는다.
++
++| 조건 | 정지 vx | 전진 vx (목표0.25) | 회전 중 vx (목표0) | 회전 yaw (목표+0.6) | 전진 접촉 Hz | 접지 미끄러짐 m/s | 전체 넘어짐 | 명령 추종 기준 |
++|---|---:|---:|---:|---:|---:|---:|---:|---|
++'''+ '\n'.join(rows)+'\n'
++    (OUT/'PAIRED_COMPARISON_KO.md').write_text(text)
++    (OUT/'comparison_detailed.json').write_text(json.dumps(results,indent=2))
++    print(text)
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ new_gait/monitor_full_env.py
+@@ -0,0 +1,45 @@
++"""Read-only milestone evaluations of matched full-environment PPO trials."""
++import argparse,json,os,subprocess,sys,time,fcntl
++from pathlib import Path
++from summarize_gait import summarize
++ROOT=Path(__file__).resolve().parent
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('--preset',required=True)
++    p.add_argument('--run',required=True);p.add_argument('--output',required=True)
++    p.add_argument('--checkpoints',type=int,nargs='+',default=[200,400,600]);p.add_argument('--group',type=int,default=16);p.add_argument('--export-all',action='store_true')
++    a=p.parse_args();out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
++    for step in a.checkpoints:
++        ckpt=ROOT/'logs/as2piper-low'/a.run/('model_%d.pt'%step)
++        start=time.monotonic()
++        while not ckpt.exists():
++            finished=ckpt.parent/'study_finished.json'
++            if finished.exists():
++                print('Training completed before remaining milestone; nothing to evaluate:',ckpt,flush=True)
++                return
++            if time.monotonic()-start>21600:raise TimeoutError(str(ckpt))
++            time.sleep(10)
++        target=out/('eval_%d'%step)
++        if not (target/'gait_summary.json').exists():
++            command=[sys.executable,'-u','evaluate_hw.py',str(ckpt),'--vbc-port',
++                '--gait-preset',a.preset,'--arm-goals','--terrain','trimesh','--domain-rand',
++                '--vx','.25','--yaw','.6','--seconds','20','--envs-per-command',str(a.group),
++                '--seed','20261102','--output',str(target)]
++            if a.export_all or step==a.checkpoints[-1]:command+=['--export-terrain']
++            print('Evaluating',ckpt,flush=True)
++            with (ROOT/'experiments/gait_full_env_v1/evaluation.lock').open('a') as lock:
++                fcntl.flock(lock,fcntl.LOCK_EX)
++                with (out/('eval_%d.log'%step)).open('w') as log:
++                    subprocess.run(command,cwd=ROOT,stdout=log,stderr=subprocess.STDOUT,check=True)
++            d=summarize(target)
++        else:d=json.loads((target/'gait_summary.json').read_text())
++        record={k:{m:d[k][m] for m in ['mean_vx_m_s','mean_yaw_rad_s','vx_abs_error_m_s',
++             'yaw_abs_error_rad_s','fall_resets_total','ee_position_mean_m']} for k in ['stand','forward','turn','forward_turn']}
++        record['checkpoint']=str(ckpt);record['completed_updates']=d['completed_updates']
++        record['local_acceptance_pass']=d['local_acceptance_pass']
++        record['full_environment_baseline_pass']=d.get('full_environment_baseline_pass',False)
++        record['passed']=record['full_environment_baseline_pass']
++        (out/('result_%d.json'%step)).write_text(json.dumps(record,indent=2))
++        print(json.dumps(record),flush=True)
++
++if __name__=='__main__':main()
+--- /dev/null
++++ new_gait/plot_comparison.py
+@@ -0,0 +1,24 @@
++"""Standalone measured ablation figure."""
++import json
++from pathlib import Path
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++from make_study_report import OUT, PRESETS
++
++d=json.loads((OUT/'comparison_detailed.json').read_text())
++names=[p for p in PRESETS if p in d]
++fig,axes=plt.subplots(2,2,figsize=(12,8))
++panels=[('stand','mean_vx_m_s','Stop command: forward speed (m/s)',0,None),
++        ('forward','mean_vx_m_s','Forward command: speed (m/s)',.25,(.15,.35)),
++        ('turn','mean_yaw_rad_s','Turn command: yaw rate (rad/s)',.6,(.35,.85)),
++        ('forward','stance_slip_mean_m_s','Forward: estimated stance slip (m/s)',None,None)]
++for ax,(group,key,title,target,band) in zip(axes.flat,panels):
++    values=[d[name][group][key] for name in names]
++    if band:ax.axvspan(*band,color='green',alpha=.1)
++    ax.barh(names,values,color=['#888888' if n=='original' else '#267eb5' for n in names])
++    if target is not None:ax.axvline(target,color='black',ls='--',label='Command')
++    ax.invert_yaxis();ax.set_title(title);ax.grid(axis='x',alpha=.2)
++    for i,v in enumerate(values):ax.text(v,i,' %.3f'%v,va='center')
++fig.suptitle('Paired reward recovery study: same model313, Adam, seed7, 120 updates / 1024 envs')
++fig.tight_layout();fig.savefig(OUT/'comparison.png',dpi=150);plt.close(fig)
+--- /dev/null
++++ new_gait/plot_full_env.py
+@@ -0,0 +1,27 @@
++"""Plot measured command tracking and falls under the full environment."""
++import json
++from pathlib import Path
++import numpy as np
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++OUT=Path(__file__).resolve().parent/'experiments/gait_full_env_v1'
++GROUPS=['stand','forward','turn','forward_turn']
++fig,axes=plt.subplots(1,3,figsize=(12,3.6))
++for preset in ['original','speed','stable','progress','progress_gain2','gaussian_gain2']:
++    points=[]
++    for pilot in [True,False]:
++        folder=OUT/(preset+'_early' if pilot else preset)
++        for f in folder.glob('eval_*/gait_summary.json'):
++            d=json.loads(f.read_text());samples=np.load(f.parent/'policy_evaluation.npz')['samples']
++            vx=np.mean([d[k]['vx_abs_error_m_s'] for k in GROUPS]);yaw=np.mean([d[k]['yaw_abs_error_rad_s'] for k in GROUPS])
++            falls=sum(d[k]['fall_resets_total'] for k in GROUPS)/(samples.shape[1]*samples.shape[0]*.02/60)
++            points.append((d.get('completed_updates',int(f.parent.name.split('_')[-1])+1),vx,yaw,falls))
++    points.sort()
++    if points:
++        values=np.array(points)
++        for i,ax in enumerate(axes):ax.plot(values[:,0],values[:,i+1],marker='o',label=preset)
++for ax,title in zip(axes,['Mean vx MAE (m/s)','Mean yaw MAE (rad/s)','Falls per robot-minute']):
++    ax.set(title=title,xlabel='Completed PPO updates');ax.grid(alpha=.3)
++if any(ax.lines for ax in axes):axes[0].legend(fontsize=8)
++fig.tight_layout();fig.savefig(OUT/'comparison.png',dpi=150)
+--- /dev/null
++++ new_gait/plot_proxy_v2.py
+@@ -0,0 +1,29 @@
++"""Show actual motion and falls; a stationary low-fall policy is not success."""
++import json
++from pathlib import Path
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++ROOT=Path(__file__).resolve().parent;OUT=ROOT/'experiments/gait_reward_proxy_v2'
++data=json.loads((OUT/'comparison.json').read_text())
++fig,axes=plt.subplots(1,3,figsize=(13,4))
++for case in ['original_vbc_port','stable_net_force','stable_proxy','progress_gain2_proxy','stable_proxy_ground','progress_gain2_proxy_yaw4','progress_gain2_proxy_ground_floor','progress_gain2_proxy_smooth_yaw4','progress_gain2_proxy_smooth_yaw4_contactmatch']:
++ points=[]
++ for label,d in data.items():
++  if label.rsplit('_',1)[0] not in (case,case+'_resume1'):continue
++  if d.get('envs_per_command')!=16:continue
++  points.append((d['completed_updates'],d['forward']['mean_vx_m_s'],d['turn']['mean_yaw_rad_s'],sum(d[k]['fall_resets_total'] for k in ['stand','forward','turn','forward_turn']),'resume1' in label or case in ('progress_gain2_proxy_yaw4','progress_gain2_proxy_ground_floor')))
++ points.sort()
++ if not points:continue
++ line=None
++ for axis,column in zip(axes,[1,2,3]):
++  line,=axis.plot([p[0] for p in points],[p[column] for p in points],marker='o',label=case)
++  for p in points:
++   if p[4]:axis.scatter(p[0],p[column],marker='s',s=70,facecolors='none',edgecolors=line.get_color())
++axes[0].axhline(.25,color='black',ls='--',lw=1,label='command')
++axes[1].axhline(.6,color='black',ls='--',lw=1)
++for ax,title in zip(axes,['Forward measured vx (m/s)','Turn measured yaw rate (rad/s)','Fall resets: 64 envs x 20s']):
++ ax.set(title=title,xlabel='Completed PPO updates');ax.grid(alpha=.25)
++axes[0].legend(fontsize=7)
++fig.suptitle('Same rough terrain/full DR; outlined square = resumed training')
++fig.tight_layout();fig.savefig(OUT/'comparison.png',dpi=160)
+--- /dev/null
++++ new_gait/plot_tracking_traces.py
+@@ -0,0 +1,26 @@
++"""Actual multi-environment velocity traces; show spread rather than return."""
++import json
++from pathlib import Path
++import numpy as np
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++ROOT=Path(__file__).resolve().parent;OUT=ROOT/'experiments/gait_reward_proxy_v2'
++fig,axes=plt.subplots(2,4,figsize=(14,6),sharex=True)
++for case,color in [('stable_proxy','#3674b1'),('progress_gain2_proxy','#d7791c')]:
++ folder=OUT/case/'eval_200';meta=json.loads((folder/'policy_evaluation.json').read_text());x=np.load(folder/'policy_evaluation.npz')['samples'];n=meta['envs_per_command'];time=np.arange(len(x))*.02
++ for j,name in enumerate(['stand','forward','turn','forward_turn']):
++  for row,col in [(0,0),(1,1)]:
++   v=x[:,j*n:(j+1)*n,col];low,mid,high=np.quantile(v,[.25,.5,.75],axis=1)
++   axes[row,j].plot(time,mid,color=color,label=case,lw=1)
++   axes[row,j].fill_between(time,low,high,color=color,alpha=.14)
++for j,name in enumerate(['stand','forward','turn','forward_turn']):
++ axes[0,j].axhline([0,.25,0,.25][j],ls='--',color='black',lw=1)
++ axes[1,j].axhline([0,0,.6,.6][j],ls='--',color='black',lw=1)
++ axes[0,j].set_title(name);axes[0,j].set_ylim(-.2,.7);axes[1,j].set_ylim(-1,1)
++ for row in [0,1]:axes[row,j].grid(alpha=.2);axes[row,j].axvline(2,color='gray',ls=':',lw=.7)
++ axes[1,j].set_xlabel('Simulation time (s)')
++axes[0,0].set_ylabel('Body vx (m/s)');axes[1,0].set_ylabel('Body yaw rate (rad/s)')
++axes[0,0].legend(fontsize=7)
++fig.suptitle('201 completed updates, same rough terrain/full DR; median and interquartile range across 16 envs')
++fig.tight_layout();fig.savefig(OUT/'tracking_traces_201.png',dpi=160)
+--- /dev/null
++++ new_gait/probe_smooth_tracking.py
+@@ -0,0 +1,51 @@
++"""Audit actual reward functions: small commands, signs, peak and continuity."""
++import isaacgym
++import json
++from pathlib import Path
++from types import SimpleNamespace
++import numpy as np,torch
++from legged_gym.envs.manip_loco.as2piper_gait_study import AS2PiPERGaitStudy,AS2PiPERGaitStudyCfg,configure
++ROOT=Path(__file__).resolve().parent
++OLD='progress_gain2_proxy_yaw4';NEW='progress_gain2_proxy_smooth_yaw4'
++
++def score(preset,axis,command,velocity):
++    velocity=torch.as_tensor(np.atleast_1d(velocity),dtype=torch.float32)
++    commands=torch.zeros(len(velocity),3);commands[:,axis]=command
++    base=torch.zeros_like(commands);base[:,axis]=velocity
++    e=SimpleNamespace(cfg=configure(AS2PiPERGaitStudyCfg(),preset),commands=commands,base_lin_vel=base,base_ang_vel=base)
++    function=AS2PiPERGaitStudy._speed_tracking if axis==0 else AS2PiPERGaitStudy._yaw_tracking
++    return function(e)[0].numpy()
++
++report={'verified':[],'low_command_jump':{}}
++for axis,commands,span in [(0,[-.634,-.25,-.05,-.00101,-.00099,0.,.00099,.00101,.05,.25,.634],1.),(2,[-1.,-.6,-.1,-.00101,0.,.00101,.1,.6,1.],2.)]:
++    for command in commands:
++        v=np.unique(np.r_[np.linspace(-span,span,2001),command])
++        value=score(NEW,axis,command,v);at_goal=float(score(NEW,axis,command,command)[0])
++        assert value.max()<=1.000001 and at_goal>=value.max()-1e-6,(axis,command)
++        np.testing.assert_allclose(value,score(NEW,axis,-command,-v),atol=2e-6)
++    physical=.4 if axis==0 else .5
++    zero=float(score(NEW,axis,0.,physical)[0]);tiny=float(score(NEW,axis,1e-8,physical)[0])
++    assert abs(zero-tiny)<1e-6
++    oldjump=float(np.diff([score(OLD,axis,c,physical)[0] for c in [.000999,.001001]])[0])
++    newjump=float(np.diff([score(NEW,axis,c,physical)[0] for c in [.000999,.001001]])[0])
++    assert oldjump>.1 and abs(newjump)<1e-3
++    report['low_command_jump'][str(axis)]={'old_jump_across_0_001':oldjump,'new_jump_across_0_001':newjump,'zero_command_score':zero,'score_at_command_1e_8':tiny}
++    report['verified'].append({'axis':axis,'command_sweep':commands,'peak_at_target':True,'sign_symmetry':True,'continuous_near_zero':True})
++report['formula']='mix=0.5*min(abs(command)/sigma,1); planar uses command norm. Return(1-mix)*Gaussian+mix*clipped directional progress. Exact zero -> Gaussian, unchanged max1. No command range/sampling/environment change.'
++path=ROOT/'experiments/gait_reward_proxy_v2/smooth_tracking_probe.json';path.write_text(json.dumps(report,indent=2)+'\n')
++print(json.dumps(report,indent=2))
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++fig,axes=plt.subplots(2,2,figsize=(10,6))
++for row,axis in enumerate([0,2]):
++    physical=.4 if axis==0 else .5
++    velocity=np.linspace(-1.,1.,801);commands=np.linspace(-.02,.02,401)
++    for preset,label,color in [(OLD,'constant mix','#b55d25'),(NEW,'smooth mix','#2877af')]:
++        axes[row,0].plot(velocity,score(preset,axis,.01,velocity),label=label,color=color)
++        values=[score(preset,axis,c,physical)[0] for c in commands]
++        axes[row,1].plot(commands,values,label=label,color=color)
++    axes[row,0].set(xlabel='Actual velocity',ylabel='Normalized reward',title=('Planar' if axis==0 else 'Yaw')+' command=0.01')
++    axes[row,1].set(xlabel='Command near zero',ylabel='Normalized reward',title='Fixed wrong velocity='+str(physical))
++for ax in axes.flat:ax.grid(alpha=.25);ax.legend(fontsize=8)
++fig.tight_layout();fig.savefig(path.with_suffix('.png'),dpi=160)
+--- preserved_baseline/render_gait.py
++++ new_gait/render_gait.py
+@@ -9,35 +9,72 @@
+ 
+ def main():
+     p=argparse.ArgumentParser();p.add_argument('evaluation');p.add_argument('--seconds',type=float,default=3.)
+-    p.add_argument('--start-seconds',type=float);a=p.parse_args();out=Path(a.evaluation)
++    p.add_argument('--start-seconds',type=float)
++    p.add_argument('--grid',action='store_true');p.add_argument('--stride',type=int,default=1)
++    p.add_argument('--fixed-azimuth',action='store_true')
++    a=p.parse_args();out=Path(a.evaluation)
++    if a.stride<1:p.error('--stride must be positive')
+     trace=np.load(str(out/'trajectories.npz'));meta=json.loads((out/'metadata.json').read_text())
++    measured=json.loads((out/'policy_evaluation.json').read_text())
++    samples=np.load(str(out/'policy_evaluation.npz'))['samples']
++    rough='Terrain=trimesh' in measured['conditions']
++    if rough and not all((out/('terrain_panel_%d.obj'%i)).exists() for i in range(4)):
++        raise ValueError('Actual terrain exports are required for a rough-ground replay.')
+     xml=ET.parse(ROOT/'resources/commands/plate_forward.xml').getroot();asset=xml.find('asset')
+     for mesh in asset.findall('mesh'):
+         mesh.set('file',str((ROOT/'resources/commands'/mesh.get('file')).resolve()))
+     ET.SubElement(asset,'texture',name='gait_grid',type='2d',builtin='checker',rgb1='.22 .27 .30',rgb2='.35 .4 .43',width='512',height='512')
+     ET.SubElement(asset,'material',name='gait_floor',texture='gait_grid',texrepeat='6 6',reflectance='0')
+-    xml.find("./worldbody/geom[@name='ground']").set('material','gait_floor')
++    ground=xml.find("./worldbody/geom[@name='ground']")
++    if rough:
++        for geom in xml.findall('.//geom'):
++            geom.set('group','5' if geom.get('group')=='3' else '0')
++        xml.find('worldbody').remove(ground)
++        for panel in range(4):
++            ET.SubElement(asset,'mesh',name='terrain_%d'%panel,file=str((out/('terrain_panel_%d.obj'%panel)).resolve()))
++            ET.SubElement(xml.find('worldbody'),'geom',name='terrain_%d'%panel,type='mesh',mesh='terrain_%d'%panel,
++                          rgba='.43 .47 .42 1',group=str(panel+1),contype='0',conaffinity='0')
++    else:ground.set('material','gait_floor')
++    if 'box' in trace:
++        box=ET.SubElement(xml.find('worldbody'),'body',name='evaluation_box')
++        ET.SubElement(box,'freejoint',name='evaluation_box_joint')
++        half=meta.get('box_size_m',.1)/2
++        ET.SubElement(box,'geom',type='box',size=' '.join([str(half)]*3),rgba='.9 .35 .12 1',mass='1')
+     m=mujoco.MjModel.from_xml_string(ET.tostring(xml,encoding='unicode'));d=mujoco.MjData(m)
+     m.vis.headlight.ambient[:]=[.6,.6,.6];m.vis.headlight.diffuse[:]=[.8,.8,.8]
+     renderer=mujoco.Renderer(m,height=288,width=512);camera=mujoco.MjvCamera();camera.distance=1.9;camera.elevation=-20
+     ids=[int(m.joint(n).qposadr) for n in meta['dof_names']]
+     def frame(i,env,title):
+         state=trace['root'][i,env];d.qpos[:3]=state[:3];d.qpos[3:7]=state[[6,3,4,5]];d.qpos[ids]=trace['q'][i,env]
++        if 'box' in trace:
++            b=trace['box'][i,env];adr=int(m.joint('evaluation_box_joint').qposadr)
++            d.qpos[adr:adr+3]=b[:3];d.qpos[adr+3:adr+7]=b[[6,3,4,5]]
+         mujoco.mj_forward(m,d);R=d.xmat[1].reshape(3,3)
+-        camera.azimuth=120+np.rad2deg(np.arctan2(R[1,0],R[0,0]));camera.lookat[:]=state[:3]+[.08,0,.15]
+-        renderer.update_scene(d,camera=camera);im=Image.fromarray(renderer.render().copy());draw=ImageDraw.Draw(im)
++        camera.azimuth=120 if a.fixed_azimuth else 120+np.rad2deg(np.arctan2(R[1,0],R[0,0]));camera.lookat[:]=state[:3]+[.08,0,.15]
++        option=mujoco.MjvOption()
++        if rough:
++            option.geomgroup[:]=0;option.geomgroup[0]=1;option.geomgroup[env+1]=1
++        renderer.update_scene(d,camera=camera,scene_option=option);im=Image.fromarray(renderer.render().copy());draw=ImageDraw.Draw(im)
+         draw.rectangle((0,0,512,43),fill=(245,245,245));command=trace['commands'][i,env]
+-        draw.text((7,5),title+' | RL policy '+str(int(trace['iteration'][i])),fill='black')
++        step=int(trace['step'][i]);env_id=meta['video_ids'][env]
++        recent=samples[max(0,step-2*a.stride):step,env_id]
++        reset_label=' | episode reset' if (recent[:,2]>.5).any() else ''
++        draw.text((7,5),title+' | RL policy '+str(int(trace['iteration'][i]))+reset_label,fill='black')
+         draw.text((7,22),'vx %.2f / %.2f m/s | yaw %.2f / %.2f rad/s'%(trace['vx'][i,env],command[0],trace['yaw_rate'][i,env],command[2]),fill='black')
+         return np.asarray(im)
+     end=len(trace['step']);start=max(0,end-int(25*a.seconds))
+     if a.start_seconds is not None:
+         start=max(0,int(25*a.start_seconds));end=min(end,start+int(25*a.seconds))
+         if start>=end:raise ValueError('Requested video interval has no frames')
+-    with imageio.get_writer(str(out/'learned_gait.mp4'),fps=25,codec='libx264',quality=8,macro_block_size=1) as w:
+-        for i in range(start,end):
+-            joined=np.concatenate([frame(i,1,'Forward'),frame(i,3,'Forward + turn')],axis=1);w.append_data(joined)
+-            if i==(start+end)//2:Image.fromarray(joined).save(str(out/'learned_gait.jpg'),quality=94)
++    with imageio.get_writer(str(out/'learned_gait.mp4'),fps=25/a.stride,codec='libx264',quality=8,macro_block_size=1) as w:
++        for i in range(start,end,a.stride):
++            if a.grid:
++                upper=np.concatenate([frame(i,0,'Stop'),frame(i,1,'Forward')],axis=1)
++                lower=np.concatenate([frame(i,2,'Turn'),frame(i,3,'Forward + turn')],axis=1)
++                joined=np.concatenate([upper,lower],axis=0)
++            else:joined=np.concatenate([frame(i,1,'Forward'),frame(i,3,'Forward + turn')],axis=1)
++            w.append_data(joined)
++            if i==start+((end-start)//(2*a.stride))*a.stride:Image.fromarray(joined).save(str(out/'learned_gait.jpg'),quality=94)
+     renderer.close();print('Rendered actual PhysX policy states; no physical reintegration or scripted joint motion.')
+ 
+ 
+--- /dev/null
++++ new_gait/report_full_env.py
+@@ -0,0 +1,46 @@
++"""Summarize only measured matched full-environment evaluations."""
++import json,re
++from summarize_gait import summarize
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent;OUT=ROOT/'experiments/gait_full_env_v1'
++GROUPS=['stand','forward','turn','forward_turn']
++
++def main():
++    rows=[];all_results={}
++    for preset in ['original','speed','stable','progress','progress_gain2','gaussian_gain2']:
++        for point in [100,200,400,600]:
++            file=OUT/preset/('eval_%d'%point)/'gait_summary.json'
++            if not file.exists():continue
++            d=summarize(file.parent);all_results[preset+'_'+str(point)]=d
++            fall=sum(d[k]['fall_resets_total'] for k in GROUPS)
++            mae=sum(d[k]['vx_abs_error_m_s'] for k in GROUPS)/4
++            yaw=sum(d[k]['yaw_abs_error_rad_s'] for k in GROUPS)/4
++            no_fall=sum(d[k]['no_fall_environment_fraction'] for k in GROUPS)/4
++            rows.append('| %s | %d | %s | %.3f | %.3f | %d | %.1f%% | %s | %s |'%(preset,point,d.get('completed_updates','?'),mae,yaw,fall,100*no_fall,'PASS' if d.get('full_environment_baseline_pass',False) else 'FAIL','PASS' if d.get('strict_no_fall_pass',False) else 'FAIL'))
++    doc=['# VBC 환경 보상 비교 측정 결과','',
++      '공통 환경과 비교 범위는 [PROTOCOL_KO.md](PROTOCOL_KO.md)를 따른다. 평지 결과를 이 표에 섞지 않는다.',
++      '속도 오차는 4개 동작의 MAE 평균이며, 전체 넘어짐은 64환경×20초에서 집계한다.',
++      '넘어짐 없는 환경 비율은 전체 20초 동안 한 번도 넘어지지 않은 환경의 비율이다.',
++      'episode return은 목적 함수가 다르므로 군 간 성능 비교에 사용하지 않는다.','',
++      '| 보상 | checkpoint 파일 번호 | 실제 완료 update | 전진속도 MAE(m/s) | yaw MAE(rad/s) | 전체 넘어짐 | 넘어짐 없는 환경 | Full-env baseline | 전체 무넘어짐 |',
++      '|---|---:|---:|---:|---:|---:|---:|---|---|' ]+rows
++    if not rows:doc+=['| 평가 대기 | — | — | — | — | — | — | — | — |']
++    doc+=['','## 100회 pilot: 32환경 ×20초','', '| 보상 | 전진 실측(m/s) | 회전 실측(rad/s) | 전체 넘어짐 |','|---|---:|---:|---:|']
++    for preset in ['original','speed','stable','progress','progress_gain2','gaussian_gain2']:
++        f=OUT/(preset+'_early')/'eval_100/gait_summary.json'
++        if f.exists():
++            d=summarize(f.parent);all_results[preset+'_pilot100']=d
++            doc.append('| %s | %.3f | %.3f | %d |'%(preset,d['forward']['mean_vx_m_s'],d['turn']['mean_yaw_rad_s'],sum(d[k]['fall_resets_total'] for k in GROUPS)))
++    doc+=['','## 학습 진행 상태','', '| 보상 | 최근 iteration | 최근 episode 길이(steps) |','|---|---:|---:|']
++    for preset in ['original','speed','stable','progress','progress_gain2','gaussian_gain2']:
++        path=OUT/(preset+'_train.log')
++        if not path.exists():continue
++        text=path.read_text();it=re.findall(r'Learning iteration (\d+)/(\d+)',text);length=re.findall(r'Mean episode length: ([\d.]+)',text)
++        doc.append('| %s | %s | %s |'%(preset,'/'.join(it[-1]) if it else '준비 중',length[-1] if length else '—'))
++    doc+=['','학습 중 episode 길이는 보행 성능의 대체 지표가 아니다. 지면 원점 기준 높이로 판단한 upright 비율은 rough에서 근사이며, 몸통 기울기 비율 및 실제 reset 원인과 함께 해석한다.',
++      '단일 학습 seed와 제한된 평가 시간의 결과이며 실물 안전성·장시간 수렴을 증명하지 않는다.']
++    (OUT/'RESULTS_KO.md').write_text('\n'.join(doc)+'\n')
++    (OUT/'comparison.json').write_text(json.dumps(all_results,indent=2)+'\n')
++    print('Summarized',len(all_results),'measured evaluations')
++
++if __name__=='__main__':main()
+--- /dev/null
++++ new_gait/report_proxy_v2.py
+@@ -0,0 +1,70 @@
++"""Report matched reward-only comparisons; never infer gait from survival alone."""
++import json,re,os
++from datetime import datetime,timezone
++from pathlib import Path
++from summarize_gait import summarize
++ROOT=Path(__file__).resolve().parent;OUT=ROOT/'experiments/gait_reward_proxy_v2'
++CASES=['stable_proxy','progress_gain2_proxy','stable_proxy_ground','progress_gain2_proxy_yaw4','progress_gain2_proxy_ground_floor','progress_gain2_proxy_smooth_yaw4','progress_gain2_proxy_smooth_yaw4_contactmatch'];GROUPS=['stand','forward','turn','forward_turn']
++RUN_NAMES={'progress_gain2_proxy_smooth_yaw4':'gait_reward_smooth_yaw4_fresh_s7_v3','progress_gain2_proxy_smooth_yaw4_contactmatch':'gait_reward_smooth_yaw4_contactmatch_fresh_s7_v3'}
++
++
++def training_logs(name):
++ return sorted(p for p in (OUT/'resume_logs').glob(name+'_*.log') if re.fullmatch(re.escape(name)+r'_\d{8}_\d{6}_\d+\.log',p.name))
++
++def publish(path,contents):
++ temporary=path.with_name(path.name+'.tmp.'+str(os.getpid()))
++ temporary.write_text(contents)
++ os.replace(str(temporary),str(path))
++
++lines=['# 동일 VBC 환경 보상 비교','', '[실험 조건과 판정 기준](PROTOCOL_KO.md)','',
++'목표: 전진0.25m/s, 회전0.6rad/s. 초기2초 이후 속도를 집계하며 넘어짐은 전체64환경×20초에서 집계한다.',
++'raw foot/body contact force에는 SDK 보고 누락 가능성이 있다. 접촉 bit와 정상반력 N은 구분한다.','',
++'| 보상 | 완료 update | 전진 실측(m/s) | 제자리 회전 yaw(rad/s) | 혼합 vx/yaw | 넘어짐 | 무넘어짐 환경 | Baseline |',
++'|---|---:|---:|---:|---|---:|---:|---|']
++all_data={}
++references=[('original_vbc_port',ROOT/'experiments/gait_full_env_v1/original'),('stable_net_force',ROOT/'experiments/gait_full_env_v1/stable')]
++evaluations=references+[(c,OUT/c) for c in CASES]+[(c+'_resume1',OUT/(c+'_resume1')) for c in CASES]
++for case,folder in evaluations:
++ for point in [100,200,300,400,600]:
++  f=folder/('eval_%d'%point)/'policy_evaluation.json'
++  if not f.exists():continue
++  d=summarize(f.parent);all_data[case+'_'+str(point)]=d
++  result=folder/('result_%d.json'%point)
++  if result.exists():
++   record=json.loads(result.read_text());record.update(completed_updates=d['completed_updates'],local_acceptance_pass=d['local_acceptance_pass'],full_environment_baseline_pass=d.get('full_environment_baseline_pass',False),passed=d.get('full_environment_baseline_pass',False))
++   publish(result,json.dumps(record,indent=2)+'\n')
++  fall=sum(d[k]['fall_resets_total'] for k in GROUPS);nf=sum(d[k]['no_fall_environment_fraction'] for k in GROUPS)/4
++  lines.append('| %s | %s | %.3f | %.3f | %.3f / %.3f | %d | %.1f%% | %s |'%(case+(' (fresh0)' if case in RUN_NAMES else '')+(' (branch201)' if case in ('progress_gain2_proxy_yaw4','progress_gain2_proxy_ground_floor') else ''),d.get('completed_updates','?'),d['forward']['mean_vx_m_s'],d['turn']['mean_yaw_rad_s'],d['forward_turn']['mean_vx_m_s'],d['forward_turn']['mean_yaw_rad_s'],fall,100*nf,'PASS' if d.get('full_environment_baseline_pass',False) else 'FAIL'))
++lines+=['','## 재개 및 비교의 한계','',
++'모든 후보는 처음에 scratch로 시작했다. 2026-10-30 07:12:17 UTC에 세 실험의 로그가 동시에 중단되었다. traceback 및 현재 cgroup OOM 기록만으로 정확한 종료 원인은 확정할 수 없다.',
++'stable_proxy와 progress_gain2_proxy는 201회, stable_proxy_ground는 101회 완료 checkpoint에서 optimizer/history 상태를 복원했다. 이후 결과에는 resume1을 표시한다. 물리 환경·episode·지지 높이 cache는 초기화되므로 중단 없는 학습과 완전히 동일하지 않으며, 서로 다른 재개 시점도 비교 한계다.',
++'yaw4는 progress_gain2_proxy의 동일201회 checkpoint/Adam/history/seed에서 분기하며 yaw weight만2→4로 변경한다. 환경은 재초기화한다. 높이 기준은 grid를 유지한다.',
++'ground_floor 분기도 동일201회 정책에서 시작하며 마지막 접촉 높이 기준과 swing 최소 높이 보상을 묶어 비교한다. stance 목표는 대칭0, 평지의4cm 대칭 목표는 유지한다. 이것은 높이 보상 그룹의 조합 효과이며 개별항의 효과를 모두 분리했다고 주장하지 않는다.',
++'기존 온라인 run 및 B1 코드는 중지·수정하지 않았다.','', '## 학습 상태','',
++'갱신 시각: '+datetime.now(timezone.utc).isoformat()]
++runtime={}
++for case in CASES:
++ for suffix in ('','_resume1'):
++  name=case+suffix
++  paths=training_logs(name) if suffix else [OUT/(case+'_train.log')]
++  if not paths or not paths[-1].exists():
++   paths=training_logs(name)
++  if not paths:continue
++  f=paths[-1];matches=re.findall(r'Learning iteration (\d+)/(\d+)',f.read_text())
++  run=RUN_NAMES.get(case,'gait_reward_'+case+'_s7_v2')+suffix
++  done=ROOT/'logs/as2piper-low'/run/'study_finished.json'
++  pidfile=f.with_suffix('.pid');pid=None;alive=False
++  if pidfile.exists():
++   pid=int(pidfile.read_text().strip())
++   try:
++    os.kill(pid,0);alive=run.encode() in (Path('/proc')/str(pid)/'cmdline').read_bytes()
++   except (ProcessLookupError,FileNotFoundError):pass
++  record={'latest_logger_iteration':matches[-1] if matches else None,'pid':pid,'alive':alive,'finished':json.loads(done.read_text()) if done.exists() else None,'log':str(f.relative_to(ROOT))}
++  runtime[name]=record
++  status='완료' if done.exists() else ('실행 중' if alive else '중단 / 실행 확인 안 됨')
++  lines.append('- '+name+': '+status+'; logger '+(' / '.join(matches[-1]) if matches else '초기화 중'))
++lines+=['','모든 후보가 통과 전에는 안정적 보행이나 장시간 수렴으로 표시하지 않는다.']
++publish(OUT/'RESULTS_KO.md','\n'.join(lines)+'\n');publish(OUT/'comparison.json',json.dumps(all_data,indent=2)+'\n')
++publish(OUT/'CURRENT_STATE.json',json.dumps({'updated_utc':datetime.now(timezone.utc).isoformat(),'runs':runtime},indent=2)+'\n')
++print('Measured evaluations:',len(all_data))
++for name,record in runtime.items():print(name,record['latest_logger_iteration'],record['alive'])
+--- /dev/null
++++ new_gait/run_ablation_suite.py
+@@ -0,0 +1,51 @@
++"""Sequential, restartable paired PPO trials; never manages other workloads."""
++import json, os, subprocess, sys, time
++from pathlib import Path
++
++ROOT=Path(__file__).resolve().parent
++OUT=ROOT/'experiments/gait_ablation_v1'
++PRESETS=['original','velocity','jerk','stop','data_stop','speed','stable']
++
++
++def summarize():
++    results={}
++    for preset in PRESETS:
++        p=OUT/(preset+'_eval')/'policy_evaluation.json'
++        if p.exists():
++            d=json.loads(p.read_text())
++            results[preset]={k:{name:v[name] for name in ('mean_vx_m_s','mean_yaw_rad_s','vx_abs_error_m_s',
++                'yaw_abs_error_rad_s','fall_resets','upright_fraction','phase_contact_agreement','stance_slip_mean_m_s')}
++                for k,v in d.items() if isinstance(v,dict) and 'mean_vx_m_s' in v}
++    (OUT/'comparison.json').write_text(json.dumps(results,indent=2))
++    return results
++
++
++def main():
++    os.environ.update(WANDB_MODE='disabled',WANDB_CONSOLE='off',WANDB_DISABLE_GIT='true',PYTHONUNBUFFERED='1')
++    # The first matched control was started explicitly; wait only for its file.
++    first=ROOT/'logs/as2piper-low/gait_ablation_v1_original/model_433.pt'
++    start=time.monotonic()
++    while not first.exists():
++        if time.monotonic()-start>1800:raise TimeoutError('Matched control did not finish')
++        time.sleep(5)
++    for preset in PRESETS:
++        run='gait_ablation_v1_'+preset
++        checkpoint=ROOT/'logs/as2piper-low'/run/'model_433.pt'
++        if not checkpoint.exists():
++            cmd=[sys.executable,'-u','train_gait.py','--preset',preset,'--controlled','--num-envs','1024',
++                 '--iterations','120','--checkpoint',str(OUT/'shared_start_313.pt'),'--run',run,'--seed','7']
++            print('Training',preset,flush=True)
++            with (OUT/(preset+'_train.log')).open('w') as log:
++                subprocess.run(cmd,cwd=str(ROOT),stdout=log,stderr=subprocess.STDOUT,check=True)
++        evaluation=OUT/(preset+'_eval')
++        if not (evaluation/'policy_evaluation.json').exists():
++            print('Evaluating',preset,flush=True)
++            cmd=[sys.executable,'-u','evaluate_hw.py',str(checkpoint),'--vbc-port','--gait-preset',preset,
++                 '--arm-goals','--vx','.25','--yaw','.6','--output',str(evaluation)]
++            with (OUT/(preset+'_eval.log')).open('w') as log:
++                subprocess.run(cmd,cwd=str(ROOT),stdout=log,stderr=subprocess.STDOUT,check=True)
++        results=summarize();print(json.dumps({preset:results[preset]}),flush=True)
++    print('Paired study complete',flush=True)
++
++
++if __name__=='__main__':main()
+--- preserved_baseline/run_gait.sh
++++ new_gait/run_gait.sh
+@@ -5,10 +5,6 @@
+ export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+ export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
+ export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
+-export WANDB_MODE="${WANDB_MODE:-online}"
+-run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
+-export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_gait_${run_stamp}}"
+-export WANDB_NAME="${WANDB_NAME:-plate_gait_${run_stamp}}"
+ export WANDB_DISABLE_GIT=true
+-python prepare_asset.py
+-exec python legged_gym/scripts/train_hw.py --task as2piper_plate_gait --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
++export WANDB_MODE="${WANDB_MODE:-disabled}"
++exec python -u train_gait.py "$@"
+--- /dev/null
++++ new_gait/run_stable.sh
+@@ -0,0 +1,19 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
++export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
++export WANDB_DISABLE_GIT=true
++export WANDB_MODE="${WANDB_MODE:-online}"
++export WANDB_BASE_URL="${WANDB_BASE_URL:-https://forge.coreweave.com/wandb}"
++stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_gait_livefoot_symmetric_phase_scratch_${stamp}}"
++export WANDB_NAME="${WANDB_NAME:-$WANDB_RUN_ID}"
++if [[ -e "$PWD/logs/as2piper-low/$WANDB_NAME" ]]; then
++  printf 'Refusing to overwrite existing run: %s\n' "$WANDB_NAME" >&2
++  exit 1
++fi
++exec python -u legged_gym/scripts/train_hw.py --task as2piper_plate_gait_stable \
++  --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
+--- /dev/null
++++ new_gait/summarize_gait.py
+@@ -0,0 +1,69 @@
++"""Summarize motion, contact cadence and explicit local acceptance criteria."""
++import argparse,json
++from pathlib import Path
++import numpy as np
++
++
++def summarize(folder):
++    folder=Path(folder);d=json.loads((folder/'policy_evaluation.json').read_text())
++    x=np.load(folder/'policy_evaluation.npz')['samples'];trace=np.load(folder/'trajectories.npz')
++    group=d.get('envs_per_command',8)
++    for i,name in enumerate(['stand','forward','turn','forward_turn']):
++        s=x[100:,i*group:(i+1)*group];c=s[:,:,5:9]>5
++        f=np.fft.rfftfreq(len(s),.02);power=abs(np.fft.rfft(c-c.mean(0),axis=0))**2
++        psd=power.mean((1,2));band=(f>.5)&(f<10)
++        d[name]['contact_dominant_Hz']=float(f[band][psd[band].argmax()])
++        d[name]['fall_resets_total']=int(((x[:,i*group:(i+1)*group,2]>.5)&(x[:,i*group:(i+1)*group,3]<.5)).sum())
++        full=x[:,i*group:(i+1)*group]
++        failures=(full[:,:,2]>.5)&(full[:,:,3]<.5)
++        d[name]['no_fall_environment_fraction']=float((~failures.any(0)).mean())
++        d[name]['fall_resets_first_2s']=int(failures[:100].sum())
++        d[name]['fall_resets_after_2s']=int(failures[100:].sum())
++        if full.shape[-1]>=44:
++            d[name]['orientation_stable_fraction']=float((np.abs(full[100:,:,40:42]).max(-1)<.35).mean())
++            d[name]['roll_pitch_termination_events']=int((failures&(np.abs(full[:,:,40:42]).max(-1)>.8)).sum())
++            d[name]['world_z_termination_events']=int((failures&(full[:,:,42]<.1)).sum())
++        if full.shape[-1]>=45:
++            d[name]['body_contact_gt5N_fraction']=float((full[100:,:,44]>5).mean())
++        if full.shape[-1]>=49:
++            proxy=full[100:,:,45:49]>.5
++            d[name]['phase_contact_agreement_proxy']=float((proxy==(full[100:,:,17:21]>.5)).mean())
++            d[name]['proxy_contact_fraction']=proxy.mean((0,1)).tolist()
++            d[name]['stance_slip_proxy_m_s']=float(full[100:,:,35:39][proxy].mean()) if proxy.any() else 0.
++        root=trace['root'][50:,i];qx,qy,qz,qw=root[:,3:7].T
++        roll=np.arctan2(2*(qw*qx+qy*qz),1-2*(qx*qx+qy*qy))
++        pitch=np.arcsin(np.clip(2*(qw*qy-qz*qx),-1,1))
++        d[name]['representative_roll_rms_deg']=float(np.rad2deg(np.sqrt(np.mean(roll**2))))
++        d[name]['representative_pitch_rms_deg']=float(np.rad2deg(np.sqrt(np.mean(pitch**2))))
++    a,b,c,e=[d[k] for k in ['stand','forward','turn','forward_turn']]
++    criteria=dict(stop=a['vx_abs_error_m_s']<.08 and a['yaw_abs_error_rad_s']<.15,
++                  forward=b['vx_abs_error_m_s']<.10 and abs(b['mean_vx_m_s']-b['command_vx_m_s'])<.10,
++                  turn=c['vx_abs_error_m_s']<.10 and c['yaw_abs_error_rad_s']<.25,
++                  combined=e['vx_abs_error_m_s']<.10 and e['yaw_abs_error_rad_s']<.25,
++                  no_fall=sum(t['fall_resets_total'] for t in [a,b,c,e])==0,
++                  upright=all(t['upright_fraction']>=.99 for t in [a,b,c,e]))
++    d['local_acceptance_criteria']=criteria
++    d['local_acceptance_pass']=all(criteria.values())
++    if x.shape[-1]>=45 and 'Terrain=trimesh' in d['conditions']:
++        groups=[a,b,c,e]
++        baseline_criteria={key:criteria[key] for key in ['stop','forward','turn','combined']}
++        baseline_criteria.update(
++            no_fall_environment_fraction_at_least_95pct=np.mean([g['no_fall_environment_fraction'] for g in groups])>=.95,
++            orientation_stable_at_least_99pct=all(g['orientation_stable_fraction']>=.99 for g in groups),
++            body_contact_under_1pct=all(g['body_contact_gt5N_fraction']<.01 for g in groups))
++        if all('vy_abs_error_m_s' in g for g in groups):
++            baseline_criteria['lateral_velocity_mae_under_0_10_m_s']=all(g['vy_abs_error_m_s']<.10 for g in groups)
++        else:
++            baseline_criteria['lateral_velocity_verified']=False
++        d['full_environment_baseline_criteria']={k:bool(v) for k,v in baseline_criteria.items()}
++        d['full_environment_baseline_pass']=all(baseline_criteria.values())
++        d['strict_no_fall_pass']=criteria['no_fall']
++    d['selection_error_score']=sum(t['vx_abs_error_m_s']+.3*t['yaw_abs_error_rad_s']+3*t['fall_resets_total'] for t in [a,b,c,e])
++    (folder/'gait_summary.json').write_text(json.dumps(d,indent=2))
++    return d
++
++
++if __name__=='__main__':
++    p=argparse.ArgumentParser();p.add_argument('evaluation');a=p.parse_args()
++    d=summarize(a.evaluation)
++    print(json.dumps({k:v for k,v in d.items() if k in ('local_acceptance_criteria','local_acceptance_pass','selection_error_score')},indent=2))
+--- /dev/null
++++ new_gait/train_gait.py
+@@ -0,0 +1,75 @@
++"""Original PPO/runner, isolated gait reward preset, explicit matched controls."""
++import argparse, hashlib, json, os
++from pathlib import Path
++import isaacgym
++from isaacgym import gymapi, gymutil
++import torch, wandb
++from legged_gym.envs.manip_loco.as2piper_gait_study import (
++    AS2PiPERGaitStudy, AS2PiPERGaitStudyCfg, AS2PiPERGaitStudyCfgPPO, PRESETS, configure)
++from legged_gym.utils.helpers import class_to_dict, set_seed
++from legged_gym.utils.hw_runner import HardwareRunner
++
++ROOT=Path(__file__).resolve().parent
++
++
++class StudyComplete(Exception):
++    pass
++
++
++class StoppableStudyRunner(HardwareRunner):
++    def log(self, locs, *args, **kwargs):
++        super().log(locs,*args,**kwargs)
++        if self.stop_file.exists():
++            counter=self.alg.counter
++            self.save(str(Path(self.log_dir)/('model_%d.pt'%counter)),counter,
++                      infos={'study_stop':'Complete optimizer/history update; checkpoint preserved'})
++            print('Study stopped after complete update',counter,flush=True)
++            raise StudyComplete()
++
++
++def main():
++    p=argparse.ArgumentParser()
++    p.add_argument('--preset',choices=PRESETS,default='stable')
++    p.add_argument('--controlled',action='store_true')
++    p.add_argument('--num-envs',type=int,default=1024)
++    p.add_argument('--iterations',type=int,default=150)
++    p.add_argument('--checkpoint')
++    p.add_argument('--run',required=True)
++    p.add_argument('--seed',type=int,default=7)
++    p.add_argument('--save-interval',type=int,default=100)
++    p.add_argument('--stop-file',help='Optional cooperative stop marker, checked only after a complete update')
++    a=p.parse_args();out=ROOT/'logs/as2piper-low'/a.run
++    if out.exists():raise FileExistsError('Refuse to overwrite an existing experiment: '+str(out))
++    out.mkdir(parents=True)
++    set_seed(a.seed)
++    cfg=configure(AS2PiPERGaitStudyCfg(),a.preset,a.controlled);cfg.env.num_envs=a.num_envs
++    cfg.seed=a.seed;ppo=AS2PiPERGaitStudyCfgPPO();ppo.runner.save_interval=a.save_interval
++    params=gymapi.SimParams();params.use_gpu_pipeline=True;params.physx.use_gpu=True
++    gymutil.parse_sim_config(class_to_dict(cfg.sim),params)
++    wandb.init(project='as2piper-low',name=a.run,id=os.environ.get('WANDB_RUN_ID',a.run),
++               mode=os.environ.get('WANDB_MODE','disabled'),dir=str(out),resume='never')
++    env=AS2PiPERGaitStudy(cfg,params,gymapi.SIM_PHYSX,'cuda:0',True)
++    runner_class=StoppableStudyRunner if a.stop_file else HardwareRunner
++    runner=runner_class(env,class_to_dict(ppo),str(out),'cuda:0')
++    if a.stop_file:runner.stop_file=Path(a.stop_file)
++    if a.checkpoint:runner.load(a.checkpoint)
++    set_seed(a.seed)  # Identical holdout seed after loading checkpoint RNG.
++    env._resample_commands(torch.arange(env.num_envs,device=env.device))
++    snapshot=dict(arguments=vars(a),environment=class_to_dict(cfg),ppo=class_to_dict(ppo),
++                  initial_iteration=runner.current_learning_iteration,
++                  asset_sha256=hashlib.sha256(Path(cfg.asset.file.format(LEGGED_GYM_ROOT_DIR=str(ROOT))).read_bytes()).hexdigest(),
++                  source_sha256={str(f.relative_to(ROOT)):hashlib.sha256(f.read_bytes()).hexdigest()
++                     for folder in ['legged_gym','rsl_rl_local'] for f in (ROOT/folder).rglob('*.py')})
++    snapshot['environment_realization'] = dict(
++        terrain_sha256=hashlib.sha256(env.height_samples.cpu().numpy().tobytes()).hexdigest() if getattr(env,'height_samples',None) is not None else None,
++        initial_dof_sha256=hashlib.sha256(env.dof_pos.detach().cpu().numpy().tobytes()).hexdigest(),
++        env_origins_sha256=hashlib.sha256(env.env_origins.detach().cpu().numpy().tobytes()).hexdigest())
++    (out/'runtime_snapshot.json').write_text(json.dumps(snapshot,indent=2,default=lambda v:v.tolist()))
++    stopped=False
++    try:runner.learn(a.iterations,init_at_random_ep_len=True)
++    except StudyComplete:stopped=True
++    (out/'study_finished.json').write_text(json.dumps(dict(completed_updates=runner.alg.counter,cooperative_stop=stopped),indent=2)+'\n')
++    wandb.finish();env.gym.destroy_sim(env.sim)
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ new_gait/watch_fresh.py
+@@ -0,0 +1,37 @@
++"""Evaluate fresh-training milestones and request a checkpointed local stop."""
++import argparse,json,subprocess,sys,time
++from pathlib import Path
++from summarize_gait import summarize
++
++ROOT=Path(__file__).resolve().parent
++
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('--run',required=True)
++    p.add_argument('--preset',default='stable');p.add_argument('--output',required=True)
++    p.add_argument('--checkpoints',type=int,nargs='+',default=[200,400,600])
++    p.add_argument('--rough-dr',action='store_true')
++    a=p.parse_args();out=Path(a.output);out.mkdir(parents=True,exist_ok=True)
++    folder=ROOT/'logs/as2piper-low'/a.run;start=time.monotonic()
++    for it in a.checkpoints:
++        checkpoint=folder/('model_%d.pt'%it)
++        while not checkpoint.exists():
++            if time.monotonic()-start>10800:raise TimeoutError('Fresh training checkpoint did not finish')
++            time.sleep(5)
++        target=out/('eval_%d'%it)
++        print('Evaluating fresh checkpoint',checkpoint,flush=True)
++        with (out/('eval_%d.log'%it)).open('w') as log:
++            command=[sys.executable,'-u','evaluate_hw.py',str(checkpoint),'--vbc-port',
++                '--gait-preset',a.preset,'--arm-goals','--vx','.25','--yaw','.6','--output',str(target)]
++            if a.rough_dr:command+=['--terrain','trimesh','--domain-rand']
++            subprocess.run(command,cwd=str(ROOT),stdout=log,stderr=subprocess.STDOUT,check=True)
++        d=summarize(target);summary=dict(checkpoint=str(checkpoint),passed=d['local_acceptance_pass'],
++            criteria=d['local_acceptance_criteria'],error_score=d['selection_error_score'])
++        print(json.dumps(summary),flush=True);(out/'progress.json').write_text(json.dumps(summary,indent=2))
++        if d['local_acceptance_pass']:
++            (out/'selected_checkpoint.txt').write_text(str(checkpoint)+'\n')
++            (out/'stop_after_update').write_text('Fresh nominal command-following criteria passed; preserve final completed update.\n')
++            return
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ new_gait/watch_proxy_study.py
+@@ -0,0 +1,23 @@
++"""Refresh bounded study reports; never start, stop, or modify training."""
++import json,subprocess,sys,time
++from pathlib import Path
++ROOT=Path(__file__).resolve().parent
++LOGS=ROOT/'experiments/gait_reward_proxy_v2/resume_logs'
++# At most four hours; trainers have their own fixed 600-update budgets.
++for _ in range(240):
++    subprocess.run([sys.executable,'report_proxy_v2.py'],cwd=ROOT,check=True)
++    subprocess.run([sys.executable,'plot_proxy_v2.py'],cwd=ROOT,check=True)
++    alive=False
++    for case in ['stable_proxy','progress_gain2_proxy','stable_proxy_ground']:
++        files=sorted(LOGS.glob(case+'_resume1_*.pid'))
++        if files:
++            proc=Path('/proc')/files[-1].read_text().strip()/'cmdline'
++            if proc.exists() and b'train_gait.py' in proc.read_bytes():alive=True
++    # Evaluators may need time after the last optimizer update.
++    if not alive:
++        pending=[]
++        for f in LOGS.glob('eval_*resume1_*.pid'):
++            proc=Path('/proc')/f.read_text().strip()/'cmdline'
++            if proc.exists() and b'monitor_full_env.py' in proc.read_bytes():pending.append(f)
++        if not pending:break
++    time.sleep(60)

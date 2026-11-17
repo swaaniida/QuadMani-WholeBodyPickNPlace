@@ -1,0 +1,29 @@
+{
+  "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_15000.pt",
+  "sha256": "484d9f3da7682de1fbebefd41a18c7db9badccbf9d6f1996fbb3e7f5f2e14a12",
+  "iteration": 15000,
+  "tensors": 164,
+  "finite": true,
+  "std": [
+    [
+      0.15000000596046448,
+      0.25,
+      0.25,
+      0.15000000596046448,
+      0.25,
+      0.25,
+      0.15005506575107574,
+      0.25,
+      0.25,
+      0.15000000596046448,
+      0.25,
+      0.25,
+      0.20000000298023224,
+      0.20150449872016907,
+      0.20153094828128815,
+      0.05000000074505806,
+      0.05000000074505806,
+      0.05000000074505806
+    ]
+  ]
+}

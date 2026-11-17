@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "command_slew_limit_rad_s": 3,
+  "per_step_delta_max_rad": 0.06000000238418579,
+  "partial_reset_clean": true,
+  "arm_delay_test_steps": 2,
+  "leg_delay_tests": [
+    0,
+    1,
+    3
+  ],
+  "arm_policy_actions_masked": true,
+  "drive_stiffness_DR": [
+    280,
+    520
+  ],
+  "drive_damping_DR": [
+    28,
+    52
+  ],
+  "effort_saturation_unchanged": true,
+  "official_basic_joint_limits_match": true,
+  "firmware_speed_units_tested": true,
+  "training_started": false
+}

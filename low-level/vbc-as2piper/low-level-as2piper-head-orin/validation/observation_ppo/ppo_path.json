@@ -1,0 +1,113 @@
+{
+  "mode": "structural replay and backward only; real PD observations/rewards with sampled diagnostic actions; no on-policy training",
+  "optimizer_steps": 0,
+  "timeout_bootstrap_verified": true,
+  "advantage_global_mean": -9.934107758624577e-09,
+  "advantage_global_std": 0.9999999403953552,
+  "advantage_branch_means": [
+    0.7910122871398926,
+    -0.7910123467445374
+  ],
+  "mixing_ratio_at_0": 0.0,
+  "actual_ppo_update_gradients": {
+    "std": 0.32105427980422974,
+    "actor.priv_encoder": 0.017839056965314685,
+    "actor.history_encoder": 0.0,
+    "actor.actor_backbone": 0.09241978218287654,
+    "actor.actor_leg_control_head": 0.31269367580215496,
+    "actor.actor_arm_control_head": 0.1528349783769793,
+    "critic.critic_backbone": 0.13435345488677808,
+    "critic.critic_leg_control_head": 0.5368288139264953,
+    "critic.critic_arm_control_head": 0.09599353849360527
+  },
+  "actual_dagger_gradients": {
+    "std": 0.0,
+    "actor.priv_encoder": 0.0,
+    "actor.history_encoder": 0.9999992928236155,
+    "actor.actor_backbone": 0.0,
+    "actor.actor_leg_control_head": 0.0,
+    "actor.actor_arm_control_head": 0.0,
+    "critic.critic_backbone": 0.0,
+    "critic.critic_leg_control_head": 0.0,
+    "critic.critic_arm_control_head": 0.0
+  },
+  "advantage_routing_gradients": {
+    "leg_mix0": {
+      "std": 0.38932573795318604,
+      "actor.priv_encoder": 0.028305228376353863,
+      "actor.history_encoder": 0.0,
+      "actor.actor_backbone": 0.09394856926044806,
+      "actor.actor_leg_control_head": 0.4182951156259658,
+      "actor.actor_arm_control_head": 0.0,
+      "critic.critic_backbone": 0.0,
+      "critic.critic_leg_control_head": 0.0,
+      "critic.critic_arm_control_head": 0.0
+    },
+    "leg_mix1": {
+      "std": 0.423505961894989,
+      "actor.priv_encoder": 0.029201558273783658,
+      "actor.history_encoder": 0.0,
+      "actor.actor_backbone": 0.11589865481389766,
+      "actor.actor_leg_control_head": 0.4182951156259658,
+      "actor.actor_arm_control_head": 0.24239529411635757,
+      "critic.critic_backbone": 0.0,
+      "critic.critic_leg_control_head": 0.0,
+      "critic.critic_arm_control_head": 0.0
+    },
+    "arm_mix0": {
+      "std": 0.1666816622018814,
+      "actor.priv_encoder": 0.014710454126155745,
+      "actor.history_encoder": 0.0,
+      "actor.actor_backbone": 0.06123743079361235,
+      "actor.actor_leg_control_head": 0.0,
+      "actor.actor_arm_control_head": 0.24239529411635757,
+      "critic.critic_backbone": 0.0,
+      "critic.critic_leg_control_head": 0.0,
+      "critic.critic_arm_control_head": 0.0
+    },
+    "arm_mix1": {
+      "std": 0.423505961894989,
+      "actor.priv_encoder": 0.029201558273783658,
+      "actor.history_encoder": 0.0,
+      "actor.actor_backbone": 0.11589865481389766,
+      "actor.actor_leg_control_head": 0.4182951156259658,
+      "actor.actor_arm_control_head": 0.24239529411635757,
+      "critic.critic_backbone": 0.0,
+      "critic.critic_leg_control_head": 0.0,
+      "critic.critic_arm_control_head": 0.0
+    }
+  },
+  "history_actor_privileged_independence_max_error": 0.0,
+  "privileged_actor_sensitivity": 0.15194235742092133,
+  "scripted_deployment_max_error": 0.0,
+  "default_inference_history_verified": true,
+  "all_parameters_unchanged": true,
+  "adam_state_entries": 0,
+  "history_adam_state_entries": 0,
+  "standing_risk_counterfactual": [
+    {
+      "vx": 0.0,
+      "velocity_weighted": 0.0,
+      "walking_dof_unchanged": 1.464,
+      "two_term_sum": 1.464
+    },
+    {
+      "vx": 0.05,
+      "velocity_weighted": 0.33332222259258026,
+      "walking_dof_unchanged": 1.464,
+      "two_term_sum": 1.7973222225925802
+    },
+    {
+      "vx": 0.15,
+      "velocity_weighted": 0.9999666677777407,
+      "walking_dof_unchanged": 1.464,
+      "two_term_sum": 2.4639666677777408
+    },
+    {
+      "vx": 0.3,
+      "velocity_weighted": 1.9999333355554814,
+      "walking_dof_unchanged": 1.464,
+      "two_term_sum": 3.463933335555481
+    }
+  ]
+}

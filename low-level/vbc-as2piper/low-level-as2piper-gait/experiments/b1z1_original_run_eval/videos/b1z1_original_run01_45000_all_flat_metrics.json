@@ -1,0 +1,175 @@
+{
+  "run": "b1z1-low/original-run01",
+  "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/experiments/b1z1_original_run_eval/logs/b1z1-low/original-run01/model_45000.pt",
+  "task": "B1Z1 original ManipLoco task copied read-only from vbc-legacy",
+  "source_config": "original run W&B config has --observe_gait_commands, seed=1",
+  "evaluation": "deterministic policy; one environment; original play.py test overrides (6x3 terrain grid, push off, base mass rand on, base CoM rand off); episode reset suppressed for continuous clips",
+  "terrain": "flat height range",
+  "dt_s": 0.019999999552965164,
+  "sample_rate_hz": 25,
+  "dof_names": [
+    "FL_hip_joint",
+    "FL_thigh_joint",
+    "FL_calf_joint",
+    "FR_hip_joint",
+    "FR_thigh_joint",
+    "FR_calf_joint",
+    "RL_hip_joint",
+    "RL_thigh_joint",
+    "RL_calf_joint",
+    "RR_hip_joint",
+    "RR_thigh_joint",
+    "RR_calf_joint",
+    "z1_waist",
+    "z1_shoulder",
+    "z1_elbow",
+    "z1_wrist_angle",
+    "z1_forearm_roll",
+    "z1_wrist_rotate",
+    "z1_jointGripper"
+  ],
+  "phases": [
+    {
+      "name": "standing",
+      "seconds": 4.0,
+      "command_vx_vy_yaw": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "first_sample": 0,
+      "last_sample_exclusive": 100
+    },
+    {
+      "name": "forward",
+      "seconds": 5.0,
+      "command_vx_vy_yaw": [
+        0.5,
+        0.0,
+        0.0
+      ],
+      "first_sample": 100,
+      "last_sample_exclusive": 225
+    },
+    {
+      "name": "reverse",
+      "seconds": 5.0,
+      "command_vx_vy_yaw": [
+        -0.3,
+        0.0,
+        0.0
+      ],
+      "first_sample": 225,
+      "last_sample_exclusive": 350
+    },
+    {
+      "name": "turn",
+      "seconds": 5.0,
+      "command_vx_vy_yaw": [
+        0.0,
+        0.0,
+        0.6
+      ],
+      "first_sample": 350,
+      "last_sample_exclusive": 475
+    },
+    {
+      "name": "forward + turn",
+      "seconds": 5.0,
+      "command_vx_vy_yaw": [
+        0.35,
+        0.0,
+        0.5
+      ],
+      "first_sample": 475,
+      "last_sample_exclusive": 600
+    }
+  ],
+  "summary": [
+    {
+      "name": "standing",
+      "seconds": 4.0,
+      "command_vx_vy_yaw": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_base_vx_m_s": 0.08183662593364716,
+      "mean_base_vy_m_s": -0.05324171110987663,
+      "mean_yaw_rate_rad_s": 0.08590896427631378,
+      "mean_ee_error_m": 0.06131027266383171,
+      "ee_error_p95_m": 0.1018773976713419,
+      "upright_fraction": 1.0,
+      "mean_loaded_feet": 3.125,
+      "done_samples": 0
+    },
+    {
+      "name": "forward",
+      "seconds": 5.0,
+      "command_vx_vy_yaw": [
+        0.5,
+        0.0,
+        0.0
+      ],
+      "mean_base_vx_m_s": 0.47699493169784546,
+      "mean_base_vy_m_s": -0.21406638622283936,
+      "mean_yaw_rate_rad_s": -0.02781275473535061,
+      "mean_ee_error_m": 0.12280493974685669,
+      "ee_error_p95_m": 0.23395617827773094,
+      "upright_fraction": 1.0,
+      "mean_loaded_feet": 2.84,
+      "done_samples": 0
+    },
+    {
+      "name": "reverse",
+      "seconds": 5.0,
+      "command_vx_vy_yaw": [
+        -0.3,
+        0.0,
+        0.0
+      ],
+      "mean_base_vx_m_s": -0.4039883017539978,
+      "mean_base_vy_m_s": -0.35994207859039307,
+      "mean_yaw_rate_rad_s": 0.01193720567971468,
+      "mean_ee_error_m": 0.12471918016672134,
+      "ee_error_p95_m": 0.20649947449564934,
+      "upright_fraction": 0.93,
+      "mean_loaded_feet": 2.49,
+      "done_samples": 0
+    },
+    {
+      "name": "turn",
+      "seconds": 5.0,
+      "command_vx_vy_yaw": [
+        0.0,
+        0.0,
+        0.6
+      ],
+      "mean_base_vx_m_s": 0.0203089602291584,
+      "mean_base_vy_m_s": 0.01709979586303234,
+      "mean_yaw_rate_rad_s": 0.5845303535461426,
+      "mean_ee_error_m": 0.0910368412733078,
+      "ee_error_p95_m": 0.121170387044549,
+      "upright_fraction": 0.92,
+      "mean_loaded_feet": 2.77,
+      "done_samples": 0
+    },
+    {
+      "name": "forward + turn",
+      "seconds": 5.0,
+      "command_vx_vy_yaw": [
+        0.35,
+        0.0,
+        0.5
+      ],
+      "mean_base_vx_m_s": 0.35349753499031067,
+      "mean_base_vy_m_s": -0.07135025411844254,
+      "mean_yaw_rate_rad_s": 0.3981056213378906,
+      "mean_ee_error_m": 0.3320639431476593,
+      "ee_error_p95_m": 0.5361817181110381,
+      "upright_fraction": 0.85,
+      "mean_loaded_feet": 3.0,
+      "done_samples": 0
+    }
+  ]
+}

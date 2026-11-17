@@ -1,0 +1,72 @@
+[
+  {
+    "repo": "piper_sdk",
+    "commit": "b847e5393a7ce6ff8508d713eca7bdd3a42421b4",
+    "path": "piper_sdk/interface/piper_interface.py",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/piper_sdk/b847e5393a7ce6ff8508d713eca7bdd3a42421b4/piper_sdk/interface/piper_interface.py",
+    "sha256": "c5d4589fed187ff30c6ada185c071487809ac9c2c36e61c02ad848ec4fff7aee"
+  },
+  {
+    "repo": "piper_sdk",
+    "commit": "b847e5393a7ce6ff8508d713eca7bdd3a42421b4",
+    "path": "README.MD",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/piper_sdk/b847e5393a7ce6ff8508d713eca7bdd3a42421b4/README.MD",
+    "sha256": "756874df39819d6047fe6a7ad7425b5b4488f84da78a0abd7bff5eaa6b63b2e7"
+  },
+  {
+    "repo": "piper_sdk",
+    "commit": "b847e5393a7ce6ff8508d713eca7bdd3a42421b4",
+    "path": "CHANGELOG.MD",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/piper_sdk/b847e5393a7ce6ff8508d713eca7bdd3a42421b4/CHANGELOG.MD",
+    "sha256": "e7100bff7b4182c76c90007b1c4b845078a5639f3f16f50842c7bff5fcbf7e45"
+  },
+  {
+    "repo": "piper_sdk",
+    "commit": "b847e5393a7ce6ff8508d713eca7bdd3a42421b4",
+    "path": "piper_sdk/piper_msgs/msg_v2/transmit/arm_joint_mit_ctrl.py",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/piper_sdk/b847e5393a7ce6ff8508d713eca7bdd3a42421b4/piper_sdk/piper_msgs/msg_v2/transmit/arm_joint_mit_ctrl.py",
+    "sha256": "2eb94909e320205ca2b79ccf064053cbe2d1781e1c5a76bf13040be6d9d2e8d3"
+  },
+  {
+    "repo": "pyAgxArm",
+    "commit": "d90e234ba8e408cfa964b38aa9120b3131fc9f85",
+    "path": "docs/piper/firmware_reference.md",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/pyAgxArm/d90e234ba8e408cfa964b38aa9120b3131fc9f85/docs/piper/firmware_reference.md",
+    "sha256": "66a410a58d3289100adfa594cce7b8e50bb004052404812c8277c642d9e94f77"
+  },
+  {
+    "repo": "pyAgxArm",
+    "commit": "d90e234ba8e408cfa964b38aa9120b3131fc9f85",
+    "path": "docs/piper/piper_api.md",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/pyAgxArm/d90e234ba8e408cfa964b38aa9120b3131fc9f85/docs/piper/piper_api.md",
+    "sha256": "c692f75c04da904f6a188ca9f6f585ad6ddca8790b3d5a1ed5a5811c939dae63"
+  },
+  {
+    "repo": "pyAgxArm",
+    "commit": "d90e234ba8e408cfa964b38aa9120b3131fc9f85",
+    "path": "pyAgxArm/protocols/can_protocol/drivers/piper/default/driver.py",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/pyAgxArm/d90e234ba8e408cfa964b38aa9120b3131fc9f85/pyAgxArm/protocols/can_protocol/drivers/piper/default/driver.py",
+    "sha256": "0724cd21d5640be71b9f473c00530ccae46689a4a46d097e29cd5a4bdacc4829"
+  },
+  {
+    "repo": "piper_sdk",
+    "commit": "b847e5393a7ce6ff8508d713eca7bdd3a42421b4",
+    "path": "assets/Q&A.MD",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/piper_sdk/b847e5393a7ce6ff8508d713eca7bdd3a42421b4/assets/Q&A.MD",
+    "sha256": "6dfea5976cd6bdcea9c6275956639a24753cf1b5c5285216083ec665c952f15f"
+  },
+  {
+    "repo": "piper_sdk",
+    "commit": "b847e5393a7ce6ff8508d713eca7bdd3a42421b4",
+    "path": "piper_sdk/demo/V2/piper_set_init_default.py",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/piper_sdk/b847e5393a7ce6ff8508d713eca7bdd3a42421b4/piper_sdk/demo/V2/piper_set_init_default.py",
+    "sha256": "affed43de5748c7f2a5033642c54dff307c385458d014ea0cc056b8eedc9ec78"
+  },
+  {
+    "repo": "pyAgxArm",
+    "commit": "d90e234ba8e408cfa964b38aa9120b3131fc9f85",
+    "path": "pyAgxArm/api/constants.py",
+    "url": "https://raw.githubusercontent.com/agilexrobotics/pyAgxArm/d90e234ba8e408cfa964b38aa9120b3131fc9f85/pyAgxArm/api/constants.py",
+    "sha256": "f2ab8c10696d82ce23a279ca6ad2fcaf2c60848beca423c192cddeac4360c1aa"
+  }
+]

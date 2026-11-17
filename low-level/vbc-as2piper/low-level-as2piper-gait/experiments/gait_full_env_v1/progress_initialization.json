@@ -1,0 +1,9 @@
+{
+  "network_tensors_equal": 33,
+  "checks": {
+    "terrain_sha256": true,
+    "env_origins_sha256": true
+  },
+  "ppo_identical": true,
+  "asset_identical": true
+}

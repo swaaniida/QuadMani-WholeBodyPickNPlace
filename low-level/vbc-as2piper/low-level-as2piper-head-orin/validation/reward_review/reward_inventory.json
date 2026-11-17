@@ -1,0 +1,988 @@
+[
+  {
+    "scale": -0.015,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/action_rate",
+    "original_function": "def _reward_action_rate(self):\n        action_rate = torch.sum(torch.square(self.env.last_actions - self.env.actions)[:, :12], dim=1)\n        return action_rate, action_rate",
+    "current_function": "def _reward_action_rate(self):\n        action_rate = torch.sum(torch.square(self.env.last_actions - self.env.actions)[:, :12], dim=1)\n        return action_rate, action_rate",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      },
+      "trimesh": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      }
+    }
+  },
+  {
+    "scale": 1.0,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/alive",
+    "original_function": "def _reward_alive(self):\n        return 1., 1.",
+    "current_function": "def _reward_alive(self):\n        return 1., 1.",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 1.0,
+        "metric_mean": 1.0,
+        "weighted_mean_before_div100": 1.0,
+        "raw_min": 1.0,
+        "raw_max": 1.0
+      },
+      "trimesh": {
+        "raw_mean": 1.0,
+        "metric_mean": 1.0,
+        "weighted_mean_before_div100": 1.0,
+        "raw_min": 1.0,
+        "raw_max": 1.0
+      }
+    }
+  },
+  {
+    "scale": -0.2,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/ang_vel_xy",
+    "original_function": "def _reward_ang_vel_xy(self):\n        rew = torch.sum(torch.square(self.env.base_ang_vel[:, :2]), dim=1)\n        return rew, rew",
+    "current_function": "def _reward_ang_vel_xy(self):\n        rew = torch.sum(torch.square(self.env.base_ang_vel[:, :2]), dim=1)\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0003869003849104047,
+        "metric_mean": 0.0003869003849104047,
+        "weighted_mean_before_div100": -7.738007698208094e-05,
+        "raw_min": 2.17602209886536e-05,
+        "raw_max": 0.0025477567687630653
+      },
+      "trimesh": {
+        "raw_mean": 0.000434593966929242,
+        "metric_mean": 0.000434593966929242,
+        "weighted_mean_before_div100": -8.69187933858484e-05,
+        "raw_min": 7.132102268769813e-07,
+        "raw_max": 0.009547537192702293
+      }
+    }
+  },
+  {
+    "scale": -5.0,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/base_height",
+    "original_function": "def _reward_base_height(self):\n        # Penalize base height away from target\n        base_height = torch.mean(self.env.root_states[:, 2].unsqueeze(1), dim=1)\n        return torch.abs(base_height - self.env.cfg.rewards.base_height_target), base_height",
+    "current_function": "def _reward_base_height(self):\n        # Penalize base height away from target\n        base_height = self.env.root_states[:, 2] - self.env._termination_ground_height()\n        return torch.abs(base_height - self.env.cfg.rewards.base_height_target), base_height",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.01571928896009922,
+        "metric_mean": 0.30868759751319885,
+        "weighted_mean_before_div100": -0.0785964448004961,
+        "raw_min": 0.015376299619674683,
+        "raw_max": 0.016152799129486084
+      },
+      "trimesh": {
+        "raw_mean": 0.030002832412719727,
+        "metric_mean": 0.3236677050590515,
+        "weighted_mean_before_div100": -0.15001416206359863,
+        "raw_min": 0.003130108118057251,
+        "raw_max": 0.058872610330581665
+      }
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/base_height_standing",
+    "original_function": "def _reward_base_height_standing(self):\n        reward, metric = self.env._reward_base_height()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_base_height_standing(self):\n        reward, metric = self.env._reward_base_height()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/base_height_walking",
+    "original_function": "def _reward_base_height_walking(self):\n        reward, metric = self.env._reward_base_height()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_base_height_walking(self):\n        reward, metric = self.env._reward_base_height()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": -10.0,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/collision",
+    "original_function": "def _reward_collision(self):\n        rew = torch.sum(1.*(torch.norm(self.env.contact_forces[:, self.env.penalized_contact_indices, :], dim=-1) > 0.1), dim=1)\n        return rew, rew",
+    "current_function": "def _reward_collision(self):\n        rew = torch.sum(1.*(torch.norm(self.env.contact_forces[:, self.env.penalized_contact_indices, :], dim=-1) > 0.1), dim=1)\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      },
+      "trimesh": {
+        "raw_mean": 0.009999999776482582,
+        "metric_mean": 0.009999999776482582,
+        "weighted_mean_before_div100": -0.09999999776482582,
+        "raw_min": 0.0,
+        "raw_max": 1.0
+      }
+    }
+  },
+  {
+    "scale": -1e-07,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/delta_torques",
+    "original_function": "def _reward_delta_torques(self):\n        rew = torch.sum(torch.square(self.env.torques - self.env.last_torques)[:, :12], dim=1)\n        return rew, rew",
+    "current_function": "def _reward_delta_torques(self):\n        rew = torch.sum(torch.square(self.env.torques - self.env.last_torques)[:, :12], dim=1)\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.005358016584068537,
+        "metric_mean": 0.005358016584068537,
+        "weighted_mean_before_div100": -5.358016584068537e-10,
+        "raw_min": 6.745460268575698e-06,
+        "raw_max": 0.5051577091217041
+      },
+      "trimesh": {
+        "raw_mean": 0.012525918893516064,
+        "metric_mean": 0.012525918893516064,
+        "weighted_mean_before_div100": -1.2525918893516063e-09,
+        "raw_min": 3.057588037336245e-05,
+        "raw_max": 0.6581898927688599
+      }
+    }
+  },
+  {
+    "scale": -7.5e-07,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/dof_acc",
+    "original_function": "def _reward_dof_acc(self):\n        rew = torch.sum(torch.square((self.env.last_dof_vel - self.env.dof_vel)[:, :12] / self.env.dt), dim=1)\n        return rew, rew",
+    "current_function": "def _reward_dof_acc(self):\n        rew = torch.sum(torch.square((self.env.last_dof_vel - self.env.dof_vel)[:, :12] / self.env.dt), dim=1)\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.7073028683662415,
+        "metric_mean": 0.7073028683662415,
+        "weighted_mean_before_div100": -5.304771512746811e-07,
+        "raw_min": 0.0007833748823031783,
+        "raw_max": 50.0399284362793
+      },
+      "trimesh": {
+        "raw_mean": 2.4858977794647217,
+        "metric_mean": 2.4858977794647217,
+        "weighted_mean_before_div100": -1.8644233345985413e-06,
+        "raw_min": 0.010309192351996899,
+        "raw_max": 148.5504913330078
+      }
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/dof_default_pos",
+    "original_function": "def _reward_dof_default_pos(self):\n        dof_error = torch.sum(torch.abs(self.env.dof_pos - self.env.default_dof_pos)[:, :12], dim=1)\n        rew = torch.exp(-dof_error*0.05)\n        \n        return rew, rew",
+    "current_function": "def _reward_dof_default_pos(self):\n        dof_error = torch.sum(torch.abs(self.env.dof_pos - self.env.default_dof_pos)[:, :12], dim=1)\n        rew = torch.exp(-dof_error*0.05)\n        \n        return rew, rew",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/dof_error",
+    "original_function": "def _reward_dof_error(self):\n        dof_error = torch.sum(torch.square(self.env.dof_pos - self.env.default_dof_pos)[:, :12], dim=1)\n        return dof_error, dof_error",
+    "current_function": "def _reward_dof_error(self):\n        dof_error = torch.sum(torch.square(self.env.dof_pos - self.env.default_dof_pos)[:, :12], dim=1)\n        return dof_error, dof_error",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": -10.0,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/dof_pos_limits",
+    "original_function": "def _reward_dof_pos_limits(self):\n        out_of_limits = -(self.env.dof_pos - self.env.dof_pos_limits[:, 0]).clip(max=0.) # lower limit\n        out_of_limits += (self.env.dof_pos - self.env.dof_pos_limits[:, 1]).clip(min=0.) # upper limit\n        rew = torch.sum(out_of_limits[:, :12], dim=1)\n        return rew, rew",
+    "current_function": "def _reward_dof_pos_limits(self):\n        out_of_limits = -(self.env.dof_pos - self.env.dof_pos_limits[:, 0]).clip(max=0.) # lower limit\n        out_of_limits += (self.env.dof_pos - self.env.dof_pos_limits[:, 1]).clip(min=0.) # upper limit\n        rew = torch.sum(out_of_limits[:, :12], dim=1)\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      },
+      "trimesh": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      }
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/energy_square",
+    "original_function": "def _reward_energy_square(self):\n        energy = torch.sum(torch.square(self.env.torques[:, :12] * self.env.dof_vel[:, :12]), dim=1)\n        return energy, energy",
+    "current_function": "def _reward_energy_square(self):\n        energy = torch.sum(torch.square(self.env.torques[:, :12] * self.env.dof_vel[:, :12]), dim=1)\n        return energy, energy",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/energy_square_standing",
+    "original_function": "def _reward_energy_square_standing(self):\n        reward, metric = self.env._reward_energy_square()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_energy_square_standing(self):\n        reward, metric = self.env._reward_energy_square()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/energy_square_walking",
+    "original_function": "def _reward_energy_square_walking(self):\n        reward, metric = self.env._reward_energy_square()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_energy_square_walking(self):\n        reward, metric = self.env._reward_energy_square()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 2.0,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/feet_air_time",
+    "original_function": "def _reward_feet_air_time(self):\n        # Reward long steps\n        # Need to filter the contacts because the contact reporting of PhysX is unreliable on meshes\n        first_contact = (self.env.feet_air_time > 0.) * self.env.foot_contacts_from_sensor  #self.env.contact_filt\n        self.env.feet_air_time += self.env.dt\n\n        if self.env.cfg.rewards.feet_aritime_allfeet:\n            rew_airTime = torch.sum((self.env.feet_air_time - 0.5) * first_contact, dim=1)\n        else:\n            rew_airTime = torch.sum((self.env.feet_air_time[:, :2] - 0.5) * first_contact[:, :2], dim=1)\n        \n        rew_airTime *= self.env._get_walking_cmd_mask()  # reward for stepping for any of the 3 motions\n        self.env.feet_air_time *= ~ self.env.foot_contacts_from_sensor  #self.env.contact_filt\n        return rew_airTime, rew_airTime",
+    "current_function": "def _reward_feet_air_time(self):\n        # Reward long steps\n        # Need to filter the contacts because the contact reporting of PhysX is unreliable on meshes\n        first_contact = (self.env.feet_air_time > 0.) * self.env.contact_filt  #self.env.contact_filt\n        self.env.feet_air_time += self.env.dt\n\n        if self.env.cfg.rewards.feet_aritime_allfeet:\n            rew_airTime = torch.sum((self.env.feet_air_time - 0.5) * first_contact, dim=1)\n        else:\n            rew_airTime = torch.sum((self.env.feet_air_time[:, :2] - 0.5) * first_contact[:, :2], dim=1)\n        \n        rew_airTime *= self.env._get_walking_cmd_mask()  # reward for stepping for any of the 3 motions\n        self.env.feet_air_time *= ~ self.env.contact_filt  #self.env.contact_filt\n        return rew_airTime, rew_airTime",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": 0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      },
+      "trimesh": {
+        "raw_mean": -0.0712750032544136,
+        "metric_mean": -0.0712750032544136,
+        "weighted_mean_before_div100": -0.1425500065088272,
+        "raw_min": -0.8600000143051147,
+        "raw_max": 0.1999998688697815
+      }
+    }
+  },
+  {
+    "scale": -0.001,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/feet_contact_forces",
+    "original_function": "def _reward_feet_contact_forces(self):\n        reset_flag = (self.env.episode_length_buf > 2./self.env.dt).type(torch.float)\n        forces = torch.sum((torch.norm(self.env.force_sensor_tensor, dim=-1) - self.env.cfg.rewards.max_contact_force).clip(min=0), dim=-1)\n        rew = reset_flag * forces\n        return rew, rew",
+    "current_function": "def _reward_feet_contact_forces(self):\n        reset_flag = (self.env.episode_length_buf > 2./self.env.dt).type(torch.float)\n        forces = torch.sum((torch.norm(self.env.contact_forces[:, self.env.feet_indices, :], dim=-1) - self.env.cfg.rewards.max_contact_force).clip(min=0), dim=-1)\n        rew = reset_flag * forces\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 68.97496795654297,
+        "metric_mean": 68.97496795654297,
+        "weighted_mean_before_div100": -0.06897496795654297,
+        "raw_min": 65.80872344970703,
+        "raw_max": 72.75655364990234
+      },
+      "trimesh": {
+        "raw_mean": 14.928997039794922,
+        "metric_mean": 14.928997039794922,
+        "weighted_mean_before_div100": -0.014928997039794922,
+        "raw_min": 0.0,
+        "raw_max": 132.69210815429688
+      }
+    }
+  },
+  {
+    "scale": -0.08,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/feet_drag",
+    "original_function": "def _reward_feet_drag(self):\n        feet_xyz_vel = torch.abs(self.env.rigid_body_state[:, self.env.feet_indices, 7:10]).sum(dim=-1)\n        dragging_vel = self.env.foot_contacts_from_sensor * feet_xyz_vel\n        rew = dragging_vel.sum(dim=-1)\n        return rew, rew",
+    "current_function": "def _reward_feet_drag(self):\n        feet_xyz_vel = torch.abs(self.env.rigid_body_state[:, self.env.feet_indices, 7:10]).sum(dim=-1)\n        dragging_vel = self.env.contact_filt * feet_xyz_vel\n        rew = dragging_vel.sum(dim=-1)\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.19537460803985596,
+        "metric_mean": 0.19537460803985596,
+        "weighted_mean_before_div100": -0.015629968643188476,
+        "raw_min": 0.17998242378234863,
+        "raw_max": 0.20641157031059265
+      },
+      "trimesh": {
+        "raw_mean": 0.08416768908500671,
+        "metric_mean": 0.08416768908500671,
+        "weighted_mean_before_div100": -0.0067334151268005375,
+        "raw_min": 0.0,
+        "raw_max": 0.25551509857177734
+      }
+    }
+  },
+  {
+    "scale": 1.0,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/feet_height",
+    "original_function": "def _reward_feet_height(self):\n        feet_height_tracking = self.env.cfg.rewards.feet_height_target\n\n        if self.env.cfg.rewards.feet_height_allfeet:\n            feet_height = self.env.rigid_body_state[:, self.env.feet_indices, 2] # All feet\n        else:\n            feet_height = self.env.rigid_body_state[:, self.env.feet_indices[:2], 2] # Only front feet\n\n        rew = torch.clamp(torch.norm(feet_height, dim=-1) - feet_height_tracking, max=0)\n        cmd_stop_flag = ~self.env._get_walking_cmd_mask()\n        rew[cmd_stop_flag] = 0\n        return rew, rew",
+    "current_function": "def _reward_feet_height(self):\n        feet_height_tracking = self.env.cfg.rewards.feet_height_target\n\n        if self.env.cfg.rewards.feet_height_allfeet:\n            feet_height = self.env.rigid_body_state[:, self.env.feet_indices, 2] # All feet\n        else:\n            feet_height = self.env.rigid_body_state[:, self.env.feet_indices[:2], 2] # Only front feet\n\n        ground = self.env._reward_foot_ground_heights()\n        if not self.env.cfg.rewards.feet_height_allfeet:\n            ground = ground[:, :2]\n        feet_height = feet_height - ground\n        rew = torch.clamp(torch.norm(feet_height, dim=-1) - feet_height_tracking, max=0)\n        cmd_stop_flag = ~self.env._get_walking_cmd_mask()\n        rew[cmd_stop_flag] = 0\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": -0.2604731023311615,
+        "metric_mean": -0.2604731023311615,
+        "weighted_mean_before_div100": -0.2604731023311615,
+        "raw_min": -0.260480672121048,
+        "raw_max": -0.26046594977378845
+      },
+      "trimesh": {
+        "raw_mean": -0.2500428855419159,
+        "metric_mean": -0.2500428855419159,
+        "weighted_mean_before_div100": -0.2500428855419159,
+        "raw_min": -0.2616996765136719,
+        "raw_max": -0.23736821115016937
+      }
+    }
+  },
+  {
+    "scale": -0.0002,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/feet_jerk",
+    "original_function": "def _reward_feet_jerk(self):\n        if not hasattr(self, \"last_contact_forces\"):            \n            result = torch.zeros(self.env.num_envs).to(self.env.device)\n        else:\n            result = torch.sum(torch.norm(self.env.force_sensor_tensor - self.env.last_contact_forces, dim=-1), dim=-1)\n        \n        self.env.last_contact_forces = self.env.force_sensor_tensor.clone()\n        result[self.env.episode_length_buf<50] = 0.\n        return result, result",
+    "current_function": "def _reward_feet_jerk(self):\n        # The original term penalizes contact-force changes, not kinematic jerk.\n        forces = self.env.contact_forces[:, self.env.feet_indices, :]\n        if not hasattr(self.env, \"last_contact_forces\"):\n            result = torch.zeros(self.env.num_envs, device=self.env.device)\n        else:\n            result = (forces - self.env.last_contact_forces[..., :3]).norm(dim=-1).sum(dim=-1)\n        self.env.last_contact_forces = forces.clone()\n        result[self.env.episode_length_buf < 50] = 0.\n        return result, result",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.643850564956665,
+        "metric_mean": 0.643850564956665,
+        "weighted_mean_before_div100": -0.000128770112991333,
+        "raw_min": 0.010059356689453125,
+        "raw_max": 5.181632995605469
+      },
+      "trimesh": {
+        "raw_mean": 42.96831130981445,
+        "metric_mean": 42.96831130981445,
+        "weighted_mean_before_div100": -0.00859366226196289,
+        "raw_min": 0.0,
+        "raw_max": 212.36810302734375
+      }
+    }
+  },
+  {
+    "scale": -0.3,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/hip_pos",
+    "original_function": "def _reward_hip_pos(self):\n        rew = torch.sum(torch.square(self.env.dof_pos[:, self.env.hip_indices] - self.env.default_dof_pos[self.env.hip_indices]), dim=1)\n        return rew, rew",
+    "current_function": "def _reward_hip_pos(self):\n        rew = torch.sum(torch.square(self.env.dof_pos[:, self.env.hip_indices] - self.env.default_dof_pos[self.env.hip_indices]), dim=1)\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 3.823587758233771e-05,
+        "metric_mean": 3.823587758233771e-05,
+        "weighted_mean_before_div100": -1.1470763274701312e-05,
+        "raw_min": 1.7687241779640317e-05,
+        "raw_max": 8.514976070728153e-05
+      },
+      "trimesh": {
+        "raw_mean": 0.006847593933343887,
+        "metric_mean": 0.006847593933343887,
+        "weighted_mean_before_div100": -0.002054278180003166,
+        "raw_min": 0.00019840727327391505,
+        "raw_max": 0.02931159920990467
+      }
+    }
+  },
+  {
+    "scale": -1.5,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/lin_vel_z",
+    "original_function": "def _reward_lin_vel_z(self):\n        rew = torch.square(self.env.base_lin_vel[:, 2])\n        return rew, rew",
+    "current_function": "def _reward_lin_vel_z(self):\n        rew = torch.square(self.env.base_lin_vel[:, 2])\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 6.182328797876835e-05,
+        "metric_mean": 6.182328797876835e-05,
+        "weighted_mean_before_div100": -9.273493196815252e-05,
+        "raw_min": 1.3069701708445791e-05,
+        "raw_max": 0.00012710732698906213
+      },
+      "trimesh": {
+        "raw_mean": 7.685668970225379e-05,
+        "metric_mean": 7.685668970225379e-05,
+        "weighted_mean_before_div100": -0.00011528503455338068,
+        "raw_min": 6.247283295124362e-07,
+        "raw_max": 0.000231948695727624
+      }
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/orientation",
+    "original_function": "def _reward_orientation(self):\n        # Penalize non flat base orientation\n        error = torch.sum(torch.square(self.env.projected_gravity[:, :2]), dim=1)\n        return error, error",
+    "current_function": "def _reward_orientation(self):\n        # Penalize non flat base orientation\n        error = torch.sum(torch.square(self.env.projected_gravity[:, :2]), dim=1)\n        return error, error",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/orientation_standing",
+    "original_function": "def _reward_orientation_standing(self):\n        reward, metric = self.env._reward_orientation()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_orientation_standing(self):\n        reward, metric = self.env._reward_orientation()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/orientation_walking",
+    "original_function": "def _reward_orientation_walking(self):\n        reward, metric = self.env._reward_orientation()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_orientation_walking(self):\n        reward, metric = self.env._reward_orientation()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/penalty_lin_vel_y",
+    "original_function": "def _reward_penalty_lin_vel_y(self):\n        rew = torch.abs(self.env.base_lin_vel[:, 1])\n        rot_indices = torch.abs(self.env.commands[:, 2]) > self.env.cfg.commands.ang_vel_yaw_clip\n        rew[rot_indices] = 0.\n        return rew, rew",
+    "current_function": "def _reward_penalty_lin_vel_y(self):\n        rew = torch.abs(self.env.base_lin_vel[:, 1])\n        rot_indices = torch.abs(self.env.commands[:, 2]) > self.env.cfg.commands.ang_vel_yaw_clip\n        rew[rot_indices] = 0.\n        return rew, rew",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": -2,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/roll",
+    "original_function": "def _reward_roll(self):\n        # Penalize non flat base orientation\n        roll = self.env._get_body_orientation()[:, 0]\n        error = torch.abs(roll)\n        return error, error",
+    "current_function": "def _reward_roll(self):\n        # Penalize non flat base orientation\n        roll = self.env._get_body_orientation()[:, 0]\n        error = torch.abs(roll)\n        return error, error",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0016750820213928819,
+        "metric_mean": 0.0016750820213928819,
+        "weighted_mean_before_div100": -0.0033501640427857637,
+        "raw_min": 5.352535126235125e-08,
+        "raw_max": 0.0072191022336483
+      },
+      "trimesh": {
+        "raw_mean": 0.08504699915647507,
+        "metric_mean": 0.08504699915647507,
+        "weighted_mean_before_div100": -0.17009399831295013,
+        "raw_min": 0.006661657709628344,
+        "raw_max": 0.15224945545196533
+      }
+    }
+  },
+  {
+    "scale": 1.0,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/stand_still",
+    "original_function": "def _reward_stand_still(self):\n        # Penalize motion at zero commands\n        dof_error = torch.sum(torch.abs(self.env.dof_pos - self.env.default_dof_pos)[:, :12], dim=1)\n        rew = torch.exp(-dof_error*0.05)\n        rew[self.env._get_walking_cmd_mask()] = 0.\n        return rew, rew",
+    "current_function": "def _reward_stand_still(self):\n        # Penalize motion at zero commands\n        dof_error = torch.sum(torch.abs(self.env.dof_pos - self.env.default_dof_pos)[:, :12], dim=1)\n        rew = torch.exp(-dof_error*0.05)\n        rew[self.env._get_walking_cmd_mask()] = 0.\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": 0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      },
+      "trimesh": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": 0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      }
+    }
+  },
+  {
+    "scale": -2.5e-05,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/torques",
+    "original_function": "def _reward_torques(self):\n        # Penalize torques\n        torque = torch.sum(torch.square(self.env.torques), dim=1)\n        return torque, torque",
+    "current_function": "def _reward_torques(self):\n        # Penalize torques\n        torque = torch.sum(torch.square(self.env.torques), dim=1)\n        return torque, torque",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 378.602294921875,
+        "metric_mean": 378.602294921875,
+        "weighted_mean_before_div100": -0.009465057373046875,
+        "raw_min": 365.06744384765625,
+        "raw_max": 395.9765625
+      },
+      "trimesh": {
+        "raw_mean": 459.0390319824219,
+        "metric_mean": 459.0390319824219,
+        "weighted_mean_before_div100": -0.011475975799560547,
+        "raw_min": 368.68170166015625,
+        "raw_max": 732.240966796875
+      }
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/torques_standing",
+    "original_function": "def _reward_torques_standing(self):\n        reward, metric = self.env._reward_torques()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_torques_standing(self):\n        reward, metric = self.env._reward_torques()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/torques_walking",
+    "original_function": "def _reward_torques_walking(self):\n        reward, metric = self.env._reward_torques()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_torques_walking(self):\n        reward, metric = self.env._reward_torques()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.5,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/tracking_ang_vel",
+    "original_function": "def _reward_tracking_ang_vel(self):\n        ang_vel_error = torch.square(self.env.commands[:, 2] - self.env.base_ang_vel[:, 2])\n        return torch.exp(-ang_vel_error/self.env.cfg.rewards.tracking_sigma), ang_vel_error",
+    "current_function": "def _reward_tracking_ang_vel(self):\n        ang_vel_error = torch.square(self.env.commands[:, 2] - self.env.base_ang_vel[:, 2])\n        return torch.exp(-ang_vel_error/self.env.cfg.rewards.tracking_sigma), ang_vel_error",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.9998052716255188,
+        "metric_mean": 3.8999642129056156e-05,
+        "weighted_mean_before_div100": 0.4999026358127594,
+        "raw_min": 0.9833799004554749,
+        "raw_max": 1.0
+      },
+      "trimesh": {
+        "raw_mean": 0.9992789626121521,
+        "metric_mean": 0.00014441921666730195,
+        "weighted_mean_before_div100": 0.49963948130607605,
+        "raw_min": 0.9884365200996399,
+        "raw_max": 1.0
+      }
+    }
+  },
+  {
+    "scale": -2.0,
+    "called": true,
+    "gated_by_gait_observation": true,
+    "observe_gait_commands": false,
+    "name": "leg/tracking_contacts_shaped_force",
+    "original_function": "def _reward_tracking_contacts_shaped_force(self):\n        if not self.env.cfg.env.observe_gait_commands:\n            return 0,0\n        foot_forces = torch.norm(self.env.contact_forces[:, self.env.feet_indices, :], dim=-1)\n        desired_contact = self.env.desired_contact_states\n\n        reward = 0\n        for i in range(4):\n            reward += - (1 - desired_contact[:, i]) * (\n                        1 - torch.exp(-1 * foot_forces[:, i] ** 2 / self.env.cfg.rewards.gait_force_sigma))\n        \n        # cmd_stop_flag = ~self.env._get_walking_cmd_mask()\n        # reward[cmd_stop_flag] = 0\n        return reward / 4, reward / 4",
+    "current_function": "def _reward_tracking_contacts_shaped_force(self):\n        if not self.env.cfg.env.observe_gait_commands:\n            return 0,0\n        foot_forces = torch.norm(self.env.contact_forces[:, self.env.feet_indices, :], dim=-1)\n        desired_contact = self.env.desired_contact_states\n\n        reward = 0\n        for i in range(4):\n            reward += (1 - desired_contact[:, i]) * (\n                        1 - torch.exp(-1 * foot_forces[:, i] ** 2 / self.env.cfg.rewards.gait_force_sigma))\n        \n        # cmd_stop_flag = ~self.env._get_walking_cmd_mask()\n        # reward[cmd_stop_flag] = 0\n        return reward / 4, reward / 4",
+    "current_status": "inactive_gait_gate",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      },
+      "trimesh": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      }
+    }
+  },
+  {
+    "scale": -2.0,
+    "called": true,
+    "gated_by_gait_observation": true,
+    "observe_gait_commands": false,
+    "name": "leg/tracking_contacts_shaped_vel",
+    "original_function": "def _reward_tracking_contacts_shaped_vel(self):\n        if not self.env.cfg.env.observe_gait_commands:\n            return 0,0\n        foot_velocities = torch.norm(self.env.foot_velocities, dim=2).view(self.env.num_envs, -1)\n        desired_contact = self.env.desired_contact_states\n        reward = 0\n        for i in range(4):\n            reward += - (desired_contact[:, i] * (\n                        1 - torch.exp(-1 * foot_velocities[:, i] ** 2 / self.env.cfg.rewards.gait_vel_sigma)))\n        # cmd_stop_flag = ~self.env._get_walking_cmd_mask()\n        # reward[cmd_stop_flag] = 0\n        \n        return reward / 4, reward / 4",
+    "current_function": "def _reward_tracking_contacts_shaped_vel(self):\n        if not self.env.cfg.env.observe_gait_commands:\n            return 0,0\n        foot_velocities = torch.norm(self.env.rigid_body_state[:, self.env.feet_indices, 7:10], dim=2)\n        desired_contact = self.env.desired_contact_states\n        reward = 0\n        for i in range(4):\n            reward += (desired_contact[:, i] * (\n                        1 - torch.exp(-1 * foot_velocities[:, i] ** 2 / self.env.cfg.rewards.gait_vel_sigma)))\n        # cmd_stop_flag = ~self.env._get_walking_cmd_mask()\n        # reward[cmd_stop_flag] = 0\n        \n        return reward / 4, reward / 4",
+    "current_status": "inactive_gait_gate",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      },
+      "trimesh": {
+        "raw_mean": 0.0,
+        "metric_mean": 0.0,
+        "weighted_mean_before_div100": -0.0,
+        "raw_min": 0.0,
+        "raw_max": 0.0
+      }
+    }
+  },
+  {
+    "scale": 2.0,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/tracking_lin_vel_max",
+    "original_function": "def _reward_tracking_lin_vel_max(self):\n        rew = torch.where(self.env.commands[:, 0] > 0, torch.minimum(self.env.base_lin_vel[:, 0], self.env.commands[:, 0]) / (self.env.commands[:, 0] + 1e-5), \\\n                          torch.minimum(-self.env.base_lin_vel[:, 0], -self.env.commands[:, 0]) / (-self.env.commands[:, 0] + 1e-5))\n        zero_cmd_indices = torch.abs(self.env.commands[:, 0]) < self.env.cfg.commands.lin_vel_x_clip\n        rew[zero_cmd_indices] = torch.exp(-torch.abs(self.env.base_lin_vel[:, 0]))[zero_cmd_indices]\n        return rew, rew",
+    "current_function": "def _reward_tracking_lin_vel_max(self):\n        rew = torch.where(self.env.commands[:, 0] > 0, torch.minimum(self.env.base_lin_vel[:, 0], self.env.commands[:, 0]) / (self.env.commands[:, 0] + 1e-5), \\\n                          torch.minimum(-self.env.base_lin_vel[:, 0], -self.env.commands[:, 0]) / (-self.env.commands[:, 0] + 1e-5))\n        zero_cmd_indices = torch.abs(self.env.commands[:, 0]) < self.env.cfg.commands.lin_vel_x_clip\n        rew[zero_cmd_indices] = torch.exp(-torch.abs(self.env.base_lin_vel[:, 0]))[zero_cmd_indices]\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": -0.005884159356355667,
+        "metric_mean": -0.005884159356355667,
+        "weighted_mean_before_div100": -0.011768318712711334,
+        "raw_min": -0.04984670504927635,
+        "raw_max": 0.03684954345226288
+      },
+      "trimesh": {
+        "raw_mean": -0.005872293841093779,
+        "metric_mean": -0.005872293841093779,
+        "weighted_mean_before_div100": -0.011744587682187557,
+        "raw_min": -0.07155465334653854,
+        "raw_max": 0.08751551806926727
+      }
+    }
+  },
+  {
+    "scale": 0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/tracking_lin_vel_x_exp",
+    "original_function": "def _reward_tracking_lin_vel_x_exp(self):\n        error = torch.abs(self.env.commands[:, 0] - self.env.base_lin_vel[:, 0])\n        return torch.exp(-error/self.env.cfg.rewards.tracking_sigma), error",
+    "current_function": "def _reward_tracking_lin_vel_x_exp(self):\n        error = torch.abs(self.env.commands[:, 0] - self.env.base_lin_vel[:, 0])\n        return torch.exp(-error/self.env.cfg.rewards.tracking_sigma), error",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/tracking_lin_vel_x_l1",
+    "original_function": "def _reward_tracking_lin_vel_x_l1(self):\n        zero_cmd_indices = torch.abs(self.env.commands[:, 0]) < 1e-5\n        error = torch.abs(self.env.commands[:, 0] - self.env.base_lin_vel[:, 0])\n        rew = 0*error\n        rew_x = -error + torch.abs(self.env.commands[:, 0])\n        rew[~zero_cmd_indices] = rew_x[~zero_cmd_indices] / (torch.abs(self.env.commands[~zero_cmd_indices, 0]) + 0.01)\n        rew[zero_cmd_indices] = 0\n        return rew, error",
+    "current_function": "def _reward_tracking_lin_vel_x_l1(self):\n        zero_cmd_indices = torch.abs(self.env.commands[:, 0]) < 1e-5\n        error = torch.abs(self.env.commands[:, 0] - self.env.base_lin_vel[:, 0])\n        rew = 0*error\n        rew_x = -error + torch.abs(self.env.commands[:, 0])\n        rew[~zero_cmd_indices] = rew_x[~zero_cmd_indices] / (torch.abs(self.env.commands[~zero_cmd_indices, 0]) + 0.01)\n        rew[zero_cmd_indices] = 0\n        return rew, error",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 1.5,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/walking_dof",
+    "original_function": "def _reward_walking_dof(self):\n        # Penalize motion at zero commands\n        dof_error = torch.sum(torch.abs(self.env.dof_pos - self.env.default_dof_pos)[:, :12], dim=1)\n        rew = torch.exp(-dof_error*0.05)\n        rew[~self.env._get_walking_cmd_mask()] = 0.\n        return rew, rew",
+    "current_function": "def _reward_walking_dof(self):\n        # Penalize motion at zero commands\n        dof_error = torch.sum(torch.abs(self.env.dof_pos - self.env.default_dof_pos)[:, :12], dim=1)\n        rew = torch.exp(-dof_error*0.05)\n        rew[~self.env._get_walking_cmd_mask()] = 0.\n        return rew, rew",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.9762374758720398,
+        "metric_mean": 0.9762374758720398,
+        "weighted_mean_before_div100": 1.4643562138080597,
+        "raw_min": 0.975220263004303,
+        "raw_max": 0.9770172834396362
+      },
+      "trimesh": {
+        "raw_mean": 0.9721548557281494,
+        "metric_mean": 0.9721548557281494,
+        "weighted_mean_before_div100": 1.4582322835922241,
+        "raw_min": 0.9612904191017151,
+        "raw_max": 0.9767630696296692
+      }
+    }
+  },
+  {
+    "scale": -0.003,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "leg/work",
+    "original_function": "def _reward_work(self):\n        work = self.env.torques * self.env.dof_vel\n        abs_sum_work = torch.abs(torch.sum(work[:, :12], dim = 1))\n        return abs_sum_work, abs_sum_work",
+    "current_function": "def _reward_work(self):\n        work = self.env.torques * self.env.dof_vel\n        abs_sum_work = torch.abs(torch.sum(work[:, :12], dim = 1))\n        return abs_sum_work, abs_sum_work",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 6.11873722076416,
+        "metric_mean": 6.11873722076416,
+        "weighted_mean_before_div100": -0.018356211662292482,
+        "raw_min": 5.289886474609375,
+        "raw_max": 7.068432807922363
+      },
+      "trimesh": {
+        "raw_mean": 8.767908096313477,
+        "metric_mean": 8.767908096313477,
+        "weighted_mean_before_div100": -0.02630372428894043,
+        "raw_min": 4.760157585144043,
+        "raw_max": 11.943194389343262
+      }
+    }
+  },
+  {
+    "scale": null,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/arm_energy_abs_sum",
+    "original_function": "def _reward_arm_energy_abs_sum(self):\n        energy = torch.sum(torch.abs(self.env.torques[:, 12:-self.env.cfg.env.num_gripper_joints] * self.env.dof_vel[:, 12:-self.env.cfg.env.num_gripper_joints]), dim = 1)\n        return energy, energy",
+    "current_function": "def _reward_arm_energy_abs_sum(self):\n        energy = torch.sum(torch.abs(self.env.torques[:, 12:-self.env.cfg.env.num_gripper_joints] * self.env.dof_vel[:, 12:-self.env.cfg.env.num_gripper_joints]), dim = 1)\n        return energy, energy",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": null,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/arm_orientation",
+    "original_function": null,
+    "current_function": null,
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": null,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/arm_termination",
+    "original_function": null,
+    "current_function": null,
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": null,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/tracking_ee_cart",
+    "original_function": "def _reward_tracking_ee_cart(self):\n        target_ee = self.env.get_ee_goal_spherical_center() + quat_apply(self.env.base_yaw_quat, self.env.curr_ee_goal_cart)\n        ee_pos_error = torch.sum(torch.abs(self.env.ee_pos - target_ee), dim=1)\n        return torch.exp(-ee_pos_error/self.env.cfg.rewards.tracking_ee_sigma), ee_pos_error",
+    "current_function": "def _reward_tracking_ee_cart(self):\n        target_ee = self.env.get_ee_goal_spherical_center() + quat_apply(self.env.base_yaw_quat, self.env.curr_ee_goal_cart)\n        ee_pos_error = torch.sum(torch.abs(self.env.ee_pos - target_ee), dim=1)\n        return torch.exp(-ee_pos_error/self.env.cfg.rewards.tracking_ee_sigma), ee_pos_error",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/tracking_ee_orn",
+    "original_function": "def _reward_tracking_ee_orn(self):\n        ee_orn_euler = torch.stack(euler_from_quat(self.env.ee_orn), dim=-1)\n        orn_err = torch.sum(torch.abs(torch_wrap_to_pi_minuspi(self.env.ee_goal_orn_euler - ee_orn_euler)) * self.env.orn_error_scale, dim=1)\n        return torch.exp(-orn_err/self.env.cfg.rewards.tracking_ee_sigma), orn_err",
+    "current_function": "def _reward_tracking_ee_orn(self):\n        ee_orn_euler = torch.stack(euler_from_quat(self.env.ee_orn), dim=-1)\n        orn_err = torch.sum(torch.abs(torch_wrap_to_pi_minuspi(self.env.ee_goal_orn_euler - ee_orn_euler)) * self.env.orn_error_scale, dim=1)\n        return torch.exp(-orn_err/self.env.cfg.rewards.tracking_ee_sigma), orn_err",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": null,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/tracking_ee_orn_ry",
+    "original_function": "def _reward_tracking_ee_orn_ry(self):\n        ee_orn_euler = torch.stack(euler_from_quat(self.env.ee_orn), dim=-1)\n        orn_err = torch.sum(torch.abs((torch_wrap_to_pi_minuspi(self.env.ee_goal_orn_euler - ee_orn_euler) * self.env.orn_error_scale)[:, [0, 2]]), dim=1)\n        return torch.exp(-orn_err/self.env.cfg.rewards.tracking_ee_sigma), orn_err",
+    "current_function": "def _reward_tracking_ee_orn_ry(self):\n        ee_orn_euler = torch.stack(euler_from_quat(self.env.ee_orn), dim=-1)\n        orn_err = torch.sum(torch.abs((torch_wrap_to_pi_minuspi(self.env.ee_goal_orn_euler - ee_orn_euler) * self.env.orn_error_scale)[:, [0, 2]]), dim=1)\n        return torch.exp(-orn_err/self.env.cfg.rewards.tracking_ee_sigma), orn_err",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/tracking_ee_sphere",
+    "original_function": "def _reward_tracking_ee_sphere(self):\n        ee_pos_local = quat_rotate_inverse(self.env.base_yaw_quat, self.env.ee_pos - self.env.get_ee_goal_spherical_center())\n        ee_pos_error = torch.sum(torch.abs(cart2sphere(ee_pos_local) - self.env.curr_ee_goal_sphere) * self.env.sphere_error_scale, dim=1)\n        return torch.exp(-ee_pos_error/self.env.cfg.rewards.tracking_ee_sigma), ee_pos_error",
+    "current_function": "def _reward_tracking_ee_sphere(self):\n        ee_pos_local = quat_rotate_inverse(self.env.base_yaw_quat, self.env.ee_pos - self.env.get_ee_goal_spherical_center())\n        ee_pos_error = torch.sum(torch.abs(cart2sphere(ee_pos_local) - self.env.curr_ee_goal_sphere) * self.env.sphere_error_scale, dim=1)\n        return torch.exp(-ee_pos_error/self.env.cfg.rewards.tracking_ee_sigma), ee_pos_error",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/tracking_ee_sphere_standing",
+    "original_function": "def _reward_tracking_ee_sphere_standing(self):\n        reward, metric = self.env._reward_tracking_ee_sphere()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_tracking_ee_sphere_standing(self):\n        reward, metric = self.env._reward_tracking_ee_sphere()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[walking_mask] = 0\n        metric[walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.0,
+    "called": false,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/tracking_ee_sphere_walking",
+    "original_function": "def _reward_tracking_ee_sphere_walking(self):\n        reward, metric = self.env._reward_tracking_ee_sphere()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_function": "def _reward_tracking_ee_sphere_walking(self):\n        reward, metric = self.env._reward_tracking_ee_sphere()\n        walking_mask = self.env._get_walking_cmd_mask()\n        reward[~walking_mask] = 0\n        metric[~walking_mask] = 0\n        return reward, metric",
+    "current_status": "inactive_scale",
+    "rollout_values": {
+      "plane": null,
+      "trimesh": null
+    }
+  },
+  {
+    "scale": 0.8,
+    "called": true,
+    "gated_by_gait_observation": false,
+    "observe_gait_commands": false,
+    "name": "arm/tracking_ee_world",
+    "original_function": "def _reward_tracking_ee_world(self):\n        ee_pos_error = torch.sum(torch.abs(self.env.ee_pos - self.env.curr_ee_goal_cart_world), dim=1)\n        rew = torch.exp(-ee_pos_error/self.env.cfg.rewards.tracking_ee_sigma * 2)\n        return rew, ee_pos_error",
+    "current_function": "def _reward_tracking_ee_world(self):\n        ee_pos_error = torch.sum(torch.abs(self.env.ee_pos - self.env.curr_ee_goal_cart_world), dim=1)\n        rew = torch.exp(-ee_pos_error/self.env.cfg.rewards.tracking_ee_sigma * 2)\n        return rew, ee_pos_error",
+    "current_status": "called_finite",
+    "rollout_values": {
+      "plane": {
+        "raw_mean": 0.9488580822944641,
+        "metric_mean": 0.02636602893471718,
+        "weighted_mean_before_div100": 0.7590864658355714,
+        "raw_min": 0.8820313811302185,
+        "raw_max": 0.9786993861198425
+      },
+      "trimesh": {
+        "raw_mean": 0.9605582356452942,
+        "metric_mean": 0.02014283835887909,
+        "weighted_mean_before_div100": 0.7684465885162354,
+        "raw_min": 0.9246114492416382,
+        "raw_max": 0.9794135689735413
+      }
+    }
+  }
+]

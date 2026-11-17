@@ -1,0 +1,40 @@
+{
+  "baseline_files_preserved": 37,
+  "forward_files_preserved": 42,
+  "vbc_methods_ast_identical": [
+    "_resample_ee_goal",
+    "_resample_ee_goal_sphere_once",
+    "_resample_ee_goal_orn_once",
+    "_collision_check"
+  ],
+  "models": {
+    "vbcsampler_smoke40_20261029": {
+      "iterations": 40,
+      "initial_iteration": 0,
+      "all_tensors_finite": true,
+      "num_envs": 512
+    },
+    "vbcsampler_speed8_20261029": {
+      "iterations": 8,
+      "initial_iteration": 0,
+      "all_tensors_finite": true,
+      "num_envs": 6144
+    }
+  },
+  "source_sha256": {
+    "legged_gym/envs/manip_loco/as2piper_walk_wbc_vbc.py": "b486474748801d9c0bce081b39fda159581a7f6f2c2336c7dc8c8663d35f8c26",
+    "legged_gym/envs/__init__.py": "8f442a16444c6d4215c741b09082e3ed1eb0a33230c06086895cb3a4f95b9200",
+    "legged_gym/scripts/train_hw.py": "7fa7df18ab08f5ff8fca123988da67ce46e6f570520a768c3e3151b6addbf594",
+    "run_hw.sh": "7a24775a2b0a40b6e44678edc7ee62a3f9ea08704469bb98190aeb288cf94dcd",
+    "restart_fresh.py": "66db806615842754fea9da7b07503a8564d3d4b2a7bcd0ccfaa2fc10618fc81e",
+    "README.md": "31bba68c96328ed8f77ea652364453c02f4aa55e4887a013a7a8182ff7a95ca1",
+    "VBC_SAMPLER_FIX_KO.md": "de9b45b7e3630f93741b7b9b8ac158ad1cd442d0838ad4805a7209d9bb163988",
+    "profile_goal_runtime.py": "5d70f3429eec11277dee30db475d606c1e43fd4786925b8670270d59000e9d0b",
+    "audit_ee_range.py": "d44de13188e1adde1f9d6737f7283b1ffb4e6aea1ac66ac12dcd3ea703bd69e6",
+    "validate_vbc_sampler.py": "93864662f1b6a9caa8951c24e3a7635096f9e10c8d1fc8d9e5909854ce80b405",
+    "evaluate_hw.py": "41558253344818667aac6b2eef4cd6df8ac8e13010a4569dae9dc5ec4598f3af"
+  },
+  "new_45000_run_started_by_codex": false,
+  "old_slow_run_pid": 501136,
+  "replacement_requires_vbc_account": true
+}

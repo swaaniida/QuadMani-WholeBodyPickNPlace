@@ -1,0 +1,67 @@
+{
+  "camera": {
+    "mass_kg": 0.072,
+    "center_m": [
+      -0.00822735,
+      -0.01745705,
+      -1.734723475976807e-18
+    ],
+    "inertia_kg_m2": [
+      [
+        5.2257488066940004e-05,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        7.516427952540001e-06,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        5.227391601948e-05
+      ]
+    ],
+    "collision_box_size_m": [
+      0.025054700000000003,
+      0.0899143,
+      0.025
+    ],
+    "mass_source": "Official description nominal 0.072 kg; not measured",
+    "inertia_source": "Uniform solid bounding-box approximation; official description explicitly marks its original inertia unreliable"
+  },
+  "mount": {
+    "mass_kg": 0.030276392802723782,
+    "center_m": [
+      -0.002951292944378184,
+      -0.011167686780970078,
+      0.04769998244792028
+    ],
+    "inertia_kg_m2": [
+      [
+        9.471601781257561e-06,
+        4.79622849158853e-10,
+        -9.000202806375196e-09
+      ],
+      [
+        4.79622849158853e-10,
+        1.635455743805268e-05,
+        8.072812880176134e-07
+      ],
+      [
+        -9.000202806375196e-09,
+        8.072812880176134e-07,
+        8.320508064872674e-06
+      ]
+    ],
+    "density_kg_m3": 1240,
+    "mass_source": "Provisional solid-PLA CAD estimate; actual print infill/hardware mass unknown"
+  },
+  "optical_frames": {
+    "mass_kg": 0,
+    "inertia_kg_m2": 0,
+    "note": "Massless fixed coordinate frames"
+  },
+  "device_intrinsics": "Not present on server; must read actual device at Windows resolution/profile; no invented K"
+}

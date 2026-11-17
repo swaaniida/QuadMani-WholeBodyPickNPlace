@@ -1,0 +1,28 @@
+[
+  {
+    "variant": "profiles_plate",
+    "mjcf": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/profiles_plate.xml",
+    "mount_x_m": 0.05,
+    "mount_y_m": 0.0,
+    "piper_mount_height_relative_to_as2_base_m": 0.161,
+    "plate_mass_kg": 0.3645,
+    "profile_total_mass_kg": 0.25,
+    "mesh_assets": 28,
+    "missing_meshes": [],
+    "skipped_meshes": [],
+    "actuator_count": 20
+  },
+  {
+    "variant": "plate_only",
+    "mjcf": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/plate_only.xml",
+    "mount_x_m": 0.05,
+    "mount_y_m": 0.0,
+    "piper_mount_height_relative_to_as2_base_m": 0.14100000000000001,
+    "plate_mass_kg": 0.3645,
+    "profile_total_mass_kg": 0,
+    "mesh_assets": 28,
+    "missing_meshes": [],
+    "skipped_meshes": [],
+    "actuator_count": 20
+  }
+]

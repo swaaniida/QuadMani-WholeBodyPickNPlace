@@ -1,0 +1,20 @@
+{
+  "test": "actuator-controlled slide from center to AS2 head coordinate, stationary leg/arm pose",
+  "duration_s": 3.199999999999869,
+  "rail_travel_m": 0.32972871056696573,
+  "arm_vs_nonarm_self_contact_samples": 0,
+  "arm_vs_nonarm_pairs": {},
+  "minimum_contact_distance_m": null,
+  "mesh_aabb_head_x_m": 0.33470532,
+  "mesh_aabb_max_z_m": 0.13478276,
+  "rail_bottom_z_m": 0.171,
+  "rail_to_mesh_aabb_vertical_clearance_m": 0.03621724000000001,
+  "piper_base_bottom_z_m": 0.18,
+  "piper_base_to_mesh_aabb_vertical_clearance_m": 0.04521723999999999,
+  "model_nq_nv_nu": [
+    28,
+    27,
+    21
+  ],
+  "structural_strength_flex_and_fastener_validation": "not modeled"
+}

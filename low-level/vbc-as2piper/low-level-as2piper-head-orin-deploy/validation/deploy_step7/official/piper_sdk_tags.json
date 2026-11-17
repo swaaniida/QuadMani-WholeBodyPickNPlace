@@ -1,0 +1,252 @@
+[
+  {
+    "name": "0.7.0a1",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.7.0a1",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.7.0a1",
+    "commit": {
+      "sha": "b847e5393a7ce6ff8508d713eca7bdd3a42421b4",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/b847e5393a7ce6ff8508d713eca7bdd3a42421b4"
+    },
+    "node_id": "REF_kwDOMrdKVbFyZWZzL3RhZ3MvMC43LjBhMQ"
+  },
+  {
+    "name": "0.6.2",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.6.2",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.6.2",
+    "commit": {
+      "sha": "c9e8a28174e71eeaac448593cb65f8ab258a92fe",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/c9e8a28174e71eeaac448593cb65f8ab258a92fe"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC42LjI"
+  },
+  {
+    "name": "0.6.1",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.6.1",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.6.1",
+    "commit": {
+      "sha": "081e7c588e5b79eeaefa67a0469bcc701c81014f",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/081e7c588e5b79eeaefa67a0469bcc701c81014f"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC42LjE"
+  },
+  {
+    "name": "0.6.0",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.6.0",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.6.0",
+    "commit": {
+      "sha": "8a468073c2bb8197ca4be2f911ef1f132b2dbb9b",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/8a468073c2bb8197ca4be2f911ef1f132b2dbb9b"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC42LjA"
+  },
+  {
+    "name": "0.5.0",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.5.0",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.5.0",
+    "commit": {
+      "sha": "e09101e084e92c30c52342fa7df5ed534f181198",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/e09101e084e92c30c52342fa7df5ed534f181198"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC41LjA"
+  },
+  {
+    "name": "0.4.3",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.4.3",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.4.3",
+    "commit": {
+      "sha": "9448e7354ff9d5d22c8f64a659c77b0dcfdc416c",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/9448e7354ff9d5d22c8f64a659c77b0dcfdc416c"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC40LjM"
+  },
+  {
+    "name": "0.4.2",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.4.2",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.4.2",
+    "commit": {
+      "sha": "d46ec45b0bf7de7422b618c79b469986fecd1f7b",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/d46ec45b0bf7de7422b618c79b469986fecd1f7b"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC40LjI"
+  },
+  {
+    "name": "0.4.1",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.4.1",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.4.1",
+    "commit": {
+      "sha": "6e3afe54e408e75adc53ac438fc0a240f8e07361",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/6e3afe54e408e75adc53ac438fc0a240f8e07361"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC40LjE"
+  },
+  {
+    "name": "0.4.0",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.4.0",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.4.0",
+    "commit": {
+      "sha": "36de4817cf858d87ee4335aa9255e651018a15f0",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/36de4817cf858d87ee4335aa9255e651018a15f0"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC40LjA"
+  },
+  {
+    "name": "0.3.3",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.3.3",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.3.3",
+    "commit": {
+      "sha": "dbb7a16800cc726fd9d4cb75f5d78412e7f187a2",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/dbb7a16800cc726fd9d4cb75f5d78412e7f187a2"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC4zLjM"
+  },
+  {
+    "name": "0.3.2",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.3.2",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.3.2",
+    "commit": {
+      "sha": "5a6f75d3d871ac9899e8810307fd66a893764c3b",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/5a6f75d3d871ac9899e8810307fd66a893764c3b"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC4zLjI"
+  },
+  {
+    "name": "0.3.0",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.3.0",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.3.0",
+    "commit": {
+      "sha": "95fad2c4fef17c9503d96cb98b3d0658d0000095",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/95fad2c4fef17c9503d96cb98b3d0658d0000095"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC4zLjA"
+  },
+  {
+    "name": "0.2.20_beta",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.2.20_beta",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.2.20_beta",
+    "commit": {
+      "sha": "4eddfcf817cd87de9acee316a72cf5b988025378",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/4eddfcf817cd87de9acee316a72cf5b988025378"
+    },
+    "node_id": "REF_kwDOMrdKVbVyZWZzL3RhZ3MvMC4yLjIwX2JldGE"
+  },
+  {
+    "name": "0.2.19",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.2.19",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.2.19",
+    "commit": {
+      "sha": "1324780159555efa85575501411ac0f87e9ab47a",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/1324780159555efa85575501411ac0f87e9ab47a"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4yLjE5"
+  },
+  {
+    "name": "0.2.18",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.2.18",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.2.18",
+    "commit": {
+      "sha": "2e353a561dbe30eac10407ebf07677deea282935",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/2e353a561dbe30eac10407ebf07677deea282935"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4yLjE4"
+  },
+  {
+    "name": "0.2.17",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.2.17",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.2.17",
+    "commit": {
+      "sha": "b069c740b0a8a95b497e234d082e060b51f9bd0f",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/b069c740b0a8a95b497e234d082e060b51f9bd0f"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4yLjE3"
+  },
+  {
+    "name": "0.2.16",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.2.16",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.2.16",
+    "commit": {
+      "sha": "1db93b7e9871f59892ec96b1b2ea6d3b4edf69f8",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/1db93b7e9871f59892ec96b1b2ea6d3b4edf69f8"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4yLjE2"
+  },
+  {
+    "name": "0.1.16",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.1.16",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.1.16",
+    "commit": {
+      "sha": "8637fea60e8558b18975a4ca69bb9aa62d9c1ab7",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/8637fea60e8558b18975a4ca69bb9aa62d9c1ab7"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4xLjE2"
+  },
+  {
+    "name": "0.1.15",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.1.15",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.1.15",
+    "commit": {
+      "sha": "44a8042495b17f591687bfac40da7a0512f10284",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/44a8042495b17f591687bfac40da7a0512f10284"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4xLjE1"
+  },
+  {
+    "name": "0.1.14",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.1.14",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.1.14",
+    "commit": {
+      "sha": "3b59ac0965be9282bd38cb9a18fd72bcf08ef602",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/3b59ac0965be9282bd38cb9a18fd72bcf08ef602"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4xLjE0"
+  },
+  {
+    "name": "0.1.13",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.1.13",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.1.13",
+    "commit": {
+      "sha": "9bd262d22131690a113b3baef5aff5a7ac641376",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/9bd262d22131690a113b3baef5aff5a7ac641376"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4xLjEz"
+  },
+  {
+    "name": "0.1.12",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.1.12",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.1.12",
+    "commit": {
+      "sha": "1076dca227f0aa85293dac04a4254d7894df209a",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/1076dca227f0aa85293dac04a4254d7894df209a"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4xLjEy"
+  },
+  {
+    "name": "0.0.12",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.0.12",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.0.12",
+    "commit": {
+      "sha": "32f0bb39c6ee747e071962933d09b66db36b73ca",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/32f0bb39c6ee747e071962933d09b66db36b73ca"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4wLjEy"
+  },
+  {
+    "name": "0.0.10",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.0.10",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.0.10",
+    "commit": {
+      "sha": "80926b795366a818ddeff07fde3baf0fa9758065",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/80926b795366a818ddeff07fde3baf0fa9758065"
+    },
+    "node_id": "REF_kwDOMrdKVbByZWZzL3RhZ3MvMC4wLjEw"
+  },
+  {
+    "name": "0.0.9",
+    "zipball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/zipball/refs/tags/0.0.9",
+    "tarball_url": "https://api.github.com/repos/agilexrobotics/piper_sdk/tarball/refs/tags/0.0.9",
+    "commit": {
+      "sha": "fcfbb6cb186dd88ed2976252895f834a41167a48",
+      "url": "https://api.github.com/repos/agilexrobotics/piper_sdk/commits/fcfbb6cb186dd88ed2976252895f834a41167a48"
+    },
+    "node_id": "REF_kwDOMrdKVa9yZWZzL3RhZ3MvMC4wLjk"
+  }
+]

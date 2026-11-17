@@ -1,0 +1,1536 @@
+--- a/README.md
++++ b/README.md
+@@ -1,4 +1,10 @@
+-# Training a universal low-level policy
++# AS2 PiPER forward plate-only training clone
++
++Active instructions: [FORWARD_DESIGN_KO.md](FORWARD_DESIGN_KO.md).
++
++Run `bash run_as2.sh` in this directory. Task: `as2piper_plate_forward`;
++W&B project: `as2piper-low`; every launch gets a fresh run ID.
++The instructions below are the copied upstream reference, not this clone's entry point.
+ 
+ ## Code structure
+ `legged_gym/envs` contains environment-related codes.
+--- a/check_original_settings.py
++++ b/check_original_settings.py
+@@ -23,14 +23,19 @@
+     delta=differences(original,adapted)
+     allowed=('asset.','init_state.default_joint_angles.','control.stiffness.','control.damping.',
+              'control.arm_position_','control.gripper_position_','control.arm_effort_limit',
+-             'env.num_gripper_joints','goal_ee.orientation_roll_offset')
++             'env.num_gripper_joints','env.observe_gait_commands','goal_ee.','init_state.pos',
++             'rewards.base_height_target')
+     assert all(any(k.startswith(prefix) for prefix in allowed) for k in delta),delta
+-    for key in ('rewards','domain_rand','terrain','commands','termination','noise','normalization'):
++    for key in ('domain_rand','terrain','commands','termination','noise','normalization'):
+         assert not differences(original[key],adapted[key]),key
++    reward_delta=differences(original['rewards'],adapted['rewards'])
++    assert set(reward_delta)=={'base_height_target'},reward_delta
++    assert adapted['rewards']['base_height_target']==.3244069024246581
+     assert adapted['env']['num_envs']==6144
+     ppo=differences(class_to_dict(B1Z1RoughCfgPPO()),class_to_dict(AS2PiPERPlateCfgPPO()))
+     assert set(ppo)=={'runner.experiment_name'},ppo
+-    out=Path(__file__).resolve().parent/'audit/original_settings.json'
++    out=Path(__file__).resolve().parent/'audit_forward/settings_diff.json'
+     out.write_text(json.dumps({'environment_differences':delta,'ppo_differences':ppo,
+-                              'all_rewards_exactly_equal':True,'num_envs':6144,'max_iterations':45000},indent=2))
+-    print('Original-setting equality PASS. Necessary hardware differences:',len(delta))
++                              'reward_formulas_scales_equal':True,'reward_parameter_differences':reward_delta,
++                              'num_envs':6144,'max_iterations':45000},indent=2))
++    print('Forward hardware-setting contract PASS. Necessary differences:',len(delta))
+--- /dev/null
++++ b/build_collision_guard.py
+@@ -0,0 +1,46 @@
++"""Export conservative collision OBBs from the actual URDF/MuJoCo asset."""
++import hashlib,json,sys
++from pathlib import Path
++import numpy as np
++import mujoco
++ROOT=Path(__file__).resolve().parent
++sys.path.insert(0,str(ROOT.parent/'mujoco_mount_compare'))
++from mount_workspace_study import StudyConverter,setup
++from verify_mounts import stl_triangles
++from prepare_asset import prepare
++
++
++def main():
++    asset=prepare(ROOT/'resources/robots/as2piper/urdf/as2piper_umi_v7_mesh_seated_plate_only.urdf')
++    directory=ROOT/'resources/commands';directory.mkdir(exist_ok=True)
++    xml=directory/'plate_forward.xml';StudyConverter(asset,xml).build()
++    m=mujoco.MjModel.from_xml_path(str(xml));d,names,_,_=setup(m,'plate_only_forward')
++    centers=[];halves=[];indices=[]
++    groups=[(i-1,'piper_link'+str(i),['piper_link'+str(i)]) for i in range(2,7)]
++    groups.append((5,'piper_link6',['piper_flange_link','piper_gripper_base','piper_gripper_link1','piper_gripper_link2']))
++    for index,frame,links in groups:
++        bid=m.body(frame).id;points=[]
++        for g in range(m.ngeom):
++            if not m.geom_contype[g] or m.body(int(m.geom_bodyid[g])).name not in links:continue
++            if m.geom_type[g]==mujoco.mjtGeom.mjGEOM_MESH:
++                mesh=m.geom_dataid[g];start=m.mesh_vertadr[mesh];v=m.mesh_vert[start:start+m.mesh_vertnum[mesh]]
++            elif m.geom_type[g]==mujoco.mjtGeom.mjGEOM_BOX:
++                v=np.array([[x,y,z] for x in (-1,1) for y in (-1,1) for z in (-1,1)])*m.geom_size[g]
++            else:raise ValueError('Unhandled arm collision geometry')
++            world=v@d.geom_xmat[g].reshape(3,3).T+d.geom_xpos[g]
++            points.extend(((world-d.xpos[bid])@d.xmat[bid].reshape(3,3)).tolist())
++        points=np.array(points);low=points.min(0);high=points.max(0)
++        centers.append(((low+high)/2).tolist());halves.append(((high-low)/2+.002).tolist());indices.append(index)
++    body=stl_triangles(ROOT/'resources/robots/as2piper/meshes/as2/base_link.STL').reshape(-1,3)
++    low=body.min(0);high=body.max(0)
++    output=dict(asset_sha256=hashlib.sha256(asset.read_bytes()).hexdigest(),link_index=indices,center=centers,half=halves,
++        obstacle_center=[((low+high)/2).tolist()],obstacle_half=[((high-low)/2+.005).tolist()],
++        joint_low=(m.jnt_range[[m.joint(n).id for n in names],0]+.01).tolist(),
++        joint_high=(m.jnt_range[[m.joint(n).id for n in names],1]-.01).tolist(),
++        description='Conservative OBBs: links2-6 + flange/gripper/open fingers versus full AS2 body/head mesh AABB. Arm pad2mm/body pad5mm. Fixed mount and link1 excluded as intended connection.',
++        limitations='Conservative boxes can reject mesh-clear poses. Not a continuous collision proof; no legs/objects/cables or arm self-collision pairs.')
++    (directory/'arm_collision.json').write_text(json.dumps(output,indent=2))
++    print(output['description'])
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/validate_forward.py
+@@ -0,0 +1,82 @@
++"""Validate B1 algorithm preservation and AS2 spherical pose collision rejection."""
++import ast,hashlib,importlib,json,sys,types
++from pathlib import Path
++import numpy as np
++import torch
++from scipy.spatial.transform import Rotation
++import mujoco
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++ROOT=Path(__file__).resolve().parent
++sys.path.insert(0,str(ROOT.parent/'mujoco_mount_compare'))
++from mount_workspace_study import setup,self_collision
++pkg=types.ModuleType('forward_utils');pkg.__path__=[str(ROOT/'legged_gym/utils')];sys.modules['forward_utils']=pkg
++Guard=importlib.import_module('forward_utils.arm_collision').ArmCollisionGuard
++
++
++def method(path,name):
++    return next(ast.dump(n,include_attributes=False) for n in ast.walk(ast.parse(path.read_text())) if isinstance(n,ast.FunctionDef) and n.name==name)
++
++
++def main():
++    out=ROOT/'audit_forward';old=ROOT.parent/'low-level-as2piper'
++    baseline=old/'legged_gym/envs/manip_loco/manip_loco.py';current=ROOT/'legged_gym/envs/manip_loco/manip_loco.py'
++    identical={n:method(baseline,n)==method(current,n) for n in ['_resample_ee_goal_sphere_once','_resample_ee_goal_orn_once','_resample_ee_goal','_update_curr_ee_goal','_collision_check','compute_reward']}
++    assert all(identical.values()),identical
++    subclass=ast.parse((ROOT/'legged_gym/envs/manip_loco/as2piper_forward.py').read_text())
++    assert not {'_resample_ee_goal_sphere_once','_resample_ee_goal_orn_once','_update_curr_ee_goal'}&{n.name for n in ast.walk(subclass) if isinstance(n,ast.FunctionDef)}
++    hashes=json.loads((out/'source_before.json').read_text());assert all(hashlib.sha256((old/p).read_bytes()).hexdigest()==h for p,h in hashes.items())
++    tree=ast.parse((ROOT/'legged_gym/envs/manip_loco/as2piper_config.py').read_text())
++    goal=next(n for n in ast.walk(tree) if isinstance(n,ast.ClassDef) and n.name=='goal_ee')
++    ranges=next(n for n in goal.body if isinstance(n,ast.ClassDef) and n.name=='ranges')
++    values={n.targets[0].id:ast.literal_eval(n.value) for n in ranges.body if isinstance(n,ast.Assign)}
++    params={n.targets[0].id:ast.literal_eval(n.value) for n in goal.body if isinstance(n,ast.Assign)}
++    asset=ROOT/'resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf'
++    guard=Guard(asset,ROOT/'resources/commands/arm_collision.json','cpu')
++    m=mujoco.MjModel.from_xml_path(str(ROOT/'resources/commands/plate_forward.xml'));d,names,_,_=setup(m,'plate_only_forward')
++    neutral=d.qpos.copy();ids=[int(m.joint(n).qposadr) for n in names];base=m.body('piper_base_link').id;tcp=m.body('piper_umi_nominal_tcp').id
++    rng=np.random.default_rng(20261029);count=1200
++    sphere=np.stack([rng.uniform(*values[k],count) for k in ['pos_l','pos_p','pos_y']],axis=-1)
++    delta=np.stack([rng.uniform(*values[k],count) for k in ['delta_orn_r','delta_orn_p','delta_orn_y']],axis=-1)
++    home=np.array(values['init_pos_start']);q=torch.tensor(neutral[ids],dtype=torch.float).repeat(count,1)
++    rejected=torch.zeros(count,dtype=torch.bool);ik_failed=rejected.clone();collided=rejected.clone();points=[]
++    for t in (0.,.5,1.):
++        s=home+(sphere-home)*t;r,p,y=s.T
++        target=np.stack([r*np.cos(p)*np.cos(y),r*np.cos(p)*np.sin(y),r*np.sin(p)],axis=-1)
++        rot=Rotation.from_euler('xyz',np.stack([delta[:,0],-p+params['arm_induced_pitch']+delta[:,1],y+delta[:,2]],axis=-1)).as_matrix()
++        q,failed=guard.solve(torch.tensor(target,dtype=torch.float),torch.tensor(rot,dtype=torch.float),q)
++        collision=guard.collides(q,torch.tensor([.005,0,.0820284782]))
++        ik_failed|=failed;collided|=collision;rejected|=failed|collision;points.append(target)
++    accepted=(~rejected).numpy();exact_collisions=0;max_error=0.
++    for i in np.where(accepted)[0]:
++        d.qpos[:]=neutral;d.qpos[ids]=q[i].numpy();mujoco.mj_forward(m,d)
++        exact_collisions+=int(self_collision(m,d));max_error=max(max_error,float(np.linalg.norm(d.xpos[tcp]-d.xpos[base]-target[i])))
++    assert accepted.sum()>count*.5, 'Excessive rejection; revisit ranges/solver'
++    assert exact_collisions==0,exact_collisions
++    p,R,_,_,_=guard.fk(torch.tensor(neutral[ids],dtype=torch.float)[None,:])
++    d.qpos[:]=neutral;mujoco.mj_forward(m,d)
++    home_error=float(np.linalg.norm(p[0].numpy()-(d.xpos[tcp]-d.xpos[base])))
++    # A gripper placed at the AS2 head center must fail the OBB SAT test.
++    module=importlib.import_module('forward_utils.arm_collision')
++    assert bool(module.box_collision(torch.tensor([[[.28,0,.08]]]),torch.eye(3)[None,None],torch.tensor([[.02,.02,.02]]),guard.obstacle_center,guard.obstacle_half)[0])
++    result=dict(b1_method_ast_identical=identical,original_files_unchanged=len(hashes),proposal_count=count,
++        accepted_by_guard=int(accepted.sum()),rejected_ik=int(ik_failed.sum()),rejected_body_head=int(collided.sum()),
++        accepted_mujoco_endpoint_collisions=exact_collisions,max_accepted_position_error_m=max_error,
++        fast_fk_home_error_m=home_error,spherical_ranges=values,
++        collision_guard='Arm/gripper OBBs versus AS2 body/head AABB; 2mm/5mm padding; 3 arm path samples, original 10 EE samples',
++        limitations='Finite nominal tests; arm self/leg/cable/object collision and continuous path clearance are not guaranteed.')
++    (out/'validation.json').write_text(json.dumps(result,indent=2))
++    fig=plt.figure(figsize=(12,5));ax=fig.add_subplot(121,projection='3d')
++    ax.scatter(*points[-1][accepted].T,s=4,alpha=.3,label='Accepted');ax.scatter(*points[-1][~accepted].T,s=6,alpha=.4,color='red',label='Rejected')
++    ax.set_xlabel('Arm-origin yaw x [m]');ax.set_ylabel('y [m]');ax.set_zlabel('z [m]');ax.legend();ax.set_title('Independent B1 spherical proposals')
++    ax=fig.add_subplot(122);p=points[-1];ax.scatter(p[accepted,0]+.005,p[accepted,2]+.0820285,s=4,alpha=.3)
++    ax.scatter(p[~accepted,0]+.005,p[~accepted,2]+.0820285,s=6,alpha=.4,color='red')
++    from matplotlib.patches import Rectangle
++    c=guard.obstacle_center[0].numpy();h=guard.obstacle_half[0].numpy();ax.add_patch(Rectangle((c[0]-h[0],c[2]-h[2]),2*h[0],2*h[2],color='gray',alpha=.3,label='Body/head keep-out'))
++    ax.set_xlabel('AS2 body x [m]');ax.set_ylabel('AS2 body z [m]');ax.grid(alpha=.2);ax.legend()
++    fig.suptitle('B1 sampling/interpolation retained; AS2 ranges + collision rejection');fig.tight_layout();fig.savefig(str(out/'command_workspace.png'),dpi=160);plt.close(fig)
++    print(json.dumps(result,indent=2))
++
++
++if __name__=='__main__':main()
+--- a/run_as2.sh
++++ b/run_as2.sh
+@@ -6,9 +6,10 @@
+ export MAX_JOBS=2
+ export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
+ export WANDB_MODE="${WANDB_MODE:-online}"
+-export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_plate_C_orig_20261028_01}"
+-export WANDB_NAME="${WANDB_NAME:-plate_only_C_original_20261028}"
++run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_forward_spherical_${run_stamp}}"
++export WANDB_NAME="${WANDB_NAME:-plate_forward_spherical_${run_stamp}}"
+ export WANDB_DISABLE_GIT=true
+ export OMP_NUM_THREADS="${OMP_NUM_THREADS:-2}"
+ python prepare_asset.py
+-exec python legged_gym/scripts/train_as2.py --task as2piper_plate --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
++exec python legged_gym/scripts/train_as2.py --task as2piper_plate_forward --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
+--- a/prepare_asset.py
++++ b/prepare_asset.py
+@@ -7,13 +7,17 @@
+ 
+ def prepare(source):
+     tree=ET.parse(source)
++    # Existing 140 mm plate: move only the PiPER root, not the plate/support.
++    mount=tree.getroot().find("joint[@name='plate_to_piper_fixed']/origin")
++    assert mount is not None
++    mount.set('xyz','0.025 0 0.003')
+     joint=tree.getroot().find("joint[@name='piper_umi_tcp_joint']")
+     assert joint is not None
+     joint.set('dont_collapse','true')
+     for fixed in tree.getroot().findall('joint'):
+         if fixed.find('child').get('link') in ('FL_foot','FR_foot','RL_foot','RR_foot'):
+             fixed.set('dont_collapse','true')
+-    output=source.with_name('as2piper_plate_training.urdf')
++    output=source.with_name('as2piper_plate_forward_training.urdf')
+     content=ET.tostring(tree.getroot(),encoding='utf-8',xml_declaration=True)
+     if output.exists() and output.read_bytes()==content:
+         return output
+--- /dev/null
++++ b/FORWARD_DESIGN_KO.md
+@@ -0,0 +1,90 @@
++# AS2 PiPER 전진 plate-only: B1 구면 pose sampling
++
++기존 `low-level-as2piper`와 B1 baseline은 수정/중지하지 않았다. 이번 변경은 독립 복제본 `low-level-as2piper-forward`에만 적용했다. 이전 관절 경로 bank 방식은 폐기하고 `audit_forward/before_spherical`에 보관했다. 활성 코드에는 bank 로드/선택이나 joint-space 목표 보간이 없다.
++
++## 실행
++
++```bash
++cd /data/team/users/suhwan/vbc-as2piper
++bash low-level-as2piper-forward/run_as2.sh
++```
++
++Task=`as2piper_plate_forward`, W&B project=**as2piper-low**. Run name은 `plate_forward_spherical_<UTC timestamp>_<PID>`, ID는 `as2piper_forward_spherical_<UTC timestamp>_<PID>`. 매 실행 새 ID를 쓰며 resume=false다. 6144env/rollout24step/45000iterations를 유지했다. 이번에는 짧은 smoke만 실행했고 장시간 학습은 시작하지 않았다.
++
++## 장착과 좌표계
++
++판은 140×120×6mm, 중심 x=-20mm 그대로다. PiPER만 +25mm 옮겨 실제 arm base를 AS2 body **[.005,0,.0820284782]m**에 둔다. 베이스 앞끝과 판 끝 사이 nominal 5mm 여유다. 실제 볼트 홀·가장자리 강도까지 승인한 최대치는 아니다. 판·UMI 형상·질량·관성은 바꾸지 않았다. 20 DOF/18 actions/그리퍼 열림±.049m를 유지한다.
++
++구면 중심은 실제 arm origin이다. 몸통 roll/pitch/yaw 전체로 mount offset을 변환한다. **구면 샘플링 축은 B1과 같은 yaw 정렬·중력 기준 축**이다.
++
++```
++origin_world = body_position + R_body * [.005, 0, .0820284782]
++goal_world = origin_world + R_body_yaw * sphere2cart(radius,pitch,yaw)
++```
++
++따라서 몸통을 숙이면 arm origin은 움직이지만 구면 축이 몸통 pitch를 따라 함께 기울지는 않는다. 기존 B1의 고정 world z=.7m 중심 대신 실제 AS2 arm 높이를 사용한다. 관측 위치는 위 world 목표를 실제 arm origin과 body 회전의 역변환으로 표현한다. 방향 관측 3칸은 **B1 원본처럼 0**, gait 관측은 켜서 총799차원이다. 앞서 추가한 rotation-vector 관측과 world-latch API는 제거했다.
++
++## B1과 같은 목표 생성 알고리즘
++
++- Radius/pitch/yaw 각각 독립 균등 sampling.
++- Orientation delta roll/pitch/yaw도 각각 독립 균등 sampling.
++- 이전 구면 목표→새 구면 목표를 **원본 linear torch.lerp**로 보간한다.
++- `default_yaw=atan2(goal_y,goal_x)`, `default_pitch=-sphere_pitch+arm_induced_pitch`에 orientation delta를 더한다.
++- 기존 trajectory [1,3]초, hold [.5,2]초와 timer 처리를 유지한다.
++- IK는 실제 기존 팔 제어와 추가 후보 검증에 사용하며, IK/FK 결과를 목표 sampling 분포로 대체하지 않는다.
++
++기반 클래스의 `_resample_ee_goal_sphere_once`, `_resample_ee_goal_orn_once`, `_resample_ee_goal`, `_update_curr_ee_goal`, `_collision_check`, `compute_reward` AST가 기존 AS2 복제 원본과 동일함을 검사했다. 새 subclass는 원본 sampling 함수를 상속하고 충돌 검사/실패 처리와 초기화만 보완한다.
++
++| 파라미터 | AS2 PiPER 값 |
++|---|---|
++| 구면 radius | **.38–.52m** |
++| 구면 pitch | **−.25–+.60rad** (약 −14.3–34.4°) |
++| 구면 yaw | **−.40–+.40rad** (약 ±22.9°) |
++| Orientation delta r/p/y | 각각 **−.15–+.15rad** (약 ±8.6°) |
++| initial start/end sphere | [.427898468686,.421686284191,0] |
++| arm_induced_pitch | **2.455216137744rad** |
++| orientation_roll_offset | 0 |
++
++PiPER TCP 축이 Z1과 다르므로 arm_induced_pitch를 실제 초기 FK에 맞췄다. 초기 default pitch=2.03352985rad이며 초기 TCP 위치와 방향이 기존 C 자세 `[0,1.1,-.55,0,0,0]`의 FK와 맞는다. start=end는 설정값으로 초기 hold를 만든 것이며 sampling/interpolation 알고리즘을 바꾼 것이 아니다. 구면 pitch 범위만 부호를 바꾸고 이 방향 offset을 그대로 두면 잘못된 orientation을 요구할 수 있다.
++
++## 충돌 고려
++
++**B1도 충돌 검사를 한다.** 원본은 구면 경로의 EE 점 10개가 금지 AABB 또는 underground limit에 들어가는지 검사한다. arm 전체 링크의 형상 충돌 검사는 아니다.
++
++AS2에서는 중앙 장착으로 앞쪽 머리/몸통과 간섭할 수 있어 다음을 추가했다.
++
++1. 기존 10점 EE 경로 AABB/underground 검사를 AS2 크기에 맞춰 유지한다.
++2. 구면 경로 시작/중간/끝 **3개 pose**를 현재 팔 상태에서 시작한 배치 DLS IK로 검증한다. 관절 한계, 위치오차12mm, 방향오차5°를 검사한다.
++3. 해당 해에서 **PiPER link2–6, 플랜지·그리퍼·열린 양 손가락**의 URDF collision 형상을 감싸는 OBB를 검사한다. AS2 전체 body/head STL AABB와 15축 SAT로 충돌을 판정한다. Arm box 2mm, body box 5mm 여유를 준 보수적 proxy다. 실제 mesh가 비어 있는 공간도 금지할 수 있다.
++4. EE 목표 높이가 현재 terrain origin+30mm보다 낮으면 거절한다.
++5. 원본처럼 위치 후보를 최대10회 재추출한다. **10회 모두 실패하면 이전 목표와 이전 orientation delta를 유지**한다. 원본은 마지막 거절 후보가 남을 수 있어서 이 부분만 충돌 처리 예외로 보완했다.
++
++실제 목표 생성은 계속 독립 구면/방향 sampling이다. 충돌 조건 때문에 수락 분포가 제안 균등분포와 달라지는 것은 rejection의 결과다. 근사 IK 실패를 기구학적 도달 불가의 증명으로 해석하면 안 된다.
++
++고정 mount/link1의 의도된 연결은 검사에서 제외했다. 동작 중 다리와 팔의 충돌, 팔 링크끼리의 모든 자기충돌, 케이블·물체·카메라, 연속 궤적 전체의 안전까지 증명하는 검사는 아니다. 물리 엔진의 원래 collision은 계속 활성화되어 있다. 원본보다 검사가 추가되어 목표 resampling 비용은 증가한다.
++
++## 다른 설정과 검증
++
++이전 전진 복제본의 하드웨어 보정은 유지한다: neutral legs hip0/thigh.8/calf−1.6, 발 FK 기반 초기 높이, 초기 팔 C 자세와 일치하는 EE 목표, body height target=.3244069m. 그 외 reward 공식·가중치, terrain/DR/보행command/PD/PPO는 유지한다. 기존 contact shaping 부호, 큰 DR 범위, 실제 arm torque 읽기 누락은 별도 미해결 항목이다. 새 subclass의 action clone은 PPO sampled action의 in-place 변경을 방지하는 기존 보정이다.
++
++`audit_forward/validation.json`과 `command_workspace.png`는 **구면 방식의 현재 결과**다. 독립 제안1200개 중 guard 수락766개, IK 조건 거절152개, body/head proxy 거절331개(거절 사유 중복 가능). 수락한 endpoint의 별도 MuJoCo 충돌은0건이었다. 이것은 nominal stance의 표본 검증이며 모든 목표/움직이는 몸통의 안전 보장은 아니다. 원본55개 파일의 해시도 그대로다.
++
++최종 GPU smoke 기록은 `logs/as2piper-low/forward_spherical_release_20261028/`의 `smoke_contracts.json` 및 `model_2.pt`다. 8env,350step rollout,reset,PPO2update를 검사한다. 미학습 zero-action 로봇이 넘어져 손가락을 누르는 경우는 전체 gripper 최대 오차로 별도 기록하고, upright 상태의 열림 유지 오차를 구분해 검사한다. 이 체크포인트는 학습된 정책이 아니며 본 학습 resume에 쓰지 않는다.
++
++```bash
++cd /data/team/users/suhwan/vbc-as2piper
++umask 0002
++OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 \
++PYTHONPATH="$PWD/mujoco_mount_compare/.deps" \
++python low-level-as2piper-forward/validate_forward.py
++
++# URDF 변경 시에만 collision proxy를 재생성한다.
++PYTHONPATH="$PWD/mujoco_mount_compare/.deps" \
++python low-level-as2piper-forward/build_collision_guard.py
++
++WANDB_MODE=disabled AS2_SMOKE=1 \
++WANDB_NAME=spherical_smoke_check WANDB_RUN_ID=spherical_smoke_check \
++bash low-level-as2piper-forward/run_as2.sh --max_iterations 2
++```
++
++실행 시 collision metadata의 asset SHA256을 대조한다. `audit_forward/design.patch`는 복제 원본 대비 현재 코드 변경이며, 이전 bank 방식은 사용하지 않는다.
+--- /dev/null
++++ b/resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf
+@@ -0,0 +1,813 @@
++<?xml version='1.0' encoding='utf-8'?>
++<robot name="as2piper_umi_v7_mesh_seated_plate_only">
++
++  
++  <link name="base_link">
++    <inertial>
++      <origin xyz="0.045604 -0.0009 0.020368" rpy="0 0 0" />
++      <mass value="8.8" />
++      <inertia ixx="0.044044" ixy="1.959E-05" ixz="-0.026181" iyy="0.13739" iyz="0.00030824" izz="0.1462" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/base_link.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="-0.0 -0.0 0.006" rpy="0 0 0" />
++      <geometry>
++        <box size="0.2 0.224 0.14" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.283 -0.0 0.078" rpy="0 0 0" />
++      <geometry>
++        <sphere radius="0.043" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.23 -0.0 0.085" rpy="0 1.68 0" />
++      <geometry>
++        <cylinder radius="0.045" length="0.06" />
++      </geometry>
++    </collision>
++  </link>
++  <link name="FL_hip">
++    <inertial>
++      <origin xyz="-0.0046547 -0.0088505 3.4235E-05" rpy="0 0 0" />
++      <mass value="0.695" />
++      <inertia ixx="0.00045574" ixy="3.269E-05" ixz="-1.7E-07" iyy="0.00057398" iyz="8.3E-07" izz="0.0005503" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/FL_hip.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++
++  </link>
++  <joint name="FL_hip_joint" type="revolute">
++    <origin xyz="0.2119 0.06 0" rpy="0 0 0" />
++    <parent link="base_link" />
++    <child link="FL_hip" />
++    <axis xyz="1 0 0" />
++    <limit lower="-0.785" upper="0.785" effort="60.0" velocity="24.0" />
++  </joint>
++  <link name="FL_thigh">
++    <inertial>
++      <origin xyz="-0.0060186 -0.024079 -0.0374" rpy="0 0 0" />
++      <mass value="1.25" />
++      <inertia ixx="0.0060449" ixy="0.00020856" ixz="-0.00063523" iyy="0.0054351" iyz="0.0010644" izz="0.0015788" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/FL_thigh.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.0 -0.03 0" rpy="1.571 0 0" />
++      <geometry>
++        <cylinder radius="0.04" length="0.1" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="-0.02 -0.00 -0.09" rpy="0 0.1 0" />
++      <geometry>
++        <box size="0.045 0.03 0.14" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="-0.02 0.00 -0.21" rpy="0 -0.77 0" />
++      <geometry>
++        <box size="0.01 0.035 0.04" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="FL_thigh_joint" type="revolute">
++    <origin xyz="0 0.1054 0" rpy="0 0 0" />
++    <parent link="FL_hip" />
++    <child link="FL_thigh" />
++    <axis xyz="0 1 0" />
++    <limit lower="-2" upper="3.492" effort="60.0" velocity="24.0" />
++  </joint>
++  <link name="FL_calf">
++    <inertial>
++      <origin xyz="0.0078616 -7.7635E-08 -0.085034" rpy="0 0 0" />
++      <mass value="0.22" />
++      <inertia ixx="0.0010957" ixy="0" ixz="0.00012446" iyy="0.001123" iyz="0" izz="4.952E-05" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/FL_calf.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.011 -0.00 -0.08" rpy="0 -0.285 0" />
++      <geometry>
++        <cylinder radius="0.013" length="0.05" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.0215 -0.00 -0.13" rpy="0 -0.1 0" />
++      <geometry>
++        <cylinder radius="0.012" length="0.06" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.02 -0.00 -0.185" rpy="0 0.15 0" />
++      <geometry>
++        <cylinder radius="0.012" length="0.055" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="FL_calf_joint" type="revolute">
++    <origin xyz="0 0 -0.212" rpy="0 0 0" />
++    <parent link="FL_thigh" />
++    <child link="FL_calf" />
++    <axis xyz="0 1 0" />
++    <limit lower="-2.7677" upper="-0.8133" effort="90.0" velocity="16.0" />
++  </joint>
++  <link name="FL_foot">
++    <inertial>
++      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
++      <mass value="0.045" />
++      <inertia ixx="1.0E-05" ixy="0" ixz="0" iyy="1.0E-05" iyz="0" izz="1.0E-05" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/FL_foot.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.69804 0.69804 0.69804 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.0 -0.00 -0.0" rpy="0 0 0" />
++      <geometry>
++        <sphere radius="0.028" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="FL_foot_joint" type="fixed" dont_collapse="true">
++    <origin xyz="0 0 -0.21344" rpy="0 0 0" />
++    <parent link="FL_calf" />
++    <child link="FL_foot" />
++    <axis xyz="0 0 0" />
++  </joint>
++  <link name="FR_hip">
++    <inertial>
++      <origin xyz="-0.0046547 0.0088505 3.4234E-05" rpy="0 0 0" />
++      <mass value="0.695" />
++      <inertia ixx="0.00045574" ixy="-3.269E-05" ixz="-1.7E-07" iyy="0.00057398" iyz="-8.3E-07" izz="0.0005503" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/FR_hip.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++  </link>
++  <joint name="FR_hip_joint" type="revolute">
++    <origin xyz="0.2119 -0.06 0" rpy="0 0 0" />
++    <parent link="base_link" />
++    <child link="FR_hip" />
++    <axis xyz="1 0 0" />
++    <limit lower="-0.785" upper="0.785" effort="60.0" velocity="24.0" />
++  </joint>
++  <link name="FR_thigh">
++    <inertial>
++      <origin xyz="-0.0060187 0.02408 -0.037399" rpy="0 0 0" />
++      <mass value="1.25" />
++      <inertia ixx="0.006045" ixy="-0.00020856" ixz="-0.00063524" iyy="0.0054353" iyz="-0.0010645" izz="0.0015788" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/FR_thigh.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.0 0.03 0" rpy="1.571 0 0" />
++      <geometry>
++        <cylinder radius="0.04" length="0.1" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="-0.02 -0.00 -0.09" rpy="0 0.1 0" />
++      <geometry>
++        <box size="0.045 0.03 0.14" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="-0.02 0.00 -0.21" rpy="0 -0.77 0" />
++      <geometry>
++        <box size="0.01 0.035 0.04" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="FR_thigh_joint" type="revolute">
++    <origin xyz="0 -0.1054 0" rpy="0 0 0" />
++    <parent link="FR_hip" />
++    <child link="FR_thigh" />
++    <axis xyz="0 1 0" />
++    <limit lower="-2" upper="3.492" effort="60.0" velocity="24.0" />
++  </joint>
++  <link name="FR_calf">
++    <inertial>
++      <origin xyz="0.0078616 -8.926E-08 -0.085034" rpy="0 0 0" />
++      <mass value="0.22" />
++      <inertia ixx="0.0010957" ixy="0" ixz="0.00012446" iyy="0.001123" iyz="0" izz="4.952E-05" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/FR_calf.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.011 -0.00 -0.08" rpy="0 -0.285 0" />
++      <geometry>
++        <cylinder radius="0.013" length="0.05" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.0215 -0.00 -0.13" rpy="0 -0.1 0" />
++      <geometry>
++        <cylinder radius="0.012" length="0.06" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.02 -0.00 -0.185" rpy="0 0.15 0" />
++      <geometry>
++        <cylinder radius="0.012" length="0.055" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="FR_calf_joint" type="revolute">
++    <origin xyz="0 0 -0.212" rpy="0 0 0" />
++    <parent link="FR_thigh" />
++    <child link="FR_calf" />
++    <axis xyz="0 1 0" />
++    <limit lower="-2.7677" upper="-0.8133" effort="90.0" velocity="16.0" />
++  </joint>
++  <link name="FR_foot">
++    <inertial>
++      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
++      <mass value="0.045" />
++      <inertia ixx="1.0E-05" ixy="0" ixz="0" iyy="1.0E-05" iyz="0" izz="1.0E-05" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/FR_foot.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.0 -0.00 -0.0" rpy="0 0 0" />
++      <geometry>
++        <sphere radius="0.028" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="FR_foot_joint" type="fixed" dont_collapse="true">
++    <origin xyz="0 0 -0.21344" rpy="0 0 0" />
++    <parent link="FR_calf" />
++    <child link="FR_foot" />
++    <axis xyz="0 0 0" />
++  </joint>
++  <link name="RL_hip">
++    <inertial>
++      <origin xyz="0.0046637 -0.0088505 -3.8901E-05" rpy="0 0 0" />
++      <mass value="0.695" />
++      <inertia ixx="0.00045574" ixy="-3.289E-05" ixz="-1.8E-07" iyy="0.00057392" iyz="-7.3E-07" izz="0.00055024" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/RL_hip.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++  </link>
++  <joint name="RL_hip_joint" type="revolute">
++    <origin xyz="-0.2119 0.06 0" rpy="0 0 0" />
++    <parent link="base_link" />
++    <child link="RL_hip" />
++    <axis xyz="1 0 0" />
++    <limit lower="-0.785" upper="0.785" effort="60.0" velocity="24.0" />
++  </joint>
++  <link name="RL_thigh">
++    <inertial>
++      <origin xyz="-0.0068766 -0.022228 -0.039019" rpy="0 0 0" />
++      <mass value="1.25" />
++      <inertia ixx="0.0061346" ixy="0.00017144" ixz="-0.00062209" iyy="0.0055602" iyz="0.0010266" izz="0.0015189" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/RL_thigh.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.0 -0.03 0" rpy="1.571 0 0" />
++      <geometry>
++        <cylinder radius="0.04" length="0.1" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="-0.02 -0.00 -0.09" rpy="0 0.1 0" />
++      <geometry>
++        <box size="0.045 0.03 0.14" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="-0.02 0.00 -0.21" rpy="0 -0.77 0" />
++      <geometry>
++        <box size="0.01 0.035 0.04" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="RL_thigh_joint" type="revolute">
++    <origin xyz="0 0.1054 0" rpy="0 0 0" />
++    <parent link="RL_hip" />
++    <child link="RL_thigh" />
++    <axis xyz="0 1 0" />
++    <limit lower="-1.3" upper="4.19" effort="60.0" velocity="24.0" />
++  </joint>
++  <link name="RL_calf">
++    <inertial>
++      <origin xyz="0.0078616 -7.7491E-08 -0.085034" rpy="0 0 0" />
++      <mass value="0.22" />
++      <inertia ixx="0.0010957" ixy="0" ixz="0.00012446" iyy="0.001123" iyz="0" izz="4.952E-05" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/RL_calf.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.011 -0.00 -0.08" rpy="0 -0.285 0" />
++      <geometry>
++        <cylinder radius="0.013" length="0.05" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.0215 -0.00 -0.13" rpy="0 -0.1 0" />
++      <geometry>
++        <cylinder radius="0.012" length="0.06" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.02 -0.00 -0.185" rpy="0 0.15 0" />
++      <geometry>
++        <cylinder radius="0.012" length="0.055" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="RL_calf_joint" type="revolute">
++    <origin xyz="0 0 -0.212" rpy="0 0 0" />
++    <parent link="RL_thigh" />
++    <child link="RL_calf" />
++    <axis xyz="0 1 0" />
++    <limit lower="-2.7677" upper="-0.8133" effort="90.0" velocity="16.0" />
++  </joint>
++  <link name="RL_foot">
++    <inertial>
++      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
++      <mass value="0.045" />
++      <inertia ixx="1.0E-05" ixy="0" ixz="0" iyy="1.0E-05" iyz="0" izz="1.0E-05" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/RL_foot.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.69804 0.69804 0.69804 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.0 -0.00 -0.0" rpy="0 0 0" />
++      <geometry>
++        <sphere radius="0.028" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="RL_foot_joint" type="fixed" dont_collapse="true">
++    <origin xyz="0 0 -0.21344" rpy="0 0 0" />
++    <parent link="RL_calf" />
++    <child link="RL_foot" />
++    <axis xyz="0 0 0" />
++  </joint>
++  <link name="RR_hip">
++    <inertial>
++      <origin xyz="0.0046637 0.0088505 -3.89E-05" rpy="0 0 0" />
++      <mass value="0.695" />
++      <inertia ixx="0.00045574" ixy="3.289E-05" ixz="-1.8E-07" iyy="0.00057392" iyz="7.3E-07" izz="0.00055024" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/RR_hip.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++  </link>
++  <joint name="RR_hip_joint" type="revolute">
++    <origin xyz="-0.2119 -0.06 0" rpy="0 0 0" />
++    <parent link="base_link" />
++    <child link="RR_hip" />
++    <axis xyz="1 0 0" />
++    <limit lower="-0.785" upper="0.785" effort="60.0" velocity="24.0" />
++  </joint>
++  <link name="RR_thigh">
++    <inertial>
++      <origin xyz="-0.0068763 0.022228 -0.039019" rpy="0 0 0" />
++      <mass value="1.25" />
++      <inertia ixx="0.0061347" ixy="-0.00017144" ixz="-0.00062209" iyy="0.0055603" iyz="-0.0010266" izz="0.0015189" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/RR_thigh.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.0 0.03 0" rpy="1.571 0 0" />
++      <geometry>
++        <cylinder radius="0.04" length="0.1" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="-0.02 -0.00 -0.09" rpy="0 0.1 0" />
++      <geometry>
++        <box size="0.045 0.03 0.14" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="-0.02 0.00 -0.21" rpy="0 -0.77 0" />
++      <geometry>
++        <box size="0.01 0.035 0.04" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="RR_thigh_joint" type="revolute">
++    <origin xyz="0 -0.1054 0" rpy="0 0 0" />
++    <parent link="RR_hip" />
++    <child link="RR_thigh" />
++    <axis xyz="0 1 0" />
++    <limit lower="-1.3" upper="4.19" effort="60.0" velocity="24.0" />
++  </joint>
++  <link name="RR_calf">
++    <inertial>
++      <origin xyz="0.0078616 -8.6653E-08 -0.085034" rpy="0 0 0" />
++      <mass value="0.22" />
++      <inertia ixx="0.0010957" ixy="0" ixz="0.00012446" iyy="0.001123" iyz="0" izz="4.952E-05" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/RR_calf.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.011 -0.00 -0.08" rpy="0 -0.285 0" />
++      <geometry>
++        <cylinder radius="0.013" length="0.05" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.0215 -0.00 -0.13" rpy="0 -0.1 0" />
++      <geometry>
++        <cylinder radius="0.012" length="0.06" />
++      </geometry>
++    </collision>
++    <collision>
++      <origin xyz="0.02 -0.00 -0.185" rpy="0 0.15 0" />
++      <geometry>
++        <cylinder radius="0.012" length="0.055" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="RR_calf_joint" type="revolute">
++    <origin xyz="0 0 -0.212" rpy="0 0 0" />
++    <parent link="RR_thigh" />
++    <child link="RR_calf" />
++    <axis xyz="0 1 0" />
++    <limit lower="-2.7677" upper="-0.8133" effort="90.0" velocity="16.0" />
++  </joint>
++  <link name="RR_foot">
++    <inertial>
++      <origin xyz="0.0 0.0 0.0" rpy="0 0 0" />
++      <mass value="0.045" />
++      <inertia ixx="1.0E-05" ixy="0" ixz="0" iyy="1.0E-05" iyz="0" izz="1.0E-05" />
++    </inertial>
++    <visual>
++      <origin xyz="0 0 0" rpy="0 0 0" />
++      <geometry>
++        <mesh filename="../meshes/as2/RR_foot.STL" />
++      </geometry>
++      <material name="">
++        <color rgba="0.79216 0.81961 0.93333 1" />
++      </material>
++    </visual>
++    <collision>
++      <origin xyz="0.0 -0.00 -0.0" rpy="0 0 0" />
++      <geometry>
++        <sphere radius="0.028" />
++      </geometry>
++    </collision>
++  </link>
++  <joint name="RR_foot_joint" type="fixed" dont_collapse="true">
++    <origin xyz="0 0 -0.21344" rpy="0 0 0" />
++    <parent link="RR_calf" />
++    <child link="RR_foot" />
++    <axis xyz="0 0 0" />
++  </joint>
++<link name="piper_base_link">
++        <inertial>
++            <origin xyz="-0.00473641164191482 2.56829134630247E-05 0.041451518036016" rpy="0 0 0" />
++            <mass value="1.02" />
++            <inertia ixx="0.00267433" ixy="-0.00000073" ixz="-0.00017389" iyy="0.00282612" iyz="0.0000004" izz="0.00089624" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/base_link.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/base_link.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <link name="piper_link1">
++        <inertial>
++            <origin xyz="0.00032 -0.00041 -0.00348" rpy="0 0 0" />
++            <mass value="0.71" />
++            <inertia ixx="0.00050027" ixy="0.00000078" ixz="0.00000626" iyy="0.00040879" iyz="0.00000462" izz="0.00045802" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/link1.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/link1.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <joint name="piper_joint1" type="revolute">
++        <origin xyz="0 0 0.123" rpy="0 0 0" />
++        <parent link="piper_base_link" />
++        <child link="piper_link1" />
++        <axis xyz="0 0 1" />
++        <limit lower="-2.6179938" upper="2.6179938" effort="100" velocity="5" />
++    </joint>
++    <link name="piper_link2">
++        <inertial>
++            <origin xyz="0.21852 -0.00861 0.00126" rpy="0 0 0" />
++            <mass value="1.16" />
++            <inertia ixx="0.00111915" ixy="0.00182916" ixz="0.00019233" iyy="0.06763251" iyz="0.00000767" izz="0.067559" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/link2.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/link2.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <joint name="piper_joint2" type="revolute">
++        <origin xyz="0 0 0" rpy="1.5707963 -0.1357866 -3.1415926" />
++        <parent link="piper_link1" />
++        <child link="piper_link2" />
++        <axis xyz="0 0 1" />
++        <limit lower="0" upper="3.1415926" effort="100" velocity="5" />
++    </joint>
++    <link name="piper_link3">
++        <inertial>
++            <origin xyz="-0.01999 -0.14808 -0.00053" rpy="0 0 0" />
++            <mass value="0.5" />
++            <inertia ixx="0.01347608" ixy="0.00161034" ixz="0.00000066" iyy="0.00046377" iyz="0.00000162" izz="0.01363321" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/link3.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/link3.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <joint name="piper_joint3" type="revolute">
++        <origin xyz="0.28503 0 0" rpy="0 0 -1.7938494" />
++        <parent link="piper_link2" />
++        <child link="piper_link3" />
++        <axis xyz="0 0 1" />
++        <limit lower="-2.9670597" upper="0" effort="100" velocity="5" />
++    </joint>
++    <link name="piper_link4">
++        <inertial>
++            <origin xyz="0.00013 -0.00076 -0.00394" rpy="0 0 0" />
++            <mass value="0.38" />
++            <inertia ixx="0.00017844" ixy="0.00000062" ixz="0.00000067" iyy="0.00018914" iyz="0.00000408" izz="0.00014613" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/link4.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/link4.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <joint name="piper_joint4" type="revolute">
++        <origin xyz="-0.02198 -0.25075 0" rpy="1.5707963 0 0" />
++        <parent link="piper_link3" />
++        <child link="piper_link4" />
++        <axis xyz="0 0 1" />
++        <limit lower="-1.7453292" upper="1.7453292" effort="100" velocity="5" />
++    </joint>
++    <link name="piper_link5">
++        <inertial>
++            <origin xyz="0.00018 -0.06104 -0.00227" rpy="0 0 0" />
++            <mass value="0.383" />
++            <inertia ixx="0.00172318" ixy="0.00000259" ixz="0.00000010" iyy="0.00017936" iyz="0.00000990" izz="0.00171172" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/link5.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/link5.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <joint name="piper_joint5" type="revolute">
++        <origin xyz="0 0 0" rpy="-1.5707963 0 0" />
++        <parent link="piper_link4" />
++        <child link="piper_link5" />
++        <axis xyz="0 0 1" />
++        <limit lower="-1.2217304" upper="1.2217304" effort="100" velocity="5" />
++    </joint>
++    <link name="piper_link6">
++        <inertial>
++            <origin xyz="0.00134940815 0 -0.00344975303" rpy="0 0 0" />
++            <mass value="0.01655408133" />
++            <inertia ixx="1.52476803967e-6" ixy="0" ixz="1.0017156778e-7" iyy="1.51721319881e-6" iyz="0" izz="2.84541364481e-6" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/link6.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/link6.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <joint name="piper_joint6" type="revolute">
++        <origin xyz="8.8259E-05 -0.091 0" rpy="1.5707963 0 0" />
++        <parent link="piper_link5" />
++        <child link="piper_link6" />
++        <axis xyz="0 0 1" />
++        <limit lower="-2.9670597" upper="2.9670597" effort="100" velocity="5" />
++    </joint>
++<link name="piper_flange_link">
++        <inertial>
++            <origin xyz="1.151691e-03 0.782428e-03 4.798051e-03" rpy="0 0 0" />
++            <mass value="0.04" />
++            <inertia ixx="9.935389e-06" ixy="0.0" ixz="0.0" iyy="10.508003e-06" iyz="0.0" izz="19.652873e-06" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/flange.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/flange.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <link name="piper_gripper_base">
++        <inertial>
++            <origin xyz="-0.000183807162235591 8.05033155577911E-05 0.0321436689908876" rpy="0 0 0" />
++            <mass value="0.45" />
++            <inertia ixx="0.000466573035886" ixy="0" ixz="0" iyy="0.000208671755285" iyz="0" izz="0.000443517627645" />
++        </inertial>
++        <visual>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/dae/gripper_base.dae" />
++            </geometry>
++        </visual>
++        <collision>
++            <origin xyz="0 0 0" rpy="0 0 0" />
++            <geometry>
++                <mesh filename="../meshes/piper/gripper_base.stl" />
++            </geometry>
++        </collision>
++    </link>
++    <link name="piper_gripper_link1">
++        <visual name="umi_pla"><origin xyz="-0.0185000018464 -0.0725021830154 -0.0157697201129" rpy="3.6783872931e-08 -1.5707963057 -1.5707963336" /><geometry><mesh filename="../meshes/umi/umi_pla.stl" scale="0.001 0.001 0.001" /></geometry><material name="umi_pla"><color rgba="0.18 0.18 0.2 1" /></material></visual><visual name="umi_tpu"><origin xyz="-0.0180000010114 -0.1036339058 -0.109205830847" rpy="1.5707963268 -3.000000004e-08 1.5707963536" /><geometry><mesh filename="../meshes/umi/umi_tpu.stl" scale="0.001 0.001 0.001" /></geometry><material name="umi_tpu"><color rgba="0.06 0.06 0.07 1" /></material></visual><collision><origin xyz="-1.93303462343e-09 -0.0692521829624 0.000740139075095" rpy="1.5707962977 1.570796301 1.5707963245" /><geometry><box size="0.0330197182 0.0065 0.037" /></geometry></collision><collision><origin xyz="-0.0147500023814 -0.0525021833574 0.000740139523895" rpy="1.5707962977 1.570796301 1.5707963245" /><geometry><box size="0.0330197182 0.027 0.0075" /></geometry></collision><collision><origin xyz="0.0147499976186 -0.0525021825674 0.000740139523895" rpy="1.5707962977 1.570796301 1.5707963245" /><geometry><box size="0.0330197182 0.027 0.0075" /></geometry></collision><collision><origin xyz="-3.53873462347e-09 -0.00932523246218 0.000740140680795" rpy="1.5707962977 1.570796301 1.5707963245" /><geometry><box size="0.0330195465 0.110353901 0.022" /></geometry></collision><inertial><origin xyz="-3.17193462338e-09 -0.0230152307624 0.000740140313995" rpy="1.5707962977 1.570796301 1.5707963245" /><mass value="0.078" /><inertia ixx="9.77661544038729e-05" ixy="0" ixz="0" iyy="1.1929159663782503e-05" iyz="0" izz="0.00010001081406765542" /></inertial></link>
++    <link name="piper_gripper_link2">
++        <visual name="umi_pla"><origin xyz="-0.0185000021342 -0.0725021830184 -0.0157697210843" rpy="3.6783872744e-08 -1.5707963057 -1.5707963336" /><geometry><mesh filename="../meshes/umi/umi_pla.stl" scale="0.001 0.001 0.001" /></geometry><material name="umi_pla"><color rgba="0.18 0.18 0.2 1" /></material></visual><visual name="umi_tpu"><origin xyz="-0.0180000012992 -0.103633905798 -0.109205831818" rpy="1.5707963268 -3.000000004e-08 1.5707963536" /><geometry><mesh filename="../meshes/umi/umi_tpu.stl" scale="0.001 0.001 0.001" /></geometry><material name="umi_tpu"><color rgba="0.06 0.06 0.07 1" /></material></visual><collision><origin xyz="-2.22080461963e-09 -0.0692521829654 0.000740138103564" rpy="1.5707962977 1.570796301 1.5707963245" /><geometry><box size="0.0330197182 0.0065 0.037" /></geometry></collision><collision><origin xyz="-0.0147500026692 -0.0525021833604 0.000740138552364" rpy="1.5707962977 1.570796301 1.5707963245" /><geometry><box size="0.0330197182 0.027 0.0075" /></geometry></collision><collision><origin xyz="0.0147499973308 -0.0525021825704 0.000740138552364" rpy="1.5707962977 1.570796301 1.5707963245" /><geometry><box size="0.0330197182 0.027 0.0075" /></geometry></collision><collision><origin xyz="-3.82650461967e-09 -0.00932523246568 0.000740139709264" rpy="1.5707962977 1.570796301 1.5707963245" /><geometry><box size="0.0330195465 0.110353901 0.022" /></geometry></collision><inertial><origin xyz="-3.45970461958e-09 -0.0230152307654 0.000740139342464" rpy="1.5707962977 1.570796301 1.5707963245" /><mass value="0.078" /><inertia ixx="9.77661544038729e-05" ixy="0" ixz="0" iyy="1.1929159663782503e-05" iyz="0" izz="0.00010001081406765542" /></inertial></link>
++    <joint name="piper_flange_joint" type="fixed">
++        <origin xyz="0 0 0" rpy="0 0 0" />
++        <parent link="piper_link6" />
++        <child link="piper_flange_link" />
++    </joint>
++    <joint name="piper_gripper_base_joint" type="fixed">
++        <origin xyz="0 0 0.0045" rpy="0 0 0" />
++        <parent link="piper_flange_link" />
++        <child link="piper_gripper_base" />
++    </joint>
++    <joint name="piper_gripper_joint1" type="prismatic">
++        <origin xyz="0 0 0.138" rpy="1.5707963 0 0" />
++        <parent link="piper_gripper_base" />
++        <child link="piper_gripper_link1" />
++        <axis xyz="0 0 1" />
++        <limit lower="0.016800" upper="0.05" effort="10" velocity="3" />
++        <dynamics damping="1.0" friction="0.0" /></joint>
++    <joint name="piper_gripper_joint2" type="prismatic">
++        <origin xyz="0 0 0.138" rpy="1.5707963 0 -3.1415926" />
++        <parent link="piper_gripper_base" />
++        <child link="piper_gripper_link2" />
++        <axis xyz="0 0 -1" />
++        <limit lower="-0.05" upper="-0.016800" effort="10" velocity="3" />
++        <dynamics damping="1.0" friction="0.0" /></joint>
++<link name="piper_umi_nominal_tcp"><inertial><origin xyz="0 0 0" rpy="0 0 0" /><mass value="0.00001" /><inertia ixx="1e-9" ixy="0" ixz="0" iyy="1e-9" iyz="0" izz="1e-9" /></inertial></link><joint name="piper_umi_tcp_joint" type="fixed" dont_collapse="true"><parent link="piper_gripper_base" /><child link="piper_umi_nominal_tcp" /><origin xyz="0 0 0.183851719307" rpy="0 0 0" /></joint><link name="as2_assumed_mount_interface" /><joint name="as2_assumed_interface_fixed" type="fixed"><parent link="base_link" /><child link="as2_assumed_mount_interface" /><origin xyz="-0.02 0 0.07602847822" rpy="0 0 0" /></joint><link name="mount_plate"><inertial><origin xyz="0 0 0" rpy="0 0 0" /><mass value="0.27216" /><inertia ixx="0.00032740848" iyy="0.0004453444800000001" izz="0.0007711200000000001" ixy="0" ixz="0" iyz="0" /></inertial><visual><origin xyz="0 0 0" rpy="0 0 0" /><geometry><box size="0.14 0.12 0.006" /></geometry><material name="mount_plate_color"><color rgba="0.75 0.62 0.25 1" /></material></visual><collision><origin xyz="0 0 0" rpy="0 0 0" /><geometry><box size="0.14 0.12 0.006" /></geometry></collision></link><joint name="mount_plate_fixed" type="fixed"><parent link="as2_assumed_mount_interface" /><child link="mount_plate" /><origin xyz="0 0 0.003" rpy="0 0 0" /></joint><joint name="plate_to_piper_fixed" type="fixed"><parent link="mount_plate" /><child link="piper_base_link" /><origin xyz="0.025 0 0.003" rpy="0 0 0" /></joint></robot>--- a/legged_gym/scripts/train_as2.py
++++ b/legged_gym/scripts/train_as2.py
+@@ -28,23 +28,49 @@
+     assert torch.isfinite(env.ee_j_eef).all()
+     assert torch.isfinite(env.obs_buf).all()
+     if os.environ.get('AS2_SMOKE')=='1':
++        # Cross-engine FK check uses actual PhysX joint and root states.
++        from isaacgym.torch_utils import quat_apply
++        from legged_gym.utils.urdf_chain import multiply
++        fk_pos,fk_quat=env.arm_fk(env.dof_pos[:,12:18])
++        predicted=env._get_ee_goal_spherical_center()+quat_apply(env.root_states[:,3:7],fk_pos)
++        fk_error=float((predicted-env.ee_pos).norm(dim=-1).max())
++        assert fk_error<.002, fk_error
++        predicted_quat=multiply(env.root_states[:,3:7],fk_quat)
++        fk_rotation_error=float((1-(predicted_quat*env.ee_orn).sum(dim=-1).abs()).abs().max())
++        assert fk_rotation_error<1e-5, fk_rotation_error
+         max_gripper_error=0.
++        upright_gripper_error=0.
+         total_reward=0.
+-        for step in range(100):
+-            result=env.step(torch.zeros(env.num_envs,18,device=env.device))
++        env._resample_ee_goal(torch.arange(env.num_envs,device=env.device))
++        for step in range(350):
++            sampled=torch.zeros(env.num_envs,18,device=env.device)
++            sampled[:,12:]=.25
++            original=sampled.clone()
++            result=env.step(sampled)
++            assert torch.equal(sampled,original), 'PPO action was modified by environment'
+             assert torch.isfinite(result[0]).all(),step
+             assert torch.isfinite(result[2]).all() and torch.isfinite(result[3]).all(),step
+             max_gripper_error=max(max_gripper_error,float((env.dof_pos[:,-2:]-env.default_dof_pos[-2:]).abs().max()))
++            upright=(env._get_body_orientation().abs().max(dim=-1).values<.4)&((env.root_states[:,2]-env.env_origins[:,2])>.22)
++            if upright.any():
++                upright_gripper_error=max(upright_gripper_error,float((env.dof_pos[upright,-2:]-env.default_dof_pos[-2:]).abs().max()))
+             total_reward+=float(result[2].abs().sum())
+-        assert max_gripper_error < .005, max_gripper_error
++        # Untrained zero-action robots can fall on the fingers. Contact-driven
++        # compression is recorded separately from upright open-hold accuracy.
++        assert upright_gripper_error < .005, upright_gripper_error
+         assert total_reward>0
+-        env.reset_idx(torch.arange(env.num_envs,device=env.device))
+-        print('AS2 rollout contracts PASS: 100 steps + explicit reset',flush=True)
++        ids=torch.arange(env.num_envs,device=env.device)
++        env.reset_idx(ids)
++        print('AS2 forward rollout contracts PASS: 350 steps + explicit reset',flush=True)
+         (path/'smoke_contracts.json').write_text(json.dumps(dict(
+             num_envs=env.num_envs,num_dofs=env.num_dofs,num_actions=env.num_actions,
+             observations=list(env.obs_buf.shape),jacobian=list(env.ee_j_eef.shape),
+             dof_names=env.dof_names,body_names=env.body_names,gripper_max_error_m=max_gripper_error,
+-            sum_abs_rollout_reward=total_reward,asset=cfg.asset.file),indent=2))
++            upright_gripper_max_error_m=upright_gripper_error,
++            sum_abs_rollout_reward=total_reward,asset=cfg.asset.file,
++            fk_position_error_m=fk_error,fk_quaternion_dot_error=fk_rotation_error,
++            sampler='B1 spherical',collision_rejection='EE AABB + arm/body OBB + IK',
++            collision_retry_fallbacks=env.pose_fallback_count),indent=2))
+     runner,_,_=task_registry.make_alg_runner(log_root=str(path),env=env,name=args.task,args=args)
+     runner.learn(num_learning_iterations=runner.max_iterations if hasattr(runner,'max_iterations') else (args.max_iterations or train_cfg.runner.max_iterations),init_at_random_ep_len=True)
+     print('AS2 training completed',flush=True)
+--- a/legged_gym/envs/__init__.py
++++ b/legged_gym/envs/__init__.py
+@@ -36,4 +36,5 @@
+ from legged_gym.utils.task_registry import task_registry
+ 
+ from .manip_loco.as2piper_config import AS2PiPERPlateCfg, AS2PiPERPlateCfgPPO
+-task_registry.register('as2piper_plate', ManipLoco, AS2PiPERPlateCfg(), AS2PiPERPlateCfgPPO(), 'manip_loco')
++from .manip_loco.as2piper_forward import AS2PiPERForward
++task_registry.register('as2piper_plate_forward', AS2PiPERForward, AS2PiPERPlateCfg(), AS2PiPERPlateCfgPPO(), 'manip_loco')
+--- /dev/null
++++ b/legged_gym/envs/manip_loco/as2piper_forward.py
+@@ -0,0 +1,100 @@
++"""B1 spherical pose sampling with AS2 dimensions and arm/body rejection."""
++import hashlib,json
++from pathlib import Path
++import torch
++from isaacgym import gymtorch
++from isaacgym.torch_utils import sphere2cart,quat_apply,quat_rotate_inverse,quat_from_euler_xyz,euler_from_quat
++from legged_gym import LEGGED_GYM_ROOT_DIR
++from legged_gym.utils.urdf_chain import URDFChain,rotate
++from legged_gym.utils.arm_collision import ArmCollisionGuard
++from .manip_loco import ManipLoco
++
++
++class AS2PiPERForward(ManipLoco):
++    def _init_buffers(self):
++        super()._init_buffers()
++        root=Path(LEGGED_GYM_ROOT_DIR);asset=Path(self.cfg.asset.file.format(LEGGED_GYM_ROOT_DIR=str(root)))
++        geometry=root/'resources/commands/arm_collision.json'
++        if json.loads(geometry.read_text())['asset_sha256']!=hashlib.sha256(asset.read_bytes()).hexdigest():
++            raise RuntimeError('Rebuild collision geometry for this URDF with build_collision_guard.py')
++        names=['piper_joint'+str(i) for i in range(1,7)]
++        self.arm_fk=URDFChain(asset,'piper_base_link','piper_umi_nominal_tcp',names,self.device)
++        self.collision_guard=ArmCollisionGuard(asset,geometry,self.device)
++        self.leg_fk=[URDFChain(asset,'base_link',leg+'_foot',[leg+'_'+s+'_joint' for s in ('hip','thigh','calf')],self.device)
++                     for leg in ('FL','FR','RL','RR')]
++        self._last_rejected_ids=torch.empty(0,device=self.device,dtype=torch.long)
++        self.pose_fallback_count=0
++
++    def step(self,actions):
++        return super().step(actions.clone())  # Protect PPO's stored action.
++
++    def _get_ee_goal_spherical_center(self):
++        # Actual arm origin. Sampling axes remain yaw/gravity aligned, as B1.
++        return self.root_states[:,:3]+quat_apply(self.root_states[:,3:7],self.arm_base_offset)
++
++    def _get_ee_goal_observation(self):
++        local=quat_rotate_inverse(self.root_states[:,3:7],self.curr_ee_goal_cart_world-self._get_ee_goal_spherical_center())
++        return local,0*self.curr_ee_goal_sphere  # Original B1 observation contract.
++
++    def _reset_dofs(self,env_ids):
++        super()._reset_dofs(env_ids)
++        self.dof_pos[env_ids,12:18]=self.default_dof_pos[12:18]
++        self.gym.set_dof_state_tensor(self.sim,gymtorch.unwrap_tensor(self.dof_state))
++
++    def _reset_root_states(self,env_ids):
++        super()._reset_root_states(env_ids)
++        bottom=[fk(self.dof_pos[env_ids,i*3:i*3+3])[0][:,2]-.028 for i,fk in enumerate(self.leg_fk)]
++        low=torch.stack(bottom,dim=-1).min(dim=-1).values
++        self.root_states[env_ids,2]=self.env_origins[env_ids,2]-low+.002
++        self.gym.set_actor_root_state_tensor(self.sim,gymtorch.unwrap_tensor(self._root_states))
++        self.gym.refresh_actor_root_state_tensor(self.sim)
++
++    def _resample_ee_goal(self,env_ids,is_init=False):
++        # B1 still draws radius/pitch/yaw independently, draws orientation
++        # deltas independently, and retries the position at most ten times.
++        if not len(env_ids):return
++        previous=self.ee_goal_sphere.clone();previous_orn=self.ee_goal_orn_delta_rpy.clone()
++        self._last_rejected_ids=torch.empty(0,device=self.device,dtype=torch.long)
++        super()._resample_ee_goal(env_ids,is_init=is_init)
++        failed=self._last_rejected_ids
++        if not is_init and len(failed):
++            # Original B1 leaves the final rejected pose after ten failures.
++            # Holding the previous pose is the collision-specific exception.
++            self.ee_goal_sphere[failed]=previous[failed]
++            self.ee_goal_orn_delta_rpy[failed]=previous_orn[failed]
++            self.ee_goal_cart[failed]=sphere2cart(self.ee_goal_sphere[failed])
++            self.pose_fallback_count+=len(failed)
++        if is_init:
++            # Initialize immediately; do not use the previous episode's goal
++            # for the first IK action after reset.
++            self.curr_ee_goal_sphere[env_ids]=self.init_start_ee_sphere
++            local=sphere2cart(self.curr_ee_goal_sphere[env_ids]);self.curr_ee_goal_cart[env_ids]=local
++            yaw=euler_from_quat(self.root_states[env_ids,3:7])[2]
++            zero=torch.zeros_like(yaw);qy=quat_from_euler_xyz(zero,zero,yaw)
++            v=quat_apply(qy,local)
++            self.curr_ee_goal_cart_world[env_ids]=self._get_ee_goal_spherical_center()[env_ids]+v
++            self.ee_goal_orn_quat[env_ids]=quat_from_euler_xyz(zero+self.cfg.goal_ee.orientation_roll_offset,
++                -self.curr_ee_goal_sphere[env_ids,1]+self.cfg.goal_ee.arm_induced_pitch,yaw+self.curr_ee_goal_sphere[env_ids,2])
++
++    def _collision_check(self,env_ids):
++        rejected=super()._collision_check(env_ids)
++        q=self.dof_pos[env_ids,12:18].clone()
++        body=self.root_states[env_ids,3:7];yaw=self.base_yaw_quat[env_ids]
++        origin=self._get_ee_goal_spherical_center()[env_ids]
++        for t in (0.,.5,1.):
++            sphere=torch.lerp(self.ee_start_sphere[env_ids],self.ee_goal_sphere[env_ids],t)
++            v=quat_apply(yaw,sphere2cart(sphere));world=origin+v
++            target=quat_rotate_inverse(body,v)
++            delta=self.ee_goal_orn_delta_rpy[env_ids]
++            orn=quat_from_euler_xyz(delta[:,0]+self.cfg.goal_ee.orientation_roll_offset,
++                -sphere[:,1]+self.cfg.goal_ee.arm_induced_pitch+delta[:,1],
++                torch.atan2(v[:,1],v[:,0])+delta[:,2])
++            # Transform target orientation from world into actual arm axes.
++            basis=torch.eye(3,device=self.device).expand(len(env_ids),3,3)
++            world_axes=rotate(orn[:,None,:].expand(-1,3,-1),basis)
++            local_axes=quat_rotate_inverse(body[:,None,:].expand(-1,3,-1).reshape(-1,4),world_axes.reshape(-1,3)).reshape(-1,3,3).transpose(1,2)
++            q,failed=self.collision_guard.solve(target,local_axes,q)
++            rejected|=failed|self.collision_guard.collides(q,self.arm_base_offset[env_ids,None,:])
++            rejected|=world[:,2]<self.env_origins[env_ids,2]+.03
++        self._last_rejected_ids=env_ids[rejected]
++        return rejected
+--- a/legged_gym/envs/manip_loco/manip_loco.py
++++ b/legged_gym/envs/manip_loco/manip_loco.py
+@@ -216,8 +216,7 @@
+     def compute_observations(self):
+         """ Computes observations
+         """
+-        arm_base_pos = self.base_pos + quat_apply(self.base_yaw_quat, self.arm_base_offset)
+-        ee_goal_local_cart = quat_rotate_inverse(self.base_quat, self.curr_ee_goal_cart_world - arm_base_pos)
++        ee_goal_local_cart, ee_goal_local_orientation = self._get_ee_goal_observation()
+         if self.stand_by:
+             self.commands[:] = 0.
+ 
+@@ -230,7 +229,7 @@
+                                     self.commands[:, :3] * self.commands_scale,  # dim 3
+                                     # self.curr_ee_goal_sphere,  # dim 3 position
+                                     ee_goal_local_cart,  # dim 3 position
+-                                    0*self.curr_ee_goal_sphere  # dim 3 orientation
++                                    ee_goal_local_orientation  # dim 3 orientation
+                                     ),dim=-1)
+         if self.cfg.env.observe_gait_commands:
+             obs_buf = torch.cat((obs_buf,
+@@ -1294,6 +1293,10 @@
+ 
+         self._resample_ee_goal(resample_id)
+     
++    def _get_ee_goal_observation(self):
++        arm_base_pos = self.base_pos + quat_apply(self.base_yaw_quat, self.arm_base_offset)
++        return quat_rotate_inverse(self.base_quat, self.curr_ee_goal_cart_world - arm_base_pos), 0*self.curr_ee_goal_sphere
++
+     def _get_ee_goal_spherical_center(self):
+         center = torch.cat([self.root_states[:, :2], torch.zeros(self.num_envs, 1, device=self.device)], dim=1)
+         center = center + quat_apply(self.base_yaw_quat, self.ee_goal_center_offset)
+--- a/legged_gym/envs/manip_loco/as2piper_config.py
++++ b/legged_gym/envs/manip_loco/as2piper_config.py
+@@ -5,21 +5,24 @@
+ class AS2PiPERPlateCfg(B1Z1RoughCfg):
+     class env(B1Z1RoughCfg.env):
+         num_gripper_joints = 2
++        observe_gait_commands = True
+ 
+     class init_state(B1Z1RoughCfg.init_state):
++        pos = [0.,0.,.3264069024246581]
+         default_joint_angles = {
+-            **{k:v for k,v in B1Z1RoughCfg.init_state.default_joint_angles.items() if not k.startswith('z1_')},
++            **{leg+'_'+name+'_joint': value for leg in ('FL','FR','RL','RR')
++               for name,value in [('hip',0.),('thigh',.8),('calf',-1.6)]},
+             **{'piper_joint'+str(i): v for i,v in enumerate([0.,1.1,-.55,0.,0.,0.],1)},
+             'piper_gripper_joint1': .049,
+             'piper_gripper_joint2': -.049,
+         }
+ 
+     class asset(B1Z1RoughCfg.asset):
+-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/as2piper/urdf/as2piper_plate_training.urdf'
++        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf'
+         gripper_name = 'piper_umi_nominal_tcp'
+         penalize_contacts_on = ['thigh','base_link','calf']
+         collapse_fixed_joints = True
+-        arm_base_offset = [-.02,0.,.08202847821788371]
++        arm_base_offset = [.005,0.,.08202847821788371]
+ 
+     class control(B1Z1RoughCfg.control):
+         stiffness = {'joint': 80., 'piper_joint': 5.}
+@@ -32,9 +35,36 @@
+ 
+     class goal_ee(B1Z1RoughCfg.goal_ee):
+         orientation_roll_offset = 0.
++        command_mode = 'sphere'
++        sampling_mode = 'b1_spherical_with_as2_collision_rejection'
++        reference_frame = 'arm_origin_yaw_aligned'
++        arm_induced_pitch = 2.455216137744035
++        collision_lower_limits = [-.185,-.12,-.15]
++        collision_upper_limits = [.335,.12,.06]
++        underground_limit = -.30
++        class sphere_center:
++            x_offset = 0.
++            y_offset = 0.
++            z_invariant_offset = 0.
++        class ranges:
++            init_pos_start = [.4278984686862198,.421686284190671,0.]
++            init_pos_end = [.4278984686862198,.421686284190671,0.]
++            pos_l = [.38,.52]
++            pos_p = [-.25,.60]
++            pos_y = [-.40,.40]
++            delta_orn_r = [-.15,.15]
++            delta_orn_p = [-.15,.15]
++            delta_orn_y = [-.15,.15]
++            final_tracking_ee_reward = .55
++        # Sampling and spherical interpolation are inherited from B1.
++
++    class rewards(B1Z1RoughCfg.rewards):
++        # Geometric height reference, not reward-scale tuning. With the AS2
++        # neutral leg pose, all four foot sphere bottoms touch at this height.
++        base_height_target = .3244069024246581
+ 
+ 
+ class AS2PiPERPlateCfgPPO(B1Z1RoughCfgPPO):
+     class runner(B1Z1RoughCfgPPO.runner):
+-        experiment_name = 'as2piper_plate_only'
++        experiment_name = 'as2piper_plate_forward_spherical'
+         resume = False
+--- /dev/null
++++ b/legged_gym/utils/arm_collision.py
+@@ -0,0 +1,87 @@
++"""Batched IK and conservative arm-vs-body OBB rejection, not a goal bank."""
++import json
++import torch
++from .urdf_chain import URDFChain,rotate
++
++
++class ArmKinematics(torch.nn.Module):
++    def __init__(self,asset):
++        super().__init__()
++        chain=URDFChain(asset,'piper_base_link','piper_umi_nominal_tcp',
++                        ['piper_joint'+str(i) for i in range(1,7)])
++        offsets=[];rotations=[];axes=[];p=torch.zeros(3);R=torch.eye(3)
++        for xyz,quat,axis,index,kind in chain.steps:
++            mat=rotate(quat.expand(3,-1),torch.eye(3)).T
++            p=p+R@xyz;R=R@mat
++            if index>=0:
++                offsets.append(p);rotations.append(R);axes.append(axis)
++                p=torch.zeros(3);R=torch.eye(3)
++        self.register_buffer('offsets',torch.stack(offsets));self.register_buffer('rotations',torch.stack(rotations))
++        self.register_buffer('axes',torch.stack(axes));self.register_buffer('tip_p',p);self.register_buffer('tip_R',R)
++        skew=[]
++        for a in axes:
++            x,y,z=a;skew.append(torch.tensor([[0.,-z,y],[z,0.,-x],[-y,x,0.]]))
++        K=torch.stack(skew);self.register_buffer('K',K);self.register_buffer('K2',K@K)
++
++    def forward(self,q):
++        n=q.shape[0];p=torch.zeros((n,3),device=q.device);R=torch.eye(3,device=q.device).expand(n,3,3)
++        points=torch.zeros((n,6,3),device=q.device);frames=torch.zeros((n,6,3,3),device=q.device)
++        axis=torch.zeros((n,6,3),device=q.device)
++        for j in range(6):
++            p=p+(R@self.offsets[j].view(1,3,1)).squeeze(-1);R=R@self.rotations[j]
++            points[:,j]=p;axis[:,j]=(R@self.axes[j].view(1,3,1)).squeeze(-1)
++            angle=q[:,j,None,None]
++            R=R@(torch.eye(3,device=q.device)+torch.sin(angle)*self.K[j]+(1-torch.cos(angle))*self.K2[j])
++            frames[:,j]=R
++        tip=p+(R@self.tip_p.view(1,3,1)).squeeze(-1);orientation=R@self.tip_R
++        linear=torch.cross(axis,tip[:,None,:]-points,dim=-1).transpose(1,2)
++        J=torch.cat((linear,axis.transpose(1,2)),dim=1)
++        return tip,orientation,J,points,frames
++
++
++def box_collision(center,rotation,half,obstacle_center,obstacle_half):
++    """Full 15-axis separating-axis test, arm OBB against body-aligned boxes."""
++    # [batch, arm geom, obstacle, axis, xyz]
++    n,g=center.shape[:2];h=obstacle_center.shape[0]
++    R=rotation[:,:,None].expand(n,g,h,3,3)
++    eye=torch.eye(3,device=center.device).expand(n,g,h,3,3)
++    arm_axes=R.transpose(-1,-2)
++    cross=torch.cross(arm_axes[:,:,:, :,None,:].expand(n,g,h,3,3,3),
++                      eye[:,:,:,None,:,:].expand(n,g,h,3,3,3),dim=-1).reshape(n,g,h,9,3)
++    axes=torch.cat((eye,arm_axes,cross),dim=-2)
++    delta=center[:,:,None,:]-obstacle_center[None,None,:,:]
++    distance=(axes*delta[:,:,:,None,:]).sum(-1).abs()
++    radius_a=((axes@R).abs()*half[None,:,None,None,:]).sum(-1)
++    radius_b=(axes.abs()*obstacle_half[None,None,:,None,:]).sum(-1)
++    return (~(distance>radius_a+radius_b+1e-7).any(-1)).reshape(n,-1).any(-1)
++
++
++class ArmCollisionGuard:
++    def __init__(self,asset,geometry,device):
++        self.fk=torch.jit.script(ArmKinematics(asset)).to(device)
++        data=json.loads(geometry.read_text())
++        def value(key,dtype=torch.float):return torch.tensor(data[key],device=device,dtype=dtype)
++        self.link_index=value('link_index',torch.long);self.center=value('center');self.half=value('half')
++        self.obstacle_center=value('obstacle_center');self.obstacle_half=value('obstacle_half')
++        self.low=value('joint_low');self.high=value('joint_high')
++
++    def solve(self,target,orientation,seed,iterations=12):
++        q=seed.clone();identity=torch.eye(6,device=q.device)
++        for _ in range(iterations):
++            p,R,J,_,_=self.fk(q)
++            # Spatial orientation error; target/R columns are basis vectors.
++            w=.5*torch.cross(R.transpose(1,2),orientation.transpose(1,2),dim=-1).sum(1)
++            error=torch.cat((target-p,w),dim=-1)
++            dq=(J.transpose(1,2)@torch.linalg.solve(J@J.transpose(1,2)+.0025*identity,error[:,:,None])).squeeze(-1)
++            q=torch.max(torch.min(q+dq.clamp(-.18,.18),self.high),self.low)
++        p,R,_,_,_=self.fk(q)
++        angle_cos=((R*orientation).sum(dim=(1,2))-1)/2
++        failed=(p-target).norm(dim=-1)>.012
++        failed|=angle_cos<.9961947  # 5 degrees
++        return q,failed
++
++    def collides(self,q,body_arm_offset):
++        _,_,_,points,frames=self.fk(q)
++        R=frames[:,self.link_index]
++        p=points[:,self.link_index]+(R@self.center[None,:,:,None]).squeeze(-1)+body_arm_offset
++        return box_collision(p,R,self.half,self.obstacle_center,self.obstacle_half)
+--- /dev/null
++++ b/legged_gym/utils/urdf_chain.py
+@@ -0,0 +1,53 @@
++"""Batched URDF FK in xyzw quaternions; no simulator or NumPy dependency."""
++import math
++import xml.etree.ElementTree as ET
++import torch
++
++
++def multiply(a,b):
++    av,aw=a[...,:3],a[...,3:];bv,bw=b[...,:3],b[...,3:]
++    return torch.cat((aw*bv+bw*av+torch.cross(av,bv,dim=-1),aw*bw-(av*bv).sum(-1,keepdim=True)),-1)
++
++
++def rotate(q,v):
++    uv=torch.cross(q[...,:3],v,dim=-1)
++    return v+2*(q[...,3:]*uv+torch.cross(q[...,:3],uv,dim=-1))
++
++
++def inverse(q):
++    return torch.cat((-q[...,:3],q[...,3:]),-1)
++
++
++def rpy_quaternion(rpy):
++    r,p,y=[v/2 for v in rpy];cr,sr=math.cos(r),math.sin(r);cp,sp=math.cos(p),math.sin(p);cy,sy=math.cos(y),math.sin(y)
++    return [sr*cp*cy-cr*sp*sy,cr*sp*cy+sr*cp*sy,cr*cp*sy-sr*sp*cy,cr*cp*cy+sr*sp*sy]
++
++
++class URDFChain:
++    def __init__(self,path,base,tip,joint_names,device='cpu'):
++        robot=ET.parse(path).getroot();parents={j.find('child').get('link'):j for j in robot.findall('joint')}
++        chain=[];current=tip
++        while current!=base:
++            j=parents[current];chain.append(j);current=j.find('parent').get('link')
++        self.steps=[];self.joint_names=joint_names
++        for j in reversed(chain):
++            o=j.find('origin');xyz=[float(v) for v in (o.get('xyz','0 0 0') if o is not None else '0 0 0').split()]
++            rpy=[float(v) for v in (o.get('rpy','0 0 0') if o is not None else '0 0 0').split()]
++            axis=j.find('axis');axis=[float(v) for v in axis.get('xyz').split()] if axis is not None else [1,0,0]
++            index=-1 if j.get('type')=='fixed' else joint_names.index(j.get('name'))
++            self.steps.append((torch.tensor(xyz,device=device),torch.tensor(rpy_quaternion(rpy),device=device),
++                               torch.tensor(axis,device=device),index,j.get('type')))
++
++    def __call__(self,q):
++        p=torch.zeros(q.shape[0],3,device=q.device,dtype=q.dtype)
++        rot=torch.zeros(q.shape[0],4,device=q.device,dtype=q.dtype);rot[:,3]=1
++        for xyz,orientation,axis,index,kind in self.steps:
++            xyz=xyz.to(q).expand(q.shape[0],-1);orientation=orientation.to(q).expand(q.shape[0],-1)
++            p=p+rotate(rot,xyz);rot=multiply(rot,orientation)
++            if index<0:continue
++            if kind=='prismatic':p=p+rotate(rot,axis.to(q).expand_as(p)*q[:,index:index+1])
++            else:
++                a=q[:,index:index+1]/2
++                delta=torch.cat((axis.to(q).expand_as(p)*torch.sin(a),torch.cos(a)),-1)
++                rot=multiply(rot,delta)
++        return p,rot/rot.norm(dim=-1,keepdim=True)

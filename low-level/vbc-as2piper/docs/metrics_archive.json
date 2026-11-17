@@ -1,0 +1,16 @@
+[
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "records": 31801,
+    "last_step": 31800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/wandb_numeric_history.jsonl.gz"
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "records": 45000,
+    "last_step": 44999,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/wandb_numeric_history.jsonl.gz"
+  }
+]

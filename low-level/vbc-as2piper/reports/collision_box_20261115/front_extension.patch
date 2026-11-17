@@ -1,0 +1,12 @@
+--- before/as2_head_orin_config.py
++++ low-level-as2piper-head-orin-deploy/legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -61,7 +61,8 @@
+         orientation_roll_offset = 0.
+         # Conservative body/head + Orin bounds, relative to the arm origin.
+         collision_lower_limits = [-.32435, -.112, -.1959]
+-        collision_upper_limits = [.10165, .112, .0158]
++        # Extend forward face 20 mm: cover the visual head tip with ~11 mm margin.
++        collision_upper_limits = [.12165, .112, .0158]
+         underground_limit = -.4563069024246581
+ 
+         class sphere_center:

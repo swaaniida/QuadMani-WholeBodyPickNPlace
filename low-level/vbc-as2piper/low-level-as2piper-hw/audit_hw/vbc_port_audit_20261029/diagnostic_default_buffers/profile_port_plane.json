@@ -1,0 +1,23 @@
+{
+  "mode": "port",
+  "terrain": "plane",
+  "dr": "off",
+  "num_envs": 6144,
+  "steps": 24,
+  "wall_s": 4.478627091739327,
+  "equivalent_collection_24steps_s": 4.478627091739327,
+  "seconds": {
+    "goal_sampling_inclusive": 0.055036911740899086,
+    "candidate_check_inclusive": 0.014454159885644913
+  },
+  "calls": {
+    "goal_sampling_inclusive": 24,
+    "candidate_check_inclusive": 23
+  },
+  "items": {
+    "goal_sampling_inclusive": 5888,
+    "candidate_check_inclusive": 5888
+  },
+  "non_sampling_s": 4.423590179998428,
+  "note": "CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time."
+}

@@ -1,0 +1,62 @@
+{
+  "profiles_plate_tilt_in_place": {
+    "frames": 73,
+    "fps": 8.0,
+    "size": [
+      640,
+      180
+    ],
+    "duration_s": 9.13,
+    "bytes": 191708
+  },
+  "profiles_plate_pick_recover": {
+    "frames": 129,
+    "fps": 8.0,
+    "size": [
+      640,
+      180
+    ],
+    "duration_s": 16.13,
+    "bytes": 388688
+  },
+  "profiles_plate_pick_drag": {
+    "frames": 129,
+    "fps": 8.0,
+    "size": [
+      640,
+      180
+    ],
+    "duration_s": 16.13,
+    "bytes": 432244
+  },
+  "plate_only_tilt_in_place": {
+    "frames": 73,
+    "fps": 8.0,
+    "size": [
+      640,
+      180
+    ],
+    "duration_s": 9.13,
+    "bytes": 192719
+  },
+  "plate_only_pick_recover": {
+    "frames": 129,
+    "fps": 8.0,
+    "size": [
+      640,
+      180
+    ],
+    "duration_s": 16.13,
+    "bytes": 387004
+  },
+  "plate_only_pick_drag": {
+    "frames": 129,
+    "fps": 8.0,
+    "size": [
+      640,
+      180
+    ],
+    "duration_s": 16.13,
+    "bytes": 423627
+  }
+}

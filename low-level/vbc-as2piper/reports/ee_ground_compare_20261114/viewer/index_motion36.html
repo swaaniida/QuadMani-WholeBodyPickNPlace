@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>AS2 · PiPER 바닥 EE 동작 3D 비교</title>
+<style>
+@font-face{font-family:ReplayKorean;src:url('./vendor/fonts/NotoSansKR-Medium.ttf') format('truetype');font-display:swap}body{font-family:ReplayKorean,system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#edf1f5;color:#172d40;font:14px ReplayKorean,system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;grid-template-columns:minmax(0,1fr) 310px;height:100dvh;overflow:hidden}#main{position:relative;min-width:0}canvas{position:absolute;inset:0;width:100%;height:100%;display:block}#panels{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}.panel{position:relative;border:1px solid #c9d2db;touch-action:none;cursor:grab;overflow:hidden}.panel.active{border:2px solid #3983b3}.panel:active{cursor:grabbing}.tag{position:absolute;left:12px;top:12px;pointer-events:none;padding:8px 11px;background:#fffffff0;border-radius:9px;box-shadow:0 1px 8px #1b334018;line-height:1.6;font-variant-numeric:tabular-nums}.tag b{font-size:15px}.reset{color:#b32b31;font-weight:700}.single .panel{display:none;position:absolute;inset:0}.single .panel.active{display:block}aside{background:white;padding:19px;overflow:auto;border-left:1px solid #d6dfe6}h1{font-size:19px;margin:0 0 8px}h2{font-size:13px;margin:19px 0 8px;color:#50687b}.sub{font-size:12px;line-height:1.65;color:#627487}.badge{display:inline-block;background:#e5f1ec;color:#267050;border-radius:12px;padding:3px 9px;font-size:11px;margin-bottom:9px}.row{display:flex;gap:7px;margin:10px 0}button,select{font:inherit;border:1px solid #d0dbe4;border-radius:7px;padding:8px;background:#f0f4f7;color:#18374c;cursor:pointer}button:hover{background:#e0ebf2}button.primary{background:#1d6a9b;border-color:#1d6a9b;color:white}.row>*{flex:1}select{width:100%;background:white}label{display:flex;gap:7px;align-items:center;margin:10px 0;font-size:12px}input[type=range]{width:100%;accent-color:#246d9b}#clock{display:flex;justify-content:space-between;font:13px ui-monospace,monospace}.metrics{background:#f2f6f9;padding:10px;border-radius:8px;font:12px ReplayKorean,ui-monospace,monospace;line-height:1.8;white-space:pre-wrap}.red{color:#d34636}.cyan{color:#008f9a}.note{font-size:11px;line-height:1.65;color:#647586;border-top:1px solid #e1e8ee;padding-top:12px;margin-top:15px}#status{font-size:11px;color:#5d778b;line-height:1.6}#loading{position:absolute;inset:0;display:grid;place-items:center;background:#edf1f5ef;z-index:10;text-align:center;padding:30px}#loading.error{background:#fff2ef;color:#a32b26}#loading strong{display:block;font-size:20px;margin-bottom:10px}.error-text{white-space:pre-wrap;font-family:monospace;font-size:12px}.off{display:none!important}@media(max-width:800px){body{grid-template-columns:1fr;grid-template-rows:minmax(300px,1fr) 270px}aside{border-left:0;border-top:1px solid #ddd;padding:12px 18px}h1{font-size:16px}.note{display:none}.tag{font-size:11px;padding:5px;left:5px;top:5px}.tag b{font-size:12px}}
+.opacity{display:block}.opacity input{display:block;margin-top:8px}
+</style>
+<script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/controls/OrbitControls.js":"./vendor/three/OrbitControls.js"}}</script>
+</head>
+<body>
+<main id="main"><canvas id="view"></canvas><div id="panels" class="single"></div><div id="loading"><div><strong>실제 로봇 형상과 동작 기록 불러오는 중</strong><span id="progress">초기화…</span></div></div></main>
+<aside>
+<h1>EE + 보행 명령 · 3D 재생</h1><div class="badge" id="clipBadge">기록 불러오는 중</div>
+<select id="scenario" aria-label="실험 선택"><option value="motion36">36초 · EE + 다양한 보행 명령</option><option value="ground64">64초 · 정지 + 바닥 EE 비교</option></select><h2>체크포인트</h2>
+<select id="checkpoint" aria-label="체크포인트"><option value="0">10,000 iteration</option><option value="1">20,000 iteration</option><option value="2">30,000 iteration</option><option value="3" selected>45,000 iteration</option></select>
+<div class="row"><button id="mode">4개 동시 비교</button><button id="focus">로봇 중심</button></div>
+<label><input type="checkbox" id="linked" checked>비교 화면 시점 연결</label>
+<div class="row"><button class="primary" id="play">재생</button><button id="restart">처음으로</button><select id="speed" aria-label="재생 속도"><option value="0.25">0.25배</option><option value="0.5">0.5배</option><option value="1" selected>1배</option><option value="2">2배</option></select></div>
+<input type="range" id="timeline" min="0" max="64" step="0.04" value="0" aria-label="재생 시간">
+<div id="clock"><span id="time">0.00 s</span><span id="duration">36.00 s</span></div>
+<div class="sub" id="phase">초기 자세</div>
+<h2>시점</h2><div class="row"><button data-view="home">기본</button><button data-view="side">측면</button><button data-view="front">정면</button><button data-view="top">위쪽</button></div>
+<div class="sub">왼쪽 드래그: 회전 · 휠: 확대/축소<br>오른쪽 드래그: 화면 이동 · Space: 재생/정지</div>
+<h2>표시</h2>
+<label><input type="checkbox" id="follow">로봇 따라가기</label>
+<label><input type="checkbox" id="velocityArrows" checked>파랑 화살표: 선속도 명령</label>
+<label><input type="checkbox" id="targetPath" checked><span class="red">목표 경로</span> / <span class="cyan">실제 EE 궤적</span></label>
+<label><input type="checkbox" id="axes" checked>목표·실제 EE 방향 축</label>
+<label><input type="checkbox" id="loop">반복 재생</label>
+<label class="opacity">팔 투명도 <input type="range" id="opacity" min="0.2" max="1" step="0.05" value="1" aria-label="팔 투명도"></label>
+<h2>선택한 체크포인트</h2><div class="metrics" id="readout">데이터를 불러오는 중…</div>
+<div class="note"><span id="conditions"></span><br>바닥 EE와 좌우 보행은 학습 범위를 벗어난 평가가 포함됩니다.<br>재생·시점 변경은 기록만 표시하며 물리 시뮬레이션이나 학습을 다시 실행하지 않습니다.</div>
+<p id="status"></p>
+</aside>
+<script type="module" src="./viewer_motion36.js"></script>
+</body></html>

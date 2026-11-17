@@ -1,0 +1,358 @@
+{
+  "status": "MESH_SEATED_CANDIDATE_STRUCTURAL_FASTENING_UNVERIFIED",
+  "units": "metres; URDF visual origins zero and scales identity for both bases",
+  "original_urdf_mount": {
+    "xyz": "0 0 0.15",
+    "rpy": "0 0 0"
+  },
+  "central_upper_triangle_intersection_z_m": 0.07600324600934982,
+  "original_urdf_piper_central_gap_mm": 73.99675399065015,
+  "piper_mesh_bottom_z_m": -1.452830911130576e-17,
+  "variants": {
+    "profiles_plate": {
+      "before": {
+        "plate_to_as2": {
+          "footprint_xy_m": [
+            -0.024999999999999994,
+            0.125,
+            -0.075,
+            0.075
+          ],
+          "bottom_z_m": 0.155,
+          "exact_top_max_m": 0.10639018834703584,
+          "min_gap_mm": 48.609811652964154,
+          "max_sampled_gap_mm": 126.68631503553878,
+          "supported_sample_fraction_1mm": 0.0,
+          "sampled_rays": 361,
+          "mesh_penetration_mm": 0.0
+        },
+        "plate_to_piper_gap_mm": -1.452830911130576e-14,
+        "piper_base_z_m": 0.161,
+        "profiles_to_as2": [
+          {
+            "footprint_xy_m": [
+              -0.075,
+              0.175,
+              -0.064,
+              -0.044
+            ],
+            "bottom_z_m": 0.135,
+            "exact_top_max_m": 0.11483689251058246,
+            "min_gap_mm": 20.16310748941755,
+            "max_sampled_gap_mm": 108.40394381180776,
+            "supported_sample_fraction_1mm": 0.0,
+            "sampled_rays": 350,
+            "mesh_penetration_mm": 0.0
+          },
+          {
+            "footprint_xy_m": [
+              -0.075,
+              0.175,
+              0.044,
+              0.064
+            ],
+            "bottom_z_m": 0.135,
+            "exact_top_max_m": 0.11488011856619587,
+            "min_gap_mm": 20.11988143380414,
+            "max_sampled_gap_mm": 108.4039436896725,
+            "supported_sample_fraction_1mm": 0.0,
+            "sampled_rays": 350,
+            "mesh_penetration_mm": 0.0
+          }
+        ],
+        "profile_top_to_plate_bottom_gap_mm": 0.0
+      },
+      "after": {
+        "plate_to_as2": {
+          "footprint_xy_m": [
+            -0.09000000000000001,
+            0.05,
+            -0.06,
+            0.06
+          ],
+          "bottom_z_m": 0.09602847821788371,
+          "exact_top_max_m": 0.07602847821788371,
+          "min_gap_mm": 20.000000000000004,
+          "max_sampled_gap_mm": 22.108306695898847,
+          "supported_sample_fraction_1mm": 0.0,
+          "sampled_rays": 361,
+          "mesh_penetration_mm": 0.0
+        },
+        "plate_to_piper_gap_mm": -1.452830911130576e-14,
+        "piper_base_z_m": 0.10202847821788372,
+        "profiles_to_as2": [
+          {
+            "footprint_xy_m": [
+              -0.09000000000000001,
+              0.05,
+              -0.045000000000000005,
+              -0.025
+            ],
+            "bottom_z_m": 0.07602847821788371,
+            "exact_top_max_m": 0.07601202436613057,
+            "min_gap_mm": 0.016453851753139848,
+            "max_sampled_gap_mm": 0.028403598702306243,
+            "supported_sample_fraction_1mm": 1.0,
+            "sampled_rays": 361,
+            "mesh_penetration_mm": 0.0
+          },
+          {
+            "footprint_xy_m": [
+              -0.09000000000000001,
+              0.05,
+              0.025,
+              0.045000000000000005
+            ],
+            "bottom_z_m": 0.07602847821788371,
+            "exact_top_max_m": 0.07601202436613057,
+            "min_gap_mm": 0.016453851753139848,
+            "max_sampled_gap_mm": 0.02833505461107,
+            "supported_sample_fraction_1mm": 1.0,
+            "sampled_rays": 361,
+            "mesh_penetration_mm": 0.0
+          }
+        ],
+        "profile_top_to_plate_bottom_gap_mm": 0.0
+      },
+      "compiled_mjcf_plate_to_piper_gap_mm": -1.3877787807814457e-14,
+      "compiled_mjcf_piper_base_z_m": 0.10202847822000005,
+      "hardware_inertias": {
+        "al_profile_left": {
+          "mass_kg": 0.07,
+          "principal_inertia_kg_m2": [
+            0.0001166666667,
+            0.0001166666667,
+            4.666666667e-06
+          ]
+        },
+        "al_profile_right": {
+          "mass_kg": 0.07,
+          "principal_inertia_kg_m2": [
+            0.0001166666667,
+            0.0001166666667,
+            4.666666667e-06
+          ]
+        },
+        "mount_plate": {
+          "mass_kg": 0.27216,
+          "principal_inertia_kg_m2": [
+            0.00077112,
+            0.00044534448,
+            0.00032740848
+          ]
+        }
+      },
+      "model": {
+        "nq": 27,
+        "nv": 26,
+        "nu": 20,
+        "nbody": 34,
+        "total_mass_kg": 22.86772408133,
+        "actuated_joint_order": [
+          "FL_hip_joint",
+          "FL_thigh_joint",
+          "FL_calf_joint",
+          "FR_hip_joint",
+          "FR_thigh_joint",
+          "FR_calf_joint",
+          "RL_hip_joint",
+          "RL_thigh_joint",
+          "RL_calf_joint",
+          "RR_hip_joint",
+          "RR_thigh_joint",
+          "RR_calf_joint",
+          "piper_joint1",
+          "piper_joint2",
+          "piper_joint3",
+          "piper_joint4",
+          "piper_joint5",
+          "piper_joint6",
+          "piper_gripper_joint1",
+          "piper_gripper_joint2"
+        ],
+        "wbc_action_joint_names": [
+          "FL_hip_joint",
+          "FL_thigh_joint",
+          "FL_calf_joint",
+          "FR_hip_joint",
+          "FR_thigh_joint",
+          "FR_calf_joint",
+          "RL_hip_joint",
+          "RL_thigh_joint",
+          "RL_calf_joint",
+          "RR_hip_joint",
+          "RR_thigh_joint",
+          "RR_calf_joint",
+          "piper_joint1",
+          "piper_joint2",
+          "piper_joint3",
+          "piper_joint4",
+          "piper_joint5",
+          "piper_joint6"
+        ],
+        "qpos_addresses": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ]
+      },
+      "original_robot_subtrees_preserved": true
+    },
+    "plate_only": {
+      "before": {
+        "plate_to_as2": {
+          "footprint_xy_m": [
+            -0.024999999999999994,
+            0.125,
+            -0.075,
+            0.075
+          ],
+          "bottom_z_m": 0.135,
+          "exact_top_max_m": 0.10639018834703584,
+          "min_gap_mm": 28.60981165296417,
+          "max_sampled_gap_mm": 106.6863150355388,
+          "supported_sample_fraction_1mm": 0.0,
+          "sampled_rays": 361,
+          "mesh_penetration_mm": 0.0
+        },
+        "plate_to_piper_gap_mm": -1.452830911130576e-14,
+        "piper_base_z_m": 0.14100000000000001
+      },
+      "after": {
+        "plate_to_as2": {
+          "footprint_xy_m": [
+            -0.09000000000000001,
+            0.05,
+            -0.06,
+            0.06
+          ],
+          "bottom_z_m": 0.07602847821788371,
+          "exact_top_max_m": 0.07602847821788371,
+          "min_gap_mm": 0.0,
+          "max_sampled_gap_mm": 2.108306695898843,
+          "supported_sample_fraction_1mm": 0.9889196675900277,
+          "sampled_rays": 361,
+          "mesh_penetration_mm": 0.0
+        },
+        "plate_to_piper_gap_mm": -1.452830911130576e-14,
+        "piper_base_z_m": 0.08202847821788371
+      },
+      "compiled_mjcf_plate_to_piper_gap_mm": -1.3877787807814457e-14,
+      "compiled_mjcf_piper_base_z_m": 0.08202847822000003,
+      "hardware_inertias": {
+        "mount_plate": {
+          "mass_kg": 0.27216,
+          "principal_inertia_kg_m2": [
+            0.00077112,
+            0.00044534448,
+            0.00032740848
+          ]
+        }
+      },
+      "model": {
+        "nq": 27,
+        "nv": 26,
+        "nu": 20,
+        "nbody": 32,
+        "total_mass_kg": 22.72772408133,
+        "actuated_joint_order": [
+          "FL_hip_joint",
+          "FL_thigh_joint",
+          "FL_calf_joint",
+          "FR_hip_joint",
+          "FR_thigh_joint",
+          "FR_calf_joint",
+          "RL_hip_joint",
+          "RL_thigh_joint",
+          "RL_calf_joint",
+          "RR_hip_joint",
+          "RR_thigh_joint",
+          "RR_calf_joint",
+          "piper_joint1",
+          "piper_joint2",
+          "piper_joint3",
+          "piper_joint4",
+          "piper_joint5",
+          "piper_joint6",
+          "piper_gripper_joint1",
+          "piper_gripper_joint2"
+        ],
+        "wbc_action_joint_names": [
+          "FL_hip_joint",
+          "FL_thigh_joint",
+          "FL_calf_joint",
+          "FR_hip_joint",
+          "FR_thigh_joint",
+          "FR_calf_joint",
+          "RL_hip_joint",
+          "RL_thigh_joint",
+          "RL_calf_joint",
+          "RR_hip_joint",
+          "RR_thigh_joint",
+          "RR_calf_joint",
+          "piper_joint1",
+          "piper_joint2",
+          "piper_joint3",
+          "piper_joint4",
+          "piper_joint5",
+          "piper_joint6"
+        ],
+        "qpos_addresses": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26
+        ]
+      },
+      "original_robot_subtrees_preserved": true
+    }
+  },
+  "piper_dae_unit": [
+    {
+      "name": "meter",
+      "meter": "1"
+    }
+  ],
+  "preserved_source_hashes": {
+    "mujoco_mount_compare/build_mount_scenes.py": true,
+    "mujoco_mount_compare/run_mount_demo.py": true,
+    "mujoco_mount_compare/mount_config.json": true,
+    "mujoco_mount_compare/models/profiles_plate.xml": true,
+    "mujoco_mount_compare/models/plate_only.xml": true,
+    "low-level/resources/robots/as2piper/urdf/as2piper_umi_actuated_v7.urdf": true,
+    "low-level/resources/robots/as2piper/urdf/as2piper_umi_open_pose_v7.urdf": true
+  }
+}

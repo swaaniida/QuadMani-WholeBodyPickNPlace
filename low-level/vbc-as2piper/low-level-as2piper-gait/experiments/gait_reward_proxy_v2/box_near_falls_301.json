@@ -1,0 +1,18 @@
+{
+  "stand": {
+    "falls": 3,
+    "falls_with_box_within_2cm_of_foot_last_half_second": 0
+  },
+  "forward": {
+    "falls": 20,
+    "falls_with_box_within_2cm_of_foot_last_half_second": 0
+  },
+  "turn": {
+    "falls": 12,
+    "falls_with_box_within_2cm_of_foot_last_half_second": 0
+  },
+  "forward_turn": {
+    "falls": 12,
+    "falls_with_box_within_2cm_of_foot_last_half_second": 0
+  }
+}

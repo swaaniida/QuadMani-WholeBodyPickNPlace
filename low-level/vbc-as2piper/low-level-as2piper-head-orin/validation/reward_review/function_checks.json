@@ -1,0 +1,13 @@
+{
+  "before": {
+    "force_mismatch_weighted": 2.0,
+    "velocity_mismatch_weighted": 1.7293294668197632,
+    "contact_excess_raw": 0.0
+  },
+  "after": {
+    "force_mismatch_weighted": -2.0,
+    "velocity_mismatch_weighted": -1.7293294668197632,
+    "contact_excess_raw": 40.0
+  },
+  "tracking_formula_checks_passed": true
+}

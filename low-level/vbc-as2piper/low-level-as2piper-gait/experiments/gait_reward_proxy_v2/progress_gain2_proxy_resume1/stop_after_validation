@@ -1,0 +1,1 @@
+Control comparison retained through model500 (501 completed).201/301/401 evaluations still fail; falls39->47->63. Focus resources on yaw and height reward variants. Preserve complete update. Existing online PID512627 untouched.

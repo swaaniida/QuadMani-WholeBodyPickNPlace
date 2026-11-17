@@ -1,0 +1,56 @@
+{
+  "profiles_plate_stand": {
+    "frames": 126,
+    "fps": 24.0,
+    "size": [
+      640,
+      368
+    ],
+    "duration_s": 5.25
+  },
+  "profiles_plate_crouch": {
+    "frames": 126,
+    "fps": 24.0,
+    "size": [
+      640,
+      368
+    ],
+    "duration_s": 5.25
+  },
+  "profiles_plate_arm": {
+    "frames": 126,
+    "fps": 24.0,
+    "size": [
+      640,
+      368
+    ],
+    "duration_s": 5.25
+  },
+  "plate_only_stand": {
+    "frames": 126,
+    "fps": 24.0,
+    "size": [
+      640,
+      368
+    ],
+    "duration_s": 5.25
+  },
+  "plate_only_crouch": {
+    "frames": 126,
+    "fps": 24.0,
+    "size": [
+      640,
+      368
+    ],
+    "duration_s": 5.25
+  },
+  "plate_only_arm": {
+    "frames": 126,
+    "fps": 24.0,
+    "size": [
+      640,
+      368
+    ],
+    "duration_s": 5.25
+  }
+}

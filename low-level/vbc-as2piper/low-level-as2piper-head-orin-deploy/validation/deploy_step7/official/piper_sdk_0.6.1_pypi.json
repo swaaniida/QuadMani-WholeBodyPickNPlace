@@ -1,0 +1,115 @@
+{
+  "info": {
+    "author": "Agilex Robotice Co., Ltd.",
+    "author_email": null,
+    "bugtrack_url": null,
+    "classifiers": [
+      "License :: OSI Approved :: MIT License",
+      "Operating System :: OS Independent",
+      "Programming Language :: Python :: 3.6"
+    ],
+    "description": "# Piper SDK\n\n[![GitHub](https://img.shields.io/badge/GitHub-blue.svg)](https://github.com/agilexrobotics/piper_sdk)\n\n|Ubuntu |STATE|\n|---|---|\n|![ubuntu18.04](https://img.shields.io/badge/Ubuntu-18.04-orange.svg)|![Pass](https://img.shields.io/badge/Pass-blue.svg)|\n|![ubuntu20.04](https://img.shields.io/badge/Ubuntu-20.04-orange.svg)|![Pass](https://img.shields.io/badge/Pass-blue.svg)|\n|![ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-orange.svg)|![Pass](https://img.shields.io/badge/Pass-blue.svg)|\n\nTest:\n\n|PYTHON |STATE|\n|---|---|\n|![python3.6](https://img.shields.io/badge/Python-3.6-blue.svg)|![Pass](https://img.shields.io/badge/Pass-blue.svg)|\n|![python3.8](https://img.shields.io/badge/Python-3.8-blue.svg)|![Pass](https://img.shields.io/badge/Pass-blue.svg)|\n|![python3.10](https://img.shields.io/badge/Python-3.10-blue.svg)|![Pass](https://img.shields.io/badge/Pass-blue.svg)|\n\n## 1 Installation Instructions\n\n### 1.1 Install dependencies\n\nThe python-can version should be higher than 3.3.4.\n\n```shell\npip3 install python-can\n```\n\n```shell\npip3 install piper_sdk\n```\n\nView piper_sdk Details, Such as Installation Path, Version, etc.\n\n```shell\npip3 show piper_sdk\n```\n\n0.0.x provides SDK support for robotic arm firmware versions prior to V1.5-2.\n\nTo uninstall\n\n```shell\npip3 uninstall piper_sdk\n```\n\n## Notes\n\n- The CAN device must be activated and the correct baud rate set before reading messages from or controlling the robotic arm.\n- The `C_PiperInterface` interface class can accept the activated CAN route name as a parameter when instantiated.\n\n## Contact Us\n\nYou can open an issue on GitHub.\n\nAlternatively, you can join our Discord at <https://discord.gg/wrKYTxwDBd>\n\n\n",
+    "description_content_type": "text/markdown",
+    "docs_url": null,
+    "download_url": null,
+    "downloads": {
+      "last_day": -1,
+      "last_month": -1,
+      "last_week": -1
+    },
+    "dynamic": null,
+    "home_page": "https://github.com/agilexrobotics/piper_sdk",
+    "keywords": null,
+    "license": "MIT License",
+    "license_expression": null,
+    "license_files": null,
+    "maintainer": null,
+    "maintainer_email": null,
+    "name": "piper-sdk",
+    "package_url": "https://pypi.org/project/piper-sdk/",
+    "platform": "Linux",
+    "project_url": "https://pypi.org/project/piper-sdk/",
+    "project_urls": {
+      "ChangeLog": "https://github.com/agilexrobotics/piper_sdk/blob/master/CHANGELOG.MD",
+      "Homepage": "https://github.com/agilexrobotics/piper_sdk",
+      "Repository": "https://github.com/agilexrobotics/piper_sdk"
+    },
+    "provides_extra": null,
+    "release_url": "https://pypi.org/project/piper-sdk/0.6.1/",
+    "requires_dist": [
+      "python-can>=3.3.4"
+    ],
+    "requires_python": ">=3.6",
+    "summary": "A sdk to control Agilex piper arm",
+    "version": "0.6.1",
+    "yanked": false,
+    "yanked_reason": null
+  },
+  "last_serial": 42207706,
+  "ownership": {
+    "organization": null,
+    "roles": [
+      {
+        "role": "Owner",
+        "user": "RosenYin"
+      },
+      {
+        "role": "Maintainer",
+        "user": "YuxinZeng"
+      },
+      {
+        "role": "Maintainer",
+        "user": "kehuanjack"
+      }
+    ]
+  },
+  "urls": [
+    {
+      "comment_text": null,
+      "core-metadata": {
+        "sha256": "955c020fb379b9d0f3be62e608277efaaccf4decc9f6dbfd67d16285035b1b74"
+      },
+      "digests": {
+        "blake2b_256": "a80c4473a7a9aca9c50798abec6a77e8e5e714ad968399db3d2b86162a05177c",
+        "md5": "a972a7950c89ddc9971dc8401594444b",
+        "sha256": "743557e1b8dfe685f2c33d728ab28c3ff510de8860d6494e54ed5d801493d65c"
+      },
+      "downloads": -1,
+      "filename": "piper_sdk-0.6.1-py3-none-any.whl",
+      "has_sig": false,
+      "md5_digest": "a972a7950c89ddc9971dc8401594444b",
+      "packagetype": "bdist_wheel",
+      "python_version": "py3",
+      "requires_python": ">=3.6",
+      "size": 193748,
+      "upload_time": "2025-10-30T06:38:51",
+      "upload_time_iso_8601": "2025-10-30T06:38:51.368367Z",
+      "url": "https://files.pythonhosted.org/packages/a8/0c/4473a7a9aca9c50798abec6a77e8e5e714ad968399db3d2b86162a05177c/piper_sdk-0.6.1-py3-none-any.whl",
+      "yanked": false,
+      "yanked_reason": null
+    },
+    {
+      "comment_text": null,
+      "core-metadata": false,
+      "digests": {
+        "blake2b_256": "b5c406172af8276170ff0f484e2065f853eef53d7ced3cc822730f55ea110f3b",
+        "md5": "fec9ba3d6417cdf86177dedbcc326b01",
+        "sha256": "2a154870992379f5048caf70662fdbb29f11b7cb17846d6a23afc07cd3d57217"
+      },
+      "downloads": -1,
+      "filename": "piper_sdk-0.6.1.tar.gz",
+      "has_sig": false,
+      "md5_digest": "fec9ba3d6417cdf86177dedbcc326b01",
+      "packagetype": "sdist",
+      "python_version": "source",
+      "requires_python": ">=3.6",
+      "size": 161302,
+      "upload_time": "2025-10-30T06:38:53",
+      "upload_time_iso_8601": "2025-10-30T06:38:53.054574Z",
+      "url": "https://files.pythonhosted.org/packages/b5/c4/06172af8276170ff0f484e2065f853eef53d7ced3cc822730f55ea110f3b/piper_sdk-0.6.1.tar.gz",
+      "yanked": false,
+      "yanked_reason": null
+    }
+  ],
+  "vulnerabilities": []
+}

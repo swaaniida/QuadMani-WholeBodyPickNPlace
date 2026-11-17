@@ -1,0 +1,262 @@
+[
+  {
+    "variant": "profiles_plate",
+    "pose": "former_high_pose",
+    "commanded_arm_rad": [
+      0.0,
+      1.2,
+      -1.4,
+      0.0,
+      0.2,
+      0.0
+    ],
+    "actual_arm_rad": [
+      -6.2522366750523e-05,
+      1.3263273238337596,
+      -1.2470673551692193,
+      0.00029955298467551004,
+      0.2324739616319571,
+      -1.8423003513687344e-05
+    ],
+    "tcp_relative_to_base_m": [
+      0.4731727635610611,
+      -0.0003205415907097404,
+      0.4688898703527706
+    ],
+    "whole_robot_com_relative_to_base_m": [
+      0.027664796134457426,
+      -0.00039335434157145173,
+      0.07285331741362899
+    ],
+    "arm_com_relative_to_base_m": [
+      0.07316832325250783,
+      -0.00023623584922541103,
+      0.37622591018546486
+    ],
+    "arm_mass_kg": 4.81556408133,
+    "position_jacobian_singular_values": [
+      0.7762858069528925,
+      0.4961760111498328,
+      0.22889569768734624
+    ],
+    "position_manipulability_product": 0.08816476192200541,
+    "max_arm_command_Nm": [
+      0.007140924775753564,
+      7.179057961635022,
+      7.047939176390491,
+      0.01301279713420749,
+      1.512740107490161,
+      0.0008223261777629992
+    ],
+    "pitch_deg": 0.14640900218305064,
+    "roll_deg": 0.0285419148910771,
+    "four_feet_loaded": true,
+    "com_support_margin_m": 0.18211719033053028,
+    "camera": {
+      "object_camera_depth_m": 0.7402785113408255,
+      "object_camera_horizontal_deg": -31.163444143824314,
+      "object_camera_vertical_deg": 5.546882123284848,
+      "tcp_camera_depth_m": 0.21035180877644888,
+      "tcp_camera_horizontal_deg": 19.999999999999996,
+      "tcp_camera_vertical_deg": 18.895240493933684,
+      "object_in_nominal_vertical_fov": 1.0,
+      "tcp_in_nominal_vertical_fov": 1.0
+    },
+    "mujoco_warning_count": 0
+  },
+  {
+    "variant": "profiles_plate",
+    "pose": "selected_locomotion_ready_pose",
+    "commanded_arm_rad": [
+      0.0,
+      0.76,
+      -0.89,
+      0.0,
+      0.45,
+      0.0
+    ],
+    "actual_arm_rad": [
+      -5.257889511368416e-06,
+      0.7638586998037006,
+      -0.7401585729591055,
+      0.0002920408171996775,
+      0.48076516002088904,
+      -1.7456148989067798e-05
+    ],
+    "tcp_relative_to_base_m": [
+      0.2983616459732928,
+      -0.0002082011541103041,
+      0.3797316757090138
+    ],
+    "whole_robot_com_relative_to_base_m": [
+      0.007863893036627958,
+      -0.0003863609210470635,
+      0.06549235806463427
+    ],
+    "arm_com_relative_to_base_m": [
+      -0.02281946809350248,
+      -0.00020303841412699193,
+      0.34019238276501773
+    ],
+    "arm_mass_kg": 4.81556408133,
+    "position_jacobian_singular_values": [
+      0.6536183299550061,
+      0.35157290517795386,
+      0.1986592566709155
+    ],
+    "position_manipulability_product": 0.0456508035915497,
+    "max_arm_command_Nm": [
+      0.0018241363661530854,
+      2.10731202132719,
+      7.324004220144509,
+      0.013567608666203471,
+      1.5196277502256896,
+      0.0008109490872896435
+    ],
+    "pitch_deg": -1.3070612222075275,
+    "roll_deg": 0.029801670109596796,
+    "four_feet_loaded": true,
+    "com_support_margin_m": 0.18234327342015033,
+    "camera": {
+      "object_camera_depth_m": 0.8947087423021045,
+      "object_camera_horizontal_deg": -10.183898521731797,
+      "object_camera_vertical_deg": 4.59170398803493,
+      "tcp_camera_depth_m": 0.21035180877644835,
+      "tcp_camera_horizontal_deg": 20.00000000000001,
+      "tcp_camera_vertical_deg": 18.895240493933677,
+      "object_in_nominal_vertical_fov": 1.0,
+      "tcp_in_nominal_vertical_fov": 1.0
+    },
+    "mujoco_warning_count": 0
+  },
+  {
+    "variant": "plate_only",
+    "pose": "former_high_pose",
+    "commanded_arm_rad": [
+      0.0,
+      1.2,
+      -1.4,
+      0.0,
+      0.2,
+      0.0
+    ],
+    "actual_arm_rad": [
+      -6.191317495356935e-05,
+      1.3264612720268898,
+      -1.247064542735004,
+      0.0002995906535884568,
+      0.23246955378421427,
+      -1.8420613482935865e-05
+    ],
+    "tcp_relative_to_base_m": [
+      0.4733577836558161,
+      -0.0003071819821234088,
+      0.4486092614226225
+    ],
+    "whole_robot_com_relative_to_base_m": [
+      0.02797170597502197,
+      -0.0003929022334799537,
+      0.06830239130778182
+    ],
+    "arm_com_relative_to_base_m": [
+      0.07330126604720946,
+      -0.00022438476208053946,
+      0.35618005328174307
+    ],
+    "arm_mass_kg": 4.81556408133,
+    "position_jacobian_singular_values": [
+      0.7762860263825033,
+      0.4962085650346371,
+      0.22889544891947577
+    ],
+    "position_manipulability_product": 0.0881704754698482,
+    "max_arm_command_Nm": [
+      0.007029737957619123,
+      7.15644509451524,
+      7.034900670581275,
+      0.012986720327483603,
+      1.5100759072389236,
+      0.000820759472978551
+    ],
+    "pitch_deg": 0.17236852946736797,
+    "roll_deg": 0.028268498019700414,
+    "four_feet_loaded": true,
+    "com_support_margin_m": 0.18198017082650958,
+    "camera": {
+      "object_camera_depth_m": 0.7292316087652098,
+      "object_camera_horizontal_deg": -30.57616902801398,
+      "object_camera_vertical_deg": 5.630693658757945,
+      "tcp_camera_depth_m": 0.21035180877644888,
+      "tcp_camera_horizontal_deg": 20.00000000000001,
+      "tcp_camera_vertical_deg": 18.895240493933674,
+      "object_in_nominal_vertical_fov": 1.0,
+      "tcp_in_nominal_vertical_fov": 1.0
+    },
+    "mujoco_warning_count": 0
+  },
+  {
+    "variant": "plate_only",
+    "pose": "selected_locomotion_ready_pose",
+    "commanded_arm_rad": [
+      0.0,
+      0.76,
+      -0.89,
+      0.0,
+      0.45,
+      0.0
+    ],
+    "actual_arm_rad": [
+      -5.187404926374722e-06,
+      0.7640546657107814,
+      -0.7401485397336534,
+      0.0002921571939423307,
+      0.48075123831117295,
+      -1.7448389748832254e-05
+    ],
+    "tcp_relative_to_base_m": [
+      0.29916936354806184,
+      -0.00019509814973453794,
+      0.35940567685800134
+    ],
+    "whole_robot_com_relative_to_base_m": [
+      0.008197383543769657,
+      -0.00038580691684792217,
+      0.060910925589392095
+    ],
+    "arm_com_relative_to_base_m": [
+      -0.022051691661496616,
+      -0.0001909544074386837,
+      0.32021599946182583
+    ],
+    "arm_mass_kg": 4.81556408133,
+    "position_jacobian_singular_values": [
+      0.6536196141287585,
+      0.35159932927214516,
+      0.19865791575755856
+    ],
+    "position_manipulability_product": 0.0456540162289579,
+    "max_arm_command_Nm": [
+      0.001818759743946905,
+      2.075526750934274,
+      7.322859266014036,
+      0.013558458643006071,
+      1.521337422856435,
+      0.0008117876386174307
+    ],
+    "pitch_deg": -1.2560282558286975,
+    "roll_deg": 0.0294690950512369,
+    "four_feet_loaded": true,
+    "com_support_margin_m": 0.18218424872772013,
+    "camera": {
+      "object_camera_depth_m": 0.880423694020549,
+      "object_camera_horizontal_deg": -9.42415970943007,
+      "object_camera_vertical_deg": 4.666156775638832,
+      "tcp_camera_depth_m": 0.2103518087764486,
+      "tcp_camera_horizontal_deg": 20.00000000000002,
+      "tcp_camera_vertical_deg": 18.895240493933674,
+      "object_in_nominal_vertical_fov": 1.0,
+      "tcp_in_nominal_vertical_fov": 1.0
+    },
+    "mujoco_warning_count": 0
+  }
+]

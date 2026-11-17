@@ -1,0 +1,11 @@
+{
+  "frames": 500,
+  "fps": 25,
+  "seconds": 20.0,
+  "size": [
+    1280,
+    670
+  ],
+  "protected_files_unchanged": true,
+  "first_frame_note": "First sample is initialization, followed by six prescribed EE segments."
+}

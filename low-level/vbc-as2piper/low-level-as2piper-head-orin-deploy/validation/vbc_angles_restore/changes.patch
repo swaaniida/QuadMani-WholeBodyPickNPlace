@@ -1,0 +1,71 @@
+--- before/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -2,6 +2,7 @@
+ from .b1z1_config import B1Z1RoughCfg, B1Z1RoughCfgPPO
+ from pathlib import Path
+ import json
++import math
+ 
+ HW = json.loads((Path(__file__).resolve().parents[3] / "validation/hardware.json").read_text())
+ 
+@@ -55,10 +56,6 @@
+         arm_effort_limit_verified = False
+ 
+     class goal_ee(B1Z1RoughCfg.goal_ee):
+-        position_linked_floor_pitch = True
+-        floor_pitch_x = [.55, .975]
+-        floor_pitch_deg = [175., 150.]
+-        floor_pitch_blend_z = [.10, .25]
+         arm_induced_pitch = 2.455216137744035  # standing-arm-base coordinates; initial direction preserved
+         orientation_roll_offset = 0.
+         # Conservative body/head + Orin bounds, relative to the arm origin.
+@@ -79,12 +76,12 @@
+             init_pos_start = [.427898468676838, .421686284147847, 0.]
+             init_pos_end = [.427898468676838, .421686284147847, 0.]
+             # Independent continuous spherical sampling, as in original VBC.
+-            # At outer radius: lower/upper elevations give ground z=0.02/1.00m.
+-            # Finite offline IK checks; no online IK feasibility filter or bank.
+-            pos_l = [.35, .65]
+-            pos_p = [-0.7358822683358291, 0.9907749219326265]
+-            pos_y = [-.30, .30]
+-            height_above_ground = [.02, 1.00]
++            # VBC position angles. Height ceiling follows r_max / elevation_max.
++            # Ground/body-box rejection remains; no online IK validity or bank.
++            pos_l = [.35, .80]
++            pos_p = [-math.pi / 2.5, math.pi / 3.]
++            pos_y = [-1.2, 1.2]
++            height_above_ground = [.02, .4563069024246581 + .80 * math.sin(math.pi / 3.)]
+             delta_orn_r = [-.08, .08]
+             delta_orn_p = [-.08, .08]
+             delta_orn_y = [-.08, .08]
+--- before/legged_gym/envs/manip_loco/manip_loco.py
++++ legged_gym/envs/manip_loco/manip_loco.py
+@@ -1377,7 +1377,7 @@
+         
+         # TODO: for the teleop mode, we need to directly update self.ee_goal_orn_quat using VR controller.
+         default_yaw = torch.atan2(ee_goal_cart_yaw_global[:, 1], ee_goal_cart_yaw_global[:, 0])
+-        default_pitch = self._get_ee_goal_pitch(self.curr_ee_goal_sphere)
++        default_pitch = -self.curr_ee_goal_sphere[:, 1] + self.cfg.goal_ee.arm_induced_pitch
+         self.ee_goal_orn_quat = quat_from_euler_xyz(self.ee_goal_orn_delta_rpy[:, 0] + self.cfg.goal_ee.orientation_roll_offset, default_pitch + self.ee_goal_orn_delta_rpy[:, 1], self.ee_goal_orn_delta_rpy[:, 2] + default_yaw)
+         
+         self.goal_timer += 1
+@@ -1390,19 +1390,6 @@
+ 
+         self._resample_ee_goal(resample_id)
+     
+-    def _get_ee_goal_pitch(self, sphere):
+-        pitch = -sphere[:, 1] + self.cfg.goal_ee.arm_induced_pitch
+-        if getattr(self.cfg.goal_ee, 'position_linked_floor_pitch', False):
+-            z = self.cfg.goal_ee.sphere_center.z_invariant_offset + sphere[:, 0] * torch.sin(sphere[:, 1])
+-            x = self.cfg.goal_ee.sphere_center.x_offset + sphere[:, 0] * torch.cos(sphere[:, 1])
+-            x0, x1 = self.cfg.goal_ee.floor_pitch_x
+-            p0, p1 = self.cfg.goal_ee.floor_pitch_deg
+-            z0, z1 = self.cfg.goal_ee.floor_pitch_blend_z
+-            floor_pitch = (p0 + (p1 - p0) * torch.clamp((x - x0) / (x1 - x0), 0., 1.)) * np.pi / 180.
+-            blend = torch.clamp((z1 - z) / (z1 - z0), 0., 1.)
+-            pitch = (1. - blend) * pitch + blend * floor_pitch
+-        return pitch
+-
+     def _get_ee_goal_spherical_center(self):
+         if getattr(self.cfg.goal_ee.sphere_center, 'height_roll_pitch_invariant', False):
+             # Like B1, XY and yaw follow locomotion; body crouch/tilt do not

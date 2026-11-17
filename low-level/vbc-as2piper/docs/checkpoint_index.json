@@ -1,0 +1,3292 @@
+[
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 0,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_0.pt",
+    "source_bytes": 675498
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_200.pt",
+    "source_bytes": 2029317
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_400.pt",
+    "source_bytes": 2029317
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_600.pt",
+    "source_bytes": 2029317
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_800.pt",
+    "source_bytes": 2029317
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 1000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_1000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 1200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_1200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 1400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_1400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 1600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_1600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 1800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_1800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 2000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_2000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 2200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_2200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 2400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_2400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 2600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_2600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 2800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_2800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 3000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_3000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 3200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_3200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 3400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_3400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 3600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_3600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 3800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_3800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 4000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_4000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 4200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_4200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 4400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_4400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 4600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_4600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 4800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_4800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 5000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_5000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 5200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_5200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 5400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_5400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 5600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_5600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 5800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_5800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 6000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_6000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 6200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_6200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 6400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_6400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 6600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_6600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 6800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_6800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 7000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_7000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 7200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_7200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 7400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_7400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 7600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_7600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 7800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_7800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 8000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_8000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 8200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_8200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 8400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_8400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 8600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_8600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 8800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_8800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 9000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_9000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 9200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_9200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 9400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_9400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 9600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_9600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 9800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_9800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 10000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_10000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 10200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_10200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 10400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_10400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 10600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_10600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 10800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_10800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 11000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_11000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 11200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_11200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 11400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_11400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 11600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_11600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 11800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_11800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 12000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_12000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 12200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_12200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 12400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_12400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 12600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_12600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 12800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_12800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 13000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_13000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 13200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_13200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 13400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_13400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 13600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_13600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 13800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_13800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 14000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_14000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 14200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_14200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 14400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_14400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 14600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_14600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 14800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_14800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 15000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_15000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 15200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_15200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 15400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_15400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 15600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_15600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 15800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_15800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 16000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_16000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 16200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_16200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 16400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_16400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 16600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_16600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 16800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_16800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 17000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_17000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 17200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_17200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 17400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_17400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 17600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_17600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 17800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_17800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 18000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_18000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 18200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_18200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 18400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_18400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 18600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_18600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 18800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_18800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 19000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_19000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 19200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_19200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 19400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_19400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 19600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_19600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 19800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_19800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 20000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_20000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 20200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_20200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 20400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_20400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 20600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_20600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 20800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_20800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 21000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_21000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 21200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_21200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 21400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_21400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 21600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_21600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 21800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_21800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 22000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_22000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 22200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_22200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 22400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_22400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 22600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_22600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 22800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_22800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 23000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_23000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 23200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_23200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 23400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_23400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 23600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_23600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 23800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_23800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 24000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_24000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 24200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_24200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 24400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_24400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 24600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_24600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 24800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_24800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 25000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_25000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 25200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_25200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 25400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_25400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 25600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_25600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 25800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_25800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 26000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_26000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 26200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_26200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 26400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_26400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 26600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_26600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 26800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_26800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 27000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_27000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 27200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_27200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 27400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_27400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 27600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_27600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 27800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_27800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 28000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_28000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 28200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_28200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 28400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_28400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 28600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_28600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 28800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_28800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 29000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_29000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 29200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_29200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 29400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_29400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 29600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_29600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 29800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_29800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 30000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_30000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 30200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_30200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 30400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_30400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 30600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_30600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 30800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_30800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 31000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_31000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 31200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_31200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 31400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_31400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 31600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_31600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 31800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_31800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 32000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_32000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 32200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_32200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 32400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_32400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 32600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_32600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 32800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_32800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 33000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_33000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 33200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_33200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 33400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_33400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 33600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_33600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 33800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_33800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 34000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_34000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 34200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_34200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 34400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_34400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 34600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_34600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 34800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_34800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 35000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_35000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 35200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_35200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 35400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_35400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 35600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_35600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 35800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_35800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 36000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_36000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 36200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_36200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 36400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_36400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 36600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_36600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 36800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_36800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 37000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_37000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 37200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_37200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 37400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_37400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 37600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_37600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 37800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_37800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 38000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_38000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 38200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_38200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 38400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_38400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 38600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_38600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 38800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_38800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 39000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_39000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 39200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_39200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 39400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_39400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 39600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_39600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 39800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_39800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 40000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_40000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 40200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_40200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 40400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_40400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 40600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_40600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 40800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_40800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 41000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_41000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 41200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_41200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 41400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_41400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 41600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_41600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 41800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_41800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 42000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_42000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 42200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_42200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 42400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_42400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 42600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_42600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 42800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_42800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 43000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_43000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 43200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_43200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 43400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_43400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 43600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_43600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 43800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_43800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 44000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_44000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 44200,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_44200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 44400,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_44400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 44600,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_44600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 44800,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_44800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-nocontact",
+    "run": "as2piper_headpiper_orin_200N_0.18m",
+    "iteration": 45000,
+    "path": "low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_45000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 0,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_0.pt",
+    "source_bytes": 675498
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_200.pt",
+    "source_bytes": 2029317
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_400.pt",
+    "source_bytes": 2029317
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_600.pt",
+    "source_bytes": 2029317
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_800.pt",
+    "source_bytes": 2029317
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 1000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_1000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 1200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_1200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 1400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_1400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 1600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_1600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 1800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_1800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 2000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_2000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 2200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_2200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 2400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_2400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 2600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_2600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 2800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_2800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 3000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_3000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 3200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_3200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 3400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_3400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 3600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_3600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 3800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_3800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 4000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_4000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 4200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_4200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 4400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_4400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 4600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_4600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 4800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_4800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 5000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_5000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 5200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_5200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 5400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_5400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 5600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_5600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 5800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_5800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 6000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_6000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 6200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_6200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 6400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_6400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 6600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_6600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 6800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_6800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 7000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_7000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 7200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_7200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 7400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_7400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 7600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_7600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 7800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_7800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 8000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_8000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 8200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_8200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 8400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_8400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 8600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_8600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 8800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_8800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 9000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_9000.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 9200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_9200.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 9400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_9400.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 9600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_9600.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 9800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_9800.pt",
+    "source_bytes": 2029483
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 10000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_10000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 10200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_10200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 10400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_10400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 10600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_10600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 10800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_10800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 11000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_11000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 11200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_11200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 11400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_11400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 11600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_11600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 11800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_11800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 12000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_12000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 12200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_12200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 12400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_12400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 12600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_12600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 12800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_12800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 13000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_13000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 13200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_13200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 13400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_13400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 13600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_13600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 13800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_13800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 14000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_14000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 14200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_14200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 14400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_14400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 14600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_14600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 14800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_14800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 15000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_15000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 15200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_15200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 15400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_15400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 15600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_15600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 15800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_15800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 16000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_16000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 16200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_16200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 16400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_16400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 16600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_16600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 16800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_16800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 17000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_17000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 17200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_17200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 17400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_17400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 17600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_17600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 17800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_17800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 18000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_18000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 18200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_18200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 18400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_18400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 18600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_18600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 18800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_18800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 19000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_19000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 19200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_19200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 19400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_19400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 19600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_19600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 19800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_19800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 20000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_20000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 20200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_20200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 20400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_20400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 20600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_20600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 20800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_20800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 21000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_21000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 21200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_21200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 21400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_21400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 21600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_21600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 21800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_21800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 22000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_22000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 22200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_22200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 22400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_22400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 22600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_22600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 22800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_22800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 23000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_23000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 23200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_23200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 23400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_23400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 23600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_23600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 23800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_23800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 24000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_24000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 24200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_24200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 24400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_24400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 24600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_24600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 24800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_24800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 25000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_25000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 25200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_25200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 25400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_25400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 25600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_25600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 25800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_25800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 26000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_26000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 26200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_26200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 26400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_26400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 26600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_26600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 26800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_26800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 27000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_27000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 27200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_27200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 27400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_27400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 27600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_27600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 27800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_27800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 28000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_28000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 28200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_28200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 28400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_28400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 28600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_28600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 28800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_28800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 29000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_29000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 29200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_29200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 29400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_29400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 29600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_29600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 29800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_29800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 30000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_30000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 30200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_30200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 30400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_30400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 30600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_30600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 30800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_30800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 31000,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_31000.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 31200,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_31200.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 31400,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_31400.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 31600,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_31600.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper-head-orin-deploy",
+    "run": "as2piper_headpiper_orin_70N_20261115T133137Z",
+    "iteration": 31800,
+    "path": "low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_31800.pt",
+    "source_bytes": 2029649
+  },
+  {
+    "variant": "low-level-as2piper",
+    "iteration": 0,
+    "path": "low-level-as2piper/logs/as2piper-low/smoke_final_20261028/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper",
+    "iteration": 2,
+    "path": "low-level-as2piper/logs/as2piper-low/smoke_final_20261028/model_2.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper",
+    "iteration": 0,
+    "path": "low-level-as2piper/logs/as2piper-low/smoke_20261028/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper",
+    "iteration": 1,
+    "path": "low-level-as2piper/logs/as2piper-low/smoke_20261028/model_1.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper",
+    "iteration": 0,
+    "path": "low-level-as2piper/logs/as2piper-low/plate_only_C_original_20261028/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper",
+    "iteration": 7000,
+    "path": "low-level-as2piper/logs/as2piper-low/plate_only_C_original_20261028/model_7000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper",
+    "iteration": 0,
+    "path": "low-level-as2piper/logs/as2piper-plate-only/original_alignment_smoke/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper",
+    "iteration": 2,
+    "path": "low-level-as2piper/logs/as2piper-plate-only/original_alignment_smoke/model_2.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 0,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/forward_spherical_release_20261028/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 2,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/forward_spherical_release_20261028/model_2.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 0,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/ee_instrument_smoke_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 1,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/ee_instrument_smoke_20261029/model_1.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 0,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/capacity_probe_6144_20261028/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 4,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/capacity_probe_6144_20261028/model_4.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 0,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/ee_observe_100_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 100,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/ee_observe_100_20261029/model_100.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 0,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/forward_smoke_release_20261028/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 2,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/forward_smoke_release_20261028/model_2.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 0,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/forward_smoke_20261028/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 2,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/forward_smoke_20261028/model_2.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 0,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/forward_smoke_final_20261028/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-forward",
+    "iteration": 2,
+    "path": "low-level-as2piper-forward/logs/as2piper-low/forward_smoke_final_20261028/model_2.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 503,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_progress_gain2_proxy_s7_v2_resume1/model_503.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_yaw4_footground_fresh_s7_v4/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 600,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_yaw4_footground_fresh_s7_v4/model_600.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_yaw4_contactmatch_fresh_s7_v3/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 600,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_yaw4_contactmatch_fresh_s7_v3/model_600.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_stable_s7_v1/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 600,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_stable_s7_v1/model_600.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_progress_s7_v1/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 201,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_progress_s7_v1/model_201.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_original_fresh_s7_v1/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 201,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_original_fresh_s7_v1/model_201.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 332,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_progress_gain2_proxy_ground_floor_s7_v2/model_332.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_stable_proxy_s7_v2/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 200,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_stable_proxy_s7_v2/model_200.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_progress_gain2_s7_v1/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 37,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_progress_gain2_s7_v1/model_37.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 321,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_stable_rough_contact_s7_v2/model_321.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 433,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_progress_gain2_proxy_yaw4_s7_v2/model_433.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 433,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_speed/model_433.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 433,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_data_stop/model_433.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 433,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_stop/model_433.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_yaw4_fresh_s7_v3/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 495,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_yaw4_fresh_s7_v3/model_495.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 433,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_stable/model_433.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 433,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_jerk/model_433.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_progress_gain2_proxy_s7_v2/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 200,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_progress_gain2_proxy_s7_v2/model_200.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 321,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_stable_rough_adapt_s7_v1/model_321.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 433,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_original/model_433.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_yaw4_footground_deadband_fresh_s7_v6/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 600,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_yaw4_footground_deadband_fresh_s7_v6/model_600.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_original_s7_v1/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 600,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_original_s7_v1/model_600.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_full_config_smoke_v1/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 3,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_full_config_smoke_v1/model_3.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 305,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_stable_proxy_ground_s7_v2_resume1/model_305.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 433,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_velocity/model_433.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_speed_s7_v1/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 200,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_fullenv_speed_s7_v1/model_200.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_stable_proxy_ground_s7_v2/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 100,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_stable_proxy_ground_s7_v2/model_100.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_contactmatch_vbcdeadband_fresh_s7_v5/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 1000,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_smooth_contactmatch_vbcdeadband_fresh_s7_v5/model_1000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 0,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_stable_fresh_s7_v1/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 217,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_stable_fresh_s7_v1/model_217.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 335,
+    "path": "low-level-as2piper-gait/logs/as2piper-low/gait_reward_stable_proxy_s7_v2_resume1/model_335.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-gait",
+    "iteration": 45000,
+    "path": "low-level-as2piper-gait/experiments/b1z1_original_run_eval/logs/b1z1-low/original-run01/model_45000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/gait_pilot500_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 500,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/gait_pilot500_20261029/model_500.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/hw_armature20_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 20,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/hw_armature20_20261029/model_20.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 520,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/walk_wbc_transfer520_20261029/model_520.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 600,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/walk_wbc_nominal600_20261029/model_600.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbc_port_smoke20_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 20,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbc_port_smoke20_20261029/model_20.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 502,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/walk_wbc_resume502_20261029/model_502.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/hw_observe20_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 20,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/hw_observe20_20261029/model_20.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 3,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/hw_resume_smoke_20261029/model_3.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbc_port_walk_verify_20261029_155856/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 300,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbc_port_walk_verify_20261029_155856/model_300.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbcsampler_speed8_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 8,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbcsampler_speed8_20261029/model_8.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 500,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/gait_arm_transfer500_20261029/model_500.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/hw_smoke_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 2,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/hw_smoke_20261029/model_2.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbcsampler_smoke40_20261029/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 40,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbcsampler_smoke40_20261029/model_40.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 0,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701/model_0.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 7000,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701/model_7000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 10000,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701/model_10000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 15000,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701/model_15000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 20000,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701/model_20000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 30000,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701/model_30000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 45000,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/as2piper_hw_gaitfix_vbcsampler_scratch_20261029_134701/model_45000.pt",
+    "role": "prototype/reference"
+  },
+  {
+    "variant": "low-level-as2piper-hw",
+    "iteration": 313,
+    "path": "low-level-as2piper-hw/logs/as2piper-low/vbc_port_walk_verify_extended_20261029_164834/model_313.pt",
+    "role": "prototype/reference"
+  }
+]

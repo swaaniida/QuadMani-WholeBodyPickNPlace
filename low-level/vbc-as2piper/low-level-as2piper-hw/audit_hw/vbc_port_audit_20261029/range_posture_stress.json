@@ -1,0 +1,296 @@
+{
+  "asset_sha256": "b103445cd5378c80db4cd244d7a6e70487afc477874001b223a69e1f854c648c",
+  "body_roll_pitch_rad": [
+    -0.10000000149011612,
+    0.0,
+    0.10000000149011612
+  ],
+  "samples_per_path": 9,
+  "seed": 20261031,
+  "extra_offline_iterations": 192,
+  "candidates": {
+    "port_inner": {
+      "bounds": [
+        [
+          0.4,
+          0.5
+        ],
+        [
+          0.1,
+          0.55
+        ],
+        [
+          -0.3,
+          0.3
+        ],
+        [
+          -0.1,
+          0.1
+        ]
+      ],
+      "paths": 5184,
+      "poses": 46656,
+      "rejected_paths": 42,
+      "rejected_fraction": 0.008101851679384708,
+      "max_ik_position_error_m": 0.09083151072263718,
+      "max_ik_orientation_error_deg": 15.141120910644531,
+      "min_joint_margin_from_guard_rad": 0.0,
+      "min_tcp_ground_height_m": 0.4463687539100647,
+      "steps": [
+        {
+          "t": 0.0,
+          "ik_failed": 18,
+          "body_collision": 0,
+          "proxy_body_collision": 166,
+          "proxy_false_positive": 166,
+          "floor_failed": 0,
+          "failed": 18
+        },
+        {
+          "t": 0.125,
+          "ik_failed": 17,
+          "body_collision": 0,
+          "proxy_body_collision": 110,
+          "proxy_false_positive": 110,
+          "floor_failed": 0,
+          "failed": 17
+        },
+        {
+          "t": 0.25,
+          "ik_failed": 14,
+          "body_collision": 0,
+          "proxy_body_collision": 96,
+          "proxy_false_positive": 96,
+          "floor_failed": 0,
+          "failed": 14
+        },
+        {
+          "t": 0.375,
+          "ik_failed": 9,
+          "body_collision": 0,
+          "proxy_body_collision": 112,
+          "proxy_false_positive": 112,
+          "floor_failed": 0,
+          "failed": 9
+        },
+        {
+          "t": 0.5,
+          "ik_failed": 8,
+          "body_collision": 0,
+          "proxy_body_collision": 169,
+          "proxy_false_positive": 169,
+          "floor_failed": 0,
+          "failed": 8
+        },
+        {
+          "t": 0.625,
+          "ik_failed": 6,
+          "body_collision": 0,
+          "proxy_body_collision": 230,
+          "proxy_false_positive": 230,
+          "floor_failed": 0,
+          "failed": 6
+        },
+        {
+          "t": 0.75,
+          "ik_failed": 7,
+          "body_collision": 0,
+          "proxy_body_collision": 364,
+          "proxy_false_positive": 364,
+          "floor_failed": 0,
+          "failed": 7
+        },
+        {
+          "t": 0.875,
+          "ik_failed": 10,
+          "body_collision": 0,
+          "proxy_body_collision": 520,
+          "proxy_false_positive": 520,
+          "floor_failed": 0,
+          "failed": 10
+        },
+        {
+          "t": 1.0,
+          "ik_failed": 25,
+          "body_collision": 0,
+          "proxy_body_collision": 738,
+          "proxy_false_positive": 738,
+          "floor_failed": 0,
+          "failed": 25
+        }
+      ],
+      "rejected_by_body_tilt": [
+        {
+          "roll": -0.10000000149011612,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.30000001192092896,
+          "rejected": 1
+        },
+        {
+          "roll": -0.10000000149011612,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.3244068920612335,
+          "rejected": 3
+        },
+        {
+          "roll": -0.10000000149011612,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.3499999940395355,
+          "rejected": 3
+        },
+        {
+          "roll": -0.10000000149011612,
+          "pitch": 0.0,
+          "root_height": 0.30000001192092896,
+          "rejected": 0
+        },
+        {
+          "roll": -0.10000000149011612,
+          "pitch": 0.0,
+          "root_height": 0.3244068920612335,
+          "rejected": 0
+        },
+        {
+          "roll": -0.10000000149011612,
+          "pitch": 0.0,
+          "root_height": 0.3499999940395355,
+          "rejected": 1
+        },
+        {
+          "roll": -0.10000000149011612,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.30000001192092896,
+          "rejected": 3
+        },
+        {
+          "roll": -0.10000000149011612,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.3244068920612335,
+          "rejected": 3
+        },
+        {
+          "roll": -0.10000000149011612,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.3499999940395355,
+          "rejected": 2
+        },
+        {
+          "roll": 0.0,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.30000001192092896,
+          "rejected": 1
+        },
+        {
+          "roll": 0.0,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.3244068920612335,
+          "rejected": 0
+        },
+        {
+          "roll": 0.0,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.3499999940395355,
+          "rejected": 5
+        },
+        {
+          "roll": 0.0,
+          "pitch": 0.0,
+          "root_height": 0.30000001192092896,
+          "rejected": 0
+        },
+        {
+          "roll": 0.0,
+          "pitch": 0.0,
+          "root_height": 0.3244068920612335,
+          "rejected": 1
+        },
+        {
+          "roll": 0.0,
+          "pitch": 0.0,
+          "root_height": 0.3499999940395355,
+          "rejected": 1
+        },
+        {
+          "roll": 0.0,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.30000001192092896,
+          "rejected": 0
+        },
+        {
+          "roll": 0.0,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.3244068920612335,
+          "rejected": 0
+        },
+        {
+          "roll": 0.0,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.3499999940395355,
+          "rejected": 0
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.30000001192092896,
+          "rejected": 0
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.3244068920612335,
+          "rejected": 2
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": -0.10000000149011612,
+          "root_height": 0.3499999940395355,
+          "rejected": 7
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": 0.0,
+          "root_height": 0.30000001192092896,
+          "rejected": 0
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": 0.0,
+          "root_height": 0.3244068920612335,
+          "rejected": 0
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": 0.0,
+          "root_height": 0.3499999940395355,
+          "rejected": 1
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.30000001192092896,
+          "rejected": 3
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.3244068920612335,
+          "rejected": 3
+        },
+        {
+          "roll": 0.10000000149011612,
+          "pitch": 0.10000000149011612,
+          "root_height": 0.3499999940395355,
+          "rejected": 2
+        }
+      ]
+    }
+  },
+  "frame": "vbc",
+  "root_heights": [
+    0.3,
+    0.3244069024,
+    0.35
+  ],
+  "exact_collision": true,
+  "limitations": "Sampled IK/body OBB/ground checks, not continuous collision certification; no legs/cables/objects/self-pairs."
+}

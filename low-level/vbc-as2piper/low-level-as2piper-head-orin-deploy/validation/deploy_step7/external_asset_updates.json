@@ -1,0 +1,53 @@
+{
+  "note": "Observed original asset updates since step1. Do not restore or silently replace initial manifest. Training URDF matches step7 BEFORE backup exactly; current deployment URDF differs from it only in six velocity attributes.",
+  "files": [
+    {
+      "path": "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+      "step1_sha256": "8df7eb7b18d68bb376eca680bd09f256f8bd6f8cdfd9083d2fe5028fc0733139",
+      "observed_original_sha256": "e091ee55b02783d129ff7d90b2220e767cf08350bd10993112d38e1b8661a300",
+      "observed_clone_sha256": "7e37cadb8e55fddb50e6bcd10440c772997c72e11f72c7afddeef281954de02b"
+    },
+    {
+      "path": "resources/robots/as2piper/urdf/as2piper_head_umi_orin64_backmount.urdf",
+      "step1_sha256": "8fe6a43e5019f43859dfa3e2369f68949a0efc5d7fa30abd14f7f76b018ccbfa",
+      "observed_original_sha256": "fdbeed266d535e15f245b438a5e857b3745f5431cb486d901344f1fa146fc68f",
+      "observed_clone_sha256": "fdbeed266d535e15f245b438a5e857b3745f5431cb486d901344f1fa146fc68f"
+    },
+    {
+      "path": "resources/robots/as2piper/wrist_camera/as2piper_head_umi_orin64_backmount_camera.json",
+      "step1_sha256": "4d10ae469845c996e1d40f39c3e3cd8a9ee6feaf471813b1dacf3854e89cb599",
+      "observed_original_sha256": "2dab6a24c0889d46e87b8259e6f48d92463bb95af2594d05a8a2bfd8d215dcff",
+      "observed_clone_sha256": "1ddb4af4bd3afb6db1fc5b956f7f85c6f8a3ab76ce9f3d6908836a31bc1be781"
+    },
+    {
+      "path": "resources/robots/as2piper/wrist_camera/rig.json",
+      "step1_sha256": "a0e4ea6c86637249bff1d62e227f819f84e05aa784c78102ae9bd8f43561440a",
+      "observed_original_sha256": "be99f8863f1eb8fe2b62e46cb59af002812e3e55fbe8f960d76c5248512677cb",
+      "observed_clone_sha256": "be99f8863f1eb8fe2b62e46cb59af002812e3e55fbe8f960d76c5248512677cb"
+    },
+    {
+      "path": "resources/robots/as2piper/wrist_camera/as2piper_head_orin_training_camera.json",
+      "step1_sha256": "a351382136e41a04d7fb4d8ffe9a344999e628554653aeb444d64a28907ca85e",
+      "observed_original_sha256": "aa3e71477db4dcf322016ed14f4642497542b6cd8ce25d9dba9bc6068918ea5a",
+      "observed_clone_sha256": "81de0fa23b2735f2b59fd0aec748f86d1d61444a78aa6aed6bd71cde61694559"
+    },
+    {
+      "path": "legged_gym/resources/robots/as2piper/urdf/as2piper.urdf",
+      "step1_sha256": "13e5451987a12bc6b25787a4ab3a60779705c94e6a1f59c91b375a503a59f7db",
+      "observed_original_sha256": "8f6536c795971634eb30e6eda8165a6d21af25d08ac73c1bd63150d6184107da",
+      "observed_clone_sha256": "8f6536c795971634eb30e6eda8165a6d21af25d08ac73c1bd63150d6184107da"
+    },
+    {
+      "path": "legged_gym/resources/robots/as2piper/wrist_camera/rig.json",
+      "step1_sha256": "a0e4ea6c86637249bff1d62e227f819f84e05aa784c78102ae9bd8f43561440a",
+      "observed_original_sha256": "be99f8863f1eb8fe2b62e46cb59af002812e3e55fbe8f960d76c5248512677cb",
+      "observed_clone_sha256": "be99f8863f1eb8fe2b62e46cb59af002812e3e55fbe8f960d76c5248512677cb"
+    },
+    {
+      "path": "legged_gym/resources/robots/as2piper/wrist_camera/as2piper_camera.json",
+      "step1_sha256": "df257dd2a1fdbeb213f3a93e704f72201ba510115e44b7bfeb838362d0edcc16",
+      "observed_original_sha256": "474aa1435418385ba12dad94969e5445ef2485548a44c8b62fe885c4b5df6179",
+      "observed_clone_sha256": "a7a5486c53b5bcb3d2cb6504ce658748da922fced7c87d82baec994e093aff11"
+    }
+  ]
+}

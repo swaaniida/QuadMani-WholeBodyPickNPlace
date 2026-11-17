@@ -1,0 +1,12 @@
+{
+  "arm_motor_strength_range": [
+    1.0,
+    1.0
+  ],
+  "nominal_and_effective_arm_stiffness": 400.0,
+  "nominal_and_effective_arm_damping": 40.0,
+  "leg_motor_DR_unchanged": true,
+  "effort_unchanged": true,
+  "training_started": false,
+  "validation": "AST config values and actual drive-property helper; not new physical rollout"
+}

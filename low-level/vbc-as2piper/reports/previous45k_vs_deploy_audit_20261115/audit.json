@@ -1,0 +1,192 @@
+{
+  "compared_runtime_files": 61,
+  "changed_runtime": [
+    {
+      "file": "legged_gym/envs/manip_loco/as2_head_orin_config.py",
+      "change": "modified"
+    },
+    {
+      "file": "legged_gym/envs/manip_loco/manip_loco.py",
+      "change": "modified"
+    },
+    {
+      "file": "legged_gym/utils/piper_control.py",
+      "change": "added"
+    }
+  ],
+  "previous_folder_drift_from_45k_manifest": [
+    "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf"
+  ],
+  "urdf": {
+    "old_path": "/data/team/users/suhwan/vbc-as2piper/reports/deployment_workspace_review_20261114/trained_asset/urdf/as2piper_head_orin_training.urdf",
+    "old_sha": "d0d667cbcdf9dbbad62432ed149764e305a395685e460a3bd3157c80bad94876",
+    "new_sha": "7e37cadb8e55fddb50e6bcd10440c772997c72e11f72c7afddeef281954de02b",
+    "mass_before": 23.328064081329998,
+    "mass_after": 23.4303404741327,
+    "added_links": [
+      "piper_wrist_camera_mount",
+      "wrist_d435i_accel_frame",
+      "wrist_d435i_accel_optical_frame",
+      "wrist_d435i_bottom_screw_frame",
+      "wrist_d435i_color_frame",
+      "wrist_d435i_color_optical_frame",
+      "wrist_d435i_depth_frame",
+      "wrist_d435i_depth_optical_frame",
+      "wrist_d435i_gyro_frame",
+      "wrist_d435i_gyro_optical_frame",
+      "wrist_d435i_infra1_frame",
+      "wrist_d435i_infra1_optical_frame",
+      "wrist_d435i_infra2_frame",
+      "wrist_d435i_infra2_optical_frame",
+      "wrist_d435i_link"
+    ],
+    "added_joints": [
+      "piper_wrist_camera_mount_joint",
+      "wrist_d435i_accel_joint",
+      "wrist_d435i_accel_optical_joint",
+      "wrist_d435i_color_joint",
+      "wrist_d435i_color_optical_joint",
+      "wrist_d435i_depth_joint",
+      "wrist_d435i_depth_optical_joint",
+      "wrist_d435i_gyro_joint",
+      "wrist_d435i_gyro_optical_joint",
+      "wrist_d435i_infra1_joint",
+      "wrist_d435i_infra1_optical_joint",
+      "wrist_d435i_infra2_joint",
+      "wrist_d435i_infra2_optical_joint",
+      "wrist_d435i_joint",
+      "wrist_d435i_link_joint"
+    ],
+    "changed_joints": [
+      {
+        "name": "jetson_agx_orin64_fixed",
+        "old": "<joint name=\"jetson_agx_orin64_fixed\" type=\"fixed\">\n    <parent link=\"base_link\" />\n    <child link=\"jetson_agx_orin64_link\" />\n    <origin xyz=\"-0.03 0 0.111875\" rpy=\"0 0 0\" />\n  </joint>\n",
+        "new": "<joint name=\"jetson_agx_orin64_fixed\" type=\"fixed\">\n    <parent link=\"base_link\" />\n    <child link=\"jetson_agx_orin64_link\" />\n    <origin xyz=\"-0.03 0 0.111875\" rpy=\"0 0 0\" />\n  </joint>\n\n  \n"
+      },
+      {
+        "name": "piper_joint1",
+        "old": "<joint name=\"piper_joint1\" type=\"revolute\">\n    <origin xyz=\"0 0 0.123\" rpy=\"0 0 0\" />\n    <parent link=\"piper_base_link\" />\n    <child link=\"piper_link1\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-2.6179938\" upper=\"2.6179938\" effort=\"100\" velocity=\"5\" />\n  </joint>\n  ",
+        "new": "<joint name=\"piper_joint1\" type=\"revolute\">\n    <origin xyz=\"0 0 0.123\" rpy=\"0 0 0\" />\n    <parent link=\"piper_base_link\" />\n    <child link=\"piper_link1\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-2.6179938\" upper=\"2.6179938\" effort=\"100\" velocity=\"3\" />\n  </joint>\n  "
+      },
+      {
+        "name": "piper_joint2",
+        "old": "<joint name=\"piper_joint2\" type=\"revolute\">\n    <origin xyz=\"0 0 0\" rpy=\"1.5707963 -0.1357866 -3.1415926\" />\n    <parent link=\"piper_link1\" />\n    <child link=\"piper_link2\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"0\" upper=\"3.1415926\" effort=\"100\" velocity=\"5\" />\n  </joint>\n  ",
+        "new": "<joint name=\"piper_joint2\" type=\"revolute\">\n    <origin xyz=\"0 0 0\" rpy=\"1.5707963 -0.1357866 -3.1415926\" />\n    <parent link=\"piper_link1\" />\n    <child link=\"piper_link2\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"0\" upper=\"3.1415926\" effort=\"100\" velocity=\"3\" />\n  </joint>\n  "
+      },
+      {
+        "name": "piper_joint3",
+        "old": "<joint name=\"piper_joint3\" type=\"revolute\">\n    <origin xyz=\"0.28503 0 0\" rpy=\"0 0 -1.7938494\" />\n    <parent link=\"piper_link2\" />\n    <child link=\"piper_link3\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-2.9670597\" upper=\"0\" effort=\"100\" velocity=\"5\" />\n  </joint>\n  ",
+        "new": "<joint name=\"piper_joint3\" type=\"revolute\">\n    <origin xyz=\"0.28503 0 0\" rpy=\"0 0 -1.7938494\" />\n    <parent link=\"piper_link2\" />\n    <child link=\"piper_link3\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-2.9670597\" upper=\"0\" effort=\"100\" velocity=\"3\" />\n  </joint>\n  "
+      },
+      {
+        "name": "piper_joint4",
+        "old": "<joint name=\"piper_joint4\" type=\"revolute\">\n    <origin xyz=\"-0.02198 -0.25075 0\" rpy=\"1.5707963 0 0\" />\n    <parent link=\"piper_link3\" />\n    <child link=\"piper_link4\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-1.7453292\" upper=\"1.7453292\" effort=\"100\" velocity=\"5\" />\n  </joint>\n  ",
+        "new": "<joint name=\"piper_joint4\" type=\"revolute\">\n    <origin xyz=\"-0.02198 -0.25075 0\" rpy=\"1.5707963 0 0\" />\n    <parent link=\"piper_link3\" />\n    <child link=\"piper_link4\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-1.7453292\" upper=\"1.7453292\" effort=\"100\" velocity=\"3\" />\n  </joint>\n  "
+      },
+      {
+        "name": "piper_joint5",
+        "old": "<joint name=\"piper_joint5\" type=\"revolute\">\n    <origin xyz=\"0 0 0\" rpy=\"-1.5707963 0 0\" />\n    <parent link=\"piper_link4\" />\n    <child link=\"piper_link5\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-1.2217304\" upper=\"1.2217304\" effort=\"100\" velocity=\"5\" />\n  </joint>\n  ",
+        "new": "<joint name=\"piper_joint5\" type=\"revolute\">\n    <origin xyz=\"0 0 0\" rpy=\"-1.5707963 0 0\" />\n    <parent link=\"piper_link4\" />\n    <child link=\"piper_link5\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-1.2217304\" upper=\"1.2217304\" effort=\"100\" velocity=\"3\" />\n  </joint>\n  "
+      },
+      {
+        "name": "piper_joint6",
+        "old": "<joint name=\"piper_joint6\" type=\"revolute\">\n    <origin xyz=\"8.8259E-05 -0.091 0\" rpy=\"1.5707963 0 0\" />\n    <parent link=\"piper_link5\" />\n    <child link=\"piper_link6\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-2.9670597\" upper=\"2.9670597\" effort=\"100\" velocity=\"5\" />\n  </joint>\n  ",
+        "new": "<joint name=\"piper_joint6\" type=\"revolute\">\n    <origin xyz=\"8.8259E-05 -0.091 0\" rpy=\"1.5707963 0 0\" />\n    <parent link=\"piper_link5\" />\n    <child link=\"piper_link6\" />\n    <axis xyz=\"0 0 1\" />\n    <limit lower=\"-2.9670597\" upper=\"2.9670597\" effort=\"100\" velocity=\"3\" />\n  </joint>\n  "
+      }
+    ],
+    "changed_links": [],
+    "semantic_changed_joints": [
+      {
+        "name": "piper_joint1",
+        "old_limit": {
+          "lower": "-2.6179938",
+          "upper": "2.6179938",
+          "effort": "100",
+          "velocity": "5"
+        },
+        "new_limit": {
+          "lower": "-2.6179938",
+          "upper": "2.6179938",
+          "effort": "100",
+          "velocity": "3"
+        }
+      },
+      {
+        "name": "piper_joint2",
+        "old_limit": {
+          "lower": "0",
+          "upper": "3.1415926",
+          "effort": "100",
+          "velocity": "5"
+        },
+        "new_limit": {
+          "lower": "0",
+          "upper": "3.1415926",
+          "effort": "100",
+          "velocity": "3"
+        }
+      },
+      {
+        "name": "piper_joint3",
+        "old_limit": {
+          "lower": "-2.9670597",
+          "upper": "0",
+          "effort": "100",
+          "velocity": "5"
+        },
+        "new_limit": {
+          "lower": "-2.9670597",
+          "upper": "0",
+          "effort": "100",
+          "velocity": "3"
+        }
+      },
+      {
+        "name": "piper_joint4",
+        "old_limit": {
+          "lower": "-1.7453292",
+          "upper": "1.7453292",
+          "effort": "100",
+          "velocity": "5"
+        },
+        "new_limit": {
+          "lower": "-1.7453292",
+          "upper": "1.7453292",
+          "effort": "100",
+          "velocity": "3"
+        }
+      },
+      {
+        "name": "piper_joint5",
+        "old_limit": {
+          "lower": "-1.2217304",
+          "upper": "1.2217304",
+          "effort": "100",
+          "velocity": "5"
+        },
+        "new_limit": {
+          "lower": "-1.2217304",
+          "upper": "1.2217304",
+          "effort": "100",
+          "velocity": "3"
+        }
+      },
+      {
+        "name": "piper_joint6",
+        "old_limit": {
+          "lower": "-2.9670597",
+          "upper": "2.9670597",
+          "effort": "100",
+          "velocity": "5"
+        },
+        "new_limit": {
+          "lower": "-2.9670597",
+          "upper": "2.9670597",
+          "effort": "100",
+          "velocity": "3"
+        }
+      }
+    ],
+    "mass_added_kg": 0.1022763928027004
+  }
+}

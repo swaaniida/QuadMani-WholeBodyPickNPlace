@@ -1,0 +1,576 @@
+{
+  "proposed": {
+    "bounds": [
+      [
+        0.38,
+        0.52
+      ],
+      [
+        -0.25,
+        0.6
+      ],
+      [
+        -0.4,
+        0.4
+      ],
+      [
+        -0.15,
+        0.15
+      ]
+    ],
+    "samples": 1728,
+    "ik_failed": 72,
+    "collision": 0,
+    "valid": 1656,
+    "examples": [
+      {
+        "sphere": [
+          0.38,
+          0.6,
+          -0.4
+        ],
+        "orientation_delta": [
+          -1,
+          -1,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.022807591065640887,
+        "rotation_error_deg": 4.754131830479437,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.38,
+          0.6,
+          -0.4
+        ],
+        "orientation_delta": [
+          1,
+          -1,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.022807637070094647,
+        "rotation_error_deg": 4.75414142529919,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.38,
+          0.6,
+          -0.13333333333333336
+        ],
+        "orientation_delta": [
+          -1,
+          -1,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.02280759106564104,
+        "rotation_error_deg": 4.754131830479491,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.38,
+          0.6,
+          -0.13333333333333336
+        ],
+        "orientation_delta": [
+          1,
+          -1,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.022807637070094162,
+        "rotation_error_deg": 4.754141425299097,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.38,
+          0.6,
+          0.1333333333333333
+        ],
+        "orientation_delta": [
+          -1,
+          -1,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.022807591065641137,
+        "rotation_error_deg": 4.754131830479505,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.38,
+          0.6,
+          0.1333333333333333
+        ],
+        "orientation_delta": [
+          1,
+          -1,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.022807637070094627,
+        "rotation_error_deg": 4.754141425299201,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.38,
+          0.6,
+          0.4
+        ],
+        "orientation_delta": [
+          -1,
+          -1,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.022807591065640766,
+        "rotation_error_deg": 4.754131830479422,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.38,
+          0.6,
+          0.4
+        ],
+        "orientation_delta": [
+          1,
+          -1,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.022807637070094273,
+        "rotation_error_deg": 4.754141425299154,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.4266666666666667,
+          -0.25,
+          -0.4
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.01791590247722055,
+        "rotation_error_deg": 12.732938685174396,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.4266666666666667,
+          -0.25,
+          -0.4
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.0013672262490508702,
+        "rotation_error_deg": 12.833233530016031,
+        "contacts": []
+      }
+    ]
+  },
+  "medium": {
+    "bounds": [
+      [
+        0.4,
+        0.52
+      ],
+      [
+        0.0,
+        0.55
+      ],
+      [
+        -0.35,
+        0.35
+      ],
+      [
+        -0.1,
+        0.1
+      ]
+    ],
+    "samples": 1728,
+    "ik_failed": 11,
+    "collision": 0,
+    "valid": 1717,
+    "examples": [
+      {
+        "sphere": [
+          0.48000000000000004,
+          0.0,
+          -0.35
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.011772582836458545,
+        "rotation_error_deg": 9.735580705780949,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.48000000000000004,
+          0.0,
+          -0.35
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.01177258518615054,
+        "rotation_error_deg": 9.73557854572458,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.48000000000000004,
+          0.0,
+          -0.11666666666666667
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.011772582836457886,
+        "rotation_error_deg": 9.735580705780805,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.48000000000000004,
+          0.0,
+          -0.11666666666666667
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.011772585186150803,
+        "rotation_error_deg": 9.735578545724719,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.48000000000000004,
+          0.0,
+          0.11666666666666664
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.011772582836457903,
+        "rotation_error_deg": 9.735580705780873,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.48000000000000004,
+          0.0,
+          0.11666666666666664
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.011772585186150795,
+        "rotation_error_deg": 9.735578545724653,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.48000000000000004,
+          0.0,
+          0.35
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.011772582836458037,
+        "rotation_error_deg": 9.735580705780704,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.48000000000000004,
+          0.0,
+          0.35
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.01177258518615087,
+        "rotation_error_deg": 9.735578545724705,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.52,
+          0.0,
+          -0.11666666666666667
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.027832261765954113,
+        "rotation_error_deg": 20.755201529243504,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.52,
+          0.0,
+          0.11666666666666664
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.027832261765955282,
+        "rotation_error_deg": 20.755201529243852,
+        "contacts": []
+      }
+    ]
+  },
+  "balanced": {
+    "bounds": [
+      [
+        0.4,
+        0.5
+      ],
+      [
+        0.0,
+        0.55
+      ],
+      [
+        -0.3,
+        0.3
+      ],
+      [
+        -0.1,
+        0.1
+      ]
+    ],
+    "samples": 1728,
+    "ik_failed": 9,
+    "collision": 0,
+    "valid": 1719,
+    "examples": [
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          -0.3
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.0188790449155998,
+        "rotation_error_deg": 15.02689578317262,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          -0.3
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.010010343059264345,
+        "rotation_error_deg": 9.332131836807983,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          -0.1
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.018879044915600683,
+        "rotation_error_deg": 15.026895783172968,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          -0.1
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.018879048533240638,
+        "rotation_error_deg": 15.026892740413269,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          0.09999999999999998
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.018879044915599736,
+        "rotation_error_deg": 15.026895783172696,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          0.09999999999999998
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.01887904853324097,
+        "rotation_error_deg": 15.0268927404133,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          0.3
+        ],
+        "orientation_delta": [
+          -1,
+          0,
+          1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.010010388433938602,
+        "rotation_error_deg": 9.332124978173672,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          0.3
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          -1
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.018879048533241002,
+        "rotation_error_deg": 15.026892740413277,
+        "contacts": []
+      },
+      {
+        "sphere": [
+          0.5,
+          0.0,
+          0.3
+        ],
+        "orientation_delta": [
+          1,
+          0,
+          0
+        ],
+        "kind": "ik_failed",
+        "position_error_m": 0.009561774328967322,
+        "rotation_error_deg": 13.574618636507086,
+        "contacts": []
+      }
+    ]
+  },
+  "inner": {
+    "bounds": [
+      [
+        0.4,
+        0.48
+      ],
+      [
+        0.1,
+        0.5
+      ],
+      [
+        -0.25,
+        0.25
+      ],
+      [
+        -0.08,
+        0.08
+      ]
+    ],
+    "samples": 1728,
+    "ik_failed": 0,
+    "collision": 0,
+    "valid": 1728,
+    "examples": []
+  },
+  "selected_paths": {
+    "paths": 128,
+    "samples_per_path": 11,
+    "ik_failed_paths": 0,
+    "collision_paths": 0,
+    "seed": 20261111
+  }
+}

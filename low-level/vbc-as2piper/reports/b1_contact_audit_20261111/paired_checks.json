@@ -1,0 +1,282 @@
+[
+  {
+    "terrain": "flat",
+    "initial_max_difference": {
+      "initial_obs": 0.0,
+      "initial_root": 0.0,
+      "initial_dof": 0.0
+    }
+  },
+  {
+    "terrain": "flat",
+    "condition": "stand",
+    "metric": "vx_rmse",
+    "paired_env_mean_delta": 0.049948252737522125,
+    "bootstrap95_env_interval": [
+      0.026546836365014315,
+      0.0941785752773285
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "stand",
+    "metric": "yaw_rmse",
+    "paired_env_mean_delta": 0.017280858010053635,
+    "bootstrap95_env_interval": [
+      0.008290951140224934,
+      0.031135655660182237
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "stand",
+    "metric": "ee_mean",
+    "paired_env_mean_delta": 0.011626088991761208,
+    "bootstrap95_env_interval": [
+      0.011038276366889477,
+      0.012488182797096669
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "forward",
+    "metric": "vx_rmse",
+    "paired_env_mean_delta": 0.22713327407836914,
+    "bootstrap95_env_interval": [
+      0.22477930821478367,
+      0.22919717691838742
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "forward",
+    "metric": "yaw_rmse",
+    "paired_env_mean_delta": 0.013645737431943417,
+    "bootstrap95_env_interval": [
+      0.011994590261019766,
+      0.015042278659529984
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "forward",
+    "metric": "ee_mean",
+    "paired_env_mean_delta": 0.009260326623916626,
+    "bootstrap95_env_interval": [
+      0.008979837410151958,
+      0.009584572166204453
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "turn",
+    "metric": "vx_rmse",
+    "paired_env_mean_delta": 0.23748546838760376,
+    "bootstrap95_env_interval": [
+      0.2344627372920513,
+      0.24128016866743565
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "turn",
+    "metric": "yaw_rmse",
+    "paired_env_mean_delta": 0.09563815593719482,
+    "bootstrap95_env_interval": [
+      0.09254023414105177,
+      0.09842181131243706
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "turn",
+    "metric": "ee_mean",
+    "paired_env_mean_delta": 0.012162147089838982,
+    "bootstrap95_env_interval": [
+      0.011912954971194267,
+      0.01239953434560448
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "forward_turn",
+    "metric": "vx_rmse",
+    "paired_env_mean_delta": 0.26867184042930603,
+    "bootstrap95_env_interval": [
+      0.26548894941806794,
+      0.272244855761528
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "forward_turn",
+    "metric": "yaw_rmse",
+    "paired_env_mean_delta": 0.03838881477713585,
+    "bootstrap95_env_interval": [
+      0.03521169302985072,
+      0.04140573376789689
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "flat",
+    "condition": "forward_turn",
+    "metric": "ee_mean",
+    "paired_env_mean_delta": 0.011971654370427132,
+    "bootstrap95_env_interval": [
+      0.011675845622085035,
+      0.012279014335945249
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "initial_max_difference": {
+      "initial_obs": 0.030492186546325684,
+      "initial_root": 0.03354477882385254,
+      "initial_dof": 0.008531749248504639
+    }
+  },
+  {
+    "terrain": "rough",
+    "condition": "stand",
+    "metric": "vx_rmse",
+    "paired_env_mean_delta": 0.06654585897922516,
+    "bootstrap95_env_interval": [
+      0.023258947860449554,
+      0.12352647390216583
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "stand",
+    "metric": "yaw_rmse",
+    "paired_env_mean_delta": 0.031448133289813995,
+    "bootstrap95_env_interval": [
+      0.009074018010869623,
+      0.061599448695778845
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "stand",
+    "metric": "ee_mean",
+    "paired_env_mean_delta": 0.01275663822889328,
+    "bootstrap95_env_interval": [
+      0.010799468634650112,
+      0.015578530728816986
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "forward",
+    "metric": "vx_rmse",
+    "paired_env_mean_delta": 0.22444447875022888,
+    "bootstrap95_env_interval": [
+      0.21376720033586025,
+      0.23394992984831334
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "forward",
+    "metric": "yaw_rmse",
+    "paired_env_mean_delta": 0.06146390363574028,
+    "bootstrap95_env_interval": [
+      0.04433120805770159,
+      0.08122487664222716
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "forward",
+    "metric": "ee_mean",
+    "paired_env_mean_delta": 0.012808486819267273,
+    "bootstrap95_env_interval": [
+      0.011130829341709614,
+      0.014774238062091171
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "turn",
+    "metric": "vx_rmse",
+    "paired_env_mean_delta": 0.2329239547252655,
+    "bootstrap95_env_interval": [
+      0.2250054769217968,
+      0.2413150519132614
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "turn",
+    "metric": "yaw_rmse",
+    "paired_env_mean_delta": 0.10062988102436066,
+    "bootstrap95_env_interval": [
+      0.09581469055265188,
+      0.10567384213209151
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "turn",
+    "metric": "ee_mean",
+    "paired_env_mean_delta": 0.011632027104496956,
+    "bootstrap95_env_interval": [
+      0.011142281023785472,
+      0.012133762240409851
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "forward_turn",
+    "metric": "vx_rmse",
+    "paired_env_mean_delta": 0.29343917965888977,
+    "bootstrap95_env_interval": [
+      0.275272686034441,
+      0.3071330785751343
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "forward_turn",
+    "metric": "yaw_rmse",
+    "paired_env_mean_delta": 0.05000689625740051,
+    "bootstrap95_env_interval": [
+      0.04485803097486496,
+      0.05805848445743322
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  },
+  {
+    "terrain": "rough",
+    "condition": "forward_turn",
+    "metric": "ee_mean",
+    "paired_env_mean_delta": 0.012672528624534607,
+    "bootstrap95_env_interval": [
+      0.012396493926644325,
+      0.012977523729205132
+    ],
+    "note": "8 matched env replicas; one seed, repeated episodes within each env, not independent multi-seed training"
+  }
+]

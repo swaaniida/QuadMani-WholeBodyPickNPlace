@@ -1,0 +1,96 @@
+{
+  "status": "inspection_only_pending_user_review",
+  "sampler_modified": false,
+  "full_training": false,
+  "sample_bank": "Offline position+orientation+whole-body witness bank; never sample rectangular r/phi/yaw bounding box blindly.",
+  "orientation": "Keep initial FK-matching high-target law. Blend into downward tool pitch 175 to 150 degrees below 0.25m, based on forward reach. This is candidate only.",
+  "transition": "Offline adjacency screening of actual sphere interpolation for every allowed target pair. Home-star paths tested here; arbitrary target-to-target transitions NOT tested.",
+  "tolerance": {
+    "position_m": 0.003,
+    "orientation_deg": 2,
+    "joint_reserve_deg": 5,
+    "com_margin_m": 0.02,
+    "penetration_reject_m": 0.001
+  },
+  "unverified": [
+    "PiPER continuous/peak torque and thermal limits",
+    "path dynamics/inertial torque",
+    "payload/grasp/object collision",
+    "PhysX learned policy feasibility",
+    "rough local target ground and terrain-relative collision",
+    "orientation perturbations and roll diversity beyond tested zero-roll poses"
+  ],
+  "geometry_bounds_do_not_define_uniform_sampling": {
+    "r_m": [
+      0.27449912612901267,
+      0.8682391004806224
+    ],
+    "phi_rad": [
+      -1.0934979298811465,
+      1.0503443030006583
+    ],
+    "yaw_rad": [
+      -0.3,
+      0.3
+    ]
+  },
+  "counts": {
+    "tested": 90,
+    "old_orientation": 60,
+    "candidate": 69
+  },
+  "by_height": [
+    {
+      "z": 0.02,
+      "candidate": 15,
+      "old_orientation": 9,
+      "candidate_min_nominal_x": 0.45,
+      "candidate_max_nominal_x": 0.975
+    },
+    {
+      "z": 0.1,
+      "candidate": 15,
+      "old_orientation": 12,
+      "candidate_min_nominal_x": 0.45,
+      "candidate_max_nominal_x": 0.975
+    },
+    {
+      "z": 0.3,
+      "candidate": 12,
+      "old_orientation": 12,
+      "candidate_min_nominal_x": 0.45,
+      "candidate_max_nominal_x": 0.9
+    },
+    {
+      "z": 0.5,
+      "candidate": 9,
+      "old_orientation": 9,
+      "candidate_min_nominal_x": 0.6,
+      "candidate_max_nominal_x": 0.9
+    },
+    {
+      "z": 0.7,
+      "candidate": 9,
+      "old_orientation": 9,
+      "candidate_min_nominal_x": 0.6,
+      "candidate_max_nominal_x": 0.9
+    },
+    {
+      "z": 0.85,
+      "candidate": 9,
+      "old_orientation": 9,
+      "candidate_min_nominal_x": 0.45,
+      "candidate_max_nominal_x": 0.75
+    }
+  ],
+  "max_abs_arm_gravity_tau_Nm": [
+    2.4666391406514454,
+    13.112307086716973,
+    5.737951761536222,
+    0.09828950357444333,
+    1.2805684851300354,
+    0.0010703382613745926
+  ],
+  "source_sha256": "8df7eb7b18d68bb376eca680bd09f256f8bd6f8cdfd9083d2fe5028fc0733139",
+  "nominal_mass_kg": 23.43034047413
+}

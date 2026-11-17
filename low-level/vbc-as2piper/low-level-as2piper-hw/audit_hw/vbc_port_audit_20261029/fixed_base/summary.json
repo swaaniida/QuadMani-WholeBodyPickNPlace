@@ -1,0 +1,34 @@
+{
+  "early_mixed": {
+    "count": 1600,
+    "position_mean_m": 0.014305063523352146,
+    "position_p95_m": 0.019331629294902078,
+    "orientation_mean_deg": 3.3319661617279053,
+    "orientation_p95_deg": 4.884781670570374,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.2804355204105377
+  },
+  "random_all": {
+    "count": 17600,
+    "position_mean_m": 0.016067489981651306,
+    "position_p95_m": 0.03109193854033946,
+    "orientation_mean_deg": 4.350401878356934,
+    "orientation_p95_deg": 10.172074127197265,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.5219478994607925
+  },
+  "random_hold": {
+    "count": 6614,
+    "position_mean_m": 0.014341727830469608,
+    "position_p95_m": 0.022260062769055365,
+    "orientation_mean_deg": 4.296085357666016,
+    "orientation_p95_deg": 11.609572982788086,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.21019661277532567
+  },
+  "pose_requests": 149,
+  "pose_accepted": 149,
+  "pose_fallback_count": 0,
+  "conditions": "Fixed torso/nominal/gravity; expanded port_inner range; original VBC fixed-world-Z/yaw frame; online candidate IK/OBB forbidden.",
+  "pose_counter_definition": "Generated requests, not online pose-guard certification."
+}

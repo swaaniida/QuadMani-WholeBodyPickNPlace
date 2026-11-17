@@ -1,0 +1,60 @@
+{
+  "config_differences": [
+    [
+      ".rewards.scales.feet_air_time",
+      2.0,
+      0.5
+    ],
+    [
+      ".rewards.scales.tracking_ang_vel",
+      0.5,
+      1.0
+    ],
+    [
+      ".rewards.scales.walking_dof",
+      1.5,
+      0.5
+    ],
+    [
+      ".study.jerk_fix",
+      false,
+      true
+    ],
+    [
+      ".study.phase_fix",
+      false,
+      true
+    ],
+    [
+      ".study.preset",
+      "original",
+      "stable"
+    ],
+    [
+      ".study.speed_fix",
+      false,
+      true
+    ],
+    [
+      ".study.stop_fix",
+      false,
+      true
+    ],
+    [
+      ".study.velocity_fix",
+      false,
+      true
+    ]
+  ],
+  "realization_hashes_match": {
+    "terrain_sha256": true,
+    "initial_dof_sha256": false,
+    "env_origins_sha256": true
+  },
+  "ppo_identical": true,
+  "seed": 7,
+  "num_envs": 6144,
+  "iterations": 600,
+  "controlled": false,
+  "initialization_note": "Initial DOF tensor is sampled after HardwareRunner initialization and a PhysX reset/step; physical state hashes differ. Terrain/origin hashes and configuration are equal. No bitwise physics-replay claim."
+}

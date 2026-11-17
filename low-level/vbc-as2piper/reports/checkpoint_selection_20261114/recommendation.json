@@ -1,0 +1,8 @@
+{
+  "iteration": 28000,
+  "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_28000.pt",
+  "basis": "Full45k local W&B-equivalent diagnostics plus10 checkpoint/8 condition deterministic history-inference evaluations and36s vy0 dynamic checks.",
+  "scope": "Best practical candidate among evaluated checkpoints, not an exhaustive physics rollout of all226 models or real-world safety certification.",
+  "training_changes": false,
+  "optimizer_updates": 0
+}

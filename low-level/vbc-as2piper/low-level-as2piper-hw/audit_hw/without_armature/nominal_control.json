@@ -1,0 +1,23 @@
+{
+  "case": "nominal",
+  "envs": 32,
+  "seconds": 10,
+  "resets": 0,
+  "upright_fraction": 1.0,
+  "height_mean_m": 0.29540249705314636,
+  "roll_pitch_abs_p95_deg": 1.1890009902383445,
+  "mean_foot_normal_force_N": [
+    47.63804244995117,
+    47.81825637817383,
+    63.68632507324219,
+    63.86233901977539
+  ],
+  "loaded_fraction_per_foot": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "leg_torque_abs_max_Nm": 18.891817092895508,
+  "ee_position_mean_m": 0.011198976077139378
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "name": "plate_only_current",
+    "nq": 27,
+    "nv": 26,
+    "nu": 20,
+    "joint_count": 20
+  },
+  {
+    "name": "plate_only_forward",
+    "nq": 27,
+    "nv": 26,
+    "nu": 20,
+    "joint_count": 20
+  },
+  {
+    "name": "profiles_plate_current",
+    "nq": 27,
+    "nv": 26,
+    "nu": 20,
+    "joint_count": 20
+  },
+  {
+    "name": "profiles_plate_forward",
+    "nq": 27,
+    "nv": 26,
+    "nu": 20,
+    "joint_count": 20
+  },
+  {
+    "name": "profiles_cantilever",
+    "nq": 27,
+    "nv": 26,
+    "nu": 20,
+    "joint_count": 20
+  },
+  {
+    "name": "b1z1",
+    "nq": 26,
+    "nv": 25,
+    "nu": 19,
+    "joint_count": 19
+  }
+]

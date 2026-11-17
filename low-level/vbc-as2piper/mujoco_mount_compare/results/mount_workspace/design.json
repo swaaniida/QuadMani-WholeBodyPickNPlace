@@ -1,0 +1,103 @@
+{
+  "cases": [
+    {
+      "name": "plate_only_current",
+      "variant": "plate_only",
+      "mount_x_m": -0.02,
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/plate_only_current.xml",
+      "urdf": "/data/team/users/suhwan/vbc-as2piper/low-level/resources/robots/as2piper/urdf/as2piper_study_plate_only_current.urdf"
+    },
+    {
+      "name": "plate_only_forward",
+      "variant": "plate_only",
+      "mount_x_m": 0.005000000894069674,
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/plate_only_forward.xml",
+      "urdf": "/data/team/users/suhwan/vbc-as2piper/low-level/resources/robots/as2piper/urdf/as2piper_study_plate_only_forward.urdf"
+    },
+    {
+      "name": "profiles_plate_current",
+      "variant": "profiles_plate",
+      "mount_x_m": -0.02,
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/profiles_plate_current.xml",
+      "urdf": "/data/team/users/suhwan/vbc-as2piper/low-level/resources/robots/as2piper/urdf/as2piper_study_profiles_plate_current.urdf"
+    },
+    {
+      "name": "profiles_plate_forward",
+      "variant": "profiles_plate",
+      "mount_x_m": 0.005000000894069674,
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/profiles_plate_forward.xml",
+      "urdf": "/data/team/users/suhwan/vbc-as2piper/low-level/resources/robots/as2piper/urdf/as2piper_study_profiles_plate_forward.urdf"
+    },
+    {
+      "name": "profiles_cantilever",
+      "variant": "profiles_plate",
+      "mount_x_m": 0.05400000089406971,
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/profiles_cantilever.xml",
+      "urdf": "/data/team/users/suhwan/vbc-as2piper/low-level/resources/robots/as2piper/urdf/as2piper_study_profiles_cantilever.urdf",
+      "redesign": true,
+      "plate_length_m": 0.18900000000000003,
+      "cantilever_m": 0.04900000000000003,
+      "plate_as2_clearance_m": 0.005227270847559334
+    },
+    {
+      "name": "b1z1",
+      "variant": "b1z1",
+      "mount_x_m": 0.3,
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/b1z1.xml",
+      "urdf": "/data/team/users/suhwan/vbc-as2piper/low-level/resources/robots/b1z1/urdf/b1z1_workspace_study.urdf"
+    }
+  ],
+  "scan": [
+    {
+      "arm_base_x_m": -0.02,
+      "base_front_x_m": 0.019999999105930328,
+      "plate_edge_clearance_m": 0.030000000894069675,
+      "supported_with_5mm_edge": true,
+      "comment": "Existing plate envelope only; fastening holes not verified"
+    },
+    {
+      "arm_base_x_m": 0.0,
+      "base_front_x_m": 0.03999999910593033,
+      "plate_edge_clearance_m": 0.010000000894069674,
+      "supported_with_5mm_edge": true,
+      "comment": "Existing plate envelope only; fastening holes not verified"
+    },
+    {
+      "arm_base_x_m": 0.005000000894069674,
+      "base_front_x_m": 0.045000000000000005,
+      "plate_edge_clearance_m": 0.0049999999999999975,
+      "supported_with_5mm_edge": true,
+      "comment": "Existing plate envelope only; fastening holes not verified"
+    },
+    {
+      "arm_base_x_m": 0.01,
+      "base_front_x_m": 0.04999999910593033,
+      "plate_edge_clearance_m": 8.940696724635266e-10,
+      "supported_with_5mm_edge": false,
+      "comment": "Existing plate envelope only; fastening holes not verified"
+    },
+    {
+      "arm_base_x_m": 0.05,
+      "base_front_x_m": 0.08999999910593033,
+      "plate_edge_clearance_m": -0.03999999910593033,
+      "supported_with_5mm_edge": false,
+      "comment": "Existing plate envelope only; fastening holes not verified"
+    },
+    {
+      "arm_base_x_m": 0.1,
+      "base_front_x_m": 0.13999999910593033,
+      "plate_edge_clearance_m": -0.08999999910593033,
+      "supported_with_5mm_edge": false,
+      "comment": "Existing plate envelope only; fastening holes not verified"
+    },
+    {
+      "arm_base_x_m": 0.15,
+      "base_front_x_m": 0.18999999910593032,
+      "plate_edge_clearance_m": -0.1399999991059303,
+      "supported_with_5mm_edge": false,
+      "comment": "Existing plate envelope only; fastening holes not verified"
+    }
+  ],
+  "forward_limit_m": 0.005000000894069674,
+  "edge_assumption_m": 0.005
+}

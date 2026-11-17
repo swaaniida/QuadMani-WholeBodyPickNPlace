@@ -1,0 +1,335 @@
+{
+  "environment_differences": {
+    "asset.arm_base_offset": {
+      "original": null,
+      "as2": [
+        0.005,
+        0.0,
+        0.08202847821788371
+      ]
+    },
+    "asset.file": {
+      "original": "{LEGGED_GYM_ROOT_DIR}/resources/robots/b1z1/urdf/b1z1.urdf",
+      "as2": "{LEGGED_GYM_ROOT_DIR}/resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf"
+    },
+    "asset.gripper_name": {
+      "original": "ee_gripper_link",
+      "as2": "piper_umi_nominal_tcp"
+    },
+    "asset.penalize_contacts_on": {
+      "original": [
+        "thigh",
+        "trunk",
+        "calf"
+      ],
+      "as2": [
+        "thigh",
+        "base_link",
+        "calf"
+      ]
+    },
+    "control.arm_effort_limit": {
+      "original": null,
+      "as2": Infinity
+    },
+    "control.arm_position_damping": {
+      "original": null,
+      "as2": 40.0
+    },
+    "control.arm_position_stiffness": {
+      "original": null,
+      "as2": 400.0
+    },
+    "control.damping.piper_joint": {
+      "original": null,
+      "as2": 0.5
+    },
+    "control.damping.z1": {
+      "original": 0.5,
+      "as2": null
+    },
+    "control.gripper_position_damping": {
+      "original": null,
+      "as2": 35.0
+    },
+    "control.gripper_position_stiffness": {
+      "original": null,
+      "as2": 1800.0
+    },
+    "control.stiffness.piper_joint": {
+      "original": null,
+      "as2": 5.0
+    },
+    "control.stiffness.z1": {
+      "original": 5,
+      "as2": null
+    },
+    "env.num_gripper_joints": {
+      "original": 1,
+      "as2": 2
+    },
+    "env.observe_gait_commands": {
+      "original": false,
+      "as2": true
+    },
+    "goal_ee.arm_induced_pitch": {
+      "original": 0.38,
+      "as2": 2.455216137744035
+    },
+    "goal_ee.collision_lower_limits": {
+      "original": [
+        -0.8,
+        -0.2,
+        -0.7
+      ],
+      "as2": [
+        -0.185,
+        -0.12,
+        -0.15
+      ]
+    },
+    "goal_ee.collision_upper_limits": {
+      "original": [
+        0.1,
+        0.2,
+        -0.05
+      ],
+      "as2": [
+        0.335,
+        0.12,
+        0.06
+      ]
+    },
+    "goal_ee.orientation_roll_offset": {
+      "original": null,
+      "as2": 0.0
+    },
+    "goal_ee.ranges.delta_orn_p": {
+      "original": [
+        -0.5,
+        0.5
+      ],
+      "as2": [
+        -0.15,
+        0.15
+      ]
+    },
+    "goal_ee.ranges.delta_orn_r": {
+      "original": [
+        -0.5,
+        0.5
+      ],
+      "as2": [
+        -0.15,
+        0.15
+      ]
+    },
+    "goal_ee.ranges.delta_orn_y": {
+      "original": [
+        -0.5,
+        0.5
+      ],
+      "as2": [
+        -0.15,
+        0.15
+      ]
+    },
+    "goal_ee.ranges.init_pos_end": {
+      "original": [
+        0.7,
+        0,
+        0
+      ],
+      "as2": [
+        0.4278984686862198,
+        0.421686284190671,
+        0.0
+      ]
+    },
+    "goal_ee.ranges.init_pos_start": {
+      "original": [
+        0.5,
+        0.39269908169872414,
+        0
+      ],
+      "as2": [
+        0.4278984686862198,
+        0.421686284190671,
+        0.0
+      ]
+    },
+    "goal_ee.ranges.pos_l": {
+      "original": [
+        0.4,
+        0.95
+      ],
+      "as2": [
+        0.38,
+        0.52
+      ]
+    },
+    "goal_ee.ranges.pos_p": {
+      "original": [
+        -1.2566370614359172,
+        1.0471975511965976
+      ],
+      "as2": [
+        -0.25,
+        0.6
+      ]
+    },
+    "goal_ee.ranges.pos_y": {
+      "original": [
+        -1.2,
+        1.2
+      ],
+      "as2": [
+        -0.4,
+        0.4
+      ]
+    },
+    "goal_ee.reference_frame": {
+      "original": null,
+      "as2": "arm_origin_yaw_aligned"
+    },
+    "goal_ee.sampling_mode": {
+      "original": null,
+      "as2": "b1_spherical_with_as2_collision_rejection"
+    },
+    "goal_ee.sphere_center.x_offset": {
+      "original": 0.3,
+      "as2": 0.0
+    },
+    "goal_ee.sphere_center.z_invariant_offset": {
+      "original": 0.7,
+      "as2": 0.0
+    },
+    "goal_ee.underground_limit": {
+      "original": -0.7,
+      "as2": -0.3
+    },
+    "init_state.default_joint_angles.FL_calf_joint": {
+      "original": -1.5,
+      "as2": -1.6
+    },
+    "init_state.default_joint_angles.FL_hip_joint": {
+      "original": 0.2,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.FR_calf_joint": {
+      "original": -1.5,
+      "as2": -1.6
+    },
+    "init_state.default_joint_angles.FR_hip_joint": {
+      "original": -0.2,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.RL_calf_joint": {
+      "original": -1.5,
+      "as2": -1.6
+    },
+    "init_state.default_joint_angles.RL_hip_joint": {
+      "original": 0.2,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.RR_calf_joint": {
+      "original": -1.5,
+      "as2": -1.6
+    },
+    "init_state.default_joint_angles.RR_hip_joint": {
+      "original": -0.2,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.piper_gripper_joint1": {
+      "original": null,
+      "as2": 0.049
+    },
+    "init_state.default_joint_angles.piper_gripper_joint2": {
+      "original": null,
+      "as2": -0.049
+    },
+    "init_state.default_joint_angles.piper_joint1": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.piper_joint2": {
+      "original": null,
+      "as2": 1.1
+    },
+    "init_state.default_joint_angles.piper_joint3": {
+      "original": null,
+      "as2": -0.55
+    },
+    "init_state.default_joint_angles.piper_joint4": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.piper_joint5": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.piper_joint6": {
+      "original": null,
+      "as2": 0.0
+    },
+    "init_state.default_joint_angles.z1_elbow": {
+      "original": -0.63,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_forearm_roll": {
+      "original": 0.0,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_jointGripper": {
+      "original": -0.785,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_shoulder": {
+      "original": 1.48,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_waist": {
+      "original": 0.0,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_wrist_angle": {
+      "original": -0.84,
+      "as2": null
+    },
+    "init_state.default_joint_angles.z1_wrist_rotate": {
+      "original": 1.57,
+      "as2": null
+    },
+    "init_state.pos": {
+      "original": [
+        0.0,
+        0.0,
+        0.5
+      ],
+      "as2": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ]
+    },
+    "rewards.base_height_target": {
+      "original": 0.55,
+      "as2": 0.3244069024246581
+    }
+  },
+  "ppo_differences": {
+    "runner.experiment_name": {
+      "original": "b1z1_v2",
+      "as2": "as2piper_plate_forward_spherical"
+    }
+  },
+  "reward_formulas_scales_equal": true,
+  "reward_parameter_differences": {
+    "base_height_target": {
+      "original": 0.55,
+      "as2": 0.3244069024246581
+    }
+  },
+  "num_envs": 6144,
+  "max_iterations": 45000
+}

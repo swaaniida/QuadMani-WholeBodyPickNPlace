@@ -1,0 +1,290 @@
+{
+  "live_run_window": {
+    "iteration_range": [
+      100,
+      132
+    ],
+    "samples": 33,
+    "mean_iteration_s": 2.034242424242424
+  },
+  "profiles": {
+    "profile_current_seed1": {
+      "mode": "screened",
+      "seed": 1,
+      "terrain": "plane",
+      "dr": "full",
+      "physics_config": {
+        "dt": 0.005,
+        "gravity": [
+          0.0,
+          0.0,
+          -9.81
+        ],
+        "physx": {
+          "bounce_threshold_velocity": 0.5,
+          "contact_collection": 2,
+          "contact_offset": 0.01,
+          "default_buffer_size_multiplier": 5,
+          "max_depenetration_velocity": 1.0,
+          "max_gpu_contact_pairs": 8388608,
+          "num_position_iterations": 4,
+          "num_threads": 10,
+          "num_velocity_iterations": 0,
+          "rest_offset": 0.0,
+          "solver_type": 1
+        },
+        "substeps": 1,
+        "up_axis": 1
+      },
+      "num_envs": 6144,
+      "steps": 24,
+      "wall_s": 2.628460690844804,
+      "equivalent_collection_24steps_s": 2.628460690844804,
+      "seconds": {
+        "goal_sampling_inclusive": 0.07664512889459729,
+        "candidate_check_inclusive": 0.01695453142747283
+      },
+      "calls": {
+        "goal_sampling_inclusive": 24,
+        "candidate_check_inclusive": 23
+      },
+      "items": {
+        "goal_sampling_inclusive": 5893,
+        "candidate_check_inclusive": 5893
+      },
+      "non_sampling_s": 2.5518155619502068,
+      "note": "CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time."
+    },
+    "profile_port_plane_full_seed1": {
+      "mode": "port",
+      "seed": 1,
+      "terrain": "plane",
+      "dr": "full",
+      "physics_config": {
+        "dt": 0.005,
+        "gravity": [
+          0.0,
+          0.0,
+          -9.81
+        ],
+        "physx": {
+          "bounce_threshold_velocity": 0.5,
+          "contact_collection": 2,
+          "contact_offset": 0.01,
+          "default_buffer_size_multiplier": 5,
+          "max_depenetration_velocity": 1.0,
+          "max_gpu_contact_pairs": 8388608,
+          "num_position_iterations": 4,
+          "num_threads": 10,
+          "num_velocity_iterations": 0,
+          "rest_offset": 0.0,
+          "solver_type": 1
+        },
+        "substeps": 1,
+        "up_axis": 1
+      },
+      "num_envs": 6144,
+      "steps": 24,
+      "wall_s": 2.958434113766998,
+      "equivalent_collection_24steps_s": 2.958434113766998,
+      "seconds": {
+        "goal_sampling_inclusive": 0.0754109276458621,
+        "candidate_check_inclusive": 0.01901521347463131
+      },
+      "calls": {
+        "goal_sampling_inclusive": 24,
+        "candidate_check_inclusive": 23
+      },
+      "items": {
+        "goal_sampling_inclusive": 5893,
+        "candidate_check_inclusive": 5893
+      },
+      "non_sampling_s": 2.883023186121136,
+      "note": "CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time."
+    },
+    "profile_port_rough_full_seed1": {
+      "mode": "port",
+      "seed": 1,
+      "terrain": "trimesh",
+      "dr": "full",
+      "physics_config": {
+        "dt": 0.005,
+        "gravity": [
+          0.0,
+          0.0,
+          -9.81
+        ],
+        "physx": {
+          "bounce_threshold_velocity": 0.5,
+          "contact_collection": 2,
+          "contact_offset": 0.01,
+          "default_buffer_size_multiplier": 5,
+          "max_depenetration_velocity": 1.0,
+          "max_gpu_contact_pairs": 8388608,
+          "num_position_iterations": 4,
+          "num_threads": 10,
+          "num_velocity_iterations": 0,
+          "rest_offset": 0.0,
+          "solver_type": 1
+        },
+        "substeps": 1,
+        "up_axis": 1
+      },
+      "num_envs": 6144,
+      "steps": 24,
+      "wall_s": 5.582110194955021,
+      "equivalent_collection_24steps_s": 5.582110194955021,
+      "seconds": {
+        "goal_sampling_inclusive": 0.07133145537227392,
+        "candidate_check_inclusive": 0.0118480259552598
+      },
+      "calls": {
+        "goal_sampling_inclusive": 34,
+        "candidate_check_inclusive": 23
+      },
+      "items": {
+        "goal_sampling_inclusive": 5932,
+        "candidate_check_inclusive": 5885
+      },
+      "non_sampling_s": 5.510778739582747,
+      "note": "CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time."
+    },
+    "profile_b1_original_seed1": {
+      "model": "B1+Z1 original source/defaults, observe_gait=True",
+      "seed": 1,
+      "num_envs": 6144,
+      "num_dofs": 19,
+      "num_bodies": 26,
+      "num_observations": 799,
+      "steps": 24,
+      "wall_s": 5.636228697840124,
+      "non_sampling_s": 5.068428066559136,
+      "timings": {
+        "sampling_s": 0.5678006312809885,
+        "sampling_calls": 39,
+        "sampling_items": 5940
+      },
+      "sim_config": {
+        "dt": 0.005,
+        "gravity": [
+          0.0,
+          0.0,
+          -9.81
+        ],
+        "physx": {
+          "bounce_threshold_velocity": 0.5,
+          "contact_collection": 2,
+          "contact_offset": 0.01,
+          "default_buffer_size_multiplier": 5,
+          "max_depenetration_velocity": 1.0,
+          "max_gpu_contact_pairs": 8388608,
+          "num_position_iterations": 4,
+          "num_threads": 10,
+          "num_velocity_iterations": 0,
+          "rest_offset": 0.0,
+          "solver_type": 1
+        },
+        "substeps": 1,
+        "up_axis": 1
+      },
+      "terrain_config": {
+        "all_vertical": false,
+        "border_size": 25,
+        "curriculum": false,
+        "downsampled_scale": 0.075,
+        "dynamic_friction": 1.0,
+        "gap_size": [
+          0.02,
+          0.1
+        ],
+        "height": [
+          0.0,
+          0.1
+        ],
+        "hf2mesh_method": "fast",
+        "horizontal_scale": 0.05,
+        "max_error": 0.1,
+        "max_init_terrain_level": 5,
+        "measure_heights": true,
+        "measured_points_x": [
+          -0.8,
+          -0.7,
+          -0.6,
+          -0.5,
+          -0.4,
+          -0.3,
+          -0.2,
+          -0.1,
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8
+        ],
+        "measured_points_y": [
+          -0.5,
+          -0.4,
+          -0.3,
+          -0.2,
+          -0.1,
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5
+        ],
+        "mesh_type": "trimesh",
+        "no_flat": true,
+        "num_cols": 20,
+        "num_rows": 10,
+        "num_sub_terrains": 200,
+        "origin_zero_z": false,
+        "restitution": 0.0,
+        "selected": false,
+        "slope_treshold": null,
+        "static_friction": 1.0,
+        "stepping_stone_distance": [
+          0.02,
+          0.08
+        ],
+        "terrain_dict": {
+          "smooth slope": 0.0,
+          "rough slope up": 0.0,
+          "rough slope down": 0.0,
+          "rough stairs up": 0.0,
+          "rough stairs down": 0.0,
+          "discrete": 0.0,
+          "stepping stones": 0.0,
+          "gaps": 0.0,
+          "rough flat": 1.0,
+          "pit": 0.0,
+          "wall": 0.0
+        },
+        "terrain_kwargs": null,
+        "terrain_length": 8.0,
+        "terrain_proportions": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        "terrain_width": 8.0,
+        "vertical_scale": 0.005
+      },
+      "environment_source": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/manip_loco.py",
+      "note": "No PPO, zero action; concurrent AS2 run. Not a reconstruction of unknown historical W&B overrides."
+    }
+  }
+}

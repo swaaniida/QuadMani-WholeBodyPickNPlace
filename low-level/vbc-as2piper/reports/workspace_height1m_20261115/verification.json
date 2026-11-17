@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "poses": 6,
+  "reached": 5,
+  "not_reached_in_finite_search": 1,
+  "production_hashes_unchanged": true,
+  "original_sources_preserved": 39,
+  "checkpoint_metadata_preserved": 226,
+  "renderer": "MuJoCo OSMesa CPU",
+  "training_started": false
+}

@@ -1,0 +1,249 @@
+{
+  "source": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/profiles_plate_forward.xml",
+  "study_assumptions": {
+    "mount_hardware_mass_kg": 0.0,
+    "rail_included": false,
+    "mounts_are_verified_hardware_datums": false,
+    "mount_position_note": "center is the prior comparison candidate; head is placed from the user-selected PiPER underside-footprint center on the AS2 base mesh, with y forced to zero",
+    "head_selected_underside_center_xyz_base_link_m": [
+      0.2151,
+      0.0,
+      0.1319
+    ],
+    "head_piper_base_link_origin_xyz_base_link_m": [
+      0.22435,
+      0.0,
+      0.1319
+    ],
+    "piper_base_underside_center_to_base_link_origin_offset_xyz_m": [
+      -0.00925,
+      0.0,
+      0.0
+    ],
+    "piper_pose_rad": [
+      0.0,
+      0.76,
+      -0.89,
+      0.0,
+      0.45,
+      0.0
+    ],
+    "gripper_open_joints_m": [
+      0.049,
+      -0.049
+    ],
+    "workspace_sampling": "identical seeded joint samples, URDF joint ranges, MuJoCo collision proxies and ground filtered",
+    "workspace_voxel_size_m": 0.03
+  },
+  "variants": {
+    "as2_only": {
+      "model_path": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_only_actual_link_inertia.xml",
+      "nq_nv_nu": [
+        19,
+        18,
+        12
+      ],
+      "mass_properties": {
+        "mass_kg": 17.64,
+        "com_base_xyz_m": [
+          0.009448691009300446,
+          -0.0004489128587630418,
+          -0.009141036190502605
+        ],
+        "inertia_about_com_base_kg_m2": [
+          [
+            0.25365844771124996,
+            0.0003057994332719845,
+            -0.061718667523794866
+          ],
+          [
+            0.0003057994332719845,
+            0.6439134689707333,
+            0.00054197929417624
+          ],
+          [
+            -0.061718667523794866,
+            0.00054197929417624,
+            0.7284291651671697
+          ]
+        ],
+        "inertia_principal_about_com_kg_m2": [
+          0.2457660597336157,
+          0.6439111241575728,
+          0.7363238979579644
+        ]
+      },
+      "standing_arm_non_ground_penetration_count": 0
+    },
+    "as2_piper_center": {
+      "model_path": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_center_actual_link_inertia.xml",
+      "nq_nv_nu": [
+        27,
+        26,
+        20
+      ],
+      "mass_properties": {
+        "mass_kg": 22.455564081329996,
+        "com_base_xyz_m": [
+          0.009070090068189878,
+          -0.0003597251059185707,
+          0.06957456770353082
+        ],
+        "inertia_about_com_base_kg_m2": [
+          [
+            0.9098740275758087,
+            0.0004973349846395722,
+            -0.048544519091966214
+          ],
+          [
+            0.0004973349846395727,
+            1.4016153264651716,
+            0.00025122570114524033
+          ],
+          [
+            -0.048544519091966214,
+            0.0002512257011452399,
+            0.8345685002318949
+          ]
+        ],
+        "inertia_principal_about_com_kg_m2": [
+          0.8107855900748036,
+          0.9336563620764052,
+          1.4016159021216672
+        ]
+      },
+      "standing_arm_non_ground_penetration_count": 0,
+      "workspace": {
+        "accepted_tcp_samples": 10337,
+        "front_of_as2_head_samples": 1924,
+        "voxel_volume_base_frame_m3": 0.24626699999999996,
+        "voxel_volume_head_frame_m3": 0.24710399999999996,
+        "sample_convex_hull_volume_base_frame_m3": 1.890547059050258,
+        "tcp_bounds_base_frame_m": [
+          [
+            -0.7858645948874146,
+            -0.8092706247143522,
+            -0.29981822242708644
+          ],
+          [
+            0.815888860707331,
+            0.8052868272471015,
+            1.040015744336186
+          ]
+        ],
+        "tcp_bounds_head_frame_m": [
+          [
+            -1.1205699178682953,
+            -0.8092706247143522,
+            -0.4238730231461092
+          ],
+          [
+            0.4811835377264503,
+            0.8052868272471015,
+            0.9159609436171632
+          ]
+        ],
+        "max_tcp_distance_from_head_m": 1.1580918938861826,
+        "head_forward_reach_max_m": 0.4811835377264503
+      },
+      "workspace_rejected_arm_collision_samples": 1653,
+      "workspace_rejected_ground_samples": 10
+    },
+    "as2_piper_head": {
+      "model_path": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_head_actual_link_inertia.xml",
+      "nq_nv_nu": [
+        27,
+        26,
+        20
+      ],
+      "mass_properties": {
+        "mass_kg": 22.455564081329996,
+        "com_base_xyz_m": [
+          0.056109388542903295,
+          -0.0003597251059185707,
+          0.07598047346556996
+        ],
+        "inertia_about_com_base_kg_m2": [
+          [
+            0.9962053148738437,
+            0.0001522377801748667,
+            -0.3777085729619392
+          ],
+          [
+            0.00015223778017486715,
+            1.6670275036998212,
+            0.00020422967352096735
+          ],
+          [
+            -0.3777085729619392,
+            0.00020422967352096692,
+            1.0136493901685093
+          ]
+        ],
+        "inertia_principal_about_com_kg_m2": [
+          0.6271180275520487,
+          1.3827366110719292,
+          1.667027570118197
+        ]
+      },
+      "standing_arm_non_ground_penetration_count": 0,
+      "workspace": {
+        "accepted_tcp_samples": 10882,
+        "front_of_as2_head_samples": 4648,
+        "voxel_volume_base_frame_m3": 0.259362,
+        "voxel_volume_head_frame_m3": 0.26022599999999996,
+        "sample_convex_hull_volume_base_frame_m3": 1.9018136017574279,
+        "tcp_bounds_base_frame_m": [
+          [
+            -0.5614885459306742,
+            -0.8035730452081051,
+            -0.2991956914523284
+          ],
+          [
+            1.0310661773327519,
+            0.8066548944199751,
+            1.0691232925944487
+          ]
+        ],
+        "tcp_bounds_head_frame_m": [
+          [
+            -0.896193868911555,
+            -0.8035730452081051,
+            -0.42325049217135113
+          ],
+          [
+            0.6963608543518711,
+            0.8066548944199751,
+            0.945068491875426
+          ]
+        ],
+        "max_tcp_distance_from_head_m": 0.980419918314112,
+        "head_forward_reach_max_m": 0.6963608543518711
+      },
+      "workspace_rejected_arm_collision_samples": 1116,
+      "workspace_rejected_ground_samples": 2
+    }
+  },
+  "head_mount_footprint_surface_check": {
+    "sample_count": 425,
+    "grid_shape": [
+      25,
+      17
+    ],
+    "as2_surface_z_min_max_m": [
+      0.1148662981666636,
+      0.13266749256875643
+    ],
+    "flat_piper_underside_clearance_min_max_mm": [
+      -0.7674925687564393,
+      17.033701833336384
+    ],
+    "interpretation": "negative is geometric overlap; positive is a gap. This samples visual STL only, not hardware fastening pads or structural surfaces."
+  },
+  "workspace_change_head_vs_center": {
+    "voxel_volume_base_frame_ratio": 1.0531739940795966,
+    "head_forward_reach_gain_m": 0.21517731662542083,
+    "head_forward_reach_ratio": 1.447183454450904,
+    "warning": "sampled workspace volume depends on sampling resolution, collision proxies, and joint range; not an exact continuous workspace"
+  }
+}

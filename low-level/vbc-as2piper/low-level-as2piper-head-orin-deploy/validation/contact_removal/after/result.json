@@ -1,0 +1,76 @@
+{
+  "observation_shape": [
+    16,
+    700
+  ],
+  "reset_return_history_zero": true,
+  "internal_reset_history_filled": true,
+  "normalization": {
+    "clip_actions": 100.0,
+    "clip_observations": 100.0,
+    "obs_scales": {
+      "ang_vel": 1.0,
+      "dof_pos": 1.0,
+      "dof_vel": 0.05,
+      "height_measurements": 5.0,
+      "lin_vel": 1.0
+    }
+  },
+  "privileged_order": "added_base_mass, COM xyz delta, gripper added mass, friction, 12 native-order leg motor-strength offsets",
+  "caller_action_mutated": false,
+  "applied_arm_actions_max": 0.0,
+  "steps": 200,
+  "seconds": 4,
+  "contact_inputs_present": false,
+  "sensor_vs_instant_contact_disagreement": 0.48906248807907104,
+  "resets": 0,
+  "history_layout_checked": true,
+  "joint_normalization_checked": true,
+  "privileged_layout_checked": true,
+  "observe_priv_false_fresh": true,
+  "observe_priv_false_placeholder_zero": true,
+  "contact_sensor_poison_independence": true,
+  "active_contact_reward_functions": [
+    "collision",
+    "feet_air_time",
+    "feet_contact_forces",
+    "feet_drag",
+    "feet_height",
+    "feet_jerk",
+    "tracking_contacts_shaped_force",
+    "tracking_contacts_shaped_vel"
+  ],
+  "active_contact_rewards_no_sensor_input": true,
+  "action_delay_branches": {
+    "early": {
+      "applied_leg_action": 0.019999999552965164,
+      "observed_latest_command": 0.019999999552965164
+    },
+    "late": {
+      "applied_leg_action": 0.0,
+      "observed_latest_command": 0.019999999552965164
+    },
+    "disabled": {
+      "applied_leg_action": 0.019999999552965164,
+      "observed_latest_command": 0.019999999552965164
+    }
+  },
+  "all_current_observation_fields_checked": true,
+  "actual_runner_storage_shape": [
+    24,
+    16,
+    700
+  ],
+  "actual_runner_inference_action_shape": [
+    16,
+    18
+  ],
+  "actual_runner_optimizer_state_entries": 0,
+  "dimensions": {
+    "current_proprio": 62,
+    "privileged": 18,
+    "history": 620,
+    "total": 700,
+    "deployment": 682
+  }
+}

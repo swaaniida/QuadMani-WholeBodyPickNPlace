@@ -1,0 +1,412 @@
+from pathlib import Path
+import json,shutil,os,hashlib,re
+from importlib.metadata import distributions,version,PackageNotFoundError
+ROOT=Path(__file__).resolve().parents[1];P=ROOT/'github-export/low-level/vbc-as2piper'
+def put(name,text):
+ p=P/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_text(text.strip()+'\n');p.chmod(0o775 if p.suffix=='.sh' else 0o664)
+put('README_KO.md',r'''
+# AS2 + PiPER + UMI + Orin — VBC Low-Level 인계 패키지
+
+이 폴더를 상위 GitHub 저장소의 `low-level/vbc-as2piper/`에 넣는다. 현재 서버의 코드·로봇 자산·모델·평가 근거를 보존한 **스냅샷**이며, 실제 push는 아직 하지 않았다.
+
+## 먼저 읽을 문서
+
+1. [현재 상태·미해결 문제](docs/CURRENT_STATE_KO.md)
+2. [설치·학습·평가·배포 입력](docs/REPRODUCTION_KO.md)
+3. [설계와 누적 지식](docs/KNOWLEDGE_KO.md)
+4. [포함 파일과 과거 버전](docs/CONTENTS_KO.md)
+5. [GitHub 업로드·LFS·복구 절차](docs/GITHUB_KO.md)
+6. [외부 의존성과 이용 조건](docs/EXTERNAL_DEPENDENCIES_KO.md)
+
+## 사용하는 코드
+
+|목적|디렉터리|상태|
+|---|---|---|
+|현재70N 학습/후속개발|`low-level-as2piper-head-orin-deploy/`|기본/B70N,카메라 포함,확장 EE 구면/불변 가상중심|
+|이전200N·45k 재현|`low-level-as2piper-head-orin-nocontact/`|export 복사본에서만 실제 학습 당시 URDF로 복원|
+|원본B1+Z1 참고|`reference/vbc-legacy/`|읽기 전용 참조용 소스·45000 checkpoint 포함|
+|과거AS2 변경·gait 연구|기타 `low-level-as2piper*`|역사적 코드. 최신 실행 진입점과 혼동하지 않는다|
+
+`AGENTS.md`가 새 작업 기준이다. `docs/historical/`의 문서와 각 폴더 CHANGES는 당시 기록이며 현재 값과 다를 수 있다.
+
+## 최소 실행
+
+Isaac Gym을 별도 설치하고 Python3.8 학습 환경을 활성화한 뒤 이 폴더에서:
+
+```bash
+python scripts/verify_snapshot.py
+bash scripts/train70.sh --seed 1 --name "as2piper_70N_$(date -u +%Y%m%dT%H%M%SZ)"
+```
+
+위 명령은 **새 초기 가중치로 학습**한다. 기존 checkpoint의 완전 동일 상태 resume 기능은 아니다. 기존 run 이름 재사용/덮어쓰기는 하지 않는다.
+
+학습 조건은6144환경·45000iterations·policy50Hz/physics200Hz. 실제 장시간 학습은 이 패키지를 만들면서 실행하지 않았다.
+
+정리 직전 실행의 모든 완성 checkpoint와 manifest는 각 코드 폴더의 `experiments/contact_force_ablation/runs/`에 보존한다. [목록](docs/checkpoint_index.json)의 최신 iteration은 **스냅샷 시점까지만** 포함하며 이후 서버에서 생성된 모델이 자동 반영되지는 않는다.
+
+## 복구 한계
+
+- Isaac Gym Preview4 SDK는 재배포 제한 때문에 포함하지 않는다. 공식 다운로드에서 별도로 확보해야 한다.
+- GitHub에 **LFS 실제 객체까지 push**해야 checkpoint/mesh/data가 보존된다. pointer 파일만 올리면 복구되지 않는다.
+- 현재 policy는 과속·정지 RR 접촉 부족이 남아 있어 실물 배포 완료 모델이 아니다.
+- 추론 모델 복원과 평가 재현은 가능하도록 묶었지만 RNG·환경상태·history optimizer 등을 저장하지 않아 원래 훈련을 비트 단위로 동일 재개할 수는 없다.
+''')
+put('AGENTS.md',r'''
+# 이 스냅샷의 작업 지침
+
+- 최신 상태는 docs/CURRENT_STATE_KO.md와 PROJECT_SNAPSHOT.json/각 run manifest를 우선한다. docs/historical/AGENTS.md는 초기 중앙 장착 문제의 역사적 문서다.
+- 현재 개발은 low-level-as2piper-head-orin-deploy. nocontact200N·45k와 reference B1 및 그 checkpoint는 보존한다.
+- 사용자 승인 없는 reward/scale/PPO/DR/초기자세/차원/URDF 변경, 학습 중지·삭제·restart 도구 실행 금지.
+- policy18action,URDF20DOF,학습755/배포737,contact44제거와gait5활성을 유지. 원본orientation zero를contact padding으로 오해해 제거하지 않는다.
+- 코드와 수치가 문서와 다르면 실제 코드/manifest/물리검증 우선. 추정 gain/effort를 공식 하드웨어 인증값이라고 주장하지 않는다.
+- 최신 URDF/45k 당시 URDF를 바꿔치기하지 않는다. baseline export에는 exact trained_asset를 적용했고 출처를 기록했다.
+- 처음에 git status/수정대상을 확인. 원본 baseline과 checkpoint 보호; 별도 실험폴더 사용. 기존 프로세스/다른 사용자 작업 종료 금지.
+- 인증파일/API키/개인SSH키를 읽거나 복사/커밋하지 않는다. W&B는각자로그인; 업로드전 scripts/verify_snapshot.py와 LFS 점검.
+- 다른 서버용 shell cache 경로 조정은 export-only 변경이다. native PPO/환경코드는 보존한다.
+- 과거 스크립트의 서버 절대경로는 scripts/relocate_historical.py로 복사본에서 치환한다. reference/orin_source는 기구 원본참고이며 독립 실행모델이 아니다.
+- GPU여유 확인 후 작은 검증부터. 평가에는optimizer업데이트 없음. 과거PD/scripted demo를 학습된 gait 성능이라고 해석하지 않는다.
+- 명시적 요청 없이 하위 에이전트/자동 장기 모니터링/실험추가를 하지 않는다.
+''')
+put('docs/CURRENT_STATE_KO.md',r'''
+# 현재 상태
+
+## 코드와 실험
+
+- 현재70N: `low-level-as2piper-head-orin-deploy`의 condition B=70N. A40N/Cscale0은보존,실행대상아님. force scale−0.001/feetheight0.18 scale+1 유지.
+- W&B project `as2piper-low`,70N 원실행ID `l8onmp0b`,원실행명 `as2piper_headpiper_orin_70N_20261115T133137Z`.
+- 200N 원실행은nocontact의 `as2piper_headpiper_orin_200N_0.18m`,ID `gdr8lou4`,45000완료.
+- 70N은아직진행중인실험의스냅샷. 저장범위는checkpoint_index.json과PROJECT_SNAPSHOT.json이기준. 최신저장≠성능검증완료.
+
+## 확정 검증:70N10k/15k/20k
+
+평지/rough각32환경,4명령×8환경,40초,초기2초제외,DR/pushoff,history actor. 중앙EE작은궤적이며확장된바닥작업영역전체를시험한것은아님.
+
+|항목|10k|15k|20k|
+|---|---:|---:|---:|
+|평지전진평균(m/s),명령0.4|0.668|0.560|0.594|
+|평지전진속도RMSE(m/s)|0.291|0.174|0.205|
+|Rough전진평균(m/s)|0.678|0.558|0.596|
+|평지정지RR contact(%),norm>2N|0.046|5.217|0.329|
+|평지전진EE평균(cm)|1.910|1.695|1.707|
+|평지전진bodyheight誤差(cm)|0.729|2.035|1.140|
+|평지전진forceP99(N)|294.7|171.4|169.6|
+|평지복합forceP99(N)|289.2|169.2|216.8|
+
+세체크포인트모두해당평가의실패reset0.20k는15k대비과속/정지접지에서후퇴하며높이추종일부개선. 속도·충격기준15k가더균형적이지만실기배포완료판정은불가. 보고서/원시데이터는reports/deploy70_iter*/와각experiments/.../evaluations에포함.
+
+## 아직 적용하지 않은 것
+
+- Foot Lift Penalty(max+tanh), Ground Proximity, Valid Contact 보상은검토/제안이며현재실행에추가하지않았다.
+- Rough정확한sphere/triangle支持面距離 보상helper도미구현. 기존지면최솟값계산유지.
+- 전신IK feasible bank/online IK validity rejection은사용자요청으로제거. 원본구면+기본box/ground/path검사만유지.
+- 실제PiPER effort정격/latency/readback/전류환산/실기통신800Hz bridge 검증미완료. SDK0.6.1/FW S-V1.5-8 참고,명목400/40/effort100은실측인증값이아님.
+- 실물안전한토크제한·estop·SDK 명령변환·센서관측 재현을완료했다고주장하지않는다.
+'''.replace('bodyheight誤差','몸통 높이 오차').replace('sphere/triangle支持面距離','sphere/triangle 지지면 거리'))
+put('docs/KNOWLEDGE_KO.md',r'''
+# 누적 설계 지식·실패 사례·판단
+
+## 모델/초기자세
+
+- AS2 다리12+PiPER6+양finger2=20DOF.18policyaction중팔6은원본마스킹;팔은DLS6DIK/position drive. finger±0.049m열림유지.
+- 최신카메라/거치대포함URDF명목질량23.4303404741327kg. baseline45k실제훈련asset23.32806408133kg. hardware.json의질량은이전gain/DR설계참고값이며actual simulator mass는URDF에서결정.
+- arm base/base_link=(0.22435,0,0.1319)m;Orin origin=(-0.03,0,0.111875)m,질량0.8725kg. 실물체결/커버지지/볼트강도검증과시각결합은구분.
+- legdefault4다리모두[0,0.8,-1.6]rad;arm=[0,1.1,-0.55,0,0,0]. standingbase0.3244069024m에서28mm반경foot가네발모두기구학적으로접지. reset0.3264069024m은2mm상공. termination0.1m와혼동금지.
+- 원본B1leg hip좌+0.2/우−0.2,thigh0.8,calf−1.5.40mmfoot collision로default접지base0.516164m,baseheightreward0.55m와33.836mm차이. 이것은기본각고정계산이며학습된B1이피할수없는penalty는아님. 원본B1visual sphere30mm≠collision40mm.
+- UMI V7 형상·방향보존.142.5mm그리퍼베이스폭은EE축길이가아님. 단순링크6아닌실제TCP(piper_umi_nominal_tcp)로도달성판정.
+
+## EE 좌표/생성
+
+- 실제armbase관측·IK는실제body회전반영. 목표중심은standingarmbase의가상yaw frame으로height/roll/pitch-invariant: x0.22435,y0,z0.4563069024m+body아래지형높이.
+- XY/yaw는locomotion을따르지만crouch/tilt가목표z를같이끌어내리지않음.
+- 현재독립구면 r[.35,.80],고도각[−pi/2.5,pi/3](−72~60°),좌우각±1.2rad. 지면높이필터[.02,1.14912722545]m. orientationdelta각±.08rad;rolloffset0;pitch=2.455216137744035−고도각+delta. 바닥전용pitch연동제거.
+- baseline45k: r[.40,.48],고도각[.10,.50],좌우±.25rad,실제armbase중심이body높이/회전을따름. 현재와범위를혼동하지않음.
+- 원본B1:r[.4,.95],고도각−72~60°,좌우±1.2,center[.3,0,.7],pitch=.38−고도각,rollpi/2,delta각±.5.
+- sampling10회실패시이전위치뿐아니라orientationdelta도복원하는오류수정. 후보bank/IKvalidity는현재없음. bbox前方20mm연장.
+- nominalfeet+bodypose/6DIK/충돌조사에서211목표중205해발견,6개미해결. 완전한연속범위의도달성인증아님. far-forwardground일부는bodypitch약40°필요.
+- currentasset의CoMstatic조사에서최악전방margin78.2mm/rear하중여유18.5%수준,nominal약35.1%. 동적안정성·마찰·payload를인증하는수치는아님. 기록된RR무접촉이단순전방CoM전복때문이라는증거는없음.
+
+## Observation/PPO/ROA
+
+- current67+privileged18+history67×10=755.배포67+670=737. contact현재4+history40은완전제거;zero padding없음. gait5는활성. orientation59:62의기존zero는별개보존.
+- current67:IMU0:5,q5:23,dq23:41,이전legcommand41:53,velocity53:56,EEgoal56:59,orientationzero59:62,gaitindex62:63,clock63:67.
+- priv18:addedbasemass/COMxyz/grippermass/friction/legmotor12. 학습priv encoder→latent20,historyencoder670→latent20;actor입력87,critic85.90차원이라는설명은잘못.
+- iteration%20==0 history rollout/DAgger update,나머지privileged rollout/PPO update. 학습때history도같이학습되지만실물추론시온라인학습안함.
+- arm action마스킹/Leg·Arm reward/advantage·critichead·mixing은원본경로유지. reward branch를단순합쳐기여도계산하지않음.
+
+## 보상과 접촉
+
+- standstill=exp(−.05×다리12관절L1default편차),정지에서만+1scale. 접지/하중균등보상이아님. RR이떠도기준각근처면높은점수가능.
+- 원본tracking_lin_vel_max는목표초과속도에서포화. 높은+2근처보상과과속이공존. 현재초과속도전용penalty없음.
+- feet_contact_forces=reset후2초부터Σmax(norm(netF)−threshold,0),scale−.001. 현재B70N,기존B200N. hardforcecap아님. sensor-onlyfoot_contacts_z는0,PhysX netforce/contact_filt기반reward는유지.
+- contactshaping force/vel은positive mismatch×−2. 정지walkingmask로0,이동정상. 실제footworldvelocity/netforce참조. force/vel이0인것을AS2에센서가없어서라고해석하지않음.
+- feet_height_target.18m은footcenter높이관련보상의목표. 발바닥18cm/반드시18cm스윙강제아님. 기존B1.30에기하비약.60적용;scale+1유지.
+- reward수집은weighted→episode_sums,실제leg/armrew_buf는각/100. Episode_rew는누적/Tmax,정상50Hz에선per-step weighted평균의약50배. Episode_metric/baseheight는높이값이고penalty가아님. 같은W&B이름·단위로비교.
+- B1heightreward는worldZ,AS2는localterrain-relative. Rough에서직접동일수치비교주의.3개node최소높이는정확한발직하지형면아님.
+- 반경.028sphere의정확한접촉도verticalheight−radius는r(secθ−1)오차(10°0.43/20°1.80/30°4.33mm). 5cmgrid최솟값의위치/양자화오차가더해지면30°예에서28mm가짜들림. 이는기하예이며새실험실측아님.
+- exactPhysX mesh로upward support triangle nearestpoint거리−r가유력한개선안. rawheightfield와Delatin단순화mesh가다를수있음. sidewall/edge/penetration분리,공간index/GPU국소탐색필요. 아직구현안함.
+- FootLift제안−.2×stop×tanh(max(hmax−.005,0)/.04):기존45k평지RR27.66mm/P9545.20mm자료에서평균−.09824(가상계산). 실제학습적용/효과검증아님. 정지외란회복step도비용을받고max는높은발이하의다른발개선을구분하지못함.
+- Rough net-contact-force와ground contact의불일치약56%조사기록존재. netF만으로실제지지율/발높이/안정성인증금지. AS2 EDU실기footforce센서없음을전제로44observation제거;torque/Jacobian estimator는추후하드웨어과제.
+
+## 제어·DR·외란
+
+- policy/IK50Hz,PhysX200Hz(decimation4). 4번에걸친보간이아니라동일목표hold. 논문Z1실기800Hz와학습루프를혼동하지않음. PiPER800Hz독립실기bridge없음.
+- arm/gripperPhysXpositiondrive400/40유지. 과거armstrength샘플.7~1.3은실제positiondrive에적용되지않던경로;현재[1,1]명시. legDR유지. MIT SDK gain숫자를PhysX에기계적으로복사하지않음.
+- arm target slew3rad/s(.06rad/50Hz step),joint limitclamp. 실제측정관절속도보장아님. effort100Nm모델값유지,정격미확정. arm delay0/accelNone;임의로실기값을확정하지않음.
+- legactiondelay는240000policytick전0,이후1tick(20ms)원본실효schedule유지. config3→1은실제지연을3→1줄인것과다름.
+- push는8초주기로baseXY속도를대입,연속외력이아님. moving±.3963886m/s,정지정확0명령배수2.5→±.9909716. 실제deltaV는직전속도와차이. N힘과구분.
+- termination height.1m/rollpitch.8rad,bodycontact기존목록유지. reset초기높이와termination기준높이구분. arbitrarythreshold완화로넘어짐가리지않음.
+
+## 재현/운영 실패 사례
+
+- terminal/VSCode종료로학습소실가능: nohup+setsid,stdin/dev/null,로그경로명시. py -u/PYTHONUNBUFFERED=1 권장.실시간지표는ablation_metrics.jsonl.
+- wandb0.15.12는Forge서버settings=null로실패;project-local0.22.3에서해결. endpoint는api.forge.coreweave.com,로그인은각자. 로그인정보공유금지.
+- wandb-core/gpu_stats실행비트누락664로PermissionError:775복구. binary를일괄일반파일chmod하지않음.
+- 기존checkpoint가있어도mainoptimizer외historyoptimizer/counter/RNG/환경history누락으로bitwise동일resume불가. 새train은seed초기가중치로시작하며resumeid로착각하지않음.
+- A100MIG EGL렌더실패;OSMesaCPU렌더성공.초기MuJoCo3.1.6,후기재생3.5.0/Python3.11사용. framebuffer크기와offwidth/offheight일치필요.
+- PD/scripteddemo/기구학한계시각화/학습policyrollout/실물인증을구분. meshmaxZ가실제체결면이라는가정으로상판이뜬과거오류재발금지.
+- offline HTML은js/font/data를내장해야file://에서동작. 현재다운로드는vy0/ground64만,좌우미학습시험제외. 원본서버자료와현재70N model은다른실험.
+'''.replace('bbox前方','bbox 전방'))
+put('docs/CONTENTS_KO.md',r'''
+# 포함 범위와 보존 정책
+
+- 원본폴더구조를유지하여기존상대import/resource경로를살렸다. 상위저장소는low-level외프로젝트를담을수있다.
+- deploy70 / nocontact200의완성checkpoint전체,seed초기가중치,manifest,평가samples/result,ablation_metrics압축본포함. snapshot이후생성모델은목록에없음.
+- 과거AS2/forward/hw/gait의소스·자산·검증문서·각run의latest및주요round checkpoint선별포함. 이계열중일부는VBC원복/분리보상실험용이다. 최신70N기본으로실행하지않음.
+- source_copy_map.json은출처,checkpoint_index.json은모델목록. 최종실제파일hash는MANIFEST_SHA256.json. baseline200URDF는추가camera이전의학습당시파일로export에서만복원했다.
+- reports/는원시NPZ·평가표·workspace/CoM/충돌조사·뷰어와스크립트. 이전보고서설정은그시점기록이다. 서술이현재와충돌하면CURRENT_STATE/manifest/실제코드를우선한다.
+- tools/ + mujoco_mount_compare/ + robot-sources/ + wrist_camera_integration/source_bundle은URDF/UMI/장착판/카메라형상재구성자료. 처음중앙장착부터head구조까지기록을보존하며모두인증된기계설계라고주장하지않음.
+- 원본B1소스/45000checkpoint와rsl_rl을reference/vbc-legacy에복사했다. 서버원본은수정하지않았다.
+- 별도Unitree공식mjlab학습및DeepWBC전체저장소는VBC low-level과다른프로젝트여서포함하지않는다. Orin원본URDF는참고자료로만포함.
+- SDK/venv/cache/빌드산출물/원시W&B run기록/인증정보는포함하지않음. Loss/Perf/Train/Episode history는numeric JSONL압축으로추출보존한다.
+- 과거restart_push25 helper는.reference.txt로보관;삭제/kill포함restart shell은실행진입점에서제외. 일반train/evaluate스크립트만사용한다.
+- historical코드/manifest의서버절대경로는출처기록이다. 필요시scripts/relocate_historical.py로한정치환한다. coretrain/evaluate는상대root계산이며새launcher캐시는프로젝트내.cache를사용한다.
+''')
+put('docs/EXTERNAL_DEPENDENCIES_KO.md',r'''
+# 외부 의존성/재배포 범위
+
+## 필수 SDK
+
+Isaac Gym Preview4는NVIDIA재배포제한SDK다. 현장python/LICENSE.txt에도express license없는재배포금지문구가있어SDK코드/바이너리/일반SDKassets를포함하지않았다. 이패키지만으로SDK를대체할수는없다.
+
+- 공식확보: https://developer.nvidia.com/isaac-gym/download
+- 독립적으로라이선스동의후확보한배포본을`third_party/isaacgym/`에풀어`python/isaacgym`이위치하도록한다.
+- 서버폐기전SDK원본설치파일도별도의허가된비공개보관소에보관해야미래공식다운로드의존성을줄일수있다. GitHub소스저장소에는자동포함하지않는다.
+
+## Python/CUDA
+
+- 학습:Linuxx86_64/Ubuntu20.04/Python3.8,PyTorch1.13.1+cu117,torchvision0.14.1+cu117,numpy1.23.5. GPU/드라이버에의존하므로미래의다른GPU에서완전동일동작을보장하지않음.
+- PyTorch공식구버전설치: https://docs.pytorch.org/get-started/previous-versions/
+- 환경기록은environment/requirements-train.txt와requirements-wandb.txt. 현재설치버전기록이며깨끗한신규OS의전체재설치를이번작업에서실행한것은아님.
+- 시각화는별도Python3.11/MuJoCo3.5.0환경. 오래된Py3.8Gym과같은환경으로무리하게통합하지않음.
+- OSMesa시스템라이브러리(예:libosmesa6)/ffmpeg/컴파일러/CUDA호환드라이버는OS관리자가준비. 전역OS설정변경은이패키지생성중하지않음.
+
+## 공개 소스/자산
+
+- VBC원본LICENCE/BSDlegged_gym/rsl_rl/Three.js/RealSense출처·license는복사본에유지했다. 단일새라이선스로모든타사자산을재라이선스하지않는다.
+- AS2/PiPER CAD/mesh는source bundle과원본출처를보존했다. 하드웨어제조사자산의공개재배포범위가모든파일에명시돼있다고가정하지않는다. 실제공개push전저장소공개범위와각원본이용조건을확인한다.
+- 인증정보는포함하지않았다. WANDB_API_KEY는파일에쓰지말고개인로그인/CI secret로관리한다.
+''')
+put('docs/REPRODUCTION_KO.md',r'''
+# 설치·실행·평가·복구
+
+## 준비
+
+```bash
+cd low-level/vbc-as2piper
+python3.8 -m venv .venv-train
+source .venv-train/bin/activate
+python -m pip install pip==23.3.2 setuptools==59.5.0
+python -m pip install torch==1.13.1+cu117 torchvision==0.14.1+cu117 --extra-index-url https://download.pytorch.org/whl/cu117
+python -m pip install -r environment/requirements-train.txt -r environment/requirements-wandb.txt
+# 라이선스동의후별도받은IsaacGym을third_party/isaacgym/에풀어놓은상태
+python -m pip install --no-deps -e third_party/isaacgym/python
+python scripts/verify_snapshot.py
+```
+
+rsl_rl은PyPI최신버전으로대체하지않고각코드의rsl_rl_local을PYTHONPATH에서사용한다. legged_gym setup.py의일반dependency를무작정업그레이드하지않는다. 기존requirements도서버실제버전이기준이다.
+
+## W&B
+
+```bash
+export WANDB_BASE_URL=https://api.forge.coreweave.com
+export WANDB_ENTITY=quadruped_capstone
+wandb login --host "$WANDB_BASE_URL"
+```
+
+로그인은각자터미널에서한다. .netrc나API키를공유/커밋하지않는다. wandb-core/gpu_stats실행권한을확인한다. requirements로설치된일반패키지에실행권한이정상이라면추가chmod는불필요하다.
+
+## 새70N학습(처음부터)
+
+```bash
+run_name="as2piper_70N_$(date -u +%Y%m%dT%H%M%SZ)"
+mkdir -p local_logs
+nohup setsid env WANDB_MODE=online PYTHONUNBUFFERED=1 \
+  bash scripts/train70.sh --seed 1 --project as2piper-low --name "$run_name" \
+  > "local_logs/$run_name.log" 2>&1 < /dev/null &
+tail -f "local_logs/$run_name.log"
+```
+
+6144환경/45000iterations/200주기checkpoint가config기본이다. 신규이름을사용하고기존manifest폴더를덮어쓰지않는다. 소규모실험을원하면원본config직접변경대신별도copy에서명시적override를기록한다.
+
+## 저장된20k평가
+
+```bash
+checkpoint="$PWD/low-level-as2piper-head-orin-deploy/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_70N_20261115T133137Z/model_20000.pt"
+bash scripts/evaluate70.sh --checkpoint "$checkpoint" --seed 1 --device cuda:0 --terrain flat --seconds 40 --name "20k_flat_$(date -u +%Y%m%dT%H%M%SZ)"
+# rough는--terrain rough로별도실행
+```
+
+배포용historyencoder로추론,optimizerupdate0. sourcehash와runmanifest가일치하는지검사. currentsource는현재70N의기준이다. baseline200평가는nocontact코드의run_force_ablation.sh를사용한다. 같은관측차원이어도두config/URDF/좌표계를혼합하지않는다.
+
+## 체크포인트 해석
+
+`model_state_dict`에actor/critic/privileged/history가포함된다. mainoptimizer/iter/infos도저장된다. historyoptimizer/ROAcounter/RNG/환경/historybuffer는누락되어완전동일resume는불가. `--mode train`은resume옵션이없고seed초기가중치로시작한다.
+
+## 실기 배포 입력
+
+755는학습전용67+18+670이다. 실제입력은67+670=737. JITexporter가737을요구하고18privileged는필요없다. 현재action18의팔출력6은원본마스킹을유지하며실팔명령은IK별도경로다. PyTorch/JIT파일만으로AS2/PiPER실물통신이완성되는것은아니다.
+
+## 시각화
+
+별도Python3.11환경에서environment/requirements-viz.txt설치. OSMesa예:
+
+```bash
+MUJOCO_GL=osmesa PYOPENGL_PLATFORM=osmesa LIBGL_ALWAYS_SOFTWARE=1 \
+  python mujoco_mount_compare/run_mount_demo.py --variant plate_only --mode arm --seconds 5 --video
+```
+
+이것은역사적PD데모다. 학습policy평가는별도환경에서수행한다. 파일만보려면`reports/ee_ground_compare_20261114/viewer/downloads/as2piper_3d_offline.html`을브라우저로열면된다. 기록은이전200N45k계열이며새70N최신모델영상이아니다.
+
+과거reports/tools의절대경로는출처기록으로보존했다. 먼저`python scripts/relocate_historical.py --dry-run`으로목록을확인하고복사본에서`--apply`한다. 현재두핵심runtime/nativePython이나run sourcehash를임의로rewrite하지않는다.
+''')
+put('docs/GITHUB_KO.md',r'''
+# GitHub에 올릴 때
+
+정리만수행했으며git init/commit/remote설정/push는아직하지않았다. 원하는상위저장소에`low-level/vbc-as2piper/`전체를복사한다. 기존서버의`.git`은legacy를참조하는linkedworktree이므로절대복사하지않는다.
+
+## LFS
+
+checkpoint/mesh/npz/video/큰HTML등은동봉.gitattributes에LFS정책을정의했다. 상위저장소에서GitLFS를설치/활성화한후add해야한다. 도구가없다면설치방법은 https://git-lfs.com/ 참고.
+
+```bash
+cd <상위저장소>
+git lfs install
+git add low-level/vbc-as2piper
+# 아직commit/push전필수확인
+git lfs ls-files
+python low-level/vbc-as2piper/scripts/verify_snapshot.py
+# diff/stat와파일목록검토후commit/push
+```
+
+과거에binary를일반Git으로이미add/commit했다면.gitattributes추가만으로과거blob이LFS가되지는않는다. 이패키지를새로추가하기전에LFS활성화순서를지킨다. 자동historyrewrite는하지않는다.
+
+`git push`후`git lfs push --all <remote>`의성공여부도확인한다. 저장소/LFS저장량·전송량제약에걸리면모델을Release/허가된artifactstorage로옮기되README에고정URL·SHA256·다운로드스크립트를같이남겨야한다. 이패키지에는현재로선실제weight가포함돼있다.
+
+## 복구 검증
+
+서버를없애기전에별도PC/폴더에서새로clone하고`git lfs pull`,`python .../scripts/verify_snapshot.py`를실행한다. `.pt`가수백byte의LFS pointer로남으면실제모델복구가아니다. GPU없는PC도정적파일검증/오프라인HTML재생은가능하다. 학습재현은별도SDK/호환CUDA환경이필요하다.
+
+## 제외 항목
+
+인증정보,.git,.venv,.deps/.wandb_deps,컴파일캐시,.so,원시W&B서비스로그,실행중PID/삭제restart도구,SDK바이너리는일반push대상에서제외. frozencheckpoint/runmanifest/압축numericmetrics는의도적으로포함했다.
+''')
+put('scripts/train70.sh',r'''
+#!/usr/bin/env bash
+set -euo pipefail
+umask 0002
+root="$(cd "$(dirname "$0")/.." && pwd)"
+export PYTHONUNBUFFERED=1
+exec bash "$root/low-level-as2piper-head-orin-deploy/run_force_ablation.sh" --mode train --condition B "$@"
+''')
+put('scripts/evaluate70.sh',r'''
+#!/usr/bin/env bash
+set -euo pipefail
+umask 0002
+root="$(cd "$(dirname "$0")/.." && pwd)"
+export PYTHONUNBUFFERED=1
+exec bash "$root/low-level-as2piper-head-orin-deploy/run_force_ablation.sh" --mode evaluate --condition B "$@"
+''')
+put('scripts/relocate_historical.py',r'''
+"""Rebase only historical text files. Core training code/source hashes stay intact."""
+from pathlib import Path
+import argparse,json
+root=Path(__file__).resolve().parents[1]
+p=argparse.ArgumentParser();p.add_argument('--apply',action='store_true');p.add_argument('--dry-run',action='store_true');a=p.parse_args()
+mapping=[('/data/team/users/suhwan/vbc-as2piper',str(root)),('/data/team/users/suhwan/vbc-legacy',str(root/'reference/vbc-legacy')),('/data/team/users/suhwan/robot-sources',str(root/'robot-sources')),('/data/team/users/suhwan/deep-wbc-as2piper/as2piper/legged_gym/resources/robots/as2piper/urdf/as2piper_center_umi_orin64.urdf',str(root/'reference/orin_source/as2piper_center_umi_orin64.urdf'))]
+changed=[]
+for folder in ['reports','tools','mujoco_mount_compare']:
+ for f in (root/folder).rglob('*'):
+  if not f.is_file() or f.suffix not in ['.py','.sh','.xml']:continue
+  text=f.read_text();new=text
+  for old,replacement in mapping:new=new.replace(old,replacement)
+  # Archived scripts launch a former shared visualization venv.
+  new=new.replace(str(root/'unitree_rl_mjlab/.venv/bin/python'),str(root/'.venv-viz/bin/python'))
+  if new!=text:
+   changed.append(str(f.relative_to(root)))
+   if a.apply:
+    backup=f.with_suffix(f.suffix+'.server-original')
+    if not backup.exists():backup.write_text(text)
+    f.write_text(new)
+print(json.dumps({'apply':a.apply,'files':changed},indent=2))
+print('Rebasing intentionally changes exported archive hashes; regenerate manifest only after review.')
+''')
+# Fresh environment pins from current installed distribution metadata.
+train={'numpy':'1.23.5','scipy':'1.10.1','matplotlib':'3.7.5','torchinfo':'1.8.0','pydelatin':'0.2.8','imageio':'2.34.2','imageio-ffmpeg':'0.4.9','Pillow':'10.4.0'}
+put('environment/requirements-train.txt','\n'.join(f'{k}=={v}' for k,v in train.items()))
+wandbpkgs={d.metadata['Name']:d.version for d in distributions(path=[str(ROOT/'low-level-as2piper-head-orin-deploy/.wandb_deps')])}
+put('environment/requirements-wandb.txt','\n'.join(f'{k}=={v}' for k,v in sorted(wandbpkgs.items(),key=lambda x:x[0].lower())))
+put('environment/requirements-viz.txt','\n'.join(['numpy==2.4.6','scipy==1.17.1','matplotlib==3.11.2','mujoco==3.5.0','trimesh==5.2.0','imageio==2.38.1','imageio-ffmpeg==0.8.1','Pillow==13.0.0','PyOpenGL==3.1.10']))
+put('environment/environment-record.json',json.dumps({'training_python':'3.8','torch':'1.13.1+cu117','torchvision':'0.14.1+cu117','isaacgym':'Preview4 (external licensed dependency)','visualization_python':'3.11','observed_wandb_packages':wandbpkgs,'fresh_install_verified':False},indent=2))
+put('third_party/isaacgym/README_REQUIRED.md','This directory intentionally contains NO Isaac Gym SDK. Obtain Preview4 under NVIDIA terms at https://developer.nvidia.com/isaac-gym/download and extract so python/isaacgym exists here. Keep SDK private; never git add it.')
+put('.gitignore',r'''
+**/__pycache__/
+**/*.pyc
+**/.venv*/
+**/.deps/
+**/.wandb_deps/
+**/.torch_extensions/
+**/.cache/
+**/.pytest_cache/
+**/wandb/
+**/launch_logs/
+local_logs/
+.env
+.env.*
+!.env.example
+**/.netrc
+**/auth.json
+**/id_rsa
+**/id_ed25519
+third_party/isaacgym/*
+!third_party/isaacgym/README_REQUIRED.md
+''')
+put('.gitattributes',r'''
+*.pt filter=lfs diff=lfs merge=lfs -text
+*.pth filter=lfs diff=lfs merge=lfs -text
+*.stl filter=lfs diff=lfs merge=lfs -text
+*.STL filter=lfs diff=lfs merge=lfs -text
+*.dae filter=lfs diff=lfs merge=lfs -text
+*.DAE filter=lfs diff=lfs merge=lfs -text
+*.obj filter=lfs diff=lfs merge=lfs -text
+*.npz filter=lfs diff=lfs merge=lfs -text
+*.npy filter=lfs diff=lfs merge=lfs -text
+*.bin filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
+*.step filter=lfs diff=lfs merge=lfs -text
+*.STEP filter=lfs diff=lfs merge=lfs -text
+reports/ee_ground_compare_20261114/viewer/downloads/as2piper_3d_offline.html filter=lfs diff=lfs merge=lfs -text
+''')
+html=ROOT/'reports/ee_ground_compare_20261114/viewer/downloads/as2piper_3d_offline.html'
+if html.exists():
+ d=P/html.relative_to(ROOT);d.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(html,d)
+# Portable construction inputs (export only).
+p=P/'tools/build_head_orin_urdf.py'
+if p.exists():p.write_text(p.read_text().replace(str(ROOT.parent/'deep-wbc-as2piper/as2piper/legged_gym/resources/robots/as2piper/urdf/as2piper_center_umi_orin64.urdf'),str(P/'reference/orin_source/as2piper_center_umi_orin64.urdf')))
+# Do not leave an export-machine-specific literal: use existing ROOT if defined.
+if p.exists():
+ s=p.read_text().replace('Path("'+str(P/'reference/orin_source/as2piper_center_umi_orin64.urdf')+'")','ROOT / "reference/orin_source/as2piper_center_umi_orin64.urdf"');p.write_text(s)
+for p in [P,*P.rglob('*')]:
+ if p.is_symlink():raise RuntimeError('symlink')
+ p.chmod(0o2775 if p.is_dir() else (0o775 if p.suffix=='.sh' else 0o664))
+print('Docs, environment pins, portable launchers created.')

@@ -1,0 +1,148 @@
+--- before/legged_gym/envs/manip_loco/manip_loco.py
++++ after/legged_gym/envs/manip_loco/manip_loco.py
+@@ -66,6 +66,7 @@
+         Args:
+             actions (torch.Tensor): Tensor of shape (num_envs, num_actions_per_env)
+         """
++        actions = actions.clone()
+         actions[:, 12:] = 0.
+         actions = self._reindex_all(actions)
+         actions = torch.clip(actions, -self.clip_actions, self.clip_actions).to(self.device)
+@@ -74,10 +75,12 @@
+         if self.action_delay != -1:
+             self.action_history_buf = torch.cat([self.action_history_buf[:, 1:], actions[:, None, :]], dim=1)
+             # actions = self.action_history_buf[:, -self.action_delay - 1] # delay for 1/50=20ms
+-        if self.global_steps < 10000 * 24:
+-            actions = self.action_history_buf[:, -1]
++            if self.global_steps < 10000 * 24:
++                actions = self.action_history_buf[:, -1]
++            else:
++                actions = self.action_history_buf[:, -2]
+         else:
+-            actions = self.action_history_buf[:, -2]
++            self.action_history_buf[:, -1] = actions
+ 
+         self.actions = actions.clone()
+         
+@@ -143,7 +146,8 @@
+         self.contact_filt = torch.logical_or(contact, self.last_contacts) 
+         self.last_contacts = contact
+ 
+-        self.foot_contacts_from_sensor = self.force_sensor_tensor.norm(dim=-1) > 1.5    
++        # Retain the legacy field name, using the same contact state as rewards.
++        self.foot_contacts_from_sensor = self.contact_filt.clone()    
+ 
+         self._post_physics_step_callback()
+         
+@@ -242,7 +246,9 @@
+                 self.friction_coeffs_tensor,
+                 self.motor_strength[:, :12] - 1,
+             ), dim=-1)
+-            self.obs_buf = torch.cat([obs_buf, priv_buf, self.obs_history_buf.view(self.num_envs, -1)], dim=-1)
++        else:
++            priv_buf = torch.zeros(self.num_envs, self.cfg.env.num_priv, device=self.device)
++        self.obs_buf = torch.cat([obs_buf, priv_buf, self.obs_history_buf.view(self.num_envs, -1)], dim=-1)
+         
+         self.obs_history_buf = torch.where(
+             (self.episode_length_buf <= 1)[:, None, None], 
+--- before/legged_gym/scripts/b1z1_interface.py
++++ after/legged_gym/scripts/b1z1_interface.py
+@@ -88,14 +88,18 @@
+         if self.args.use_jit:
+             path = os.path.join(log_pth, 'traced', self.args.exptid + "_" + str(self.args.checkpoint) + "_jit.pt")
+             print("Loading jit for policy: ", path)
++            if not os.path.isfile(path):
++                export_dir = os.path.join(log_pth, 'traced')
++                export_policy_as_jit(ppo_runner.alg.actor_critic, export_dir)
++                path = os.path.join(export_dir, 'policy_1.pt')
+             self.policy = torch.jit.load(path, map_location=ppo_runner.device)
+ 
+     def step(self):
+         start_time = time.time()
+         obs = self.obs
+ 
+-        if args.use_jit:
+-            actions = self.policy(torch.cat((obs[:, :self.env.cfg.env.num_proprio], obs[:, self.env.cfg.env.num_priv:]), dim=1))
++        if self.args.use_jit:
++            actions = self.policy(torch.cat((obs[:, :self.env.cfg.env.num_proprio], obs[:, self.env.cfg.env.num_proprio+self.env.cfg.env.num_priv:]), dim=1))
+         else:
+             actions = self.policy(obs.detach(), hist_encoding=True)
+ 
+--- before/legged_gym/scripts/play.py
++++ after/legged_gym/scripts/play.py
+@@ -87,6 +87,10 @@
+     if args.use_jit:
+         path = os.path.join(log_pth, 'traced', args.exptid + "_" + str(args.checkpoint) + "_jit.pt")
+         print("Loading jit for policy: ", path)
++        if not os.path.isfile(path):
++            export_dir = os.path.join(log_pth, 'traced')
++            export_policy_as_jit(ppo_runner.alg.actor_critic, export_dir)
++            path = os.path.join(export_dir, 'policy_1.pt')
+         policy = torch.jit.load(path, map_location=ppo_runner.device)
+     
+     logger = Logger(env.dt)
+--- before/legged_gym/utils/helpers.py
++++ after/legged_gym/utils/helpers.py
+@@ -217,9 +217,22 @@
+     else: 
+         os.makedirs(path, exist_ok=True)
+         path = os.path.join(path, 'policy_1.pt')
+-        model = copy.deepcopy(actor_critic.actor).to('cpu')
++        model = HistoryPolicyExporter(copy.deepcopy(actor_critic.actor).to('cpu'))
+         traced_script_module = torch.jit.script(model)
+         traced_script_module.save(path)
++
++
++class HistoryPolicyExporter(torch.nn.Module):
++    """Deployment input is current proprioception followed by previous frames."""
++    def __init__(self, actor):
++        super().__init__()
++        self.actor = actor
++        self.input_size = actor.num_prop * (actor.num_hist + 1)
++
++    def forward(self, observations: torch.Tensor) -> torch.Tensor:
++        if observations.dim() != 2 or observations.size(1) != self.input_size:
++            raise ValueError("Deployment input must contain current proprioception and history")
++        return self.actor(observations, True)
+ 
+ 
+ class PolicyExporterLSTM(torch.nn.Module):
+--- before/rsl_rl_local/rsl_rl/modules/actor_critic.py
++++ after/rsl_rl_local/rsl_rl/modules/actor_critic.py
+@@ -203,7 +203,7 @@
+                         actor_arm_layers.append(activation)
+                 self.actor_arm_control_head = nn.Sequential(*actor_arm_layers)
+             
+-            def forward(self, obs, hist_encoding=False):
++            def forward(self, obs, hist_encoding: bool = False):
+                 obs_prop = obs[:, :self.num_prop]
+                 if hist_encoding:
+                     latent = self.infer_hist_latent(obs)
+--- before/rsl_rl_local/rsl_rl/runners/on_policy_runner.py
++++ after/rsl_rl_local/rsl_rl/runners/on_policy_runner.py
+@@ -32,6 +32,7 @@
+ import os
+ from collections import deque
+ import statistics
++from functools import partial
+ 
+ # from torch.utils.tensorboard import SummaryWriter
+ import torch
+@@ -88,7 +89,7 @@
+ 
+         _, _ = self.env.reset()
+ 
+-        self.alg.set_arm_default_coeffs(self.env.p_gains[12:], self.env.d_gains[12:], self.env.default_dof_pos[-7:-2])
++        self.alg.set_arm_default_coeffs(self.env.p_gains[12:], self.env.d_gains[12:], self.env.default_dof_pos[12:18])
+         
+     def set_it(self, it):
+         self.current_learning_iteration = it
+@@ -301,6 +302,6 @@
+             self.alg.actor_critic.to(device)
+ 
+         if not stochastic:
+-            return self.alg.actor_critic.act_inference
++            return partial(self.alg.actor_critic.act_inference, hist_encoding=True)
+         else:
+-            return self.alg.actor_critic.act
++            return partial(self.alg.actor_critic.act, hist_encoding=True)

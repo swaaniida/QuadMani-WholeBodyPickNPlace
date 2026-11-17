@@ -1,0 +1,28 @@
+{
+  "relocated_legged_gym": "/data/team/users/suhwan/vbc-as2piper/github-export/low-level/vbc-as2piper/low-level-as2piper-head-orin-deploy/legged_gym/__init__.py",
+  "relocated_rsl_rl": "/data/team/users/suhwan/vbc-as2piper/github-export/low-level/vbc-as2piper/low-level-as2piper-head-orin-deploy/rsl_rl_local/rsl_rl/__init__.py",
+  "threshold": 70.0,
+  "observations": 755,
+  "results": [
+    {
+      "iteration": 10000,
+      "strict_load": true,
+      "history_forward": true,
+      "jit737_parity": true
+    },
+    {
+      "iteration": 15000,
+      "strict_load": true,
+      "history_forward": true,
+      "jit737_parity": true
+    },
+    {
+      "iteration": 20000,
+      "strict_load": true,
+      "history_forward": true,
+      "jit737_parity": true
+    }
+  ],
+  "optimizer_steps": 0,
+  "note": "uses original separately licensed Isaac Gym and installed dependencies/cache; not a fresh machine reinstall or new physical rollout"
+}

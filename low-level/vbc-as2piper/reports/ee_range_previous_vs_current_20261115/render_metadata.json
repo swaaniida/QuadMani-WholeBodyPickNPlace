@@ -1,0 +1,45 @@
+{
+  "center": [
+    0.22435,
+    0.0,
+    0.4563069024246581
+  ],
+  "previous": {
+    "name": "previous45k",
+    "rmin": 0.4,
+    "rmax": 0.48,
+    "pmin": 0.1,
+    "pmax": 0.5,
+    "ymax": 0.25,
+    "color": [
+      0.05,
+      0.32,
+      0.96,
+      0.95
+    ]
+  },
+  "current": {
+    "name": "current",
+    "rmin": 0.35,
+    "rmax": 0.8,
+    "pmin": -1.2566370614359172,
+    "pmax": 1.0471975511965976,
+    "ymax": 1.2,
+    "color": [
+      0.98,
+      0.43,
+      0.025,
+      0.9
+    ]
+  },
+  "current_max_height_m": 1.149127225452209,
+  "current_raw_min_height_m": -0.30453831061146475,
+  "clearance_min_m": 0.02,
+  "body_box_not_subtracted": true,
+  "IK_checked": false,
+  "source_hashes": {
+    "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-deploy/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf": "7e37cadb8e55fddb50e6bcd10440c772997c72e11f72c7afddeef281954de02b",
+    "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-deploy/legged_gym/envs/manip_loco/as2_head_orin_config.py": "556ecc8d9c33824678870df5ae25260d5d586d7c6c34a71ac526db2fc0007a74",
+    "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-deploy/legged_gym/envs/manip_loco/manip_loco.py": "6d1787ab0189c26d50ce9cb77dfa9c7582e68af250c526ee8b2045f1889e277c"
+  }
+}

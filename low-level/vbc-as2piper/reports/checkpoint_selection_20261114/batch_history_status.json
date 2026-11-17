@@ -1,0 +1,14 @@
+[
+  {
+    "iteration": 40000,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 117.01436495780945
+  },
+  {
+    "iteration": 40000,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 133.05238366127014
+  }
+]

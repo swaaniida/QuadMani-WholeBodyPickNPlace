@@ -1,0 +1,52 @@
+{
+  "output": "low-level-as2piper-hw/resources/robots/as2piper/urdf/as2piper_head_umi_orin64_backmount.urdf",
+  "source_v7_urdf": "low-level-as2piper-hw/resources/robots/as2piper/urdf/as2piper_umi_actuated_v7.urdf",
+  "source_v7_sha256": "2846c82b2139a2384c32db36c81e3da8c15c81fe9541ad28d5cd4b61c9713737",
+  "orin_box_source_urdf": "/data/team/users/suhwan/deep-wbc-as2piper/as2piper/legged_gym/resources/robots/as2piper/urdf/as2piper_center_umi_orin64.urdf",
+  "orin_dimensions_m": [
+    0.11,
+    0.11,
+    0.07165
+  ],
+  "orin_mass_kg": 0.8725,
+  "orin_inertia_kg_m2": {
+    "ixx": 0.0012530352401041668,
+    "iyy": 0.0012530352401041668,
+    "izz": 0.0017595416666666668,
+    "ixy": 0.0,
+    "ixz": 0.0,
+    "iyz": 0.0
+  },
+  "orin_base_xyz_in_as2_base_m": [
+    -0.03,
+    0.0,
+    0.111875
+  ],
+  "orin_bottom_z_m": 0.07605,
+  "orin_footprint_x_m": [
+    -0.085,
+    0.025
+  ],
+  "orin_footprint_y_m": [
+    -0.055,
+    0.055
+  ],
+  "as2_base_collision_top_z_m": 0.076,
+  "base_collision_support_bounds_xy_m": {
+    "x": [
+      -0.1,
+      0.1
+    ],
+    "y": [
+      -0.112,
+      0.112
+    ]
+  },
+  "head_piper_base_xyz_in_as2_base_m": [
+    0.22435,
+    0.0,
+    0.1319
+  ],
+  "support_note": "Orin footprint is fully inside the flat top of the AS2 base collision box. STL top-surface sampling at 121 points over the full footprint had complete coverage and z range 0.07577\u20130.07601 m (0.24 mm relief). Fixed-joint placement is geometric only; actual fasteners and thermal clearances remain unverified.",
+  "output_sha256": "06b3709db4936c19104a37233f7d41951c5677e0c09b83903db2a034ee7f3e35"
+}

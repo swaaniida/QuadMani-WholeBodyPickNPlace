@@ -1,0 +1,472 @@
+{
+  "iterations": [
+    20000,
+    28000,
+    30000,
+    45000
+  ],
+  "checkpoints": [
+    {
+      "iteration": 20000,
+      "path": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_20000.pt",
+      "sha256": "63e27acd37ce0795e98c1246200f18b3b2ac67ee26108e1930b09f3d777a01f9"
+    },
+    {
+      "iteration": 28000,
+      "path": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_28000.pt",
+      "sha256": "f8d283d6872f866f3edb72b8dded6645df232d048746caa128a47c15610cb4d3"
+    },
+    {
+      "iteration": 30000,
+      "path": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_30000.pt",
+      "sha256": "d8e52319089216c59165a4952dedbb7aa2c3a62ee040711771e67a449f31bfa4"
+    },
+    {
+      "iteration": 45000,
+      "path": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m/model_45000.pt",
+      "sha256": "3b979389d0624e794a5176a2431db381b487894578662e224ed1f9207e1b3d80"
+    }
+  ],
+  "knots": [
+    [
+      0,
+      [
+        0.6148,
+        0,
+        0.6335
+      ],
+      [
+        0,
+        2.03353,
+        0
+      ],
+      "초기 자세"
+    ],
+    [
+      3,
+      [
+        0.6148,
+        0,
+        0.6335
+      ],
+      [
+        0,
+        2.03353,
+        0
+      ],
+      "정지 안정화"
+    ],
+    [
+      6,
+      [
+        0.52,
+        0,
+        0.8
+      ],
+      [
+        0,
+        1.7,
+        0
+      ],
+      "상단 접근"
+    ],
+    [
+      9,
+      [
+        0.72,
+        0,
+        0.43
+      ],
+      [
+        0,
+        2.25,
+        0
+      ],
+      "전방 확장"
+    ],
+    [
+      12,
+      [
+        0.6,
+        0,
+        0.16
+      ],
+      [
+        0,
+        2.8,
+        0
+      ],
+      "바닥 접근"
+    ],
+    [
+      15,
+      [
+        0.6,
+        0,
+        0.01
+      ],
+      [
+        0,
+        3.05,
+        0
+      ],
+      "바닥 접촉 목표"
+    ],
+    [
+      18,
+      [
+        0.55,
+        0.18,
+        0.02
+      ],
+      [
+        0.12,
+        2.9,
+        0.35
+      ],
+      "바닥 왼쪽"
+    ],
+    [
+      21,
+      [
+        0.55,
+        -0.18,
+        0.02
+      ],
+      [
+        -0.12,
+        2.9,
+        -0.35
+      ],
+      "바닥 오른쪽"
+    ],
+    [
+      24,
+      [
+        0.72,
+        0,
+        0.02
+      ],
+      [
+        0,
+        2.8,
+        0
+      ],
+      "바닥 먼 위치"
+    ],
+    [
+      27,
+      [
+        0.45,
+        0,
+        0.02
+      ],
+      [
+        0,
+        3.0,
+        0
+      ],
+      "바닥 가까운 위치"
+    ],
+    [
+      30,
+      [
+        0.5,
+        0.12,
+        0.13
+      ],
+      [
+        0.1,
+        2.65,
+        0.25
+      ],
+      "살짝 들어올리기"
+    ],
+    [
+      33,
+      [
+        0.5,
+        0.12,
+        0.01
+      ],
+      [
+        0.1,
+        3.0,
+        0.25
+      ],
+      "왼쪽 내려놓기"
+    ],
+    [
+      36,
+      [
+        0.68,
+        -0.15,
+        0.03
+      ],
+      [
+        -0.1,
+        2.85,
+        -0.25
+      ],
+      "바닥 대각선 이동"
+    ],
+    [
+      39,
+      [
+        0.66,
+        -0.12,
+        0.16
+      ],
+      [
+        0,
+        2.7,
+        -0.3
+      ],
+      "오른쪽 들어올리기"
+    ],
+    [
+      42,
+      [
+        0.66,
+        -0.12,
+        0.01
+      ],
+      [
+        0,
+        3.0,
+        -0.3
+      ],
+      "오른쪽 내려놓기"
+    ],
+    [
+      45,
+      [
+        0.56,
+        0,
+        0.02
+      ],
+      [
+        0,
+        3.0,
+        0
+      ],
+      "바닥 중앙"
+    ],
+    [
+      48,
+      [
+        0.48,
+        -0.18,
+        0.04
+      ],
+      [
+        -0.12,
+        2.85,
+        -0.35
+      ],
+      "가까운 오른쪽"
+    ],
+    [
+      51,
+      [
+        0.69,
+        0.16,
+        0.04
+      ],
+      [
+        0.12,
+        2.85,
+        0.35
+      ],
+      "먼 왼쪽"
+    ],
+    [
+      54,
+      [
+        0.58,
+        0,
+        0.01
+      ],
+      [
+        0,
+        3.05,
+        0
+      ],
+      "중앙 접촉 목표"
+    ],
+    [
+      57,
+      [
+        0.58,
+        0,
+        0.01
+      ],
+      [
+        0,
+        3.05,
+        0
+      ],
+      "바닥 유지"
+    ],
+    [
+      60,
+      [
+        0.58,
+        0,
+        0.16
+      ],
+      [
+        0,
+        2.8,
+        0
+      ],
+      "바닥에서 들어올리기"
+    ],
+    [
+      64,
+      [
+        0.6148,
+        0,
+        0.6335
+      ],
+      [
+        0,
+        2.03353,
+        0
+      ],
+      "초기 자세 복귀"
+    ]
+  ],
+  "metrics": {
+    "20000": {
+      "position_mean_cm": 1.9516827538609505,
+      "position_p95_cm": 3.6544117145240285,
+      "orientation_mean_deg": 6.1759562492370605,
+      "failures": 0,
+      "tcp_min_height_cm": 0.028085708618164062,
+      "video_replica_ground_segment_position_mean_cm": 2.313295751810074,
+      "video_replica_tcp_below_3cm_fraction": 0.6908333333333333,
+      "video_replica_finger_contact_frames": 203
+    },
+    "28000": {
+      "position_mean_cm": 2.5993330404162407,
+      "position_p95_cm": 6.082821432501076,
+      "orientation_mean_deg": 9.366616249084473,
+      "failures": 0,
+      "tcp_min_height_cm": 0.059707462787628174,
+      "video_replica_ground_segment_position_mean_cm": 2.8853194788098335,
+      "video_replica_tcp_below_3cm_fraction": 0.6683333333333333,
+      "video_replica_finger_contact_frames": 349
+    },
+    "30000": {
+      "position_mean_cm": 2.292412519454956,
+      "position_p95_cm": 5.779231321066617,
+      "orientation_mean_deg": 7.491365909576416,
+      "failures": 0,
+      "tcp_min_height_cm": 0.0398099422454834,
+      "video_replica_ground_segment_position_mean_cm": 2.519523538649082,
+      "video_replica_tcp_below_3cm_fraction": 0.7091666666666666,
+      "video_replica_finger_contact_frames": 346
+    },
+    "45000": {
+      "position_mean_cm": 1.9328709691762924,
+      "position_p95_cm": 4.112610220909119,
+      "orientation_mean_deg": 6.350868225097656,
+      "failures": 0,
+      "tcp_min_height_cm": 0.04273802042007446,
+      "video_replica_ground_segment_position_mean_cm": 1.9829630851745605,
+      "video_replica_tcp_below_3cm_fraction": 0.685,
+      "video_replica_finger_contact_frames": 151
+    }
+  },
+  "reset_events": [],
+  "body_names": [
+    "base_link",
+    "FL_hip",
+    "FL_thigh",
+    "FL_calf",
+    "FL_foot",
+    "FR_hip",
+    "FR_thigh",
+    "FR_calf",
+    "FR_foot",
+    "RL_hip",
+    "RL_thigh",
+    "RL_calf",
+    "RL_foot",
+    "RR_hip",
+    "RR_thigh",
+    "RR_calf",
+    "RR_foot",
+    "piper_link1",
+    "piper_link2",
+    "piper_link3",
+    "piper_link4",
+    "piper_link5",
+    "piper_link6",
+    "piper_gripper_link1",
+    "piper_gripper_link2",
+    "piper_umi_nominal_tcp"
+  ],
+  "finger_force_bodies": [
+    "piper_gripper_link1",
+    "piper_gripper_link2"
+  ],
+  "dof_names": [
+    "FL_hip_joint",
+    "FL_thigh_joint",
+    "FL_calf_joint",
+    "FR_hip_joint",
+    "FR_thigh_joint",
+    "FR_calf_joint",
+    "RL_hip_joint",
+    "RL_thigh_joint",
+    "RL_calf_joint",
+    "RR_hip_joint",
+    "RR_thigh_joint",
+    "RR_calf_joint",
+    "piper_joint1",
+    "piper_joint2",
+    "piper_joint3",
+    "piper_joint4",
+    "piper_joint5",
+    "piper_joint6",
+    "piper_gripper_joint1",
+    "piper_gripper_joint2"
+  ],
+  "fps": 25,
+  "terrain": "flat",
+  "duration_s": 64,
+  "seed": 1,
+  "video_envs": [
+    0,
+    8,
+    16,
+    24
+  ],
+  "protocol": "4 policies, 8 nominal replicas each; world-frame identical targets; velocity commands all zero; nominal physics; DR and push off; 90s evaluation timeout; identical reset setpoints, initial jitter removed; post-reset PhysX variation measured; failures retained",
+  "position_frame": "ground-fixed, relative to initial AS2 base xy",
+  "orientation_frame": "world XYZW quaternion",
+  "out_of_training_range": true,
+  "optimizer_updates": 0,
+  "source_sha256": {
+    "legged_gym/envs/manip_loco/manip_loco.py": "585a56391c42ec105d2f74132be035a3b333ddbbb8b952743015e3ade5bc3de2",
+    "legged_gym/envs/manip_loco/as2_head_orin_config.py": "20f6e0b6f8ae05b29215e7dd672a789221c96e6d385068a6c42f0117fb2320a2",
+    "legged_gym/envs/manip_loco/b1z1_config.py": "71d0cbd174c42cfbae937c2d38436e017bf8f5fe387576c9f94bfd55eae4a7ea",
+    "legged_gym/envs/rewards/maniploco_rewards.py": "0c8e001a3047f5af7b7ba56ddecf09723724baccbef6718dc860c5c4df1dd3b4",
+    "rsl_rl_local/rsl_rl/algorithms/ppo.py": "ef5d310f30918b2b70f396477e895cfd821de8bd49c6ef8cb532dc3ef7449402",
+    "rsl_rl_local/rsl_rl/storage/rollout_storage.py": "b003609b55899faa7fdcf11ba90f09c6e54aa492054d977bab2c8f36cdbbe5d3",
+    "rsl_rl_local/rsl_rl/modules/actor_critic.py": "5c6bb26a58d32a78ec9d6a5028754da14b547324111b45b591c5d292cf6cedc4",
+    "rsl_rl_local/rsl_rl/runners/on_policy_runner.py": "ef5ab2afa0422efc68e90a92702c2930e94c604c65c489b23c06e644e3a612e4",
+    "validation/hardware.json": "1885fd92aca3d0fb974b049726b447f9a2a62fd660cddeca7e51e10070014ce9",
+    "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf": "d0d667cbcdf9dbbad62432ed149764e305a395685e460a3bd3157c80bad94876",
+    "force_ablation/configs.py": "36ac1e52c3bf10a766a22261ce079cb61a6fd21892abac5ae952c0c567e65d90",
+    "force_ablation/runtime.py": "1ca9c274af32f2397d7f2c6fd7fdbcdfc739978492826fa098f5c0de3114bbf7",
+    "force_ablation/run.py": "d8e57531f0610c12bcde3e2fe97986f1fbda0401fc928578c37bb4f8f3ebfc12"
+  },
+  "initial_q_max_difference": 0.03639054298400879,
+  "initial_root_max_difference": 0.017393410205841064,
+  "urdf": "/data/team/users/suhwan/vbc-as2piper/reports/deployment_workspace_review_20261114/trained_asset/urdf/as2piper_head_orin_training.urdf",
+  "asset_note": "Exact-byte training URDF restored only into evaluation report directory from wrist-camera integration backup; production current-camera URDF preserved.",
+  "production_current_urdf_sha256": "8df7eb7b18d68bb376eca680bd09f256f8bd6f8cdfd9083d2fe5028fc0733139"
+}

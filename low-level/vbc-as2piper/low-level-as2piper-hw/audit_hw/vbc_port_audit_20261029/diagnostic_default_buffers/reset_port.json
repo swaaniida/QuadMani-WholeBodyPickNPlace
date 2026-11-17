@@ -1,0 +1,14 @@
+{
+  "case": "port",
+  "num_envs": 128,
+  "seconds": 4.0,
+  "resets_after_initial5steps": 0,
+  "roll_pitch_p95_rad": 0.03389344364404678,
+  "max_foot_force_N": 279.3810119628906,
+  "max_foot_force_including_initial_N": 433.01702880859375,
+  "max_applied_leg_torque_Nm": 23.677669525146484,
+  "ee_position_mean_m": 0.012826341204345226,
+  "mean_root_z_m": 0.3029760420322418,
+  "wall_s": 29.63935411022976,
+  "conditions": "No policy/DR; same zero-action dynamics; first five samples excluded from aggregate."
+}

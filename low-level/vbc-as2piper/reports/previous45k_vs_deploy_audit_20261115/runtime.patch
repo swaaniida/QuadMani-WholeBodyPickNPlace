@@ -1,0 +1,267 @@
+--- previous45k/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ deploy/legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -2,6 +2,7 @@
+ from .b1z1_config import B1Z1RoughCfg, B1Z1RoughCfgPPO
+ from pathlib import Path
+ import json
++import math
+ 
+ HW = json.loads((Path(__file__).resolve().parents[3] / "validation/hardware.json").read_text())
+ 
+@@ -16,6 +17,10 @@
+         env_spacing = 3.
+         stop_update_goal = False
+         pitch_control = False
++        # Preserve the effective legacy schedule explicitly: 0 -> 1 policy step.
++        # This is not measured AS2/PiPER latency.
++        action_delay = 1
++        action_delay_warmup_steps = 10000 * 24
+ 
+     class init_state(B1Z1RoughCfg.init_state):
+         pos = [0., 0., 0.3264069024246581]
+@@ -39,33 +44,53 @@
+         stiffness = {**{name + '_joint': gain for name, gain in zip(('hip', 'thigh', 'calf'), HW['kp'])}, 'piper_joint': 5.}
+         damping = {**{name + '_joint': gain for name, gain in zip(('hip', 'thigh', 'calf'), HW['kd'])}, 'piper_joint': .5}
+         leg_armature = HW['armature']
++        # Uncalibrated PhysX gains inherited from VBC, NOT PiPER MIT gains.
++        arm_drive_stiffness = 400.
++        arm_drive_damping = 40.
++        gripper_drive_stiffness = 400.
++        gripper_drive_damping = 40.
++        # Official position-mode maximum configurable speed, not device readback.
++        arm_command_velocity_limit = 3.
++        arm_command_acceleration_limit = None  # requires device/firmware readback
++        arm_command_delay_steps = 0  # unknown physical latency; no invented value
++        arm_effort_limit_verified = False
+ 
+     class goal_ee(B1Z1RoughCfg.goal_ee):
+-        arm_induced_pitch = 2.455216137744035
++        arm_induced_pitch = 2.455216137744035  # standing-arm-base coordinates; initial direction preserved
+         orientation_roll_offset = 0.
+         # Conservative body/head + Orin bounds, relative to the arm origin.
+         collision_lower_limits = [-.32435, -.112, -.1959]
+-        collision_upper_limits = [.10165, .112, .0158]
++        # Extend forward face 20 mm: cover the visual head tip with ~11 mm margin.
++        collision_upper_limits = [.12165, .112, .0158]
+         underground_limit = -.4563069024246581
+ 
+         class sphere_center:
+-            x_offset = 0.
++            # Virtual yaw frame, independent of body height/roll/pitch.
++            # Center equals actual arm base at nominal standing height (not reset height).
++            height_roll_pitch_invariant = True
++            x_offset = .22435
+             y_offset = 0.
+-            z_invariant_offset = 0.
++            z_invariant_offset = .4563069024246581
+ 
+         class ranges:
+             init_pos_start = [.427898468676838, .421686284147847, 0.]
+             init_pos_end = [.427898468676838, .421686284147847, 0.]
+-            # 4^3 position grid x 3^3 orientation grid screened offline (1728 poses).
+-            pos_l = [.40, .48]
+-            pos_p = [.10, .50]
+-            pos_y = [-.25, .25]
++            # Independent continuous spherical sampling, as in original VBC.
++            # VBC position angles. Height ceiling follows r_max / elevation_max.
++            # Ground/body-box rejection remains; no online IK validity or bank.
++            pos_l = [.35, .80]
++            pos_p = [-math.pi / 2.5, math.pi / 3.]
++            pos_y = [-1.2, 1.2]
++            height_above_ground = [.02, .4563069024246581 + .80 * math.sin(math.pi / 3.)]
+             delta_orn_r = [-.08, .08]
+             delta_orn_p = [-.08, .08]
+             delta_orn_y = [-.08, .08]
+             final_tracking_ee_reward = .55
+ 
+     class domain_rand(B1Z1RoughCfg.domain_rand):
++        # User-selected fixed 400/40 arm drive, matching effective VBC behavior.
++        # Leg motor DR is inherited unchanged; retain the arm DR mechanism for tests.
++        arm_motor_strength_range = [1., 1.]
+         added_mass_range = HW['added_base_mass_kg']
+         added_com_range_x = [-HW['base_com_half_range_m'][0], HW['base_com_half_range_m'][0]]
+         added_com_range_y = [-HW['base_com_half_range_m'][1], HW['base_com_half_range_m'][1]]
+--- previous45k/legged_gym/envs/manip_loco/manip_loco.py
++++ deploy/legged_gym/envs/manip_loco/manip_loco.py
+@@ -43,6 +43,7 @@
+ from legged_gym import LEGGED_GYM_ROOT_DIR
+ from legged_gym.utils.helpers import class_to_dict
+ from legged_gym.utils.terrain import Terrain, Terrain_Perlin
++from legged_gym.utils.piper_control import ArmCommandFilter, arm_drive_properties
+ from .b1z1_config import B1Z1RoughCfg
+ 
+ import sys
+@@ -73,11 +74,9 @@
+         self.render()
+         if self.action_delay != -1:
+             self.action_history_buf = torch.cat([self.action_history_buf[:, 1:], actions[:, None, :]], dim=1)
+-            # actions = self.action_history_buf[:, -self.action_delay - 1] # delay for 1/50=20ms
+-            if self.global_steps < 10000 * 24:
+-                actions = self.action_history_buf[:, -1]
+-            else:
+-                actions = self.action_history_buf[:, -2]
++            warmup = self.cfg.env.action_delay_warmup_steps
++            delay = 0 if self.global_steps < warmup else self.action_delay
++            actions = self.action_history_buf[:, -delay - 1]
+         else:
+             self.action_history_buf[:, -1] = actions
+ 
+@@ -94,6 +93,8 @@
+         dpose = torch.cat([dpos, drot], -1).unsqueeze(-1)
+         arm_pos_targets = self._control_ik(dpose) + self.dof_pos[:, 12:18]
+         arm_pos_targets = torch.clamp(arm_pos_targets, self.dof_pos_limits[12:18, 0], self.dof_pos_limits[12:18, 1])
++        arm_pos_targets = self.arm_command_filter.step(arm_pos_targets)
++        self.arm_position_targets = arm_pos_targets
+         all_pos_targets = torch.zeros_like(self.dof_pos)
+         all_pos_targets[:, -2:] = self.default_dof_pos[-2:]
+         all_pos_targets[:, -(6 + self.cfg.env.num_gripper_joints):-self.cfg.env.num_gripper_joints] = arm_pos_targets
+@@ -522,8 +523,11 @@
+         self.num_bodies = self.gym.get_asset_rigid_body_count(robot_asset)
+         dof_props_asset = self.gym.get_asset_dof_properties(robot_asset)
+         dof_props_asset['driveMode'][12:].fill(gymapi.DOF_MODE_POS)  # set arm to pos control
+-        dof_props_asset['stiffness'][12:].fill(400.0)
+-        dof_props_asset['damping'][12:].fill(40.0)
++        dof_props_asset['stiffness'][12:18].fill(self.cfg.control.arm_drive_stiffness)
++        dof_props_asset['damping'][12:18].fill(self.cfg.control.arm_drive_damping)
++        dof_props_asset['velocity'][12:18].fill(self.cfg.control.arm_command_velocity_limit)
++        dof_props_asset['stiffness'][18:].fill(self.cfg.control.gripper_drive_stiffness)
++        dof_props_asset['damping'][18:].fill(self.cfg.control.gripper_drive_damping)
+         rigid_shape_props_asset = self.gym.get_asset_rigid_shape_properties(robot_asset)
+         self.body_names = self.gym.get_asset_rigid_body_names(robot_asset)
+         self.body_names_to_idx = self.gym.get_asset_rigid_body_dict(robot_asset)
+@@ -651,6 +655,17 @@
+         else:
+             self.motor_strength = torch.ones(self.num_envs, self.num_torques, device=self.device)
+ 
++        # Arm policy actions/force commands are masked. Apply its sampled response
++        # variation to the actual PhysX position drives once during creation.
++        arm_strength = self.motor_strength[:, 12:18].cpu().numpy()
++        for i, (env_handle, actor_handle) in enumerate(zip(self.envs, self.actor_handles)):
++            props = self.gym.get_actor_dof_properties(env_handle, actor_handle)
++            props = arm_drive_properties(props, arm_strength[i],
++                                         self.cfg.control.arm_drive_stiffness,
++                                         self.cfg.control.arm_drive_damping,
++                                         self.cfg.control.arm_command_velocity_limit)
++            self.gym.set_actor_dof_properties(env_handle, actor_handle, props)
++
+         hip_names = ["FR_hip_joint", "FL_hip_joint", "RR_hip_joint", "RL_hip_joint"]
+         self.hip_indices = torch.zeros(len(hip_names), dtype=torch.long, device=self.device, requires_grad=False)
+         for i, name in enumerate(hip_names):
+@@ -930,6 +945,12 @@
+                     raise Exception(f"PD gain of joint {name} were not defined, setting them to zero")
+         # self.default_dof_pos = self.default_dof_pos.unsqueeze(0)
+         self.default_dof_pos_wo_gripper = self.default_dof_pos[:-self.cfg.env.num_gripper_joints]
++        if self.cfg.control.arm_command_acceleration_limit is not None:
++            raise ValueError('Arm acceleration profile needs firmware readback and a validated trajectory filter')
++        self.arm_command_filter = ArmCommandFilter(
++            self.dof_pos[:, 12:18], self.dof_pos_limits[12:18, 0], self.dof_pos_limits[12:18, 1],
++            self.cfg.control.arm_command_velocity_limit, self.dt,
++            self.cfg.control.arm_command_delay_steps)
+         
+         self.global_steps = 0
+ 
+@@ -984,6 +1005,8 @@
+         self.dof_pos[env_ids, 12:] = self.default_dof_pos[12:]
+         self.dof_pos[env_ids] = torch.clamp(self.dof_pos[env_ids], self.dof_pos_limits[:, 0], self.dof_pos_limits[:, 1])
+         self.dof_vel[env_ids] = 0.
++        if hasattr(self, 'arm_command_filter'):
++            self.arm_command_filter.reset(env_ids, self.dof_pos[env_ids, 12:18])
+ 
+         self.gym.set_dof_state_tensor(self.sim, gymtorch.unwrap_tensor(self.dof_state))
+         self.gym.refresh_rigid_body_state_tensor(self.sim)
+@@ -1297,6 +1320,7 @@
+                 self.ee_start_sphere[env_ids] = self.init_start_ee_sphere[:]
+                 self.ee_goal_sphere[env_ids] = self.init_end_ee_sphere[:]
+             else:
++                previous_orientation = self.ee_goal_orn_delta_rpy.clone()
+                 self._resample_ee_goal_orn_once(env_ids)
+                 self.ee_start_sphere[env_ids] = self.ee_goal_sphere[env_ids].clone()
+                 for i in range(10):
+@@ -1305,6 +1329,11 @@
+                     env_ids = env_ids[collision_mask]
+                     if len(env_ids) == 0:
+                         break
++                if len(env_ids) > 0:
++                    # Legacy retries could leave the last rejected target active.
++                    # Keep the previous goal/orientation if all ten draws failed.
++                    self.ee_goal_sphere[env_ids] = self.ee_start_sphere[env_ids]
++                    self.ee_goal_orn_delta_rpy[env_ids] = previous_orientation[env_ids]
+             self.ee_goal_cart[init_env_ids, :] = sphere2cart(self.ee_goal_sphere[init_env_ids, :])
+             self.goal_timer[init_env_ids] = 0.0
+ 
+@@ -1327,6 +1356,13 @@
+         else:
+             ground = self.env_origins[env_ids, 2]
+         underground_mask = torch.any(world[..., 2] < ground.unsqueeze(0), dim=0)
++        if 'height_above_ground' in self.goal_ee_ranges:
++            # Sphere interpolation can overshoot endpoint heights. Bound the
++            # actual sampled path in the same virtual ground frame as the goal.
++            frame_ground = self._get_ee_goal_spherical_center()[env_ids, 2] - self.cfg.goal_ee.sphere_center.z_invariant_offset
++            relative_z = world[..., 2] - frame_ground.unsqueeze(0)
++            z_min, z_max = self.goal_ee_ranges['height_above_ground']
++            underground_mask |= torch.any((relative_z < z_min - 1e-6) | (relative_z > z_max + 1e-6), dim=0)
+         return collision_mask | underground_mask
+ 
+     def _update_curr_ee_goal(self):
+@@ -1355,6 +1391,13 @@
+         self._resample_ee_goal(resample_id)
+     
+     def _get_ee_goal_spherical_center(self):
++        if getattr(self.cfg.goal_ee.sphere_center, 'height_roll_pitch_invariant', False):
++            # Like B1, XY and yaw follow locomotion; body crouch/tilt do not
++            # move the virtual center. Rough terrain uses local ground under
++            # the base, rather than a body-oriented height probe average.
++            center = torch.cat([self.root_states[:, :2],
++                                self._termination_ground_height()[:, None]], dim=1)
++            return center + quat_apply(self.base_yaw_quat, self.ee_goal_center_offset)
+         center = self.base_pos + quat_apply(self.base_quat, self.arm_base_offset)
+         center = center + quat_apply(self.base_yaw_quat, self.ee_goal_center_offset)
+         return center
+--- previous45k/legged_gym/utils/piper_control.py
++++ deploy/legged_gym/utils/piper_control.py
+@@ -0,0 +1,45 @@
++"""PiPER command-side limits; no claim of an identified motor/firmware model."""
++import torch
++
++
++class ArmCommandFilter:
++    """Bound transmitted joint-target slew and optionally model measured delay.
++
++    Velocity limits bound command slew, not guaranteed measured joint velocity.
++    No guessed acceleration, continuous torque, or CAN latency is inserted.
++    """
++    def __init__(self, initial, lower, upper, velocity, dt, delay_steps=0):
++        if dt <= 0 or int(delay_steps) != delay_steps or delay_steps < 0:
++            raise ValueError('Invalid arm command dt/delay')
++        self.lower, self.upper = lower, upper
++        self.max_delta = torch.as_tensor(velocity, device=initial.device, dtype=initial.dtype) * dt
++        if torch.any(self.max_delta <= 0):
++            raise ValueError('Arm command velocity must be positive')
++        self.delay_steps = int(delay_steps)
++        self.last = initial.clone()
++        self.history = initial[:, None, :].repeat(1, self.delay_steps + 1, 1)
++
++    def reset(self, env_ids, position):
++        self.last[env_ids] = position
++        self.history[env_ids] = position[:, None, :]
++
++    def step(self, desired):
++        bounded = torch.maximum(torch.minimum(desired, self.upper), self.lower)
++        self.history = torch.cat([self.history[:, 1:], bounded[:, None, :]], dim=1)
++        delayed = self.history[:, 0]
++        delta = torch.maximum(torch.minimum(delayed - self.last, self.max_delta), -self.max_delta)
++        self.last = torch.maximum(torch.minimum(self.last + delta, self.upper), self.lower)
++        return self.last.clone()
++
++
++def arm_drive_properties(properties, strength, stiffness, damping, velocity):
++    """Scale effective position-drive response, leaving leg/finger properties alone.
++
++    Gain scaling approximates response variation. Effort saturation is retained;
++    this is not an identified torque-constant/current-limit motor model.
++    """
++    result = properties.copy()
++    result['stiffness'][12:18] = stiffness * strength
++    result['damping'][12:18] = damping * strength
++    result['velocity'][12:18] = velocity
++    return result

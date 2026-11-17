@@ -1,0 +1,33 @@
+{
+  "early_mixed": {
+    "count": 1600,
+    "position_mean_m": 0.014526679180562496,
+    "position_p95_m": 0.01833311626687646,
+    "orientation_mean_deg": 3.374037981033325,
+    "orientation_p95_deg": 4.900391840934753,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.3674462914466858
+  },
+  "random_all": {
+    "count": 17600,
+    "position_mean_m": 0.017350783571600914,
+    "position_p95_m": 0.029241074621677396,
+    "orientation_mean_deg": 4.069879055023193,
+    "orientation_p95_deg": 7.516751837730405,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.7997195363044739
+  },
+  "random_hold": {
+    "count": 6614,
+    "position_mean_m": 0.015169575810432434,
+    "position_p95_m": 0.02368729934096336,
+    "orientation_mean_deg": 3.4915361404418945,
+    "orientation_p95_deg": 4.843770956993103,
+    "contact_gt_1N_fraction": 0.0,
+    "force_abs_max_p95_Nm": 0.366517052054405
+  },
+  "pose_requests": 149,
+  "pose_accepted": 145,
+  "pose_fallback_count": 4,
+  "conditions": "Fixed torso, nominal mass/COM, gravity on; same URDF, spherical sampler, DLS IK, 400/40 arm and 1800/35 gripper drives. Not locomotion."
+}

@@ -1,0 +1,204 @@
+{
+  "urdf": "low-level-as2piper-head-orin/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+  "status": "CAD_nominal_not_hand_eye_calibrated",
+  "original_sha256": "d0d667cbcdf9dbbad62432ed149764e305a395685e460a3bd3157c80bad94876",
+  "added_links": [
+    "piper_wrist_camera_mount",
+    "wrist_d435i_bottom_screw_frame",
+    "wrist_d435i_link",
+    "wrist_d435i_depth_frame",
+    "wrist_d435i_depth_optical_frame",
+    "wrist_d435i_infra1_frame",
+    "wrist_d435i_infra1_optical_frame",
+    "wrist_d435i_infra2_frame",
+    "wrist_d435i_infra2_optical_frame",
+    "wrist_d435i_color_frame",
+    "wrist_d435i_color_optical_frame",
+    "wrist_d435i_accel_frame",
+    "wrist_d435i_accel_optical_frame",
+    "wrist_d435i_gyro_frame",
+    "wrist_d435i_gyro_optical_frame"
+  ],
+  "added_fixed_joints": [
+    "piper_wrist_camera_mount_joint",
+    "wrist_d435i_joint",
+    "wrist_d435i_link_joint",
+    "wrist_d435i_depth_joint",
+    "wrist_d435i_depth_optical_joint",
+    "wrist_d435i_infra1_joint",
+    "wrist_d435i_infra1_optical_joint",
+    "wrist_d435i_infra2_joint",
+    "wrist_d435i_infra2_optical_joint",
+    "wrist_d435i_color_joint",
+    "wrist_d435i_color_optical_joint",
+    "wrist_d435i_accel_joint",
+    "wrist_d435i_accel_optical_joint",
+    "wrist_d435i_gyro_joint",
+    "wrist_d435i_gyro_optical_joint"
+  ],
+  "added_flange": false,
+  "active_joint_count_before": 20,
+  "active_joint_count_after": 20,
+  "camera_frame": "wrist_d435i_color_optical_frame",
+  "tcp_frame": "piper_umi_nominal_tcp",
+  "T_flange_color": [
+    [
+      7.936104332478853e-10,
+      0.8660253998961398,
+      0.5000000067347312,
+      -0.06677809966682932
+    ],
+    [
+      -1.0,
+      9.153475923262346e-10,
+      1.7923370950368759e-12,
+      0.03256309921235151
+    ],
+    [
+      -4.561215928782593e-10,
+      -0.5000000067347312,
+      0.8660253998961398,
+      0.033666784110371537
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_color_tcp": [
+    [
+      7.936104332478852e-10,
+      -1.0,
+      -4.5612159287825923e-10,
+      0.03256309919479217
+    ],
+    [
+      0.8660253998961397,
+      9.153475923262345e-10,
+      -0.5000000067347311,
+      -0.019510938201612094
+    ],
+    [
+      0.5000000067347311,
+      1.7923370950368446e-12,
+      0.8660253998961397,
+      0.16735013314465746
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T_tcp_color": [
+    [
+      7.936104332478853e-10,
+      0.8660253998961398,
+      0.5000000067347312,
+      -0.06677809966682932
+    ],
+    [
+      -1.0,
+      9.153475923262346e-10,
+      1.7923370950368759e-12,
+      0.03256309921235151
+    ],
+    [
+      -4.561215928782593e-10,
+      -0.5000000067347312,
+      0.8660253998961398,
+      -0.15468493519662846
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "tcp_note": "Existing nominal TCP retained",
+  "payload": {
+    "camera": {
+      "mass_kg": 0.072,
+      "center_m": [
+        -0.00822735,
+        -0.01745705,
+        -1.734723475976807e-18
+      ],
+      "inertia_kg_m2": [
+        [
+          5.2257488066940004e-05,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          7.516427952540001e-06,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          5.227391601948e-05
+        ]
+      ],
+      "collision_box_size_m": [
+        0.025054700000000003,
+        0.0899143,
+        0.025
+      ],
+      "mass_source": "Official description nominal 0.072 kg; not measured",
+      "inertia_source": "Uniform solid bounding-box approximation; official description explicitly marks its original inertia unreliable"
+    },
+    "mount": {
+      "mass_kg": 0.030276392802723782,
+      "center_m": [
+        -0.002951292944378184,
+        -0.011167686780970078,
+        0.04769998244792028
+      ],
+      "inertia_kg_m2": [
+        [
+          9.471601781257561e-06,
+          4.79622849158853e-10,
+          -9.000202806375196e-09
+        ],
+        [
+          4.79622849158853e-10,
+          1.635455743805268e-05,
+          8.072812880176134e-07
+        ],
+        [
+          -9.000202806375196e-09,
+          8.072812880176134e-07,
+          8.320508064872674e-06
+        ]
+      ],
+      "density_kg_m3": 1240,
+      "mass_source": "Provisional solid-PLA CAD estimate; actual print infill/hardware mass unknown"
+    },
+    "optical_frames": {
+      "mass_kg": 0,
+      "inertia_kg_m2": 0,
+      "note": "Massless fixed coordinate frames"
+    },
+    "device_intrinsics": "Not present on server; must read actual device at Windows resolution/profile; no invented K"
+  },
+  "reference_geometry": {
+    "camera_commit": "7a87097c499e3b0b69518d54a8e7a9ac1924e87c",
+    "clocking_deg": 180.0,
+    "camera_roll_deg": 0,
+    "camera_hole_center_residual_mm": [
+      3.988420704816152e-09,
+      3.9884172353692004e-09
+    ],
+    "wrist_axis_coaxial_residual_mm": [
+      3.1586558991881565e-08,
+      3.2312352430444923e-08
+    ]
+  },
+  "device_intrinsics_source": "Actual camera SDK JSON required; intrinsic K is not inferred from URDF"
+}

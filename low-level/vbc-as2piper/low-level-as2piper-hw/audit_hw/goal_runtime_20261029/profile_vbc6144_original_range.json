@@ -1,0 +1,21 @@
+{
+  "mode": "vbc",
+  "num_envs": 6144,
+  "steps": 24,
+  "wall_s": 3.788741130847484,
+  "equivalent_collection_24steps_s": 3.788741130847484,
+  "seconds": {
+    "goal_sampling_inclusive": 0.0477353734895587,
+    "candidate_check_inclusive": 0.01134423678740859
+  },
+  "calls": {
+    "goal_sampling_inclusive": 24,
+    "candidate_check_inclusive": 23
+  },
+  "items": {
+    "goal_sampling_inclusive": 5888,
+    "candidate_check_inclusive": 5888
+  },
+  "non_sampling_s": 3.741005757357925,
+  "note": "CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time."
+}

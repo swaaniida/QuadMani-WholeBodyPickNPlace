@@ -1,0 +1,95 @@
+diff --git a/mujoco_mount_compare/audit/camera_side_by_side_before/run_locomani_demo.py b/mujoco_mount_compare/run_locomani_demo.py
+index bece637..064beff 100755
+--- a/mujoco_mount_compare/audit/camera_side_by_side_before/run_locomani_demo.py
++++ b/mujoco_mount_compare/run_locomani_demo.py
+@@ -275,24 +275,30 @@ def run(args):
+     setup(model, data, mount_cfg, loco_cfg)
+     controller = build_controller(model)
+     duration = DURATIONS[args.scenario]
+-    OUT.mkdir(parents=True, exist_ok=True)
+-    csv_path = OUT / '{}_{}.csv'.format(args.variant, args.scenario)
+-    video_path = OUT / '{}_{}.mp4'.format(args.variant, args.scenario)
++    output = OUT / 'side_by_side' if args.quick else OUT
++    output.mkdir(parents=True, exist_ok=True)
++    csv_path = output / '{}_{}.csv'.format(args.variant, args.scenario)
++    video_path = output / '{}_{}.mp4'.format(args.variant, args.scenario)
+     renderer = wrist_renderer = writer = None
++    main_writer = wrist_writer = None
++    panel_width, panel_height = (320, 180) if args.quick else (640, 360)
++    fps = 8 if args.quick else 12
+     camera = None
+     if args.video:
+         import imageio.v2 as imageio
+         from PIL import Image, ImageDraw
+-        renderer = mujoco.Renderer(model, height=360, width=640)
+-        wrist_renderer = mujoco.Renderer(model, height=180, width=320)
++        renderer = mujoco.Renderer(model, height=panel_height, width=panel_width)
++        wrist_renderer = mujoco.Renderer(model, height=panel_height, width=panel_width)
+         camera = mujoco.MjvCamera()
+         camera.distance = 1.65
+         camera.azimuth = 145
+         camera.elevation = -18
+-        writer = imageio.get_writer(str(video_path), fps=12, codec='libx264', quality=8, macro_block_size=1)
++        writer = imageio.get_writer(str(video_path), fps=fps, codec='libx264', quality=7, macro_block_size=1)
++        main_writer = imageio.get_writer(str(video_path.with_name(video_path.stem+'_main.mp4')), fps=fps, codec='libx264', macro_block_size=1)
++        wrist_writer = imageio.get_writer(str(video_path.with_name(video_path.stem+'_wrist.mp4')), fps=fps, codec='libx264', macro_block_size=1)
+     dt = float(model.opt.timestep)
+     log_stride = max(1, int(0.02 / dt))
+-    render_stride = max(1, int((1.0 / 12.0) / dt))
++    next_frame_time = 0.0
+     writer_csv = None
+     with csv_path.open('w', newline='', encoding='utf-8') as handle:
+         csv_file = None
+@@ -333,18 +339,19 @@ def run(args):
+                 csv_file.writerow(row)
+                 if not all(math.isfinite(float(value)) for value in row.values()):
+                     raise RuntimeError('Non-finite simulation state')
+-            if renderer is not None and step % render_stride == 0:
++            if renderer is not None and data.time + 1e-9 >= next_frame_time:
++                next_frame_time += 1.0 / fps
+                 base = model.body('base_link').id
+                 camera.lookat[:] = data.xpos[base] + np.array([0.12, 0.0, 0.08])
+                 renderer.update_scene(data, camera=camera)
+                 main = renderer.render()
+                 wrist_renderer.update_scene(data, camera='wrist_camera')
+                 wrist = wrist_renderer.render()
+-                frame = main.copy()
+-                frame[5:185, 315:635] = wrist
++                main_writer.append_data(main)
++                wrist_writer.append_data(wrist)
++                frame = np.concatenate((main, wrist), axis=1)
+                 image = Image.fromarray(frame)
+                 draw = ImageDraw.Draw(image)
+-                draw.rectangle((314, 4, 635, 185), outline=(80, 220, 255), width=2)
+                 direction = 'HOLD'
+                 if command[0] > 0.5:
+                     direction = 'FORWARD'
+@@ -357,15 +364,19 @@ def run(args):
+                 elif command[2] > 0.5:
+                     direction = 'YAW LEFT'
+                 draw.text((8, 8), '{} | {} | {}'.format(args.variant, args.scenario, direction), fill=(255, 255, 255))
+-                draw.text((322, 10), 'WRIST CAMERA', fill=(80, 220, 255))
++                draw.text((panel_width+8, 10), 'WRIST CAMERA', fill=(80, 220, 255))
+                 frame = np.asarray(image)
+                 writer.append_data(frame)
+             step += 1
+     if writer is not None:
+         writer.close()
++        main_writer.close()
++        wrist_writer.close()
+         renderer.close()
+         wrist_renderer.close()
+         video_path.chmod(0o664)
++        video_path.with_name(video_path.stem+'_main.mp4').chmod(0o664)
++        video_path.with_name(video_path.stem+'_wrist.mp4').chmod(0o664)
+     csv_path.chmod(0o664)
+     print('Saved', csv_path, video_path if args.video else '')
+ 
+@@ -375,6 +386,7 @@ def main():
+     parser.add_argument('--variant', choices=('profiles_plate', 'plate_only'), required=True)
+     parser.add_argument('--scenario', choices=SCENARIOS, required=True)
+     parser.add_argument('--video', action='store_true')
++    parser.add_argument('--quick', action='store_true', help='320x180 per panel, 8fps, separate output directory')
+     args = parser.parse_args()
+     run(args)
+ 

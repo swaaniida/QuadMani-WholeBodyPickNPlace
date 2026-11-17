@@ -1,0 +1,666 @@
+--- before/legged_gym/envs/__init__.py
++++ after/legged_gym/envs/__init__.py
+@@ -47,3 +47,5 @@
+ task_registry.register('as2piper_plate_walk_wbc',AS2PiPERWalkWBC,AS2PiPERWalkWBCCfg(),AS2PiPERWalkWBCCfgPPO(),'manip_loco')
+ from .manip_loco.as2piper_walk_wbc import AS2PiPERWalkWBCNominalCfg
+ task_registry.register('as2piper_plate_walk_wbc_nominal',AS2PiPERWalkWBC,AS2PiPERWalkWBCNominalCfg(),AS2PiPERWalkWBCCfgPPO(),'manip_loco')
++from .manip_loco.as2piper_walk_wbc_vbc import AS2PiPERWalkWBCVBC,AS2PiPERWalkWBCVBCCfg,AS2PiPERWalkWBCVBCCfgPPO
++task_registry.register('as2piper_plate_walk_wbc_vbc',AS2PiPERWalkWBCVBC,AS2PiPERWalkWBCVBCCfg(),AS2PiPERWalkWBCVBCCfgPPO(),'manip_loco')
+--- before/legged_gym/scripts/train_hw.py
++++ after/legged_gym/scripts/train_hw.py
+@@ -35,7 +35,9 @@
+     (out/'runtime_snapshot.json').write_text(json.dumps(snapshot,indent=2,default=lambda v:v.tolist()))
+     wandb.config.update({'hardware_task':args.task,'observations':799,'num_envs':env.num_envs,
+         'leg_kp':cfg.control.stiffness,'leg_kd':cfg.control.damping,'gait_hz':cfg.env.frequencies,
+-        'terrain':cfg.terrain.mesh_type,'asset_sha256':snapshot['asset_sha256']})
++        'terrain':cfg.terrain.mesh_type,'asset_sha256':snapshot['asset_sha256'],
++        'ee_sampling_mode':cfg.goal_ee.sampling_mode,
++        'ee_command_ranges':class_to_dict(cfg.goal_ee.ranges)})
+     target=args.max_iterations or train_cfg.runner.max_iterations
+     remaining=target-runner.current_learning_iteration
+     if remaining<=0:raise ValueError('Target iteration is not after the checkpoint')
+--- before/restart_fresh.py
++++ after/restart_fresh.py
+@@ -1,5 +1,6 @@
+ """Delete the explicitly superseded resumed run and start fresh WBC training."""
+ import os
++import argparse
+ import shutil
+ import signal
+ import subprocess
+@@ -10,10 +11,9 @@
+ 
+ ROOT = Path(__file__).resolve().parent
+ OLD_ID = 'as2piper_hw_gaitfix_ee_transfer520_20261029_124502'
+-OLD_RUN = 'quadruped_capstone/as2piper-low/' + OLD_ID
+ 
+ 
+-def requested_processes():
++def requested_processes(old_id=OLD_ID):
+     matches = []
+     for entry in Path('/proc').iterdir():
+         if not entry.name.isdigit():
+@@ -22,7 +22,7 @@
+             args = (entry / 'cmdline').read_bytes().split(b'\0')
+             if b'legged_gym/scripts/train_hw.py' not in args:
+                 continue
+-            if b'--exptid' in args and args[args.index(b'--exptid') + 1] == OLD_ID.encode():
++            if b'--exptid' in args and args[args.index(b'--exptid') + 1] == old_id.encode():
+                 matches.append(int(entry.name))
+         except (FileNotFoundError, PermissionError, IndexError):
+             continue
+@@ -30,13 +30,34 @@
+ 
+ 
+ def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('--old-run-id', default=OLD_ID)
++    parser.add_argument('--task', default='as2piper_plate_walk_wbc_vbc')
++    parser.add_argument('--run-prefix', default='as2piper_hw_gaitfix_vbcsampler_scratch')
++    options = parser.parse_args()
++    old_id = options.old_run_id
++    if not old_id.startswith('as2piper_hw_gaitfix_') or any(c not in 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-' for c in old_id):
++        raise SystemExit('Only an exact AS2 HW gait-fix run ID is allowed.')
++    old_run = 'quadruped_capstone/as2piper-low/' + old_id
+     os.umask(0o002)
+-    fresh_marker = ROOT / 'launch_logs' / 'fresh_restart_20261029.done'
++    fresh_marker = ROOT / 'launch_logs' / ('fresh_restart_' + old_id + '.done')
++    legacy_marker = ROOT / 'launch_logs' / 'fresh_restart_20261029.done'
++    if old_id == OLD_ID and legacy_marker.exists():
++        raise SystemExit('Original restart already completed: ' + legacy_marker.read_text().strip())
+     if fresh_marker.exists():
+         raise SystemExit('Fresh restart already completed: ' + fresh_marker.read_text().strip())
+ 
+     # Match the full run ID, never stop another experiment by a broad pattern.
+-    for pid in requested_processes():
++    old_pids = set(requested_processes(old_id))
++    launcher_files = []
++    for path in (ROOT/'launch_logs').glob('*.pid'):
++        try:
++            pid = int(path.read_text().strip())
++            if pid in old_pids:
++                launcher_files.extend([path, path.with_suffix('.log')])
++        except (ValueError, OSError):
++            continue
++    for pid in old_pids:
+         try:
+             os.kill(pid, signal.SIGTERM)
+         except ProcessLookupError:
+@@ -45,7 +66,7 @@
+             raise SystemExit('Run this script as vbc or root; cannot stop PID ' + str(pid))
+         print('Stopping superseded run, PID', pid, flush=True)
+     deadline = time.monotonic() + 30
+-    while requested_processes():
++    while requested_processes(old_id):
+         if time.monotonic() > deadline:
+             raise SystemExit('Old training has not exited; no data deleted and no new training started.')
+         time.sleep(0.5)
+@@ -59,7 +80,7 @@
+             try:
+                 args = (entry / 'cmdline').read_bytes().split(b'\0')
+                 writer_alive |= (b'--pid' in args and
+-                                 args[args.index(b'--pid') + 1] == b'497233' and
++                                 args[args.index(b'--pid') + 1] in {str(p).encode() for p in old_pids} and
+                                  any(b'wandb-core' in arg for arg in args))
+             except (FileNotFoundError, PermissionError, IndexError):
+                 continue
+@@ -74,28 +95,27 @@
+     api = wandb.Api(timeout=30)
+     # Query the exact ID; fail before local deletion if the API is unavailable.
+     old = next((run for run in api.runs('quadruped_capstone/as2piper-low',
+-                                      filters={'name': OLD_ID}) if run.id == OLD_ID), None)
++                                      filters={'name': old_id}) if run.id == old_id), None)
+     if old is not None:
+         old.delete(delete_artifacts=False)
+-        print('Deleted W&B run:', OLD_RUN, flush=True)
++        print('Deleted W&B run:', old_run, flush=True)
+     else:
+-        print('W&B run already absent:', OLD_RUN, flush=True)
++        print('W&B run already absent:', old_run, flush=True)
+ 
+-    old_dir = ROOT / 'logs' / 'as2piper-low' / OLD_ID
++    old_dir = ROOT / 'logs' / 'as2piper-low' / old_id
+     if old_dir.is_symlink():
+         raise RuntimeError('Refusing unexpected symlink: ' + str(old_dir))
+     if old_dir.exists():
+         shutil.rmtree(str(old_dir))
+         print('Deleted local run:', old_dir, flush=True)
+     # These launcher files belong only to the superseded run.
+-    for suffix in ('log', 'pid'):
+-        path = ROOT / 'launch_logs' / ('train_20261029_124754_497229.' + suffix)
++    for path in launcher_files:
+         if path.exists():
+             path.unlink()
+ 
+-    new_id = 'as2piper_hw_gaitfix_ee_scratch_' + datetime.utcnow().strftime('%Y%m%d_%H%M%S')
++    new_id = options.run_prefix + '_' + datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+     env = os.environ.copy()
+-    env.update(AS2_TASK='as2piper_plate_walk_wbc_nominal', WANDB_MODE='online',
++    env.update(AS2_TASK=options.task, WANDB_MODE='online',
+                WANDB_BASE_URL='https://api.wandb.ai', WANDB_RUN_ID=new_id,
+                WANDB_NAME=new_id, WANDB_RESUME='never')
+     # No --resume, --resumeid, or --checkpoint: model/Adam/counters start fresh.
+@@ -103,7 +123,7 @@
+                    cwd=str(ROOT), env=env, check=True)
+     fresh_marker.write_text(new_id + '\n')
+     print('Fresh run:', new_id, flush=True)
+-    print('Task: as2piper_plate_walk_wbc_nominal; iteration 0 -> 45000', flush=True)
++    print('Task: ' + options.task + '; iteration 0 -> 45000', flush=True)
+ 
+ 
+ if __name__ == '__main__':
+--- before/README.md
++++ after/README.md
+@@ -1,8 +1,32 @@
+-# AS2+PiPER walking policy and WBC curriculum
++# AS2+PiPER WBC with offline-screened ranges and the VBC sampler
+ 
+ Independent copy of `low-level-as2piper-forward`. B1 baseline, old AS2 training,
+ and the forward test configuration are preserved. This is a new training task,
+ not a resume of the old 7000-iteration model.
++
++Current training starts **from iteration 0**, without a gait checkpoint or arm
++input transfer initialization. Default task: `as2piper_plate_walk_wbc_vbc`.
++EE pose IK/body collision screening runs offline in `audit_ee_range.py`.
++Training uses the original VBC spherical sampler and its ten-point EE box/floor
++checker; it does not instantiate or call the additional iterative IK/OBB guard.
++See [VBC_SAMPLER_FIX_KO.md](VBC_SAMPLER_FIX_KO.md) for measurements and range limits.
++
++```bash
++# Fresh 0 -> 45000 run, from the project root in the authenticated vbc account.
++WANDB_BASE_URL=https://api.wandb.ai bash low-level-as2piper-hw/launch_hw.sh \
++  --max_iterations 45000
++
++# Replace only the superseded slow run (stop + remove its local/W&B records).
++python low-level-as2piper-hw/restart_fresh.py \
++  --old-run-id as2piper_hw_gaitfix_ee_scratch_20261029_130112
++```
++
++W&B project: `as2piper-low`. New default ID:
++`as2piper_hw_gaitfix_vbcsampler_scratch_<UTC timestamp>_<PID>`.
++The flat nominal task retains friction/leg-strength randomization and disables
++payload/COM/gripper-mass/push randomization. It is not a ground-picking task.
++
++## Historical gait/transfer diagnostics (not the current launch recipe)
+ 
+ The measured arm-held walking checkpoint is
+ `logs/as2piper-low/gait_pilot500_20261029/model_500.pt`.
+@@ -11,7 +35,7 @@
+ See [GAIT_FIX_KO.md](GAIT_FIX_KO.md) for actual velocity/contact measurements.
+ 
+ ```bash
+-# Continue the validated nominal walking+arm-goal stage.
++# Historical transfer diagnostic, not the current fresh-start experiment.
+ # Run from the project root, using an environment already authenticated to W&B.
+ AS2_TASK=as2piper_plate_walk_wbc_nominal bash low-level-as2piper-hw/launch_hw.sh \
+   --resumeid walk_wbc_transfer520_20261029 --checkpoint 520 --max_iterations 45000
+--- /dev/null
++++ after/legged_gym/envs/manip_loco/as2piper_walk_wbc_vbc.py
+@@ -0,0 +1,48 @@
++"""Offline-screened AS2 ranges with the original VBC online sampler/checker."""
++from pathlib import Path
++from legged_gym import LEGGED_GYM_ROOT_DIR
++from legged_gym.utils.urdf_chain import URDFChain
++from .manip_loco import ManipLoco
++from .as2piper_forward import AS2PiPERForward
++from .as2piper_walk_wbc import AS2PiPERWalkWBC, AS2PiPERWalkWBCNominalCfg, AS2PiPERWalkWBCCfgPPO
++
++
++class AS2PiPERWalkWBCVBCCfg(AS2PiPERWalkWBCNominalCfg):
++    class goal_ee(AS2PiPERWalkWBCNominalCfg.goal_ee):
++        sampling_mode = 'original_vbc_spherical_offline_screened_ranges'
++        validation_mode = 'vbc_ee_box_and_floor_only'
++        offline_range_report = 'audit_hw/goal_runtime_20261029/range_holdout.json'
++        class ranges(AS2PiPERWalkWBCNominalCfg.goal_ee.ranges):
++            pos_l = [.46, .49]
++            pos_p = [.30, .45]
++            pos_y = [-.10, .10]
++            delta_orn_r = [-.015, .015]
++            delta_orn_p = [-.015, .015]
++            delta_orn_y = [-.015, .015]
++            init_pos_end = [.475, .375, 0.]
++
++
++class AS2PiPERWalkWBCVBCCfgPPO(AS2PiPERWalkWBCCfgPPO):
++    class runner(AS2PiPERWalkWBCCfgPPO.runner):
++        experiment_name = 'as2piper_walk_wbc_vbc_sampler'
++
++
++class AS2PiPERWalkWBCVBC(AS2PiPERWalkWBC):
++    # Same checker implementation as B1: ten EE points against a forbidden
++    # box/floor, not repeated candidate IK or arm/body OBB rejection.
++    _collision_check = ManipLoco._collision_check
++
++    def _init_buffers(self):
++        ManipLoco._init_buffers(self)
++        asset = Path(self.cfg.asset.file.format(LEGGED_GYM_ROOT_DIR=LEGGED_GYM_ROOT_DIR))
++        # Retain AS2 reset-height FK; do not instantiate an online pose guard.
++        self.leg_fk = [URDFChain(asset, 'base_link', leg+'_foot',
++            [leg+'_'+joint+'_joint' for joint in ('hip', 'thigh', 'calf')], self.device)
++            for leg in ('FL', 'FR', 'RL', 'RR')]
++        self.pose_fallback_count = 0
++
++    def _resample_ee_goal(self, env_ids, is_init=False):
++        if is_init:
++            # AS2 reset must immediately publish its FK-matched start goal.
++            return AS2PiPERForward._resample_ee_goal(self, env_ids, is_init=True)
++        return ManipLoco._resample_ee_goal(self, env_ids, is_init=False)
+--- /dev/null
++++ after/profile_goal_runtime.py
+@@ -0,0 +1,98 @@
++"""Scoped diagnostic: attribute rollout time without changing a live run."""
++import argparse
++import json
++import time
++import types
++from collections import defaultdict
++from pathlib import Path
++
++import isaacgym
++from isaacgym import gymapi
++import torch
++from legged_gym.envs.manip_loco.as2piper_walk_wbc import AS2PiPERWalkWBC, AS2PiPERWalkWBCNominalCfg
++from legged_gym.envs.manip_loco.manip_loco import ManipLoco
++from legged_gym.envs.manip_loco.as2piper_walk_wbc_vbc import AS2PiPERWalkWBCVBC, AS2PiPERWalkWBCVBCCfg
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('--mode', choices=['guard', 'vbc', 'screened'], required=True)
++    parser.add_argument('--num-envs', type=int, default=128)
++    parser.add_argument('--steps', type=int, default=120)
++    parser.add_argument('--output', required=True)
++    args = parser.parse_args()
++    torch.manual_seed(20261029)
++    cfg = AS2PiPERWalkWBCVBCCfg() if args.mode == 'screened' else AS2PiPERWalkWBCNominalCfg()
++    cfg.env.num_envs = args.num_envs
++    cfg.domain_rand.randomize_friction = False
++    cfg.domain_rand.randomize_motor = False
++    params = gymapi.SimParams()
++    params.dt = cfg.sim.dt
++    params.up_axis = gymapi.UP_AXIS_Z
++    params.gravity = gymapi.Vec3(0, 0, -9.81)
++    params.use_gpu_pipeline = True
++    params.physx.use_gpu = True
++    for key in ['num_position_iterations', 'num_velocity_iterations', 'contact_offset',
++                'rest_offset', 'bounce_threshold_velocity', 'max_depenetration_velocity']:
++        setattr(params.physx, key, getattr(cfg.sim.physx, key))
++    cls = AS2PiPERWalkWBCVBC if args.mode == 'screened' else AS2PiPERWalkWBC
++    env = cls(cfg, params, gymapi.SIM_PHYSX, 'cuda:0', True)
++    if args.mode == 'screened':
++        assert not hasattr(env, 'collision_guard')
++        assert env._collision_check.__func__ is ManipLoco._collision_check
++    if args.mode == 'vbc':
++        env._collision_check = types.MethodType(ManipLoco._collision_check, env)
++        initial = env._resample_ee_goal
++        def resample(ids, is_init=False):
++            if is_init:
++                return initial(ids, is_init=True)
++            return ManipLoco._resample_ee_goal(env, ids, is_init=False)
++        env._resample_ee_goal = resample
++    action = torch.zeros(env.num_envs, 18, device=env.device)
++    with torch.no_grad():
++        for _ in range(10):
++            env.step(action.clone())
++    elapsed = defaultdict(float)
++    calls = defaultdict(int)
++    counts = defaultdict(int)
++    def wrap(obj, field, label):
++        original = getattr(obj, field)
++        def timed(*a, **kw):
++            torch.cuda.synchronize()
++            start = time.perf_counter()
++            value = original(*a, **kw)
++            torch.cuda.synchronize()
++            elapsed[label] += time.perf_counter() - start
++            calls[label] += 1
++            if a and isinstance(a[0], torch.Tensor):
++                counts[label] += len(a[0])
++            return value
++        setattr(obj, field, timed)
++    wrap(env, '_resample_ee_goal', 'goal_sampling_inclusive')
++    wrap(env, '_collision_check', 'candidate_check_inclusive')
++    if hasattr(env, 'collision_guard'):
++        wrap(env.collision_guard, 'solve', 'iterative_ik')
++        wrap(env.collision_guard, 'collides', 'body_obb')
++    # Spread requests across rollout steps, as in an asynchronous vector env.
++    env.goal_timer[:] = env.traj_total_timesteps - torch.randint(1, 25, (env.num_envs,), device=env.device)
++    with torch.no_grad():
++        torch.cuda.synchronize()
++        start = time.perf_counter()
++        for step in range(args.steps):
++            env.step(action.clone())
++            if step % 24 == 23:
++                print('PROFILE', args.mode, step + 1, round(time.perf_counter() - start, 3), flush=True)
++        torch.cuda.synchronize()
++        total = time.perf_counter() - start
++    result = dict(mode=args.mode, num_envs=env.num_envs, steps=args.steps, wall_s=total,
++                  equivalent_collection_24steps_s=total * 24 / args.steps,
++                  seconds=dict(elapsed), calls=dict(calls), items=dict(counts),
++                  non_sampling_s=total-elapsed['goal_sampling_inclusive'],
++                  note='CUDA-synchronized nested timers; no PPO; concurrent existing training may affect absolute time.')
++    Path(args.output).write_text(json.dumps(result, indent=2))
++    print(json.dumps(result, indent=2), flush=True)
++    env.gym.destroy_sim(env.sim)
++
++
++if __name__ == '__main__':
++    main()
+--- /dev/null
++++ after/audit_ee_range.py
+@@ -0,0 +1,112 @@
++"""Offline pose/path screening; never called by the training sampler."""
++import argparse
++import hashlib
++import itertools
++import json
++from pathlib import Path
++import isaacgym
++from isaacgym.torch_utils import sphere2cart, quat_from_euler_xyz, quat_rotate_inverse
++import torch
++from legged_gym.envs.manip_loco.as2piper_hw import RefinedGuard
++from legged_gym.utils.urdf_chain import rotate
++
++ROOT = Path(__file__).resolve().parent
++CANDIDATES = {
++    'original': [[.38, .52], [-.25, .60], [-.40, .40], [-.15, .15]],
++    'compact': [[.40, .48], [.10, .50], [-.25, .25], [-.10, .10]],
++    'conservative': [[.40, .47], [.20, .50], [-.20, .20], [-.08, .08]],
++    'tight': [[.40, .46], [.25, .48], [-.15, .15], [-.05, .05]],
++    'front': [[.44, .48], [.35, .50], [-.10, .10], [-.03, .03]],
++    'center': [[.42, .46], [.38, .46], [-.10, .10], [-.03, .03]],
++    'extended': [[.46, .49], [.30, .45], [-.10, .10], [-.03, .03]],
++    'extended_small_orn': [[.46, .49], [.30, .45], [-.10, .10], [-.015, .015]],
++    'front_mid': [[.46, .49], [.25, .45], [-.15, .15], [-.015, .015]],
++    'front_work': [[.46, .50], [.20, .45], [-.20, .20], [-.015, .015]],
++}
++
++
++def main():
++    parser = argparse.ArgumentParser()
++    parser.add_argument('--output', required=True)
++    parser.add_argument('--device', default='cuda:0')
++    parser.add_argument('--candidates', nargs='+', default=list(CANDIDATES))
++    parser.add_argument('--random-paths', type=int, default=256)
++    parser.add_argument('--extra-offline-iterations', type=int, default=0)
++    parser.add_argument('--seed', type=int, default=20261029)
++    parser.add_argument('--path-samples', type=int, default=9)
++    parser.add_argument('--tilt-grid', type=int, default=3)
++    args = parser.parse_args()
++    device = args.device
++    torch.manual_seed(args.seed)
++    asset = ROOT / 'resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf'
++    guard = RefinedGuard(asset, ROOT/'resources/commands/arm_collision.json', device)
++    home = torch.tensor([0, 1.1, -.55, 0, 0, 0], device=device)
++    home_sphere = torch.tensor([.4278984686862198, .421686284190671, 0], device=device)
++    offset = torch.tensor([.005, 0, .08202847821788371], device=device)
++    tilt_values = torch.linspace(-.15, .15, args.tilt_grid).tolist()
++    tilts = torch.tensor(list(itertools.product(tilt_values, repeat=2)), device=device)
++    results = {}
++    for name in args.candidates:
++        bounds = CANDIDATES[name]
++        low = torch.tensor([b[0] for b in bounds[:3]]+[bounds[3][0]]*3, device=device)
++        high = torch.tensor([b[1] for b in bounds[:3]]+[bounds[3][1]]*3, device=device)
++        corners = torch.tensor(list(itertools.product([0., 1.], repeat=6)), device=device)
++        end = torch.cat((low+(high-low)*corners,
++                         low+(high-low)*torch.rand(args.random_paths, 6, device=device)))
++        # Half begin at home; half from independently sampled previous targets.
++        start = home_sphere.repeat(len(end), 1)
++        start[len(corners):] = low[:3]+(high[:3]-low[:3])*torch.rand(args.random_paths, 3, device=device)
++        end = end.repeat(len(tilts), 1)
++        start = start.repeat(len(tilts), 1)
++        body_rp = tilts.repeat_interleave(len(start)//len(tilts), 0)
++        n = len(start)
++        body = quat_from_euler_xyz(body_rp[:, 0], body_rp[:, 1], torch.zeros(n, device=device))
++        q = home.repeat(n, 1)
++        rejected = torch.zeros(n, dtype=torch.bool, device=device)
++        by_step = []
++        max_error = 0.; max_angle = 0.; joint_margin = float('inf'); min_z = float('inf')
++        with torch.no_grad():
++            for t in torch.linspace(0, 1, args.path_samples).tolist():
++                sphere = torch.lerp(start, end[:, :3], t)
++                world_vector = sphere2cart(sphere)
++                target = quat_rotate_inverse(body, world_vector)
++                orn = quat_from_euler_xyz(end[:, 3], -sphere[:, 1]+2.455216137744035+end[:, 4],
++                                         sphere[:, 2]+end[:, 5])
++                basis = torch.eye(3, device=device).expand(n, 3, 3)
++                axes = rotate(orn[:, None, :].expand(-1, 3, -1), basis)
++                local_axes = quat_rotate_inverse(body[:, None, :].expand(-1, 3, -1).reshape(-1, 4),
++                                                 axes.reshape(-1, 3)).reshape(n, 3, 3).transpose(1, 2)
++                q, failed = guard.solve(target, local_axes, q)
++                if args.extra_offline_iterations and failed.any():
++                    ids = failed.nonzero(as_tuple=False).flatten()
++                    q1, f1 = guard.solve(target[ids], local_axes[ids], q[ids], args.extra_offline_iterations)
++                    q[ids] = q1; failed[ids] = f1
++                collision = guard.collides(q, offset[None, None, :].expand(n, 1, 3))
++                z = .3244069024246581+rotate(body, offset.expand(n, 3))[:, 2]+world_vector[:, 2]
++                floor = z < .03
++                bad = failed | collision | floor
++                rejected |= bad
++                actual, rotation, _, _, _ = guard.fk(q)
++                error = (actual-target).norm(dim=-1)
++                angle = torch.rad2deg(torch.acos((((rotation*local_axes).sum((1, 2))-1)/2).clamp(-1, 1)))
++                max_error = max(max_error, error.max().item()); max_angle = max(max_angle, angle.max().item())
++                joint_margin = min(joint_margin, torch.minimum(q-guard.low, guard.high-q).min().item())
++                min_z = min(min_z, z.min().item())
++                by_step.append(dict(t=t, ik_failed=int(failed.sum()), body_collision=int(collision.sum()),
++                                    floor_failed=int(floor.sum()), failed=int(bad.sum())))
++        results[name] = dict(bounds=bounds, paths=n, poses=n*args.path_samples, rejected_paths=int(rejected.sum()),
++                             rejected_fraction=float(rejected.float().mean()),
++                             max_ik_position_error_m=max_error, max_ik_orientation_error_deg=max_angle,
++                             min_joint_margin_from_guard_rad=joint_margin, min_tcp_ground_height_m=min_z,
++                             steps=by_step,
++                             rejected_by_body_tilt=[dict(roll=float(tilts[i, 0]), pitch=float(tilts[i, 1]),
++                                 rejected=int(rejected.reshape(len(tilts), -1)[i].sum())) for i in range(len(tilts))])
++        print(name, json.dumps(results[name]), flush=True)
++        Path(args.output).write_text(json.dumps(dict(asset_sha256=hashlib.sha256(asset.read_bytes()).hexdigest(),
++            body_roll_pitch_rad=tilt_values, samples_per_path=args.path_samples, seed=args.seed,
++            extra_offline_iterations=args.extra_offline_iterations, candidates=results,
++            limitations='Sampled IK/body OBB/ground checks, not continuous collision certification; no legs/cables/objects/self-pairs.'), indent=2))
++
++
++if __name__ == '__main__':
++    main()
+--- /dev/null
++++ after/validate_vbc_sampler.py
+@@ -0,0 +1,39 @@
++"""Fixed-torso physical tracking check with forbidden online guard calls."""
++import json
++from pathlib import Path
++import isaacgym
++from audit_hw import fixed_base_hw as audit
++from legged_gym.envs.manip_loco.as2piper_walk_wbc_vbc import AS2PiPERWalkWBCVBC, AS2PiPERWalkWBCVBCCfg
++
++
++class CountedSampler(AS2PiPERWalkWBCVBC):
++    def _resample_ee_goal(self, ids, is_init=False):
++        result = super()._resample_ee_goal(ids, is_init)
++        if not is_init:
++            self.pose_requests += len(ids)
++            self.pose_accepted += len(ids)
++        return result
++
++
++class ForbiddenOnlineGuard:
++    def __init__(self, *args, **kwargs):
++        pass
++    def solve(self, *args, **kwargs):
++        raise AssertionError('Online iterative candidate IK must not run')
++    def collides(self, *args, **kwargs):
++        raise AssertionError('Online OBB rejection must not run')
++
++
++if __name__ == '__main__':
++    audit.AS2PiPERForward = CountedSampler
++    audit.AS2PiPERPlateCfg = AS2PiPERWalkWBCVBCCfg
++    audit.ArmCollisionGuard = ForbiddenOnlineGuard
++    audit.OUT = Path(__file__).resolve().parent/'audit_hw/goal_runtime_20261029/fixed_base_screened'
++    audit.OUT.mkdir(parents=True, exist_ok=True)
++    audit.main()
++    path = audit.OUT/'summary.json'
++    result = json.loads(path.read_text())
++    result['conditions'] = ('Fixed torso, nominal mass/COM, gravity; original VBC online sphere sampler/checker; '
++                            'offline-screened ranges; iterative candidate IK/OBB calls forbidden; not locomotion.')
++    result['pose_counter_definition'] = 'Generated requests, not online IK/OBB certification.'
++    path.write_text(json.dumps(result, indent=2))
+--- /dev/null
++++ after/VBC_SAMPLER_FIX_KO.md
+@@ -0,0 +1,119 @@
++# EE 명령 생성 병목 수정: 사전 범위 검토 + 원본 VBC 학습 경로
++
++## 적용 대상
++
++- 현재 권장 task: `as2piper_plate_walk_wbc_vbc`.
++- 기존 HW/nominal task는 비교·복구용으로 보존했다.
++- 새 장시간 실험은 체크포인트 없이 0→45000 iteration이다. Gait500/transfer520을 사용하지 않는다.
++- PPO, reward, 다리 제어, nominal DR 설정은 이번 수정에서 변경하지 않았다.
++- 기존 B1, 기존 AS2 및 forward 실험은 수정하지 않았다.
++
++## 병목 측정
++
++6,144환경, 24 control step, 같은 명목 모델·zero action·목표 재추출 일정에서 CUDA 동기화 계측을 수행했다. 기존 vbc 소유 학습과 동시에 실행했으므로 절대 속도에는 공유 GPU 부하가 포함된다. Nested timer는 서로 더하지 않는다.
++
++| 항목 | 추가 pose guard | 원본 VBC 검사, 기존 범위 | 최종 task, 확정 범위 |
++|---|---:|---:|---:|
++| 전체 수집 시간 |26.108s|3.789s|3.814s|
++| 목표 생성 포함 시간 |22.371s|0.0477s|0.0486s|
++| 후보 반복 IK |20.363s|없음|없음|
++| 팔/body OBB |0.658s|없음|없음|
++| 목표 생성 외 시간 |3.737s|3.741s|3.765s|
++
++추가 guard에서 5,888개 목표에 8,273개 후보를 검사했다(약1.405후보/목표). 거절 재추출만 폭증한 문제가 아니라 후보마다 수행한 반복 IK 자체가 주된 비용이다. 목표 생성이 수집 시간의85.7%, 반복 IK가78.0%를 차지했다.
++
++원본 VBC 검사만 사용하되 기존 범위를 그대로 둔 대조군에서도 시간이 감소했다. 범위를 좁혀 계산을 생략한 것만으로 설명되는 개선이 아니다.
++
++실제 PPO 진단은 새 task를 6,144환경으로 체크포인트 없이8 iteration 실행했다. Iteration2~7 전체 시간은3.91~4.45s였다. 마지막3회는3.92/4.19/3.91s였다. 약4초가 유지될 경우45000회는 약2.1일 규모다. 짧은 동시 실행 측정의 단순 외삽이며 단독 장시간 속도 보장은 아니다.
++
++## 학습 중 제거한 추가 검사
++
++- 목표 후보의 시작·중간·끝 pose를 반복 IK로 푸는 검사.
++- 후보 arm/body OBB 검사.
++- 실패 원인에 따른 추가52회 IK 반복.
++- 실패 시 orientation까지 다시 추출하는 HW 전용 루프.
++- HW 전용 이전 pose fallback.
++- 학습 환경의 `ArmCollisionGuard` 객체 생성.
++
++## 원본 VBC에서 유지한 검사·알고리즘
++
++- Radius/pitch/yaw 독립 uniform proposal.
++- Orientation delta 독립 추출.
++- 목표 위치 최대10회 재추출.
++- 구면 경로10점의 EE 금지 box/floor 검사.
++- 구면 선형 보간, trajectory1~3초, hold0.5~2초.
++- 실제 팔을 제어하는 매 control step의 DLS IK 및 position drive.
++
++`_collision_check`는 `ManipLoco._collision_check`를 직접 사용하고, 초기화 이외 `_resample_ee_goal`도 `ManipLoco` 구현을 직접 호출한다. 초기화에서는 AS2 FK와 일치하는 현재 목표를 즉시 반영하는 기존 보완을 유지한다. 실제 팔 제어 IK를 제거한 것은 아니다.
++
++## 확정 범위
++
++Arm origin은 실제 PiPER mount를 사용하고, 구면 축은 yaw/중력 정렬을 유지한다.
++
++| 항목 | 이전 | 확정 |
++|---|---|---|
++| 반경 |0.38~0.52m|0.46~0.49m|
++| 구면 pitch |−0.25~0.60rad|0.30~0.45rad|
++| 구면 yaw |±0.40rad|±0.10rad|
++| Orientation delta 각 축 |±0.15rad|±0.015rad|
++| 초기 end |[0.46,0.25,0]|[0.475,0.375,0]|
++
++방향 delta의±0.015rad는 약±0.86도다. 기본 EE 방향은 구면 pitch/yaw에 따라 계속 변하므로 절대 방향이 고정되는 설정은 아니다.
++
++## 사전 검토 방법과 결과
++
++기존 범위와 compact/tight/front/extended 등 후보를 비교했다. 넓은 후보 중 몸통 간섭·IK 오차가 검출된 범위는 채택하지 않았다. 일부64회 IK 미수렴은 오프라인에서 추가 반복으로 분리 확인했다. 이 추가 반복은 학습 경로에 포함하지 않는다.
++
++최종 별도 seed 검증:
++
++- Seed20261030, 후보 선정 검사와 분리.
++- 위치3축·방향 delta3축의64개 경계 조합과512개 무작위 목표.
++- 경계 조합은 초기 FK 위치에서 출발, 무작위 목표는 독립적으로 추출한 이전 위치에서 출발.
++- Body roll/pitch 각각−0.15,−0.075,0,+0.075,+0.15rad:25조건.
++- 14,400경로 ×17점 =244,800pose.
++- 최대256회 수준의 오프라인 IK 검토, 위치 허용1.2cm·방향 허용5도.
++- 허용오차 초과0, arm/body OBB 간섭0, ground 위반0.
++- 측정 최대 IK 위치 오차 약1.20cm, 방향 오차 약4.01도.
++
++이는 샘플 검사이며 연속 공간 전체의 안전 증명이 아니다. Body tilt±0.15rad 범위 밖, self/leg/object/cable 충돌은 보장하지 않는다. 확정 범위는 현재 보행/전방 조작 시작 자세용이다. 명목 조건에서 TCP는 지면 약0.54m 이상이며 바닥 파지 범위를 검증한 것이 아니다.
++
++## 실제 PhysX 추적·학습 확인
++
++32환경15초, 몸통 고정·중력 적용·무작위 목표:
++
++- 생성 요청149건.
++- 무작위 구간 위치 평균1.47cm, p95 1.68cm.
++- 방향 평균3.60도, p95 4.11도.
++- Arm contact>1N 관측0.
++- 추가 candidate IK/OBB 함수를 호출하면 AssertionError가 발생하도록 금지한 상태에서 통과.
++
++체크포인트 없이512환경40 PPO iteration을 실행해 업데이트·저장·799관측·20DOF·18action·6×6 arm Jacobian 검사를 통과했다. 이후32환경10초 free-base 평가의 위치 평균은1.36~1.42cm, p95 1.55~2.03cm였고 넘어짐0이었다.40회 정책의 실제 전진 속도는 거의0이었다. 실행 및 추적 smoke 검사이며 보행 수렴 검증으로 해석하지 않는다. 해당40회 모델은 장시간 학습의 시작점으로 사용하지 않는다.
++
++## 실행
++
++기존 느린 run은 이미 로드한 이전 클래스로 계속 실행된다. 파일 수정만으로 실행 중인 프로세스가 바뀌지 않는다. 현재 Codex는suhwan, 해당 프로세스는vbc 소유여서 직접 종료할 수 없다.
++
++인증된vbc 셸에서 현재 느린 run만 종료·W&B/로컬 기록 삭제 후 새 task를0부터 시작:
++
++```bash
++cd /data/team/users/suhwan/vbc-as2piper
++python low-level-as2piper-hw/restart_fresh.py \
++  --old-run-id as2piper_hw_gaitfix_ee_scratch_20261029_130112
++```
++
++새 run 프로젝트는`as2piper-low`, ID는`as2piper_hw_gaitfix_vbcsampler_scratch_<UTC시각>`이다. 다른 실험과500/520 진단 체크포인트는 보존한다.
++
++재현용 진단:
++
++```bash
++cd /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-hw
++export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python"
++export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions" OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 MAX_JOBS=2
++python profile_goal_runtime.py --mode screened --num-envs 6144 --steps 24 \
++  --output audit_hw/goal_runtime_20261029/profile_repeat.json
++python audit_ee_range.py --candidates extended_small_orn --random-paths 512 \
++  --seed 20261030 --tilt-grid 5 --path-samples 17 --extra-offline-iterations 192 \
++  --output audit_hw/goal_runtime_20261029/range_repeat.json
++```
++
++측정 원본은`audit_hw/goal_runtime_20261029`에 보존한다. 실제 W&B 실행의 교체 여부는 이 문서의 진단 결과와 구분한다.
+--- before/run_hw.sh
++++ after/run_hw.sh
+@@ -7,8 +7,8 @@
+ export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
+ export WANDB_MODE="${WANDB_MODE:-online}"
+ run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
+-export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_walk_wbc_${run_stamp}}"
+-export WANDB_NAME="${WANDB_NAME:-plate_walk_wbc_${run_stamp}}"
++export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_hw_gaitfix_vbcsampler_scratch_${run_stamp}}"
++export WANDB_NAME="${WANDB_NAME:-plate_walk_wbc_vbcsampler_${run_stamp}}"
+ export WANDB_DISABLE_GIT=true
+ python prepare_asset.py
+-exec python legged_gym/scripts/train_hw.py --task "${AS2_TASK:-as2piper_plate_walk_wbc}" --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
++exec python legged_gym/scripts/train_hw.py --task "${AS2_TASK:-as2piper_plate_walk_wbc_vbc}" --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
+--- before/evaluate_hw.py
++++ after/evaluate_hw.py
+@@ -19,14 +19,20 @@
+     parser.add_argument('--seconds',type=float,default=10.)
+     parser.add_argument('--arm-goals',action='store_true')
+     parser.add_argument('--domain-rand',action='store_true')
++    parser.add_argument('--vbc-sampler', action='store_true')
+     args=parser.parse_args()
+-    cfg=AS2PiPERHardwareCfg();cfg.env.num_envs=32
++    env_class=AS2PiPERHardware
++    cfg=AS2PiPERHardwareCfg()
++    if args.vbc_sampler:
++        from legged_gym.envs.manip_loco.as2piper_walk_wbc_vbc import AS2PiPERWalkWBCVBC,AS2PiPERWalkWBCVBCCfg
++        env_class=AS2PiPERWalkWBCVBC;cfg=AS2PiPERWalkWBCVBCCfg()
++    cfg.env.num_envs=32
+     cfg.init_state.leg_reset_fraction=0;cfg.init_state.init_vel_perturb_range=0
+     if not args.domain_rand:
+         for k in ['randomize_friction','randomize_base_mass','randomize_base_com','randomize_motor','randomize_gripper_mass','push_robots']:setattr(cfg.domain_rand,k,False)
+     params=gymapi.SimParams();params.dt=cfg.sim.dt;params.up_axis=gymapi.UP_AXIS_Z;params.gravity=gymapi.Vec3(0,0,-9.81);params.use_gpu_pipeline=True;params.physx.use_gpu=True
+     for k in ['num_position_iterations','num_velocity_iterations','contact_offset','rest_offset','bounce_threshold_velocity','max_depenetration_velocity']:setattr(params.physx,k,getattr(cfg.sim.physx,k))
+-    e=AS2PiPERHardware(cfg,params,gymapi.SIM_PHYSX,'cuda:0',True)
++    e=env_class(cfg,params,gymapi.SIM_PHYSX,'cuda:0',True)
+     r=HardwareRunner(e,class_to_dict(AS2PiPERHardwareCfgPPO()),None,'cuda:0');r.load(args.checkpoint);r.alg.actor_critic.eval()
+     targets=torch.tensor([[0,0,0],[args.vx,0,0],[0,0,args.yaw],[args.vx,0,args.yaw]],device=e.device).repeat_interleave(8,0)
+     e._resample_commands=lambda ids:e.commands.__setitem__(ids,targets[ids])

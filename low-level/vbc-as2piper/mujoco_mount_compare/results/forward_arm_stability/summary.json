@@ -1,0 +1,96 @@
+[
+  {
+    "condition": "rail_center_actuator_step",
+    "arm_moves_forward": false,
+    "initial_arm_base_x_relative_to_as2_m": 0.005,
+    "max_rail_travel_m": 0.0,
+    "computer_mass_assumption_kg": 1.0,
+    "computer_com_position_relative_to_base_m": [
+      0,
+      0,
+      0.155
+    ],
+    "rail_pair_mass_assumption_kg": 0.5,
+    "carriage_mass_assumption_kg": 0.5,
+    "total_model_mass_kg": 24.892153105804315,
+    "com_xyz_min_m": [
+      -0.03935241837411694,
+      -0.0027556751328471868,
+      0.354529739897804
+    ],
+    "com_xyz_max_m": [
+      0.007959302015726531,
+      0.001989240021659326,
+      0.40088404235951547
+    ],
+    "com_xyz_mean_m": [
+      -0.0270478241690423,
+      -0.0004319244574938642,
+      0.3649178745854534
+    ],
+    "com_x_relative_to_base_at_rail_release_m": 0.009974194011029953,
+    "com_x_relative_to_base_mean_during_scripted_step_m": 0.007384762183922128,
+    "com_z_relative_to_base_mean_after_settle_m": 0.07772184279862543,
+    "base_vertical_settle_drop_m": 0.03599747970571082,
+    "base_x_drift_m": -0.04524682619871464,
+    "pitch_abs_max_deg": 2.079181082567476,
+    "roll_abs_max_deg": 0.49002399095214083,
+    "support_margin_min_when_at_least_three_feet_loaded_m": 0.1663856097291371,
+    "support_margin_mean_when_at_least_three_feet_loaded_m": 0.18317367883474908,
+    "support_margin_invalid_sample_count": 1,
+    "frames_with_less_than_three_loaded_feet_fraction": 0.0024937655860349127,
+    "duration_s": 8,
+    "timestep_s": 0.002,
+    "render_fps": 12,
+    "controller": "PD + joint gravity feedforward; no base wrench or learned gait policy",
+    "video": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/results/forward_arm_stability/rail_center_actuator_step.mp4",
+    "timeseries": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/results/forward_arm_stability/rail_center_actuator_step.csv"
+  },
+  {
+    "condition": "rail_forward_actuator_step",
+    "arm_moves_forward": true,
+    "initial_arm_base_x_relative_to_as2_m": 0.005,
+    "max_rail_travel_m": 0.05,
+    "computer_mass_assumption_kg": 1.0,
+    "computer_com_position_relative_to_base_m": [
+      0,
+      0,
+      0.155
+    ],
+    "rail_pair_mass_assumption_kg": 0.5,
+    "carriage_mass_assumption_kg": 0.5,
+    "total_model_mass_kg": 24.892153105804315,
+    "com_xyz_min_m": [
+      -0.028731974688023933,
+      -0.0037835285501475117,
+      0.35562367504932163
+    ],
+    "com_xyz_max_m": [
+      0.007959302015726531,
+      0.0029874335326985813,
+      0.40088404235951547
+    ],
+    "com_xyz_mean_m": [
+      -0.014027569877846952,
+      -0.00044153493433795026,
+      0.3656183436716545
+    ],
+    "com_x_relative_to_base_at_rail_release_m": 0.021834615209682853,
+    "com_x_relative_to_base_mean_during_scripted_step_m": 0.01914539275894568,
+    "com_z_relative_to_base_mean_after_settle_m": 0.07768205034564246,
+    "base_vertical_settle_drop_m": 0.03559879821514633,
+    "base_x_drift_m": -0.03881083165901201,
+    "pitch_abs_max_deg": 1.350107040992969,
+    "roll_abs_max_deg": 0.593563927231504,
+    "support_margin_min_when_at_least_three_feet_loaded_m": 0.1663856097291371,
+    "support_margin_mean_when_at_least_three_feet_loaded_m": 0.18683115154880445,
+    "support_margin_invalid_sample_count": 1,
+    "frames_with_less_than_three_loaded_feet_fraction": 0.0024937655860349127,
+    "duration_s": 8,
+    "timestep_s": 0.002,
+    "render_fps": 12,
+    "controller": "PD + joint gravity feedforward; no base wrench or learned gait policy",
+    "video": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/results/forward_arm_stability/rail_forward_actuator_step.mp4",
+    "timeseries": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/results/forward_arm_stability/rail_forward_actuator_step.csv"
+  }
+]

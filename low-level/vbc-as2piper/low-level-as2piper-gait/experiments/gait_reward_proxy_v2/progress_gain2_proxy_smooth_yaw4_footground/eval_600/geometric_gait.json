@@ -1,0 +1,163 @@
+{
+  "reference": "Shortest distance to actual terrain triangles or dynamic oriented box minus sphere radius 0.028m. Geometric near-contact gap<2mm, not GRF. Excludes first 2s, done frames and abs roll/pitch>=0.35rad. Unsigned geometry is not a penetration-depth test.",
+  "slip_note": "Uses recorded v_COM + omega cross vertical sphere-bottom offset; approximate contact-point slip on rough terrain.",
+  "sampling_dt_s": 0.08,
+  "completed_updates": 600,
+  "conditions": "Terrain=trimesh, DR=True, deterministic history inference, random arm goals=True, 64 envs, 20.0s; 16 envs per command.",
+  "stand": {
+    "valid_fraction": 0.9944444444444445,
+    "gap_p95_per_foot_m": [
+      0.009241125732660286,
+      1.622065901756278e-05,
+      -2.250541001558342e-06,
+      0.003404249250888824
+    ],
+    "contact_fraction_per_foot": [
+      0.9120111731843575,
+      0.985195530726257,
+      0.9910614525139665,
+      0.9441340782122905
+    ],
+    "contact_proxy_agreement": 0.8717877094972067,
+    "contact_proxy_precision": 0.998489932885906,
+    "contact_proxy_recall": 0.8674927113702624,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.01815790683031082,
+    "contact_dominant_Hz": 0.611111111111111,
+    "geometric_two_or_more_contact_fraction": 0.9946927374301676,
+    "geometric_no_contact_fraction": 0.0033519553072625698,
+    "geometric_phase_contact_agreement": 0.9581005586592178,
+    "missing_geometric_stance_per_foot": [
+      0.08798882681564246,
+      0.014804469273743017,
+      0.008938547486033519,
+      0.055865921787709494
+    ],
+    "missing_proxy_stance_same_samples": [
+      0.35698324022346367,
+      0.016201117318435754,
+      0.05111731843575419,
+      0.24608938547486034
+    ],
+    "closest_surface_tangent_slip_m_s": 0.019222335889935493,
+    "grid_minus_contact_ground_abs_p95_m": 0.042474404349923126,
+    "counterfactual_grid_height_reward": 0.0,
+    "counterfactual_last_support_height_reward": 0.0
+  },
+  "forward": {
+    "valid_fraction": 0.9825,
+    "gap_p95_per_foot_m": [
+      0.1414298504590988,
+      0.0785425722599029,
+      0.05574141070246695,
+      0.07814827561378479
+    ],
+    "contact_fraction_per_foot": [
+      0.4975968334746961,
+      0.6307605315238903,
+      0.7070964093864858,
+      0.6316087079445858
+    ],
+    "contact_proxy_agreement": 0.952078032230704,
+    "contact_proxy_precision": 0.998636926889715,
+    "contact_proxy_recall": 0.9235617694247078,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.08605360984802246,
+    "contact_dominant_Hz": 2.0,
+    "geometric_two_or_more_contact_fraction": 0.9510884930732258,
+    "geometric_no_contact_fraction": 0.0016963528413910093,
+    "geometric_phase_contact_agreement": 0.7817359344076902,
+    "missing_geometric_stance_per_foot": [
+      0.17750439367311072,
+      0.029850746268656716,
+      0.024582967515364356,
+      0.007029876977152899
+    ],
+    "missing_proxy_stance_same_samples": [
+      0.20035149384885764,
+      0.0456540825285338,
+      0.10272168568920105,
+      0.012302284710017574
+    ],
+    "closest_surface_tangent_slip_m_s": 0.09222286939620972,
+    "grid_minus_contact_ground_abs_p95_m": 0.04085523169487715,
+    "counterfactual_grid_height_reward": 0.3235347867012024,
+    "counterfactual_last_support_height_reward": 0.45594221353530884
+  },
+  "turn": {
+    "valid_fraction": 0.9833333333333333,
+    "gap_p95_per_foot_m": [
+      0.12058348059654232,
+      0.11552630513906478,
+      0.037442485243082024,
+      0.08427657634019849
+    ],
+    "contact_fraction_per_foot": [
+      0.5282485875706214,
+      0.5810734463276837,
+      0.7926553672316384,
+      0.6211864406779661
+    ],
+    "contact_proxy_agreement": 0.9500706214689265,
+    "contact_proxy_precision": 0.991044776119403,
+    "contact_proxy_recall": 0.929243170622481,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.1192518025636673,
+    "contact_dominant_Hz": 2.0,
+    "geometric_two_or_more_contact_fraction": 0.9398305084745763,
+    "geometric_no_contact_fraction": 0.0031073446327683617,
+    "geometric_phase_contact_agreement": 0.7382768361581921,
+    "missing_geometric_stance_per_foot": [
+      0.18101933216168717,
+      0.05985915492957746,
+      0.08362676056338028,
+      0.016695957820738138
+    ],
+    "missing_proxy_stance_same_samples": [
+      0.1968365553602812,
+      0.07130281690140845,
+      0.15492957746478872,
+      0.014938488576449912
+    ],
+    "closest_surface_tangent_slip_m_s": 0.12739203870296478,
+    "grid_minus_contact_ground_abs_p95_m": 0.04397761877626181,
+    "counterfactual_grid_height_reward": 0.2546287477016449,
+    "counterfactual_last_support_height_reward": 0.37887701392173767
+  },
+  "forward_turn": {
+    "valid_fraction": 0.9819444444444444,
+    "gap_p95_per_foot_m": [
+      0.12096126377582546,
+      0.11240591108798978,
+      0.04892232567071913,
+      0.08449368774890897
+    ],
+    "contact_fraction_per_foot": [
+      0.5301272984441301,
+      0.6237623762376238,
+      0.7586987270155587,
+      0.6727015558698727
+    ],
+    "contact_proxy_agreement": 0.9499292786421499,
+    "contact_proxy_precision": 0.9940232040314074,
+    "contact_proxy_recall": 0.9281102965313491,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.10871274769306183,
+    "contact_dominant_Hz": 2.0,
+    "geometric_two_or_more_contact_fraction": 0.9499292786421499,
+    "geometric_no_contact_fraction": 0.004526166902404526,
+    "geometric_phase_contact_agreement": 0.728076379066478,
+    "missing_geometric_stance_per_foot": [
+      0.17398945518453426,
+      0.036939313984168866,
+      0.09938434476693052,
+      0.013181019332161687
+    ],
+    "missing_proxy_stance_same_samples": [
+      0.19595782073813708,
+      0.05452946350043975,
+      0.18293755496921724,
+      0.02460456942003515
+    ],
+    "closest_surface_tangent_slip_m_s": 0.1143006905913353,
+    "grid_minus_contact_ground_abs_p95_m": 0.0461501218378544,
+    "counterfactual_grid_height_reward": 0.24501599371433258,
+    "counterfactual_last_support_height_reward": 0.39893171191215515
+  }
+}

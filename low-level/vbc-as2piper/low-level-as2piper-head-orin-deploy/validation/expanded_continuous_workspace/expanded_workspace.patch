@@ -1,0 +1,120 @@
+--- before/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -55,6 +55,10 @@
+         arm_effort_limit_verified = False
+ 
+     class goal_ee(B1Z1RoughCfg.goal_ee):
++        position_linked_floor_pitch = True
++        floor_pitch_x = [.55, .975]
++        floor_pitch_deg = [175., 150.]
++        floor_pitch_blend_z = [.10, .25]
+         arm_induced_pitch = 2.455216137744035
+         orientation_roll_offset = 0.
+         # Conservative body/head + Orin bounds, relative to the arm origin.
+@@ -75,9 +79,13 @@
+             init_pos_start = [.427898468676838, .421686284147847, 0.]
+             init_pos_end = [.427898468676838, .421686284147847, 0.]
+             # Original continuous spherical sampler; no IK feasibility rejection.
+-            pos_l = [.40, .48]
+-            pos_p = [.10, .50]
+-            pos_y = [-.25, .25]
++            # Outer spherical bounds; radius is conditional on elevation so
++            # x_nominal=0.45..0.975 and ground-relative z=0.02..0.85 stay bounded.
++            pos_l = [.22565, .8682391004806224]
++            pos_p = [-1.0934979298811465, 1.0503443030006583]
++            pos_y = [-.30, .30]
++            horizontal_reach = [.22565, .75065]
++            height_above_ground = [.02, .85]
+             delta_orn_r = [-.08, .08]
+             delta_orn_p = [-.08, .08]
+             delta_orn_y = [-.08, .08]
+--- before/legged_gym/envs/manip_loco/manip_loco.py
++++ legged_gym/envs/manip_loco/manip_loco.py
+@@ -1295,6 +1295,24 @@
+         return torch.clip(torques, -self.torque_limits, self.torque_limits)
+     
+     def _resample_ee_goal_sphere_once(self, env_ids):
++        if 'horizontal_reach' in self.goal_ee_ranges:
++            # Continuous spherical sampling with analytic geometric bounds only.
++            # No IK, body-pose, CoM, torque or bank-based acceptance test.
++            phi = torch_rand_float(*self.goal_ee_ranges['pos_p'], (len(env_ids), 1), device=self.device).squeeze(1)
++            rho_min, rho_max = self.goal_ee_ranges['horizontal_reach']
++            z_min, z_max = self.goal_ee_ranges['height_above_ground']
++            center_z = self.cfg.goal_ee.sphere_center.z_invariant_offset
++            lower = torch.clamp(rho_min / torch.cos(phi), min=self.goal_ee_ranges['pos_l'][0])
++            upper = torch.clamp(rho_max / torch.cos(phi), max=self.goal_ee_ranges['pos_l'][1])
++            sin_phi = torch.sin(phi)
++            vertical_max = torch.where(sin_phi >= 0.,
++                (z_max - center_z) / torch.clamp(sin_phi, min=1e-8),
++                (center_z - z_min) / torch.clamp(-sin_phi, min=1e-8))
++            upper = torch.minimum(upper, vertical_max)
++            self.ee_goal_sphere[env_ids, 0] = lower + torch.rand_like(lower) * torch.clamp(upper - lower, min=0.)
++            self.ee_goal_sphere[env_ids, 1] = phi
++            self.ee_goal_sphere[env_ids, 2] = torch_rand_float(*self.goal_ee_ranges['pos_y'], (len(env_ids), 1), device=self.device).squeeze(1)
++            return
+         self.ee_goal_sphere[env_ids, 0] = torch_rand_float(self.goal_ee_ranges["pos_l"][0], self.goal_ee_ranges["pos_l"][1], (len(env_ids), 1), device=self.device).squeeze(1)
+         self.ee_goal_sphere[env_ids, 1] = torch_rand_float(self.goal_ee_ranges["pos_p"][0], self.goal_ee_ranges["pos_p"][1], (len(env_ids), 1), device=self.device).squeeze(1)
+         self.ee_goal_sphere[env_ids, 2] = torch_rand_float(self.goal_ee_ranges["pos_y"][0], self.goal_ee_ranges["pos_y"][1], (len(env_ids), 1), device=self.device).squeeze(1)
+@@ -1320,6 +1338,7 @@
+                 self.ee_start_sphere[env_ids] = self.init_start_ee_sphere[:]
+                 self.ee_goal_sphere[env_ids] = self.init_end_ee_sphere[:]
+             else:
++                previous_orientation = self.ee_goal_orn_delta_rpy.clone()
+                 self._resample_ee_goal_orn_once(env_ids)
+                 self.ee_start_sphere[env_ids] = self.ee_goal_sphere[env_ids].clone()
+                 for i in range(10):
+@@ -1328,6 +1347,11 @@
+                     env_ids = env_ids[collision_mask]
+                     if len(env_ids) == 0:
+                         break
++                if len(env_ids) > 0:
++                    # Legacy retries could leave the last rejected target active.
++                    # Keep the previous goal/orientation if all ten draws failed.
++                    self.ee_goal_sphere[env_ids] = self.ee_start_sphere[env_ids]
++                    self.ee_goal_orn_delta_rpy[env_ids] = previous_orientation[env_ids]
+             self.ee_goal_cart[init_env_ids, :] = sphere2cart(self.ee_goal_sphere[init_env_ids, :])
+             self.goal_timer[init_env_ids] = 0.0
+ 
+@@ -1350,6 +1374,13 @@
+         else:
+             ground = self.env_origins[env_ids, 2]
+         underground_mask = torch.any(world[..., 2] < ground.unsqueeze(0), dim=0)
++        if 'height_above_ground' in self.goal_ee_ranges:
++            # Sphere interpolation can overshoot endpoint heights. Bound the
++            # actual sampled path in the same virtual ground frame as the goal.
++            frame_ground = self._get_ee_goal_spherical_center()[env_ids, 2] - self.cfg.goal_ee.sphere_center.z_invariant_offset
++            relative_z = world[..., 2] - frame_ground.unsqueeze(0)
++            z_min, z_max = self.goal_ee_ranges['height_above_ground']
++            underground_mask |= torch.any((relative_z < z_min - 1e-6) | (relative_z > z_max + 1e-6), dim=0)
+         return collision_mask | underground_mask
+ 
+     def _update_curr_ee_goal(self):
+@@ -1364,7 +1395,7 @@
+         
+         # TODO: for the teleop mode, we need to directly update self.ee_goal_orn_quat using VR controller.
+         default_yaw = torch.atan2(ee_goal_cart_yaw_global[:, 1], ee_goal_cart_yaw_global[:, 0])
+-        default_pitch = -self.curr_ee_goal_sphere[:, 1] + self.cfg.goal_ee.arm_induced_pitch
++        default_pitch = self._get_ee_goal_pitch(self.curr_ee_goal_sphere)
+         self.ee_goal_orn_quat = quat_from_euler_xyz(self.ee_goal_orn_delta_rpy[:, 0] + self.cfg.goal_ee.orientation_roll_offset, default_pitch + self.ee_goal_orn_delta_rpy[:, 1], self.ee_goal_orn_delta_rpy[:, 2] + default_yaw)
+         
+         self.goal_timer += 1
+@@ -1377,6 +1408,19 @@
+ 
+         self._resample_ee_goal(resample_id)
+     
++    def _get_ee_goal_pitch(self, sphere):
++        pitch = -sphere[:, 1] + self.cfg.goal_ee.arm_induced_pitch
++        if getattr(self.cfg.goal_ee, 'position_linked_floor_pitch', False):
++            z = self.cfg.goal_ee.sphere_center.z_invariant_offset + sphere[:, 0] * torch.sin(sphere[:, 1])
++            x = self.cfg.goal_ee.sphere_center.x_offset + sphere[:, 0] * torch.cos(sphere[:, 1])
++            x0, x1 = self.cfg.goal_ee.floor_pitch_x
++            p0, p1 = self.cfg.goal_ee.floor_pitch_deg
++            z0, z1 = self.cfg.goal_ee.floor_pitch_blend_z
++            floor_pitch = (p0 + (p1 - p0) * torch.clamp((x - x0) / (x1 - x0), 0., 1.)) * np.pi / 180.
++            blend = torch.clamp((z1 - z) / (z1 - z0), 0., 1.)
++            pitch = (1. - blend) * pitch + blend * floor_pitch
++        return pitch
++
+     def _get_ee_goal_spherical_center(self):
+         if getattr(self.cfg.goal_ee.sphere_center, 'height_roll_pitch_invariant', False):
+             # Like B1, XY and yaw follow locomotion; body crouch/tilt do not

@@ -1,0 +1,259 @@
+--- original/CHANGES_KO.md
++++ deploy/CHANGES_KO.md
+@@ -201,3 +201,26 @@
+ - locomotion_vy0_compare.py 추가. 36초 vx/yaw 일정·EE경로유지,vy명령만전구간0. 물리step/저장기록 전체에서비영vy명령0개확인. 실제vy는강제고정하지않고표시.
+ - render_locomotion_compare.py 추가. 명령/실제vx/vy/yaw를표시하는영상재생.
+ - 8774기본 motion36_vy0로갱신,기존motion36도새vy0로alias. 이전비영vy자료는보관. 학습코드·PPO·보상·URDF·checkpoint변경없음.
++
++## 배포 수정 1단계 — 가상 구면 중심 (2026-11-15)
++
++- `low-level-as2piper-head-orin-nocontact`에서 별도 복제. 기존 코드·45k 실험·checkpoint 보존, 학습 미실행.
++- EE 목표 중심을 실제 Arm Base 추종에서 지면 높이 + yaw 가상 중심으로 분리: `[0.22435, 0, ground+0.4563069024246581]`의 yaw 변환. 몸통 높이·roll·pitch 불변.
++- 실제 Arm Base 기반 관측·IK·TCP, observation/action 차원, Reward·PPO·DAgger·ROA와 샘플링 범위 유지.
++- 1,000개 자세 CPU 좌표 검증 통과. 동역학·workspace 타당성은 아직 검증하지 않음.
++- 근거·한계·diff·재현: `validation/deploy_step1/REPORT_KO.md`, `verification.json`, `step1.patch`.
++- 이후 2~8단계는 사용자 검토 후 순서대로 진행.
++
++## 배포 수정 7단계 우선 진행 — 기본 PiPER 구동 경로 (2026-11-15)
++
++- 공식 agilexrobotics/piper_sdk 및 pyAgxArm 자료를 commit/SHA256과 함께 `validation/deploy_step7/official`에 저장. 패키지 설치·실기 통신 없음.
++- 학습용 URDF의 PiPER 6관절 velocity 5→3rad/s, PhysX DOF 속성도 3rad/s로 일치. 위치 제어 SDK의 설정 범위 상한이며 실제 기기 설정값/최적 운용 속도는 미확정.
++- Arm IK 목표에 송신 목표 변화율 제한 추가: 50Hz에서 관절당 최대 0.06rad/step. 물리 관절 속도 보장이나 가속도 제한으로 해석하지 않음. reset 시 필터 이력 초기화.
++- 실제 position drive에 팔 DR 적용: 기존 0.7~1.3 표본으로 stiffness/damping을 배율 조정. 포화 effort는 그대로. 실제 전류/토크 상수 모델이 아닌 drive 응답 DR임을 명시.
++- 하드코딩된 PhysX 400/40을 arm/gripper 별도 config로 이동. 수치 유지, 실측 미보정 상태. MIT 예시 gain 10/0.8을 복사하지 않음.
++- 다리 action_delay 설정을 실제 기존 동작과 맞춰 1-step으로 명시하고 warmup 240000-step을 config로 분리. 0→1-step(20ms) 실제 동작 유지. 설정한 step 수를 실제 인덱싱에 사용하도록 수정.
++- 팔 command delay는 별도 설정/필터로 분리. 기본 0-step 유지, 실기 지연값 미확정. 가속도 한계 None 및 실기 effort 검증 False 명시.
++- 실제 PhysX position drive torque는 기존 `self.torques`의 팔 0과 구분. 이번에 reward 입력/scale을 바꾸거나 total DOF force를 motor torque로 대체하지 않음.
++- CPU 단위 검증 및 PhysX 4환경·2초 zero-action hold: 유한값, reset 0, 755 observation / 18 action / 20DOF 유지, gain DR 속성 및 속도 설정 readback 확인. 학습/optimizer update 없음.
++- 미확정: 실제 펌웨어·MOVE J/CPV/MIT 배포 모드, 모터 연속/피크/열 한계, gain 등가성, 속도·가속도 readback, 통신·구동 지연. 상세 `validation/deploy_step7/REPORT_KO.md`.
++- 2단계 샘플러는 미적용. 3~6/8단계는 이번에 변경하지 않음.
+--- original/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf
++++ deploy/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf
+@@ -609,7 +609,7 @@
+     <parent link="piper_base_link" />
+     <child link="piper_link1" />
+     <axis xyz="0 0 1" />
+-    <limit lower="-2.6179938" upper="2.6179938" effort="100" velocity="5" />
++    <limit lower="-2.6179938" upper="2.6179938" effort="100" velocity="3" />
+   </joint>
+   <link name="piper_link2">
+     <inertial>
+@@ -635,7 +635,7 @@
+     <parent link="piper_link1" />
+     <child link="piper_link2" />
+     <axis xyz="0 0 1" />
+-    <limit lower="0" upper="3.1415926" effort="100" velocity="5" />
++    <limit lower="0" upper="3.1415926" effort="100" velocity="3" />
+   </joint>
+   <link name="piper_link3">
+     <inertial>
+@@ -661,7 +661,7 @@
+     <parent link="piper_link2" />
+     <child link="piper_link3" />
+     <axis xyz="0 0 1" />
+-    <limit lower="-2.9670597" upper="0" effort="100" velocity="5" />
++    <limit lower="-2.9670597" upper="0" effort="100" velocity="3" />
+   </joint>
+   <link name="piper_link4">
+     <inertial>
+@@ -687,7 +687,7 @@
+     <parent link="piper_link3" />
+     <child link="piper_link4" />
+     <axis xyz="0 0 1" />
+-    <limit lower="-1.7453292" upper="1.7453292" effort="100" velocity="5" />
++    <limit lower="-1.7453292" upper="1.7453292" effort="100" velocity="3" />
+   </joint>
+   <link name="piper_link5">
+     <inertial>
+@@ -713,7 +713,7 @@
+     <parent link="piper_link4" />
+     <child link="piper_link5" />
+     <axis xyz="0 0 1" />
+-    <limit lower="-1.2217304" upper="1.2217304" effort="100" velocity="5" />
++    <limit lower="-1.2217304" upper="1.2217304" effort="100" velocity="3" />
+   </joint>
+   <link name="piper_link6">
+     <inertial>
+@@ -739,7 +739,7 @@
+     <parent link="piper_link5" />
+     <child link="piper_link6" />
+     <axis xyz="0 0 1" />
+-    <limit lower="-2.9670597" upper="2.9670597" effort="100" velocity="5" />
++    <limit lower="-2.9670597" upper="2.9670597" effort="100" velocity="3" />
+   </joint>
+   <joint name="as2_to_piper" type="fixed">
+     <parent link="base_link" />
+--- original/resources/robots/as2piper/wrist_camera/as2piper_head_umi_orin64_backmount_camera.json
++++ deploy/resources/robots/as2piper/wrist_camera/as2piper_head_umi_orin64_backmount_camera.json
+@@ -1,5 +1,5 @@
+ {
+-  "urdf": "low-level-as2piper-head-orin-nocontact/resources/robots/as2piper/urdf/as2piper_head_umi_orin64_backmount.urdf",
++  "urdf": "low-level-as2piper-head-orin-deploy/resources/robots/as2piper/urdf/as2piper_head_umi_orin64_backmount.urdf",
+   "status": "CAD_nominal_not_hand_eye_calibrated",
+   "original_sha256": "06b3709db4936c19104a37233f7d41951c5677e0c09b83903db2a034ee7f3e35",
+   "added_links": [
+--- original/resources/robots/as2piper/wrist_camera/as2piper_head_orin_training_camera.json
++++ deploy/resources/robots/as2piper/wrist_camera/as2piper_head_orin_training_camera.json
+@@ -1,5 +1,5 @@
+ {
+-  "urdf": "low-level-as2piper-head-orin-nocontact/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
++  "urdf": "low-level-as2piper-head-orin-deploy/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+   "status": "CAD_nominal_not_hand_eye_calibrated",
+   "original_sha256": "d0d667cbcdf9dbbad62432ed149764e305a395685e460a3bd3157c80bad94876",
+   "added_links": [
+--- original/legged_gym/resources/robots/as2piper/wrist_camera/as2piper_camera.json
++++ deploy/legged_gym/resources/robots/as2piper/wrist_camera/as2piper_camera.json
+@@ -1,5 +1,5 @@
+ {
+-  "urdf": "low-level-as2piper-head-orin-nocontact/legged_gym/resources/robots/as2piper/urdf/as2piper.urdf",
++  "urdf": "low-level-as2piper-head-orin-deploy/legged_gym/resources/robots/as2piper/urdf/as2piper.urdf",
+   "status": "CAD_nominal_not_hand_eye_calibrated",
+   "original_sha256": "b86f1b013a11fc24dbbd708faecb5876ae2f4879ccffa606db11bec3c3acee46",
+   "added_links": [
+--- original/legged_gym/envs/manip_loco/as2_head_orin_config.py
++++ deploy/legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -16,6 +16,10 @@
+         env_spacing = 3.
+         stop_update_goal = False
+         pitch_control = False
++        # Preserve the effective legacy schedule explicitly: 0 -> 1 policy step.
++        # This is not measured AS2/PiPER latency.
++        action_delay = 1
++        action_delay_warmup_steps = 10000 * 24
+ 
+     class init_state(B1Z1RoughCfg.init_state):
+         pos = [0., 0., 0.3264069024246581]
+@@ -39,6 +43,16 @@
+         stiffness = {**{name + '_joint': gain for name, gain in zip(('hip', 'thigh', 'calf'), HW['kp'])}, 'piper_joint': 5.}
+         damping = {**{name + '_joint': gain for name, gain in zip(('hip', 'thigh', 'calf'), HW['kd'])}, 'piper_joint': .5}
+         leg_armature = HW['armature']
++        # Uncalibrated PhysX gains inherited from VBC, NOT PiPER MIT gains.
++        arm_drive_stiffness = 400.
++        arm_drive_damping = 40.
++        gripper_drive_stiffness = 400.
++        gripper_drive_damping = 40.
++        # Official position-mode maximum configurable speed, not device readback.
++        arm_command_velocity_limit = 3.
++        arm_command_acceleration_limit = None  # requires device/firmware readback
++        arm_command_delay_steps = 0  # unknown physical latency; no invented value
++        arm_effort_limit_verified = False
+ 
+     class goal_ee(B1Z1RoughCfg.goal_ee):
+         arm_induced_pitch = 2.455216137744035
+@@ -49,9 +63,12 @@
+         underground_limit = -.4563069024246581
+ 
+         class sphere_center:
+-            x_offset = 0.
++            # Virtual yaw frame: nominal arm origin, independent of body z/roll/pitch.
++            # Nominal base height 0.3244069024246581 + mount height 0.1319.
++            height_roll_pitch_invariant = True
++            x_offset = .22435
+             y_offset = 0.
+-            z_invariant_offset = 0.
++            z_invariant_offset = .4563069024246581
+ 
+         class ranges:
+             init_pos_start = [.427898468676838, .421686284147847, 0.]
+--- original/legged_gym/envs/manip_loco/manip_loco.py
++++ deploy/legged_gym/envs/manip_loco/manip_loco.py
+@@ -43,6 +43,7 @@
+ from legged_gym import LEGGED_GYM_ROOT_DIR
+ from legged_gym.utils.helpers import class_to_dict
+ from legged_gym.utils.terrain import Terrain, Terrain_Perlin
++from legged_gym.utils.piper_control import ArmCommandFilter, arm_drive_properties
+ from .b1z1_config import B1Z1RoughCfg
+ 
+ import sys
+@@ -73,11 +74,9 @@
+         self.render()
+         if self.action_delay != -1:
+             self.action_history_buf = torch.cat([self.action_history_buf[:, 1:], actions[:, None, :]], dim=1)
+-            # actions = self.action_history_buf[:, -self.action_delay - 1] # delay for 1/50=20ms
+-            if self.global_steps < 10000 * 24:
+-                actions = self.action_history_buf[:, -1]
+-            else:
+-                actions = self.action_history_buf[:, -2]
++            warmup = self.cfg.env.action_delay_warmup_steps
++            delay = 0 if self.global_steps < warmup else self.action_delay
++            actions = self.action_history_buf[:, -delay - 1]
+         else:
+             self.action_history_buf[:, -1] = actions
+ 
+@@ -94,6 +93,8 @@
+         dpose = torch.cat([dpos, drot], -1).unsqueeze(-1)
+         arm_pos_targets = self._control_ik(dpose) + self.dof_pos[:, 12:18]
+         arm_pos_targets = torch.clamp(arm_pos_targets, self.dof_pos_limits[12:18, 0], self.dof_pos_limits[12:18, 1])
++        arm_pos_targets = self.arm_command_filter.step(arm_pos_targets)
++        self.arm_position_targets = arm_pos_targets
+         all_pos_targets = torch.zeros_like(self.dof_pos)
+         all_pos_targets[:, -2:] = self.default_dof_pos[-2:]
+         all_pos_targets[:, -(6 + self.cfg.env.num_gripper_joints):-self.cfg.env.num_gripper_joints] = arm_pos_targets
+@@ -522,8 +523,11 @@
+         self.num_bodies = self.gym.get_asset_rigid_body_count(robot_asset)
+         dof_props_asset = self.gym.get_asset_dof_properties(robot_asset)
+         dof_props_asset['driveMode'][12:].fill(gymapi.DOF_MODE_POS)  # set arm to pos control
+-        dof_props_asset['stiffness'][12:].fill(400.0)
+-        dof_props_asset['damping'][12:].fill(40.0)
++        dof_props_asset['stiffness'][12:18].fill(self.cfg.control.arm_drive_stiffness)
++        dof_props_asset['damping'][12:18].fill(self.cfg.control.arm_drive_damping)
++        dof_props_asset['velocity'][12:18].fill(self.cfg.control.arm_command_velocity_limit)
++        dof_props_asset['stiffness'][18:].fill(self.cfg.control.gripper_drive_stiffness)
++        dof_props_asset['damping'][18:].fill(self.cfg.control.gripper_drive_damping)
+         rigid_shape_props_asset = self.gym.get_asset_rigid_shape_properties(robot_asset)
+         self.body_names = self.gym.get_asset_rigid_body_names(robot_asset)
+         self.body_names_to_idx = self.gym.get_asset_rigid_body_dict(robot_asset)
+@@ -651,6 +655,17 @@
+         else:
+             self.motor_strength = torch.ones(self.num_envs, self.num_torques, device=self.device)
+ 
++        # Arm policy actions/force commands are masked. Apply its sampled response
++        # variation to the actual PhysX position drives once during creation.
++        arm_strength = self.motor_strength[:, 12:18].cpu().numpy()
++        for i, (env_handle, actor_handle) in enumerate(zip(self.envs, self.actor_handles)):
++            props = self.gym.get_actor_dof_properties(env_handle, actor_handle)
++            props = arm_drive_properties(props, arm_strength[i],
++                                         self.cfg.control.arm_drive_stiffness,
++                                         self.cfg.control.arm_drive_damping,
++                                         self.cfg.control.arm_command_velocity_limit)
++            self.gym.set_actor_dof_properties(env_handle, actor_handle, props)
++
+         hip_names = ["FR_hip_joint", "FL_hip_joint", "RR_hip_joint", "RL_hip_joint"]
+         self.hip_indices = torch.zeros(len(hip_names), dtype=torch.long, device=self.device, requires_grad=False)
+         for i, name in enumerate(hip_names):
+@@ -930,6 +945,12 @@
+                     raise Exception(f"PD gain of joint {name} were not defined, setting them to zero")
+         # self.default_dof_pos = self.default_dof_pos.unsqueeze(0)
+         self.default_dof_pos_wo_gripper = self.default_dof_pos[:-self.cfg.env.num_gripper_joints]
++        if self.cfg.control.arm_command_acceleration_limit is not None:
++            raise ValueError('Arm acceleration profile needs firmware readback and a validated trajectory filter')
++        self.arm_command_filter = ArmCommandFilter(
++            self.dof_pos[:, 12:18], self.dof_pos_limits[12:18, 0], self.dof_pos_limits[12:18, 1],
++            self.cfg.control.arm_command_velocity_limit, self.dt,
++            self.cfg.control.arm_command_delay_steps)
+         
+         self.global_steps = 0
+ 
+@@ -984,6 +1005,8 @@
+         self.dof_pos[env_ids, 12:] = self.default_dof_pos[12:]
+         self.dof_pos[env_ids] = torch.clamp(self.dof_pos[env_ids], self.dof_pos_limits[:, 0], self.dof_pos_limits[:, 1])
+         self.dof_vel[env_ids] = 0.
++        if hasattr(self, 'arm_command_filter'):
++            self.arm_command_filter.reset(env_ids, self.dof_pos[env_ids, 12:18])
+ 
+         self.gym.set_dof_state_tensor(self.sim, gymtorch.unwrap_tensor(self.dof_state))
+         self.gym.refresh_rigid_body_state_tensor(self.sim)
+@@ -1355,6 +1378,13 @@
+         self._resample_ee_goal(resample_id)
+     
+     def _get_ee_goal_spherical_center(self):
++        if getattr(self.cfg.goal_ee.sphere_center, 'height_roll_pitch_invariant', False):
++            # Like B1, XY and yaw follow locomotion; body crouch/tilt do not
++            # move the virtual center. Rough terrain uses local ground under
++            # the base, rather than a body-oriented height probe average.
++            center = torch.cat([self.root_states[:, :2],
++                                self._termination_ground_height()[:, None]], dim=1)
++            return center + quat_apply(self.base_yaw_quat, self.ee_goal_center_offset)
+         center = self.base_pos + quat_apply(self.base_quat, self.arm_base_offset)
+         center = center + quat_apply(self.base_yaw_quat, self.ee_goal_center_offset)
+         return center

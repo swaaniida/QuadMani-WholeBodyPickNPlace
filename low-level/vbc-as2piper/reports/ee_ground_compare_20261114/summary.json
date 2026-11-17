@@ -1,0 +1,232 @@
+{
+  "video": "ee_ground_compare_64s.mp4",
+  "duration_s": 64,
+  "frames": 800,
+  "fps": 12.5,
+  "video_sha256": "a7785eb47a523871bfde3e2c45b3975fc45a37ec27aa57f6d29560cc01d3194d",
+  "control_commands": "vx=vy=yaw_rate=0 for every step (asserted)",
+  "physics": "nominal URDF mass/inertia and default friction; DR/push off",
+  "comparison": [
+    {
+      "iteration": 10000,
+      "ground_position_mean_cm": 53.29171419143677,
+      "ground_orientation_mean_deg": 32.04830551147461,
+      "full_position_mean_cm": 45.48670947551727,
+      "full_position_p95_cm": 106.50890111923216,
+      "failure_resets_all8": 25,
+      "failure_resets_video": 5,
+      "min_tcp_height_cm": -0.13744868338108063,
+      "render_validation": {
+        "iteration": 10000,
+        "max_nonreset_fk_error_m": 2.1622823550537375e-06,
+        "reset_discontinuity_frames": [
+          840,
+          1002
+        ],
+        "expanded_view_frames": 122,
+        "frames": 800,
+        "fps": 12.5,
+        "duration_s": 64.0,
+        "render": "MuJoCo CPU replay of PhysX states, not MuJoCo physics"
+      }
+    },
+    {
+      "iteration": 20000,
+      "ground_position_mean_cm": 1.9557330757379532,
+      "ground_orientation_mean_deg": 6.8690948486328125,
+      "full_position_mean_cm": 1.8951360136270523,
+      "full_position_p95_cm": 3.5181958042085166,
+      "failure_resets_all8": 0,
+      "failure_resets_video": 0,
+      "min_tcp_height_cm": 0.050224363803863525,
+      "render_validation": {
+        "iteration": 20000,
+        "max_nonreset_fk_error_m": 3.6149306181069754e-06,
+        "reset_discontinuity_frames": [],
+        "expanded_view_frames": 0,
+        "frames": 800,
+        "fps": 12.5,
+        "duration_s": 64.0,
+        "render": "MuJoCo CPU replay of PhysX states, not MuJoCo physics"
+      }
+    },
+    {
+      "iteration": 30000,
+      "ground_position_mean_cm": 2.4614306166768074,
+      "ground_orientation_mean_deg": 8.718810081481934,
+      "full_position_mean_cm": 2.2936884313821793,
+      "full_position_p95_cm": 5.780049730092286,
+      "failure_resets_all8": 0,
+      "failure_resets_video": 0,
+      "min_tcp_height_cm": 0.040249526500701904,
+      "render_validation": {
+        "iteration": 30000,
+        "max_nonreset_fk_error_m": 5.769089234348348e-06,
+        "reset_discontinuity_frames": [],
+        "expanded_view_frames": 0,
+        "frames": 800,
+        "fps": 12.5,
+        "duration_s": 64.0,
+        "render": "MuJoCo CPU replay of PhysX states, not MuJoCo physics"
+      }
+    },
+    {
+      "iteration": 45000,
+      "ground_position_mean_cm": 1.9784841686487198,
+      "ground_orientation_mean_deg": 5.709958553314209,
+      "full_position_mean_cm": 1.9329465925693512,
+      "full_position_p95_cm": 4.112444072961807,
+      "failure_resets_all8": 0,
+      "failure_resets_video": 0,
+      "min_tcp_height_cm": 0.04273802042007446,
+      "render_validation": {
+        "iteration": 45000,
+        "max_nonreset_fk_error_m": 6.358057349265255e-06,
+        "reset_discontinuity_frames": [],
+        "expanded_view_frames": 0,
+        "frames": 800,
+        "fps": 12.5,
+        "duration_s": 64.0,
+        "render": "MuJoCo CPU replay of PhysX states, not MuJoCo physics"
+      }
+    }
+  ],
+  "metadata": "data_final/metadata.json",
+  "ground_contact_geometry": {
+    "10000": {
+      "candidate_frames": 117,
+      "min_visual_finger_z_m": -0.0005226432086800695,
+      "within_3mm_with_net_contact_force_frames": 32,
+      "example_frames": [
+        {
+          "time_s": 24.039999462664127,
+          "visual_finger_min_z_m": 0.0015062366102595454,
+          "finger_contact_force_N": 96.53749084472656
+        },
+        {
+          "time_s": 24.27999945729971,
+          "visual_finger_min_z_m": 7.034597881825505e-05,
+          "finger_contact_force_N": 3.9163296222686768
+        },
+        {
+          "time_s": 34.91999921947718,
+          "visual_finger_min_z_m": 0.00041021322002119526,
+          "finger_contact_force_N": 5.8882551193237305
+        },
+        {
+          "time_s": 35.15999921411276,
+          "visual_finger_min_z_m": 0.0017046404900163056,
+          "finger_contact_force_N": 61.099891662597656
+        },
+        {
+          "time_s": 42.119999058544636,
+          "visual_finger_min_z_m": 0.0028353730635777355,
+          "finger_contact_force_N": 3.51633358001709
+        }
+      ],
+      "interpretation": "Geometry + net contact force supports floor touch; contact partner not directly recorded, self contact cannot be excluded solely by net force."
+    },
+    "20000": {
+      "candidate_frames": 168,
+      "min_visual_finger_z_m": -2.1659400441173537e-06,
+      "within_3mm_with_net_contact_force_frames": 95,
+      "example_frames": [
+        {
+          "time_s": 14.879999667406082,
+          "visual_finger_min_z_m": 0.0003019887894488704,
+          "finger_contact_force_N": 0.8726347088813782
+        },
+        {
+          "time_s": 22.11999950557947,
+          "visual_finger_min_z_m": 0.002951699365890459,
+          "finger_contact_force_N": 12.039653778076172
+        },
+        {
+          "time_s": 33.439999252557755,
+          "visual_finger_min_z_m": 0.0025885983694692444,
+          "finger_contact_force_N": 18.037813186645508
+        },
+        {
+          "time_s": 41.79999906569719,
+          "visual_finger_min_z_m": -7.018522552998396e-07,
+          "finger_contact_force_N": 6.81912088394165
+        },
+        {
+          "time_s": 42.55999904870987,
+          "visual_finger_min_z_m": -1.816636387770576e-06,
+          "finger_contact_force_N": 11.674739837646484
+        }
+      ],
+      "interpretation": "Geometry + net contact force supports floor touch; contact partner not directly recorded, self contact cannot be excluded solely by net force."
+    },
+    "30000": {
+      "candidate_frames": 341,
+      "min_visual_finger_z_m": -1.8746450786630287e-06,
+      "within_3mm_with_net_contact_force_frames": 269,
+      "example_frames": [
+        {
+          "time_s": 14.839999668300152,
+          "visual_finger_min_z_m": 9.945181160352784e-05,
+          "finger_contact_force_N": 0.9311918020248413
+        },
+        {
+          "time_s": 23.23999948054552,
+          "visual_finger_min_z_m": 0.0014195228119335893,
+          "finger_contact_force_N": 1.6332205533981323
+        },
+        {
+          "time_s": 33.439999252557755,
+          "visual_finger_min_z_m": 0.002492739082905128,
+          "finger_contact_force_N": 16.120548248291016
+        },
+        {
+          "time_s": 43.279999032616615,
+          "visual_finger_min_z_m": 1.9334751883773316e-06,
+          "finger_contact_force_N": 1.6089723110198975
+        },
+        {
+          "time_s": 55.19999876618385,
+          "visual_finger_min_z_m": 6.885762045685806e-05,
+          "finger_contact_force_N": 3.593362808227539
+        }
+      ],
+      "interpretation": "Geometry + net contact force supports floor touch; contact partner not directly recorded, self contact cannot be excluded solely by net force."
+    },
+    "45000": {
+      "candidate_frames": 150,
+      "min_visual_finger_z_m": 1.840512237512304e-06,
+      "within_3mm_with_net_contact_force_frames": 91,
+      "example_frames": [
+        {
+          "time_s": 14.799999669194221,
+          "visual_finger_min_z_m": 0.00013443175339918761,
+          "finger_contact_force_N": 4.1952643394470215
+        },
+        {
+          "time_s": 15.519999653100967,
+          "visual_finger_min_z_m": 6.284299451286834e-05,
+          "finger_contact_force_N": 1.7303264141082764
+        },
+        {
+          "time_s": 33.27999925613403,
+          "visual_finger_min_z_m": 0.002567095041417479,
+          "finger_contact_force_N": 18.210107803344727
+        },
+        {
+          "time_s": 41.79999906569719,
+          "visual_finger_min_z_m": 0.00025872021088831076,
+          "finger_contact_force_N": 5.514859199523926
+        },
+        {
+          "time_s": 42.51999904960394,
+          "visual_finger_min_z_m": 2.6285870386513754e-06,
+          "finger_contact_force_N": 5.236159324645996
+        }
+      ],
+      "interpretation": "Geometry + net contact force supports floor touch; contact partner not directly recorded, self contact cannot be excluded solely by net force."
+    }
+  },
+  "initialization_note": "Same reset setpoints, but first post-reset PhysX states vary; measured q max difference 0.036391 rad and root max difference 0.017393. Initial 3s hold in video. This is one seed with nominal replicas, not a paired identical-state robustness experiment.",
+  "capture_sha256": "11d7f6d6f889ba61345ef75df0f0964f8d3d94eadbd3d09dea0e211efc1d73c1",
+  "render_sha256": "1cc4d8e029d692dc79ad7f6ee2b557b5bed79e03d0ec253a3d8d3aeebdf0ffa3"
+}

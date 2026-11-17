@@ -1,0 +1,19 @@
+--- before/as2_head_orin_config.py
++++ low-level-as2piper-head-orin-deploy/legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -80,12 +80,12 @@
+             init_pos_end = [.427898468676838, .421686284147847, 0.]
+             # Original continuous spherical sampler; no IK feasibility rejection.
+             # Outer spherical bounds; radius is conditional on elevation so
+-            # x_nominal=0.45..0.975 and ground-relative z=0.02..0.85 stay bounded.
+-            pos_l = [.22565, .8682391004806224]
+-            pos_p = [-1.0934979298811465, 1.0503443030006583]
++            # x_nominal=0.45..0.975 and ground-relative z=0.02..1.00 stay bounded.
++            pos_l = [.22565, .926864395071399]
++            pos_p = [-1.0934979298811465, 1.177398919915009]
+             pos_y = [-.30, .30]
+             horizontal_reach = [.22565, .75065]
+-            height_above_ground = [.02, .85]
++            height_above_ground = [.02, 1.00]
+             delta_orn_r = [-.08, .08]
+             delta_orn_p = [-.08, .08]
+             delta_orn_y = [-.08, .08]

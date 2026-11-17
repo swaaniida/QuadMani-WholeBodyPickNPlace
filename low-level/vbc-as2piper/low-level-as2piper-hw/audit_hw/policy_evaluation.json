@@ -1,0 +1,67 @@
+{
+  "stand": {
+    "command_vx_m_s": 0.0,
+    "command_yaw_rad_s": 0.0,
+    "mean_vx_m_s": -0.0011542850406840444,
+    "mean_yaw_rad_s": 0.00023432314628735185,
+    "vx_abs_error_m_s": 0.0015181637136265635,
+    "yaw_abs_error_rad_s": 0.00026668739155866206,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "forward": {
+    "command_vx_m_s": 0.15000000596046448,
+    "command_yaw_rad_s": 0.0,
+    "mean_vx_m_s": -0.0009342088014818728,
+    "mean_yaw_rad_s": -7.847446977393702e-05,
+    "vx_abs_error_m_s": 0.15093421936035156,
+    "yaw_abs_error_rad_s": 0.026935141533613205,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "turn": {
+    "command_vx_m_s": 0.0,
+    "command_yaw_rad_s": 0.25,
+    "mean_vx_m_s": -0.0010024950606748462,
+    "mean_yaw_rad_s": -0.0002645533240865916,
+    "vx_abs_error_m_s": 0.005560851655900478,
+    "yaw_abs_error_rad_s": 0.25026455521583557,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "forward_turn": {
+    "command_vx_m_s": 0.15000000596046448,
+    "command_yaw_rad_s": 0.25,
+    "mean_vx_m_s": -0.0009716182830743492,
+    "mean_yaw_rad_s": 0.00017863517859950662,
+    "vx_abs_error_m_s": 0.15097162127494812,
+    "yaw_abs_error_rad_s": 0.24982136487960815,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  },
+  "conditions": "Nominal flat, deterministic history-encoder inference, held initial EE, 32 envs, 10s; 8 envs per command."
+}

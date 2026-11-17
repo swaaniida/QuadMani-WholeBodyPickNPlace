@@ -1,0 +1,17 @@
+[
+  "README.md",
+  "check_original_settings.py",
+  "build_collision_guard.py",
+  "validate_forward.py",
+  "run_as2.sh",
+  "prepare_asset.py",
+  "FORWARD_DESIGN_KO.md",
+  "resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf",
+  "legged_gym/scripts/train_as2.py",
+  "legged_gym/envs/__init__.py",
+  "legged_gym/envs/manip_loco/as2piper_forward.py",
+  "legged_gym/envs/manip_loco/manip_loco.py",
+  "legged_gym/envs/manip_loco/as2piper_config.py",
+  "legged_gym/utils/arm_collision.py",
+  "legged_gym/utils/urdf_chain.py"
+]

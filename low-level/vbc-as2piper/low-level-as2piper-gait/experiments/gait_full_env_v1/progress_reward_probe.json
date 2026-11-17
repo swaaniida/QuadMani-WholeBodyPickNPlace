@@ -1,0 +1,35 @@
+{
+  "velocity": [
+    {
+      "command": -0.6342218,
+      "maximizing_velocity": -0.6350000500679016,
+      "stationary_reward": 2.14724841498537e-05,
+      "max_reward": 0.9999924302101135
+    },
+    {
+      "command": -0.25,
+      "maximizing_velocity": -0.25,
+      "stationary_reward": 0.10480572283267975,
+      "max_reward": 1.0
+    },
+    {
+      "command": 0,
+      "maximizing_velocity": -9.313225746154785e-09,
+      "stationary_reward": 1.0,
+      "max_reward": 1.0
+    },
+    {
+      "command": 0.25,
+      "maximizing_velocity": 0.25,
+      "stationary_reward": 0.10480567812919617,
+      "max_reward": 1.0
+    },
+    {
+      "command": 0.6342218,
+      "maximizing_velocity": 0.6350000500679016,
+      "stationary_reward": 2.1457801267388277e-05,
+      "max_reward": 0.9999924302101135
+    }
+  ],
+  "yaw_peak_checks_passed": true
+}

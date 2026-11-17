@@ -1,0 +1,103 @@
+{
+  "stand": {
+    "command_vx_m_s": 0.0,
+    "command_yaw_rad_s": 0.0,
+    "mean_vx_m_s": -0.0007473991136066616,
+    "mean_yaw_rad_s": -0.001086798612959683,
+    "vx_abs_error_m_s": 0.0008121491991914809,
+    "yaw_abs_error_rad_s": 0.0011814541649073362,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "foot_clearance_p95_m": [
+      -8.0648809671402e-06,
+      -6.977468729019165e-06,
+      -4.369765520095825e-06,
+      6.295740604400635e-07
+    ],
+    "applied_leg_torque_abs_max_Nm": 9.843271255493164,
+    "stance_slip_mean_m_s": 0.0056429519318044186,
+    "phase_contact_agreement": 0.0
+  },
+  "forward": {
+    "command_vx_m_s": 0.25,
+    "command_yaw_rad_s": 0.0,
+    "mean_vx_m_s": 0.2481541782617569,
+    "mean_yaw_rad_s": -0.01075219176709652,
+    "vx_abs_error_m_s": 0.01855548471212387,
+    "yaw_abs_error_rad_s": 0.02945866994559765,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.68875,
+      0.719375,
+      0.8203125,
+      0.824375
+    ],
+    "foot_clearance_p95_m": [
+      0.030308889597654338,
+      0.032162710651755334,
+      0.0138677429407835,
+      0.01576959080994129
+    ],
+    "applied_leg_torque_abs_max_Nm": 23.580089569091797,
+    "stance_slip_mean_m_s": 0.17283882200717926,
+    "phase_contact_agreement": 0.731171875
+  },
+  "turn": {
+    "command_vx_m_s": 0.0,
+    "command_yaw_rad_s": 0.4000000059604645,
+    "mean_vx_m_s": 0.025388306006789207,
+    "mean_yaw_rad_s": 0.2972017526626587,
+    "vx_abs_error_m_s": 0.025429829955101013,
+    "yaw_abs_error_rad_s": 0.10280748456716537,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.665,
+      0.7365625,
+      0.92625,
+      0.8621875
+    ],
+    "foot_clearance_p95_m": [
+      0.02832752093672752,
+      0.02508468963205813,
+      1.5769153833389221e-06,
+      0.008796671777963639
+    ],
+    "applied_leg_torque_abs_max_Nm": 23.214250564575195,
+    "stance_slip_mean_m_s": 0.06940943002700806,
+    "phase_contact_agreement": 0.69
+  },
+  "forward_turn": {
+    "command_vx_m_s": 0.25,
+    "command_yaw_rad_s": 0.4000000059604645,
+    "mean_vx_m_s": 0.25488606095314026,
+    "mean_yaw_rad_s": 0.3517208993434906,
+    "vx_abs_error_m_s": 0.016771361231803894,
+    "yaw_abs_error_rad_s": 0.05137187987565994,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.6503125,
+      0.765,
+      0.8234375,
+      0.8134375
+    ],
+    "foot_clearance_p95_m": [
+      0.0319170482456684,
+      0.028894807770848272,
+      0.01587964743375778,
+      0.012116490676999091
+    ],
+    "applied_leg_torque_abs_max_Nm": 22.911043167114258,
+    "stance_slip_mean_m_s": 0.19015024602413177,
+    "phase_contact_agreement": 0.729765625
+  },
+  "conditions": "Nominal flat, deterministic privileged inference, held initial EE, 32 envs, 10.0s; 8 envs per command."
+}

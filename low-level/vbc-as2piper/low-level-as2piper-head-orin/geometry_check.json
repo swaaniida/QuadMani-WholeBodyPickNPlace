@@ -1,0 +1,17 @@
+{
+  "foot_contact_base_height_m": 0.3244069024246581,
+  "arm_base_xyz_m": [
+    0.22435,
+    0.0,
+    0.1319
+  ],
+  "initial_tcp_xyz_base_m": [
+    0.6147645809813631,
+    2.3168792212708377e-08,
+    0.30703867206624874
+  ],
+  "initial_goal_position_error_m": 2.3168792212708387e-08,
+  "initial_goal_rotation_matrix_max_error": 8.335421810932583e-08,
+  "physics_rollout_verified": false,
+  "full_workspace_ik_collision_verified": false
+}

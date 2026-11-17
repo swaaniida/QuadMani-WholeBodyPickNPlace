@@ -1,0 +1,62 @@
+[
+  {
+    "posture": "Standing · 직립",
+    "base_height_m": 0.3244069024246581,
+    "pitch_deg": 0,
+    "actual_arm_base": [
+      0.22435,
+      0.0,
+      0.4563069024246581
+    ],
+    "virtual_center": [
+      0.22435,
+      0.0,
+      0.4563069024246581
+    ],
+    "floor_target": [
+      0.75,
+      0.0,
+      0.02
+    ]
+  },
+  {
+    "posture": "Crouching · 수평으로 낮춤",
+    "base_height_m": 0.27,
+    "pitch_deg": 0,
+    "actual_arm_base": [
+      0.22435,
+      0.0,
+      0.40190000000000003
+    ],
+    "virtual_center": [
+      0.22435,
+      0.0,
+      0.4563069024246581
+    ],
+    "floor_target": [
+      0.75,
+      0.0,
+      0.02
+    ]
+  },
+  {
+    "posture": "Front Crouching · 앞다리를 굽혀 30° 숙임",
+    "base_height_m": 0.27,
+    "pitch_deg": 30,
+    "actual_arm_base": [
+      0.2602427993390388,
+      0.0,
+      0.2720537507591675
+    ],
+    "virtual_center": [
+      0.22435,
+      0.0,
+      0.4563069024246581
+    ],
+    "floor_target": [
+      0.75,
+      0.0,
+      0.02
+    ]
+  }
+]

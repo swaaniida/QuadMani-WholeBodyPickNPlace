@@ -1,0 +1,65 @@
+{
+  "source": "/data/team/users/suhwan/vbc-as2piper/low-level/resources/robots/as2piper/urdf/as2piper_umi_actuated_v6.urdf",
+  "full_open_chassis_width_mm": 142.5,
+  "inset_each_side_mm": 4.0,
+  "old_open_outer_width_mm": 130.49999999997368,
+  "new_open_outer_width_mm": 134.4999999999737,
+  "old_open_inner_gap_mm": 64.46056135476938,
+  "new_open_inner_gap_mm": 68.4605613547659,
+  "closed_inner_AABB_clearance_mm": 2.0605613547659725,
+  "robot_right_link": "piper_gripper_link1",
+  "robot_left_link": "piper_gripper_link2",
+  "local_X_dot_robot_UP": -0.9961946971674247,
+  "right_left_world_UP_centers_before_mm": {
+    "right": 4.567889,
+    "left": 10.073899
+  },
+  "right_left_world_UP_centers_after_mm": {
+    "right": 7.320894,
+    "left": 7.320894
+  },
+  "right_left_height_center_difference_after_mm": -6.897087068136187e-11,
+  "local_X_shift_mm": {
+    "right": -2.763521,
+    "left": 2.763521
+  },
+  "world_UP_shift_mm": {
+    "right": 2.753004963155204,
+    "left": -2.753004963155204
+  },
+  "local_Y_shift_mm": {
+    "right": -2.0,
+    "left": 2.0
+  },
+  "finger_X_bounds_after_mm": {
+    "right": [
+      -18.500002850688787,
+      18.49999804867429
+    ],
+    "left": [
+      -18.500001364787796,
+      18.50000122504523
+    ]
+  },
+  "finger_robot_UP_extents_after_mm": {
+    "right": [
+      -12.416044672775126,
+      27.057833221160227
+    ],
+    "left": [
+      -12.416044676072623,
+      27.057833224595665
+    ]
+  },
+  "joint_limits_m": {
+    "piper_gripper_joint1": [
+      0.016800000000000002,
+      0.05
+    ],
+    "piper_gripper_joint2": [
+      -0.05,
+      -0.016800000000000002
+    ]
+  },
+  "note": "Only custom printed assembly moved, not actual carriage bolt holes. AABB closed clearance is not a validated collision/contact model. Prior V5/V6 collision and inertia are still provisional. "
+}

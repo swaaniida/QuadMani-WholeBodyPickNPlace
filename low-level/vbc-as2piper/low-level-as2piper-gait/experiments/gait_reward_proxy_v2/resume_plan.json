@@ -1,0 +1,28 @@
+{
+  "reason": "All three foreground-session experiments ended at 2026-10-30 07:12:17 UTC without traceback; current cgroup oom/oom_kill counters are zero. Exact exit signal unavailable.",
+  "environment_state_restored": false,
+  "optimizer_and_history_restored": true,
+  "entries": [
+    {
+      "preset": "stable_proxy",
+      "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_reward_stable_proxy_s7_v2/model_200.pt",
+      "completed_updates": 201,
+      "new_updates": 399,
+      "run": "gait_reward_stable_proxy_s7_v2_resume1"
+    },
+    {
+      "preset": "progress_gain2_proxy",
+      "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_reward_progress_gain2_proxy_s7_v2/model_200.pt",
+      "completed_updates": 201,
+      "new_updates": 399,
+      "run": "gait_reward_progress_gain2_proxy_s7_v2_resume1"
+    },
+    {
+      "preset": "stable_proxy_ground",
+      "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_reward_stable_proxy_ground_s7_v2/model_100.pt",
+      "completed_updates": 101,
+      "new_updates": 499,
+      "run": "gait_reward_stable_proxy_ground_s7_v2_resume1"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_original_fresh_s7_v1/model_201.pt",
+  "passed": false,
+  "criteria": {
+    "stop": true,
+    "forward": false,
+    "turn": false,
+    "combined": false,
+    "no_fall": true,
+    "upright": true
+  },
+  "error_score": 1.3189160321839153
+}

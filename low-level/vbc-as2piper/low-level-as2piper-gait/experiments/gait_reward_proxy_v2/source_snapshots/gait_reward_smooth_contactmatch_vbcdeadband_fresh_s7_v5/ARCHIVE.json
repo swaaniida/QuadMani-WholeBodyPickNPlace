@@ -1,0 +1,21 @@
+{
+  "initial_iteration": 0,
+  "checkpoint": null,
+  "non_history_init_tensors_equal": 33,
+  "config_differences": [
+    [
+      ".study.preset",
+      "progress_gain2_proxy_smooth_yaw4_contactmatch",
+      "progress_gain2_proxy_smooth_yaw4_contactmatch_deadband"
+    ],
+    [
+      ".study.vbc_linear_deadband",
+      null,
+      true
+    ]
+  ],
+  "ppo_asset_terrain_origins_match": true,
+  "runtime_archived_source_hashes_matched": 52,
+  "new_budget": 1000,
+  "comparison_note": "Compare actual201/401/600 milestones withE; later1000 results are longer training, not a matched-budget reward comparison."
+}

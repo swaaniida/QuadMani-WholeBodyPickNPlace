@@ -1,0 +1,11 @@
+{
+  "training_source_files_checked": 50,
+  "source_changed_since_start": [],
+  "protected_run_pid": 512627,
+  "protected_run_still_alive": true,
+  "diagnostic_training_final_iteration": 313,
+  "production_reward_environment_changed_for_this_verification": false,
+  "b1_source_checked": 19,
+  "b1_changed": [],
+  "b1_comparison_scope": "Python source entries in original clone manifest; excludes AS2-generated asset."
+}

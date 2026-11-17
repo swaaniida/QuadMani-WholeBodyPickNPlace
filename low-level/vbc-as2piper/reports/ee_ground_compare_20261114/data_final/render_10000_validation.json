@@ -1,0 +1,13 @@
+{
+  "iteration": 10000,
+  "max_nonreset_fk_error_m": 2.1622823550537375e-06,
+  "reset_discontinuity_frames": [
+    840,
+    1002
+  ],
+  "expanded_view_frames": 122,
+  "frames": 800,
+  "fps": 12.5,
+  "duration_s": 64.0,
+  "render": "MuJoCo CPU replay of PhysX states, not MuJoCo physics"
+}

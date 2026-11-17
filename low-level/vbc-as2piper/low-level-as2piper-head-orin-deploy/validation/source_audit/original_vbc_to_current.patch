@@ -1,0 +1,1239 @@
+--- /data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/__init__.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/envs/__init__.py
+@@ -1,38 +1,5 @@
+-# SPDX-FileCopyrightText: Copyright (c) 2021 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+-# SPDX-License-Identifier: BSD-3-Clause
+-# 
+-# Redistribution and use in source and binary forms, with or without
+-# modification, are permitted provided that the following conditions are met:
+-#
+-# 1. Redistributions of source code must retain the above copyright notice, this
+-# list of conditions and the following disclaimer.
+-#
+-# 2. Redistributions in binary form must reproduce the above copyright notice,
+-# this list of conditions and the following disclaimer in the documentation
+-# and/or other materials provided with the distribution.
+-#
+-# 3. Neither the name of the copyright holder nor the names of its
+-# contributors may be used to endorse or promote products derived from
+-# this software without specific prior written permission.
+-#
+-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+-# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+-# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-#
+-# Copyright (c) 2021 ETH Zurich, Nikita Rudin
+-
+ from .manip_loco.manip_loco import ManipLoco
+-from .manip_loco.b1z1_config import B1Z1RoughCfg, B1Z1RoughCfgPPO
+-
+-import os
+-
++from .manip_loco.as2_head_orin_config import AS2HeadOrinCfg, AS2HeadOrinCfgPPO
+ from legged_gym.utils.task_registry import task_registry
+ 
+-task_registry.register( "b1z1", ManipLoco, B1Z1RoughCfg(), B1Z1RoughCfgPPO(), 'b1z1')+task_registry.register('as2piper_head_orin_nocontact', ManipLoco, AS2HeadOrinCfg(), AS2HeadOrinCfgPPO(), 'as2piper_head_orin_nocontact')
+--- /dev/null
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/envs/manip_loco/as2_head_orin_config.py
+@@ -0,0 +1,92 @@
++"""Head-mounted PiPER/UMI and back-mounted Orin adaptation of original VBC."""
++from .b1z1_config import B1Z1RoughCfg, B1Z1RoughCfgPPO
++from pathlib import Path
++import json
++
++HW = json.loads((Path(__file__).resolve().parents[3] / "validation/hardware.json").read_text())
++
++
++class AS2HeadOrinCfg(B1Z1RoughCfg):
++    class env(B1Z1RoughCfg.env):
++        observe_foot_contacts = False
++        observe_gait_commands = True
++        num_proprio = 67
++        num_observations = num_proprio * (B1Z1RoughCfg.env.history_len + 1) + B1Z1RoughCfg.env.num_priv
++        num_gripper_joints = 2
++        env_spacing = 3.
++        stop_update_goal = False
++        pitch_control = False
++
++    class init_state(B1Z1RoughCfg.init_state):
++        pos = [0., 0., 0.3264069024246581]
++        default_joint_angles = {
++            **{leg + '_' + joint + '_joint': angle
++               for leg in ('FL', 'FR', 'RL', 'RR')
++               for joint, angle in [('hip', 0.), ('thigh', .8), ('calf', -1.6)]},
++            **{'piper_joint' + str(i): angle
++               for i, angle in enumerate([0., 1.1, -.55, 0., 0., 0.], 1)},
++            'piper_gripper_joint1': .049,
++            'piper_gripper_joint2': -.049,
++        }
++
++    class asset(B1Z1RoughCfg.asset):
++        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf'
++        gripper_name = 'piper_umi_nominal_tcp'
++        penalize_contacts_on = ['thigh', 'base_link', 'calf']
++        arm_base_offset = [.22435, 0., .1319]
++
++    class control(B1Z1RoughCfg.control):
++        stiffness = {**{name + '_joint': gain for name, gain in zip(('hip', 'thigh', 'calf'), HW['kp'])}, 'piper_joint': 5.}
++        damping = {**{name + '_joint': gain for name, gain in zip(('hip', 'thigh', 'calf'), HW['kd'])}, 'piper_joint': .5}
++        leg_armature = HW['armature']
++
++    class goal_ee(B1Z1RoughCfg.goal_ee):
++        arm_induced_pitch = 2.455216137744035
++        orientation_roll_offset = 0.
++        # Conservative body/head + Orin bounds, relative to the arm origin.
++        collision_lower_limits = [-.32435, -.112, -.1959]
++        collision_upper_limits = [.10165, .112, .0158]
++        underground_limit = -.4563069024246581
++
++        class sphere_center:
++            x_offset = 0.
++            y_offset = 0.
++            z_invariant_offset = 0.
++
++        class ranges:
++            init_pos_start = [.427898468676838, .421686284147847, 0.]
++            init_pos_end = [.427898468676838, .421686284147847, 0.]
++            # 4^3 position grid x 3^3 orientation grid screened offline (1728 poses).
++            pos_l = [.40, .48]
++            pos_p = [.10, .50]
++            pos_y = [-.25, .25]
++            delta_orn_r = [-.08, .08]
++            delta_orn_p = [-.08, .08]
++            delta_orn_y = [-.08, .08]
++            final_tracking_ee_reward = .55
++
++    class domain_rand(B1Z1RoughCfg.domain_rand):
++        added_mass_range = HW['added_base_mass_kg']
++        added_com_range_x = [-HW['base_com_half_range_m'][0], HW['base_com_half_range_m'][0]]
++        added_com_range_y = [-HW['base_com_half_range_m'][1], HW['base_com_half_range_m'][1]]
++        added_com_range_z = [-HW['base_com_half_range_m'][2], HW['base_com_half_range_m'][2]]
++        max_push_vel_xy = HW['max_push_velocity_m_s']
++        standing_push_multiplier = 1.0
++
++    class termination(B1Z1RoughCfg.termination):
++        height_reference = 'terrain'
++
++    class rewards(B1Z1RoughCfg.rewards):
++        base_height_target = .3244069024246581
++        # 0.30 m B1 target x approximately 0.60 geometric scale.
++        feet_height_target = 0.18
++
++        class scales(B1Z1RoughCfg.rewards.scales):
++            # This unused legacy term requires a foot-mounted force sensor.
++            foot_contacts_z = 0.0
++
++
++class AS2HeadOrinCfgPPO(B1Z1RoughCfgPPO):
++    class runner(B1Z1RoughCfgPPO.runner):
++        experiment_name = 'as2piper_head_orin_nocontact'
++        resume = False
+--- /data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/manip_loco.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/envs/manip_loco/manip_loco.py
+@@ -52,11 +52,10 @@
+     cfg: B1Z1RoughCfg
+ 
+     def __init__(self, cfg, *args, **kwargs):
+-        if cfg.env.observe_gait_commands:
+-            print("||||||||||Observe gait commands!")
+-            cfg.env.num_proprio += 5 # gait_indices=1, clock_phase=4
+-            cfg.env.num_observations = cfg.env.num_proprio * (cfg.env.history_len+1) + cfg.env.num_priv
+-            self.num_obs = cfg.env.num_observations
++        # Derive the contract rather than incrementing a mutable config on reuse.
++        cfg.env.num_proprio = 62 + (4 if getattr(cfg.env, "observe_foot_contacts", True) else 0) + (5 if cfg.env.observe_gait_commands else 0)
++        cfg.env.num_observations = cfg.env.num_proprio * (cfg.env.history_len + 1) + cfg.env.num_priv
++        self.num_obs = cfg.env.num_observations
+         self.stand_by = cfg.env.stand_by
+         super().__init__(cfg, *args, **kwargs)
+ 
+@@ -66,6 +65,7 @@
+         Args:
+             actions (torch.Tensor): Tensor of shape (num_envs, num_actions_per_env)
+         """
++        actions = actions.clone()
+         actions[:, 12:] = 0.
+         actions = self._reindex_all(actions)
+         actions = torch.clip(actions, -self.clip_actions, self.clip_actions).to(self.device)
+@@ -74,10 +74,12 @@
+         if self.action_delay != -1:
+             self.action_history_buf = torch.cat([self.action_history_buf[:, 1:], actions[:, None, :]], dim=1)
+             # actions = self.action_history_buf[:, -self.action_delay - 1] # delay for 1/50=20ms
+-        if self.global_steps < 10000 * 24:
+-            actions = self.action_history_buf[:, -1]
++            if self.global_steps < 10000 * 24:
++                actions = self.action_history_buf[:, -1]
++            else:
++                actions = self.action_history_buf[:, -2]
+         else:
+-            actions = self.action_history_buf[:, -2]
++            self.action_history_buf[:, -1] = actions
+ 
+         self.actions = actions.clone()
+         
+@@ -90,8 +92,10 @@
+         dpos = self.curr_ee_goal_cart_world - self.ee_pos
+         drot = orientation_error(self.ee_goal_orn_quat, self.ee_orn / torch.norm(self.ee_orn, dim=-1).unsqueeze(-1))
+         dpose = torch.cat([dpos, drot], -1).unsqueeze(-1)
+-        arm_pos_targets = self._control_ik(dpose) + self.dof_pos[:, -(6 + self.cfg.env.num_gripper_joints):-self.cfg.env.num_gripper_joints]
++        arm_pos_targets = self._control_ik(dpose) + self.dof_pos[:, 12:18]
++        arm_pos_targets = torch.clamp(arm_pos_targets, self.dof_pos_limits[12:18, 0], self.dof_pos_limits[12:18, 1])
+         all_pos_targets = torch.zeros_like(self.dof_pos)
++        all_pos_targets[:, -2:] = self.default_dof_pos[-2:]
+         all_pos_targets[:, -(6 + self.cfg.env.num_gripper_joints):-self.cfg.env.num_gripper_joints] = arm_pos_targets
+ 
+         for t in range(self.cfg.control.decimation):
+@@ -141,7 +145,8 @@
+         self.contact_filt = torch.logical_or(contact, self.last_contacts) 
+         self.last_contacts = contact
+ 
+-        self.foot_contacts_from_sensor = self.force_sensor_tensor.norm(dim=-1) > 1.5    
++        # Retain the legacy field name, using the same contact state as rewards.
++        self.foot_contacts_from_sensor = self.contact_filt.clone()    
+ 
+         self._post_physics_step_callback()
+         
+@@ -214,7 +219,7 @@
+     def compute_observations(self):
+         """ Computes observations
+         """
+-        arm_base_pos = self.base_pos + quat_apply(self.base_yaw_quat, self.arm_base_offset)
++        arm_base_pos = self.base_pos + quat_apply(self.base_quat, self.arm_base_offset)
+         ee_goal_local_cart = quat_rotate_inverse(self.base_quat, self.curr_ee_goal_cart_world - arm_base_pos)
+         if self.stand_by:
+             self.commands[:] = 0.
+@@ -224,12 +229,14 @@
+                                     self._reindex_all((self.dof_pos - self.default_dof_pos) * self.obs_scales.dof_pos)[:, :-self.cfg.env.num_gripper_joints],  # dim 18
+                                     self._reindex_all(self.dof_vel * self.obs_scales.dof_vel)[:, :-self.cfg.env.num_gripper_joints],  # dim 18
+                                     self._reindex_all(self.action_history_buf[:, -1])[:, :12],  # dim 12
+-                                    self._reindex_feet(self.foot_contacts_from_sensor),  # dim 4
+                                     self.commands[:, :3] * self.commands_scale,  # dim 3
+                                     # self.curr_ee_goal_sphere,  # dim 3 position
+                                     ee_goal_local_cart,  # dim 3 position
+                                     0*self.curr_ee_goal_sphere  # dim 3 orientation
+                                     ),dim=-1)
++        if getattr(self.cfg.env, "observe_foot_contacts", True):
++            obs_buf = torch.cat((obs_buf[:, :53], self._reindex_feet(self.foot_contacts_from_sensor), obs_buf[:, 53:]), dim=-1)
++        assert obs_buf.shape[1] == self.cfg.env.num_proprio - (5 if self.cfg.env.observe_gait_commands else 0)
+         if self.cfg.env.observe_gait_commands:
+             obs_buf = torch.cat((obs_buf,
+                                       self.gait_indices.unsqueeze(1), self.clock_inputs), dim=-1)
+@@ -240,7 +247,9 @@
+                 self.friction_coeffs_tensor,
+                 self.motor_strength[:, :12] - 1,
+             ), dim=-1)
+-            self.obs_buf = torch.cat([obs_buf, priv_buf, self.obs_history_buf.view(self.num_envs, -1)], dim=-1)
++        else:
++            priv_buf = torch.zeros(self.num_envs, self.cfg.env.num_priv, device=self.device)
++        self.obs_buf = torch.cat([obs_buf, priv_buf, self.obs_history_buf.view(self.num_envs, -1)], dim=-1)
+         
+         self.obs_history_buf = torch.where(
+             (self.episode_length_buf <= 1)[:, None, None], 
+@@ -254,27 +263,51 @@
+         if self.add_noise:
+             self.obs_buf += (2 * torch.rand_like(self.obs_buf) - 1) * self.noise_scale_vec
+ 
++    def _termination_ground_height(self):
++        if self.cfg.terrain.mesh_type == 'plane':
++            return torch.zeros(self.num_envs, device=self.device)
++        # Sample directly below the body using the existing terrain grid.
++        pixels = ((self.root_states[:, :2] + self.cfg.terrain.border_size) /
++                  self.cfg.terrain.horizontal_scale).long()
++        x = pixels[:, 0].clamp(0, self.height_samples.shape[0] - 2)
++        y = pixels[:, 1].clamp(0, self.height_samples.shape[1] - 2)
++        height = torch.minimum(self.height_samples[x, y], self.height_samples[x + 1, y])
++        height = torch.minimum(height, self.height_samples[x, y + 1])
++        return height * self.cfg.terrain.vertical_scale
++
++    def _reward_foot_ground_heights(self):
++        xy = self.rigid_body_state[:, self.feet_indices, :2]
++        if self.cfg.terrain.mesh_type == 'plane':
++            return torch.zeros(xy.shape[:2], device=self.device)
++        pixels = ((xy + self.cfg.terrain.border_size) / self.cfg.terrain.horizontal_scale).long()
++        x = pixels[..., 0].clamp(0, self.height_samples.shape[0] - 2)
++        y = pixels[..., 1].clamp(0, self.height_samples.shape[1] - 2)
++        height = torch.minimum(self.height_samples[x, y], self.height_samples[x + 1, y])
++        height = torch.minimum(height, self.height_samples[x, y + 1])
++        return height * self.cfg.terrain.vertical_scale
++
+     def check_termination(self):
+-        """ Check if environments need to be reset
+-        """
+-        termination_contact_buf = torch.any(torch.norm(self.contact_forces[:, self.termination_contact_indices, :], dim=-1) > 1., dim=1)
+-
+-        r, p, _ = euler_from_quat(self.base_quat) 
+-        z = self.root_states[:, 2]
+-
+-        # r_threshold_buff = ((r > 0.2) & (self.curr_ee_goal_sphere[:, 2] >= 0)) | ((r < -0.2) & (self.curr_ee_goal_sphere[:, 2] <= 0))
+-        # p_threshold_buff = ((p > 0.2) & (self.curr_ee_goal_sphere[:, 1] >= 0)) | ((p < -0.2) & (self.curr_ee_goal_sphere[:, 1] <= 0))
+-        r_term = torch.abs(r) > 0.8
+-        p_term = torch.abs(p) > 0.8
+-        z_term = z < 0.1
+-        self.time_out_buf = self.episode_length_buf > self.max_episode_length # no terminal reward for time-outs
+-
+-        # arm_base_local = torch.tensor([0.3, 0.0, 0.09], device=self.device).repeat(self.num_envs, 1)
+-        # arm_base = quat_apply(self.base_quat, arm_base_local) + self.root_states[:, :3]
+-        # curr_ee_pos_local = quat_rotate_inverse(self.root_states[:, 3:7], self.ee_pos - arm_base)
+-        # ik_fail = (self.curr_ee_goal_cart[:, -1:] - curr_ee_pos_local[:, -1:]).norm(dim=-1) > 0.3
+-        # self.reset_buf = termination_contact_buf | self.time_out_buf | r_term | p_term | z_term | ik_fail
+-        self.reset_buf = termination_contact_buf | self.time_out_buf | r_term | p_term | z_term
++        roll, pitch, _ = euler_from_quat(self.base_quat)
++        ground = self._termination_ground_height()
++        relative_height = self.root_states[:, 2] - ground
++        contact = torch.any(torch.norm(self.contact_forces[:, self.termination_contact_indices, :], dim=-1) > 1., dim=1)
++        thresholds = self.cfg.termination
++        tested_height = relative_height if thresholds.height_reference == 'terrain' else self.root_states[:, 2]
++        self.time_out_buf = self.episode_length_buf > self.max_episode_length
++        self.termination_reasons = {
++            'contact': contact,
++            'roll': roll.abs() > thresholds.r_threshold,
++            'pitch': pitch.abs() > thresholds.p_threshold,
++            'height': tested_height < thresholds.z_threshold,
++            'timeout': self.time_out_buf,
++        }
++        self.termination_metrics = {
++            'roll_rad': roll, 'pitch_rad': pitch,
++            'world_z_m': self.root_states[:, 2].clone(),
++            'ground_z_m': ground, 'height_above_ground_m': relative_height,
++            'legacy_world_height_failure': self.root_states[:, 2] < .1,
++        }
++        self.reset_buf = contact | self.termination_reasons['roll'] | self.termination_reasons['pitch'] | self.termination_reasons['height'] | self.time_out_buf
+ 
+     def create_sim(self):
+         """ Creates simulation, terrain and evironments
+@@ -282,7 +315,10 @@
+         self.up_axis_idx = 2 # 2 for z, 1 for y -> adapt gravity accordingly
+         self.sim = self.gym.create_sim(self.sim_device_id, self.graphics_device_id, self.physics_engine, self.sim_params)
+         self.terrain = Terrain(self.cfg.terrain, )
+-        self._create_trimesh()
++        if self.cfg.terrain.mesh_type == "plane":
++            self._create_ground_plane()
++        else:
++            self._create_trimesh()
+         # self._create_ground_plane()
+         self._create_envs()
+         
+@@ -298,6 +334,13 @@
+         """
+         if len(env_ids) == 0:
+             return
++        reason_rates = {}
++        if hasattr(self, 'termination_reasons'):
++            reason_rates = {'termination_' + name: values[env_ids].float().mean()
++                            for name, values in self.termination_reasons.items()}
++            for name in ('roll_rad', 'pitch_rad', 'world_z_m', 'ground_z_m', 'height_above_ground_m'):
++                values = self.termination_metrics[name][env_ids]
++                reason_rates['termination_' + name] = values.abs().mean() if name in ('roll_rad', 'pitch_rad') else values.mean()
+         # update curriculum
+         if self.cfg.terrain.curriculum:
+             self._update_terrain_curriculum(env_ids)
+@@ -325,7 +368,7 @@
+         self.goal_timer[env_ids] = 0.
+ 
+         # fill extras
+-        self.extras["episode"] = {}
++        self.extras["episode"] = dict(reason_rates)
+         for key in self.episode_sums.keys():
+             self.extras["episode"]['rew_' + key] = torch.mean(self.episode_sums[key][env_ids]) / self.max_episode_length_s
+             self.episode_sums[key][env_ids] = 0.
+@@ -399,6 +442,8 @@
+                         for name in list(self.reward_scales.keys()) + list(self.arm_reward_scales.keys())}
+ 
+     def _get_env_origins(self):
++        if self.cfg.terrain.mesh_type == "plane":
++            return super()._get_env_origins()
+         """ Sets environment origins. On rough terrain the origins are defined by the terrain platforms.
+             Otherwise create a grid.
+         """
+@@ -483,8 +528,15 @@
+         self.body_names = self.gym.get_asset_rigid_body_names(robot_asset)
+         self.body_names_to_idx = self.gym.get_asset_rigid_body_dict(robot_asset)
+         self.dof_names = self.gym.get_asset_dof_names(robot_asset)
++        expected = [leg + '_' + name + '_joint' for leg in ('FL', 'FR', 'RL', 'RR') for name in ('hip', 'thigh', 'calf')] + ['piper_joint' + str(i) for i in range(1, 7)] + ['piper_gripper_joint1', 'piper_gripper_joint2']
++        if self.dof_names != expected:
++            raise RuntimeError('Unexpected AS2 DOF order: ' + str(self.dof_names))
++        self.base_body_index = self.body_names_to_idx['base_link']
+         self.dof_wo_gripper_names = self.dof_names[:-self.cfg.env.num_gripper_joints]
+         self.dof_names_to_idx = self.gym.get_asset_dof_dict(robot_asset)
++        for leg in ('FL', 'FR', 'RL', 'RR'):
++            for name, value in zip(('hip', 'thigh', 'calf'), self.cfg.control.leg_armature):
++                dof_props_asset['armature'][self.dof_names_to_idx[leg + '_' + name + '_joint']] = value
+         # self.num_bodies = len(self.body_names)
+         # self.num_dofs = len(self.dof_names)
+         feet_names = [s for s in self.body_names if self.cfg.asset.foot_name in s]
+@@ -504,7 +556,7 @@
+         self.sensor_indices = []
+         for name in feet_names:
+             foot_idx = self.body_names_to_idx[name]
+-            sensor_pose = gymapi.Transform(gymapi.Vec3(0.0, 0.0, -0.05))
++            sensor_pose = gymapi.Transform(gymapi.Vec3(0.0, 0.0, -0.028))
+             sensor_idx = self.gym.create_asset_force_sensor(robot_asset, foot_idx, sensor_pose)
+             self.sensor_indices.append(sensor_idx)
+         
+@@ -557,6 +609,8 @@
+             self.gym.set_asset_rigid_shape_properties(robot_asset, rigid_shape_props)
+             robot_dog_handle = self.gym.create_actor(env_handle, robot_asset, start_pose, "robot_dog", i, self.cfg.asset.self_collisions, 0)
+             self.actor_handles.append(robot_dog_handle)
++            if getattr(self.cfg.asset, "measure_dof_forces", False):
++                self.gym.enable_actor_dof_force_sensors(env_handle, robot_dog_handle)
+ 
+             dof_props = self._process_dof_props(dof_props_asset, i)
+             self.gym.set_actor_dof_properties(env_handle, robot_dog_handle, dof_props)
+@@ -635,7 +689,7 @@
+         if self.cfg.domain_rand.randomize_base_mass:
+             rng_mass = self.cfg.domain_rand.added_mass_range
+             rand_mass = np.random.uniform(rng_mass[0], rng_mass[1], size=(1, ))
+-            props[1].mass += rand_mass
++            props[self.base_body_index].mass += rand_mass
+         else:
+             rand_mass = np.zeros(1)
+         
+@@ -651,7 +705,7 @@
+             rng_com_y = self.cfg.domain_rand.added_com_range_y
+             rng_com_z = self.cfg.domain_rand.added_com_range_z
+             rand_com = np.random.uniform([rng_com_x[0], rng_com_y[0], rng_com_z[0]], [rng_com_x[1], rng_com_y[1], rng_com_z[1]], size=(3, ))
+-            props[1].com += gymapi.Vec3(*rand_com)
++            props[self.base_body_index].com += gymapi.Vec3(*rand_com)
+         else:
+             rand_com = np.zeros(3)
+ 
+@@ -730,7 +784,7 @@
+         self.dof_vel_wo_gripper = self.dof_vel[:, :-self.cfg.env.num_gripper_joints]
+         self.base_quat = self.root_states[:, 3:7]
+         self.base_pos = self.root_states[:, :3]
+-        self.arm_base_offset = torch.tensor([0.3, 0., 0.09], device=self.device, dtype=torch.float).repeat(self.num_envs, 1)
++        self.arm_base_offset = torch.tensor(self.cfg.asset.arm_base_offset, device=self.device, dtype=torch.float).repeat(self.num_envs, 1)
+         # self.yaw_ema = euler_from_quat(self.base_quat)[2]
+         base_yaw = euler_from_quat(self.base_quat)[2]
+         self.base_yaw_euler = torch.cat([torch.zeros(self.num_envs, 2, device=self.device), base_yaw.view(-1, 1)], dim=1)
+@@ -905,15 +959,16 @@
+         self.gym.refresh_actor_root_state_tensor(self.sim)
+ 
+     def _push_robots(self):
+-        """ Random pushes the robots. Emulates an impulse by setting a randomized base velocity. 
+-        """
+-        max_vel = self.cfg.domain_rand.max_push_vel_xy
+-        self.root_states[:, 7:9] = torch_rand_float(-max_vel, max_vel, (self.num_envs, 2), device=self.device) # lin vel x/y
+-        self.root_states[:, 7:9] = torch.where(
+-            self.commands.sum(dim=1).unsqueeze(-1) == 0,
+-            self.root_states[:, 7:9] * 2.5,
+-            self.root_states[:, 7:9]
+-        )
++        maximum = self.cfg.domain_rand.max_push_vel_xy
++        before = self.root_states[:, 7:9].clone()
++        sampled = torch_rand_float(-maximum, maximum, (self.num_envs, 2), device=self.device)
++        stationary = self.commands.abs().max(dim=1).values < 1e-6
++        multiplier = torch.where(stationary, self.cfg.domain_rand.standing_push_multiplier, 1.)
++        applied = sampled * multiplier[:, None]
++        self.root_states[:, 7:9] = applied
++        self.last_push = {'velocity_before': before, 'velocity_after': applied.clone(),
++                          'delta_velocity': applied - before, 'stationary': stationary,
++                          'multiplier': multiplier, 'step': self.common_step_counter}
+         self.gym.set_actor_root_state_tensor(self.sim, gymtorch.unwrap_tensor(self._root_states))
+ 
+     def _reset_dofs(self, env_ids):
+@@ -925,6 +980,9 @@
+             env_ids (List[int]): Environemnt ids
+         """
+         self.dof_pos[env_ids] = self.default_dof_pos * torch_rand_float(0.8, 1.2, (len(env_ids), self.num_dofs), device=self.device)
++        # Keep the arm/TCP at the posture used to construct the initial EE goal.
++        self.dof_pos[env_ids, 12:] = self.default_dof_pos[12:]
++        self.dof_pos[env_ids] = torch.clamp(self.dof_pos[env_ids], self.dof_pos_limits[:, 0], self.dof_pos_limits[:, 1])
+         self.dof_vel[env_ids] = 0.
+ 
+         self.gym.set_dof_state_tensor(self.sim, gymtorch.unwrap_tensor(self.dof_state))
+@@ -1079,9 +1137,10 @@
+         noise_vec[idx:idx+12] = 0  # Assuming no noise for action history
+         idx += 12
+ 
+-        # Foot contacts (dim 4)
+-        noise_vec[idx:idx+4] = 0  # Assuming no noise for foot contacts
+-        idx += 4
++        # Optional foot contact input is absent from the AS2 deployment contract.
++        if getattr(cfg.env, "observe_foot_contacts", True):
++            noise_vec[idx:idx+4] = 0
++            idx += 4
+ 
+         # Commands (dim 3)
+         noise_vec[idx:idx+3] = 0  # Assuming no noise for commands
+@@ -1252,8 +1311,22 @@
+     def _collision_check(self, env_ids):
+         ee_target_all_sphere = torch.lerp(self.ee_start_sphere[env_ids, ..., None], self.ee_goal_sphere[env_ids, ...,  None], self.collision_check_t).squeeze(-1)
+         ee_target_cart = sphere2cart(torch.permute(ee_target_all_sphere, (2, 0, 1)).reshape(-1, 3)).reshape(self.num_collision_check_samples, -1, 3)
+-        collision_mask = torch.any(torch.logical_and(torch.all(ee_target_cart < self.collision_upper_limits, dim=-1), torch.all(ee_target_cart > self.collision_lower_limits, dim=-1)), dim=0)
+-        underground_mask = torch.any(ee_target_cart[..., 2] < self.underground_limit, dim=0)
++        count = len(env_ids)
++        yaw_quat = self.base_yaw_quat[env_ids].unsqueeze(0).expand(self.num_collision_check_samples, -1, -1).reshape(-1, 4)
++        world = quat_apply(yaw_quat, ee_target_cart.reshape(-1, 3)).reshape(self.num_collision_check_samples, count, 3)
++        world = world + self._get_ee_goal_spherical_center()[env_ids].unsqueeze(0)
++        base_quat = self.base_quat[env_ids].unsqueeze(0).expand(self.num_collision_check_samples, -1, -1).reshape(-1, 4)
++        local = quat_rotate_inverse(base_quat, (world - self.base_pos[env_ids].unsqueeze(0)).reshape(-1, 3))
++        local = local.reshape(self.num_collision_check_samples, count, 3) - self.arm_base_offset[env_ids].unsqueeze(0)
++        inside = torch.all((local > self.collision_lower_limits) & (local < self.collision_upper_limits), dim=-1)
++        collision_mask = torch.any(inside, dim=0)
++        # Use the same terrain-height measurements used by base-height rewards.
++        heights = getattr(self, 'measured_heights', None)
++        if isinstance(heights, torch.Tensor) and heights.ndim == 2:
++            ground = heights[env_ids].mean(dim=1)
++        else:
++            ground = self.env_origins[env_ids, 2]
++        underground_mask = torch.any(world[..., 2] < ground.unsqueeze(0), dim=0)
+         return collision_mask | underground_mask
+ 
+     def _update_curr_ee_goal(self):
+@@ -1269,7 +1342,7 @@
+         # TODO: for the teleop mode, we need to directly update self.ee_goal_orn_quat using VR controller.
+         default_yaw = torch.atan2(ee_goal_cart_yaw_global[:, 1], ee_goal_cart_yaw_global[:, 0])
+         default_pitch = -self.curr_ee_goal_sphere[:, 1] + self.cfg.goal_ee.arm_induced_pitch
+-        self.ee_goal_orn_quat = quat_from_euler_xyz(self.ee_goal_orn_delta_rpy[:, 0] + np.pi / 2, default_pitch + self.ee_goal_orn_delta_rpy[:, 1], self.ee_goal_orn_delta_rpy[:, 2] + default_yaw)
++        self.ee_goal_orn_quat = quat_from_euler_xyz(self.ee_goal_orn_delta_rpy[:, 0] + self.cfg.goal_ee.orientation_roll_offset, default_pitch + self.ee_goal_orn_delta_rpy[:, 1], self.ee_goal_orn_delta_rpy[:, 2] + default_yaw)
+         
+         self.goal_timer += 1
+         resample_id = (self.goal_timer > self.traj_total_timesteps).nonzero(as_tuple=False).flatten()
+@@ -1282,7 +1355,7 @@
+         self._resample_ee_goal(resample_id)
+     
+     def _get_ee_goal_spherical_center(self):
+-        center = torch.cat([self.root_states[:, :2], torch.zeros(self.num_envs, 1, device=self.device)], dim=1)
++        center = self.base_pos + quat_apply(self.base_quat, self.arm_base_offset)
+         center = center + quat_apply(self.base_yaw_quat, self.ee_goal_center_offset)
+         return center
+ 
+--- /data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/rewards/maniploco_rewards.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/envs/rewards/maniploco_rewards.py
+@@ -189,27 +189,28 @@
+         return rew, rew
+ 
+     def _reward_feet_jerk(self):
+-        if not hasattr(self, "last_contact_forces"):            
+-            result = torch.zeros(self.env.num_envs).to(self.env.device)
++        # The original term penalizes contact-force changes, not kinematic jerk.
++        forces = self.env.contact_forces[:, self.env.feet_indices, :]
++        if not hasattr(self.env, "last_contact_forces"):
++            result = torch.zeros(self.env.num_envs, device=self.env.device)
+         else:
+-            result = torch.sum(torch.norm(self.env.force_sensor_tensor - self.env.last_contact_forces, dim=-1), dim=-1)
+-        
+-        self.env.last_contact_forces = self.env.force_sensor_tensor.clone()
+-        result[self.env.episode_length_buf<50] = 0.
++            result = (forces - self.env.last_contact_forces[..., :3]).norm(dim=-1).sum(dim=-1)
++        self.env.last_contact_forces = forces.clone()
++        result[self.env.episode_length_buf < 50] = 0.
+         return result, result
+-    
++
+     def _reward_alive(self):
+         return 1., 1.
+     
+     def _reward_feet_drag(self):
+         feet_xyz_vel = torch.abs(self.env.rigid_body_state[:, self.env.feet_indices, 7:10]).sum(dim=-1)
+-        dragging_vel = self.env.foot_contacts_from_sensor * feet_xyz_vel
++        dragging_vel = self.env.contact_filt * feet_xyz_vel
+         rew = dragging_vel.sum(dim=-1)
+         return rew, rew
+ 
+     def _reward_feet_contact_forces(self):
+         reset_flag = (self.env.episode_length_buf > 2./self.env.dt).type(torch.float)
+-        forces = torch.sum((torch.norm(self.env.force_sensor_tensor, dim=-1) - self.env.cfg.rewards.max_contact_force).clip(min=0), dim=-1)
++        forces = torch.sum((torch.norm(self.env.contact_forces[:, self.env.feet_indices, :], dim=-1) - self.env.cfg.rewards.max_contact_force).clip(min=0), dim=-1)
+         rew = reset_flag * forces
+         return rew, rew
+     
+@@ -226,7 +227,7 @@
+     
+     def _reward_base_height(self):
+         # Penalize base height away from target
+-        base_height = torch.mean(self.env.root_states[:, 2].unsqueeze(1), dim=1)
++        base_height = self.env.root_states[:, 2] - self.env._termination_ground_height()
+         return torch.abs(base_height - self.env.cfg.rewards.base_height_target), base_height
+     
+     def _reward_orientation_walking(self):
+@@ -317,24 +318,22 @@
+ 
+         reward = 0
+         for i in range(4):
+-            reward += - (1 - desired_contact[:, i]) * (
++            reward += (1 - desired_contact[:, i]) * (
+                         1 - torch.exp(-1 * foot_forces[:, i] ** 2 / self.env.cfg.rewards.gait_force_sigma))
+         
+-        # cmd_stop_flag = ~self.env._get_walking_cmd_mask()
+-        # reward[cmd_stop_flag] = 0
++        reward *= self.env._get_walking_cmd_mask()
+         return reward / 4, reward / 4
+ 
+     def _reward_tracking_contacts_shaped_vel(self):
+         if not self.env.cfg.env.observe_gait_commands:
+             return 0,0
+-        foot_velocities = torch.norm(self.env.foot_velocities, dim=2).view(self.env.num_envs, -1)
++        foot_velocities = torch.norm(self.env.rigid_body_state[:, self.env.feet_indices, 7:10], dim=2)
+         desired_contact = self.env.desired_contact_states
+         reward = 0
+         for i in range(4):
+-            reward += - (desired_contact[:, i] * (
++            reward += (desired_contact[:, i] * (
+                         1 - torch.exp(-1 * foot_velocities[:, i] ** 2 / self.env.cfg.rewards.gait_vel_sigma)))
+-        # cmd_stop_flag = ~self.env._get_walking_cmd_mask()
+-        # reward[cmd_stop_flag] = 0
++        reward *= self.env._get_walking_cmd_mask()
+         
+         return reward / 4, reward / 4
+     
+@@ -346,6 +345,10 @@
+         else:
+             feet_height = self.env.rigid_body_state[:, self.env.feet_indices[:2], 2] # Only front feet
+ 
++        ground = self.env._reward_foot_ground_heights()
++        if not self.env.cfg.rewards.feet_height_allfeet:
++            ground = ground[:, :2]
++        feet_height = feet_height - ground
+         rew = torch.clamp(torch.norm(feet_height, dim=-1) - feet_height_tracking, max=0)
+         cmd_stop_flag = ~self.env._get_walking_cmd_mask()
+         rew[cmd_stop_flag] = 0
+@@ -354,7 +357,7 @@
+     def _reward_feet_air_time(self):
+         # Reward long steps
+         # Need to filter the contacts because the contact reporting of PhysX is unreliable on meshes
+-        first_contact = (self.env.feet_air_time > 0.) * self.env.foot_contacts_from_sensor  #self.env.contact_filt
++        first_contact = (self.env.feet_air_time > 0.) * self.env.contact_filt  #self.env.contact_filt
+         self.env.feet_air_time += self.env.dt
+ 
+         if self.env.cfg.rewards.feet_aritime_allfeet:
+@@ -363,5 +366,5 @@
+             rew_airTime = torch.sum((self.env.feet_air_time[:, :2] - 0.5) * first_contact[:, :2], dim=1)
+         
+         rew_airTime *= self.env._get_walking_cmd_mask()  # reward for stepping for any of the 3 motions
+-        self.env.feet_air_time *= ~ self.env.foot_contacts_from_sensor  #self.env.contact_filt
++        self.env.feet_air_time *= ~ self.env.contact_filt  #self.env.contact_filt
+         return rew_airTime, rew_airTime--- /data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/b1z1_interface.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/scripts/b1z1_interface.py
+@@ -88,14 +88,18 @@
+         if self.args.use_jit:
+             path = os.path.join(log_pth, 'traced', self.args.exptid + "_" + str(self.args.checkpoint) + "_jit.pt")
+             print("Loading jit for policy: ", path)
++            if not os.path.isfile(path):
++                export_dir = os.path.join(log_pth, 'traced')
++                export_policy_as_jit(ppo_runner.alg.actor_critic, export_dir)
++                path = os.path.join(export_dir, 'policy_1.pt')
+             self.policy = torch.jit.load(path, map_location=ppo_runner.device)
+ 
+     def step(self):
+         start_time = time.time()
+         obs = self.obs
+ 
+-        if args.use_jit:
+-            actions = self.policy(torch.cat((obs[:, :self.env.cfg.env.num_proprio], obs[:, self.env.cfg.env.num_priv:]), dim=1))
++        if self.args.use_jit:
++            actions = self.policy(torch.cat((obs[:, :self.env.cfg.env.num_proprio], obs[:, self.env.cfg.env.num_proprio+self.env.cfg.env.num_priv:]), dim=1))
+         else:
+             actions = self.policy(obs.detach(), hist_encoding=True)
+ 
+--- /data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/play.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/scripts/play.py
+@@ -87,6 +87,10 @@
+     if args.use_jit:
+         path = os.path.join(log_pth, 'traced', args.exptid + "_" + str(args.checkpoint) + "_jit.pt")
+         print("Loading jit for policy: ", path)
++        if not os.path.isfile(path):
++            export_dir = os.path.join(log_pth, 'traced')
++            export_policy_as_jit(ppo_runner.alg.actor_critic, export_dir)
++            path = os.path.join(export_dir, 'policy_1.pt')
+         policy = torch.jit.load(path, map_location=ppo_runner.device)
+     
+     logger = Logger(env.dt)
+--- /data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/train.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/scripts/train.py
+@@ -54,6 +54,7 @@
+         mode = "online"
+     wandb.init(project=args.proj_name, name=args.exptid, mode=mode, dir=LEGGED_GYM_ENVS_DIR +"/logs")
+     wandb.save(LEGGED_GYM_ENVS_DIR + "/manip_loco/b1z1_config.py", policy="now")
++    wandb.save(LEGGED_GYM_ENVS_DIR + "/manip_loco/as2_head_orin_config.py", policy="now")
+     wandb.save(LEGGED_GYM_ENVS_DIR + "/manip_loco/manip_loco.py", policy="now")
+ 
+     env, env_cfg = task_registry.make_env(name=args.task, args=args)
+--- /data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/helpers.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/legged_gym/utils/helpers.py
+@@ -217,9 +217,22 @@
+     else: 
+         os.makedirs(path, exist_ok=True)
+         path = os.path.join(path, 'policy_1.pt')
+-        model = copy.deepcopy(actor_critic.actor).to('cpu')
++        model = HistoryPolicyExporter(copy.deepcopy(actor_critic.actor).to('cpu'))
+         traced_script_module = torch.jit.script(model)
+         traced_script_module.save(path)
++
++
++class HistoryPolicyExporter(torch.nn.Module):
++    """Deployment input is current proprioception followed by previous frames."""
++    def __init__(self, actor):
++        super().__init__()
++        self.actor = actor
++        self.input_size = actor.num_prop * (actor.num_hist + 1)
++
++    def forward(self, observations: torch.Tensor) -> torch.Tensor:
++        if observations.dim() != 2 or observations.size(1) != self.input_size:
++            raise ValueError("Deployment input must contain current proprioception and history")
++        return self.actor(observations, True)
+ 
+ 
+ class PolicyExporterLSTM(torch.nn.Module):
+--- /data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/modules/actor_critic.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/rsl_rl_local/rsl_rl/modules/actor_critic.py
+@@ -203,7 +203,16 @@
+                         actor_arm_layers.append(activation)
+                 self.actor_arm_control_head = nn.Sequential(*actor_arm_layers)
+             
+-            def forward(self, obs, hist_encoding=False):
++            def forward(self, obs, hist_encoding: bool = False):
++                deployment_width = self.num_prop * (self.num_hist + 1)
++                training_width = deployment_width + self.num_priv
++                if obs.dim() != 2:
++                    raise ValueError("Actor observation must be a batch matrix")
++                if hist_encoding:
++                    if obs.size(1) != training_width and obs.size(1) != deployment_width:
++                        raise ValueError("History actor observation width does not match configured inputs")
++                elif obs.size(1) != training_width:
++                    raise ValueError("Privileged actor requires the configured training observation")
+                 obs_prop = obs[:, :self.num_prop]
+                 if hist_encoding:
+                     latent = self.infer_hist_latent(obs)
+@@ -281,6 +290,8 @@
+                 self.critic_arm_control_head = nn.Sequential(*critic_arm_layers)
+             
+             def forward(self, obs):
++                if obs.dim() != 2 or obs.size(1) != self.num_prop * (self.num_hist + 1) + self.num_priv:
++                    raise ValueError("Critic observation width does not match configured inputs")
+                 prop_and_priv = obs[:, :self.num_prop + self.num_priv]
+                 backbone_output = self.critic_backbone(prop_and_priv)
+                 leg_output = self.critic_leg_control_head(backbone_output)
+--- /data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/runners/on_policy_runner.py
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/rsl_rl_local/rsl_rl/runners/on_policy_runner.py
+@@ -32,6 +32,7 @@
+ import os
+ from collections import deque
+ import statistics
++from functools import partial
+ 
+ # from torch.utils.tensorboard import SummaryWriter
+ import torch
+@@ -88,7 +89,7 @@
+ 
+         _, _ = self.env.reset()
+ 
+-        self.alg.set_arm_default_coeffs(self.env.p_gains[12:], self.env.d_gains[12:], self.env.default_dof_pos[-7:-2])
++        self.alg.set_arm_default_coeffs(self.env.p_gains[12:], self.env.d_gains[12:], self.env.default_dof_pos[12:18])
+         
+     def set_it(self, it):
+         self.current_learning_iteration = it
+@@ -301,6 +302,6 @@
+             self.alg.actor_critic.to(device)
+ 
+         if not stochastic:
+-            return self.alg.actor_critic.act_inference
++            return partial(self.alg.actor_critic.act_inference, hist_encoding=True)
+         else:
+-            return self.alg.actor_critic.act
++            return partial(self.alg.actor_critic.act, hist_encoding=True)
+--- /dev/null
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/force_ablation/__init__.py
+@@ -0,0 +1 @@
++"""Independent contact-force ablation; existing tasks and checkpoints are unchanged."""
+--- /dev/null
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/force_ablation/configs.py
+@@ -0,0 +1,32 @@
++from legged_gym.envs.manip_loco.as2_head_orin_config import AS2HeadOrinCfg, AS2HeadOrinCfgPPO
++
++class Force40Cfg(AS2HeadOrinCfg):
++    pass
++
++class Force200Cfg(AS2HeadOrinCfg):
++    class rewards(AS2HeadOrinCfg.rewards):
++        max_contact_force = 200.
++
++class ForceOffCfg(AS2HeadOrinCfg):
++    class rewards(AS2HeadOrinCfg.rewards):
++        class scales(AS2HeadOrinCfg.rewards.scales):
++            feet_contact_forces = 0.
++
++CASES = {'A': Force40Cfg, 'B': Force200Cfg, 'C': ForceOffCfg}
++TASKS = {key: 'as2piper_nocontact_force_' + key.lower() for key in CASES}
++
++def configs(case, seed=1):
++    env = CASES[case]()
++    train = AS2HeadOrinCfgPPO()
++    env.seed = train.seed = seed
++    assert env.rewards.feet_height_target == .18
++    assert env.rewards.scales.feet_height == 1.
++    assert env.env.observe_gait_commands and not env.env.observe_foot_contacts
++    return env, train
++
++def register_tasks():
++    from legged_gym.utils.task_registry import task_registry
++    from .runtime import MeteredEnvironment
++    for case in CASES:
++        env, train = configs(case)
++        task_registry.register(TASKS[case], MeteredEnvironment, env, train, TASKS[case])
+--- /dev/null
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/force_ablation/report_validation.py
+@@ -0,0 +1,88 @@
++from pathlib import Path
++import json,hashlib,ast,os,grp
++ROOT=Path(__file__).resolve().parents[1];base=ROOT/'experiments/contact_force_ablation'
++results={}
++for p in sorted((base/'validation').glob('*/result.json')):
++ x=json.loads(p.read_text());results[x['condition']]=(p,x)
++assert set(results)==set('ABC')
++assert len({x['initial_model_sha256'] for _,x in results.values()})==1
++assert len({x['dr_parameters_sha256'] for _,x in results.values()})==1
++assert len({json.dumps(x['source_sha256'],sort_keys=True) for _,x in results.values()})==1
++for _,x in results.values():
++ assert x['initial_model_sha256']==x['final_model_sha256'] and x['optimizer_steps']==0 and x['reward_sum_verified']
++ assert x['env']['rewards']['feet_height_target']==.18 and x['env']['rewards']['scales']['feet_height']==1
++ for k in ['tracking_contacts_shaped_force','tracking_contacts_shaped_vel']:
++  assert x['metrics']['stand']['RewardWeighted/leg/'+k]==0
++ assert x['env']['env']['num_observations']==755 and x['env']['env']['observe_gait_commands']
++ assert not x['env']['env']['observe_foot_contacts']
++protected=json.loads((base/'preservation_before.json').read_text())
++changed=[p for p,h in protected.items() if hashlib.sha256(Path(p).read_bytes()).hexdigest()!=h]
++assert not changed
++proof={'existing_files_checked':len(protected),'changed_existing_files':changed,'same_initial_model_sha256':results['A'][1]['initial_model_sha256'],'same_dr_sha256':results['A'][1]['dr_parameters_sha256'],'reward_sum_verified_all_cases':True,'optimizer_steps':0,'training_started':False}
++(base/'verification_summary.json').write_text(json.dumps(proof,indent=2)+'\n')
++rows=[]
++for c in 'ABC':
++ _,x=results[c];f=x['force_probes'];rows.append(f"| {c} | {x['env']['rewards']['max_contact_force']} | {x['env']['rewards']['scales']['feet_contact_forces']} | {f['150.0']['weighted']:.2f} | {f['250.0']['weighted']:.2f} |")
++initsha=proof['same_initial_model_sha256'];drsha=proof['same_dr_sha256']
++report='''# Contact Force Reward Ablation 설정·검증
++
++## 구성 및 불변 조건
++
++기존코드를수정하지않고 force_ablation/ 모듈과 run_force_ablation.sh만추가했다. A/B/C를독립태스크·run·출력디렉터리로분리했다. 세조건의설정차이는 contact force threshold와feet_contact_forces scale뿐임을전체config비교로확인했다. 조건C의threshold40은 raw진단기준일뿐실제보상에는무관하다.
++
++공통: feet_height_target0.18m·scale+1, gait clock5 활성·2Hz, contact observation44 제거,755/737 입력계약, 정지contact shaping walking_mask, shaping scale−2,원래PPO·DR·기타reward. 훈련규모도기존6144환경·45000iteration·24step rollout을그대로사용한다. 원본실행스크립트와기존태스크는보존했다.
++
++| 조건 | thresholdN | scale | 네발각150N weighted | 네발각250N weighted |
++|---|---:|---:|---:|---:|
++'''+ '\n'.join(rows)+'''
++
++Probe는episode age>2s인동일상태이며값은/100이전이다. A/B는 실제 reward 목록에포함되고C는 scale0으로목록에서제외된다. C의raw force값은side effect없는함수를진단용으로만계산하여기록한다. 기여도와학습반환reward에는0으로반영한다.
++
++## 동일 초기화
++
++Seed 기본1. seed_1/initial_policy.pt는학습전공통가중치이며생성시독점쓰기,기존파일덮어쓰기금지. 각actual runner에strict load하고모델hash·빈두Adam state·iteration0·PPO counter0을검사한다. 세조건의initial/final model hash는모두동일했다.
++
++Model SHA256: `'''+initsha+'''`
++
++실제DR mass/COM/friction/motor strength tensor SHA256도모두동일했다: `'''+drsha+'''`.
++
++따라서초기파라미터나DR설정차이가아닌force reward차이로학습비교할수있다. 단동일seed라도GPU PhysX의개별물리궤적bitwise재현을보장하지않는다. 더강한통계결론에는같은seed묶음의A/B/C를반복해야한다.
++
++## 검증 실행 범위
++
++- prepare: 공통초기가중치와전체조건config 저장.
++- A/B/C 각각 actual runner/model/storage 생성, 같은weight load,16환경×120step(2.4초) PD/IK rollout. 검증용terrain만4x4·border5m으로축소했으며DR는원래활성범위를유지했다. 검증override는세조건동일하고훈련config에저장하지않는다.
++- 실제호출raw×scale합이native leg/arm reward와일치함을매step검사했다. Stateful reward는재호출하지않는다.
++- 모든조건의정지shaping force/vel=0,이동명령에서는음수penalty. Force source는net contact force, EE source는실제TCP이다.
++- 미학습 model_0 fixture로3초의checkpoint-load/evaluate경로도실행하여정지·전진·회전·복합각8환경의metric JSON/NPZ생성을확인했다. 이결과는미학습정책이므로성능평가결과로사용하지않는다.
++- actual train mode와learn()은한번도실행하지않았다. Optimizer step0,가중치불변. 장시간학습시작전설정/계측검증이다.
++
++## 평가·기록 지표
++
++Training중native24step logging에속도RMSE(vx/vy/yaw)·실제속도·EE position mean/P95·timeout/실패reset·1000env-step당실패·발net force norm평균/P95/P99(pooled및발별)·모든활성reward raw/weighted/signed share/absolute share를추가했다. 원본loss/episode 로그는유지한다. ablation_metrics.jsonl과동일W&B step에저장하며project는as2piper-low다.
++
++weighted는/100이전,abs share=E|weighted term|/ΣE|weighted term|. C의force contribution은항상0. Force통계는비접촉0도포함하는norm이고Fz/6축sensor norm과다르다. Rough net contact의보고누락가능성때문에독립실측접촉정답으로보지않는다.
++
++후속평가는같은seed·terrain·duration·iteration으로각조건checkpoint를로드한다. 기본flat/rough각32환경,4명령조건,40초중초기2초제외,고정중앙EE궤적,평가에서만DR/push off. 학습manifest의condition/source hash가다르면거부한다. 자세한명령은README_KO.md.
++
++## 파일·보존
++
++- configs.py: 세조건/태스크, runtime.py: 계측환경·원본runner logging확장, run.py: prepare/validate/train/evaluate.
++- experiments/contact_force_ablation/seed_1/: 공통미학습weight와전체config.
++- experiments/contact_force_ablation/validation/*/result.json,samples.npz: 조건별검증결과.
++- experiments/contact_force_ablation/evaluations/*/: 평가경로검사결과(미학습fixture).
++- verification_summary.json,preservation_before.json: 기존B1 checkpoint·현재No-contact production code·PPO·URDF 보존검사.
++
++기존파일hash보존을확인했다. Git status는기존dubious ownership오류라설정을변경하지않고hash로확인했다. 사용자검토전장시간학습은시작하지않는다.
++'''
++(ROOT/'force_ablation/VALIDATION_KO.md').write_text(report)
++p=ROOT/'CHANGES_KO.md';s=p.read_text();heading='## Contact Force Reward Ablation 준비'
++if heading not in s:
++ s+='''\n## Contact Force Reward Ablation 준비\n\n- 기존production코드수정없이force_ablation모듈·run_force_ablation.sh추가. A40N/B200N/Cforce scale0을별도태스크/run으로분리.\n- Height0.18·scale+1, shaping walking_mask·scale−2, DR/Gait/PPO/755·737입력유지.\n- Seed1공통미학습weight strict load,초기/최종모델hash및DR tensor hash가세조건동일. 실제reward합산·정지shaping0·150/250N probe검증.\n- 속도/EE/reset/force분포/reward기여도계측및checkpoint평가경로준비. Native PPO/DAgger유지.\n- Prepare·소규모PD검증·미학습fixture평가만실행. 실제학습/optimizer step0. 상세force_ablation/VALIDATION_KO.md.\n''';p.write_text(s)
++for p in (ROOT/'force_ablation').glob('*.py'):ast.parse(p.read_text(),filename=str(p))
++gid=grp.getgrnam('vbc').gr_gid
++for p in [ROOT/'force_ablation',base]+list((ROOT/'force_ablation').rglob('*'))+list(base.rglob('*'))+[ROOT/'run_force_ablation.sh',ROOT/'CHANGES_KO.md']:
++ if p.is_symlink():continue
++ p.chmod(0o2775 if p.is_dir() else (0o775 if p.suffix=='.sh' else 0o664))
++ if p.stat().st_uid==os.getuid() and p.stat().st_gid!=gid:os.chown(str(p),-1,gid)
++print('All checks passed:',proof)
+--- /dev/null
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/force_ablation/run.py
+@@ -0,0 +1,232 @@
++"""Prepare/validate by default. Training requires an explicit --mode train invocation."""
++import argparse, hashlib, json, random
++from datetime import datetime, timezone
++from pathlib import Path
++import isaacgym
++from isaacgym import gymapi, gymutil
++import numpy as np
++import torch
++import legged_gym.envs
++from legged_gym.utils.helpers import class_to_dict, set_seed
++from rsl_rl.modules import ActorCritic
++from .configs import configs, TASKS, register_tasks
++from .runtime import MeteredEnvironment, AblationRunner
++
++ROOT = Path(__file__).resolve().parents[1]
++BASE = ROOT / 'experiments/contact_force_ablation'
++
++def serial(value):
++    return value.tolist() if hasattr(value, 'tolist') else str(value)
++
++def canonical(value):
++    return json.dumps(value, sort_keys=True, default=serial, separators=(',', ':'))
++
++def model_hash(model):
++    state = model.state_dict() if hasattr(model, 'state_dict') else model
++    h = hashlib.sha256()
++    for name in sorted(state):
++        h.update(name.encode()); h.update(state[name].detach().cpu().contiguous().numpy().tobytes())
++    return h.hexdigest()
++
++def build_model(train, device='cpu'):
++    return ActorCritic(67, 67, 18, **class_to_dict(train.policy), num_priv=18, num_hist=10, num_prop=67).to(device)
++
++def initialization(seed):
++    path = BASE / ('seed_' + str(seed)) / 'initial_policy.pt'
++    _, train = configs('A', seed)
++    contract = {'seed': seed, 'policy': class_to_dict(train.policy), 'proprio': 67, 'privileged': 18, 'history': 10, 'action': 18}
++    if not path.exists():
++        path.parent.mkdir(parents=True, exist_ok=True)
++        set_seed(seed)
++        model = build_model(train)
++        payload = {'purpose': 'untrained common initialization; optimizer steps=0', 'contract': canonical(contract),
++                   'model_state_dict': model.state_dict(), 'model_sha256': model_hash(model)}
++        # Exclusive creation prevents replacing an existing initialization/checkpoint.
++        with path.open('xb') as f:
++            torch.save(payload, f)
++    value = torch.load(str(path), map_location='cpu')
++    assert value['contract'] == canonical(contract), 'Existing initialization uses a different seed/policy contract'
++    assert value['model_sha256'] == model_hash(value['model_state_dict'])
++    return path, value
++
++def config_manifest(case, seed):
++    env, train = configs(case, seed)
++    return {'condition': case, 'task': TASKS[case], 'seed': seed, 'env': class_to_dict(env), 'train': class_to_dict(train)}
++
++def compare_settings(seed):
++    manifests = {c: config_manifest(c, seed) for c in 'ABC'}
++    reference = manifests['A']
++    for c, current in manifests.items():
++        left = json.loads(canonical(reference)); right = json.loads(canonical(current))
++        for x in [left, right]:
++            x.pop('condition'); x.pop('task')
++            x['env']['rewards'].pop('max_contact_force')
++            x['env']['rewards']['scales'].pop('feet_contact_forces')
++        assert left == right, 'Unintended difference in ' + c
++    assert manifests['A']['env']['rewards']['max_contact_force'] == 40
++    assert manifests['B']['env']['rewards']['max_contact_force'] == 200
++    assert manifests['C']['env']['rewards']['scales']['feet_contact_forces'] == 0
++    return manifests
++
++def environment(case, seed, device, small=False, terrain=None):
++    cfg, train = configs(case, seed)
++    if small:
++        cfg.env.num_envs = 16 if terrain is None else 32
++        cfg.terrain.num_rows = cfg.terrain.num_cols = 4
++        cfg.terrain.border_size = 5
++    if terrain is not None:
++        if terrain == 'flat': cfg.terrain.height = [0., 0.]
++        for flag in ['randomize_friction', 'randomize_base_mass', 'randomize_base_com', 'randomize_motor', 'randomize_gripper_mass', 'push_robots']:
++            setattr(cfg.domain_rand, flag, False)
++    set_seed(seed)
++    params = gymapi.SimParams()
++    params.dt = cfg.sim.dt; params.up_axis = gymapi.UP_AXIS_Z; params.gravity = gymapi.Vec3(0, 0, -9.81)
++    params.use_gpu_pipeline = device.startswith('cuda'); params.physx.use_gpu = device.startswith('cuda')
++    gymutil.parse_sim_config(class_to_dict(cfg.sim), params)
++    return MeteredEnvironment(cfg, params, gymapi.SIM_PHYSX, device, True), train
++
++def initialize_runner(env, train, initial, directory=None):
++    runner = AblationRunner(env, class_to_dict(train), log_dir=None if directory is None else str(directory), device=env.device)
++    runner.alg.actor_critic.load_state_dict(initial['model_state_dict'], strict=True)
++    assert model_hash(runner.alg.actor_critic) == initial['model_sha256']
++    assert not runner.alg.optimizer.state and not runner.alg.hist_encoder_optimizer.state
++    assert runner.alg.counter == 0 and runner.current_learning_iteration == 0
++    env.meter.clear()
++    return runner
++
++def source_hashes():
++    names = ['legged_gym/envs/manip_loco/manip_loco.py', 'legged_gym/envs/manip_loco/as2_head_orin_config.py',
++        'legged_gym/envs/manip_loco/b1z1_config.py', 'legged_gym/envs/rewards/maniploco_rewards.py',
++        'rsl_rl_local/rsl_rl/algorithms/ppo.py', 'rsl_rl_local/rsl_rl/storage/rollout_storage.py',
++        'rsl_rl_local/rsl_rl/modules/actor_critic.py', 'rsl_rl_local/rsl_rl/runners/on_policy_runner.py',
++        'validation/hardware.json', 'resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf',
++        'force_ablation/configs.py', 'force_ablation/runtime.py', 'force_ablation/run.py']
++    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in names}
++
++def new_directory(kind, case, seed, name=None):
++    name = name or (case + '_seed' + str(seed) + '_' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ'))
++    assert Path(name).name == name and name not in ['.', '..']
++    path = BASE / kind / name
++    path.mkdir(parents=True, exist_ok=False)
++    return path
++
++def validate(args, initial_path, initial):
++    path = new_directory('validation', args.condition, args.seed, args.name)
++    env, train = environment(args.condition, args.seed, args.device, small=True)
++    try:
++        runner = initialize_runner(env, train, initial)
++        env.meter.verify = True
++        targets = torch.tensor([[0., 0., 0.], [.3, 0., 0.], [0., 0., .6], [.3, 0., .6]], device=env.device).repeat_interleave(4, 0)
++        env._resample_commands = lambda ids: env.commands.__setitem__(ids, targets[ids])
++        env.commands.copy_(targets)
++        # Fixed states isolate the causal change in the force reward alone.
++        import copy
++        from legged_gym.envs.rewards.maniploco_rewards import ManipLoco_rewards
++        shadow = copy.copy(env); shadow.contact_forces = env.contact_forces.clone()
++        shadow.episode_length_buf = torch.full_like(env.episode_length_buf, 200)
++        reward = ManipLoco_rewards(shadow)
++        probes = {}
++        for force in [0., 40., 150., 200., 250.]:
++            shadow.contact_forces[:, env.feet_indices] = torch.tensor([0., 0., force], device=env.device)
++            raw, _ = reward._reward_feet_contact_forces()
++            expected = 4 * max(force - env.cfg.rewards.max_contact_force, 0)
++            assert torch.allclose(raw, torch.full_like(raw, expected))
++            probes[str(force)] = {'raw': float(raw.mean()), 'weighted': float(raw.mean() * env.cfg.rewards.scales.feet_contact_forces)}
++        for _ in range(120):
++            env.commands.copy_(targets)
++            env.step(torch.zeros(env.num_envs, 18, device=env.device))
++        summaries = {name: env.meter.summary(slice(i * 4, (i + 1) * 4)) for i, name in enumerate(['stand', 'forward', 'turn', 'forward_turn'])}
++        for name in ['tracking_contacts_shaped_force', 'tracking_contacts_shaped_vel']:
++            assert summaries['stand']['RewardWeighted/leg/' + name] == 0
++            assert summaries['forward']['RewardWeighted/leg/' + name] < 0
++        assert env.obs_buf.shape[-1] == 755
++        assert model_hash(runner.alg.actor_critic) == initial['model_sha256']
++        if args.condition == 'C':
++            assert 'feet_contact_forces' not in env.reward_names
++            assert summaries['forward']['RewardWeighted/leg/feet_contact_forces'] == 0
++        manifest = config_manifest(args.condition, args.seed)
++        manifest.update(initialization=str(initial_path), initial_model_sha256=initial['model_sha256'],
++            final_model_sha256=model_hash(runner.alg.actor_critic), optimizer_steps=0,
++            validation_overrides={'envs':16, 'terrain_rows_cols':[4,4], 'border_size_m':5, 'steps':120, 'seconds':120*env.dt, 'actions':'zero leg/arm actions; original arm IK; DR otherwise inherited'},
++            force_probes=probes, reward_sum_verified=True, metrics=summaries,
++            dr_parameters_sha256=hashlib.sha256(torch.cat([env.mass_params_tensor.flatten(),env.friction_coeffs_tensor.flatten(),env.motor_strength.flatten()]).cpu().numpy().tobytes()).hexdigest(),
++            source_sha256=source_hashes())
++        env.meter.save_samples(path / 'samples.npz')
++        (path / 'result.json').write_text(json.dumps(manifest, indent=2, default=serial) + '\n')
++        print('Validation saved:', path, flush=True)
++    finally:
++        env.gym.destroy_sim(env.sim)
++
++def train_run(args, initial_path, initial):
++    import wandb
++    path = new_directory('runs', args.condition, args.seed, args.name)
++    manifest = config_manifest(args.condition, args.seed)
++    manifest.update(initialization=str(initial_path), initial_model_sha256=initial['model_sha256'], source_sha256=source_hashes())
++    (path / 'manifest.json').write_text(json.dumps(manifest, indent=2, default=serial) + '\n')
++    wandb.init(project=args.project, name=path.name, id=path.name, resume='never', dir=str(path), config=manifest)
++    env, train = environment(args.condition, args.seed, args.device)
++    try:
++        runner = initialize_runner(env, train, initial, path)
++        (path / 'initial_model_sha256.txt').write_text(model_hash(runner.alg.actor_critic) + '\n')
++        runner.learn(num_learning_iterations=train.runner.max_iterations, init_at_random_ep_len=True)
++    finally:
++        env.gym.destroy_sim(env.sim); wandb.finish()
++
++def evaluate(args):
++    assert args.checkpoint is not None, '--checkpoint is required'
++    checkpoint = Path(args.checkpoint).resolve()
++    assert checkpoint.is_file()
++    saved_manifest = checkpoint.parent / 'manifest.json'
++    if saved_manifest.exists():
++        saved = json.loads(saved_manifest.read_text())
++        assert saved['condition'] == args.condition, 'Checkpoint condition differs from evaluation condition'
++        assert saved['source_sha256'] == source_hashes(), 'Evaluation source differs from recorded training source'
++    path = new_directory('evaluations', args.condition, args.seed, args.name)
++    env, train = environment(args.condition, args.seed, args.device, small=True, terrain=args.terrain)
++    try:
++        model = build_model(train, env.device)
++        weights = torch.load(str(checkpoint), map_location=env.device)
++        model.load_state_dict(weights['model_state_dict'], strict=True); model.eval()
++        initial_hash = model_hash(model)
++        targets = torch.tensor([[0.,0.,0.],[.4,0.,0.],[0.,0.,.6],[.4,0.,.6]],device=env.device).repeat_interleave(8,0)
++        env._resample_commands=lambda ids:env.commands.__setitem__(ids,targets[ids])
++        env.reset(); env.global_steps=int(weights.get('iter',45000))*train.runner.num_steps_per_env
++        # Prescribed central EE targets make A/B/C comparison commands identical after resets.
++        env.cfg.env.teleop_mode=True
++        with torch.no_grad():
++            for i in range(int(args.seconds/env.dt)):
++                t=i*env.dt
++                env.curr_ee_goal_sphere[:]=torch.tensor([.44+.02*np.sin(t),.3+.1*np.sin(t*.7),.15*np.sin(t*.5)],device=env.device)
++                env.ee_goal_orn_delta_rpy.zero_();env._update_curr_ee_goal();env.commands.copy_(targets)
++                env.step(model.act_inference(env.obs_buf,True).clone())
++                if i==99: env.meter.clear()
++        assert model_hash(model)==initial_hash
++        values={name:env.meter.summary(slice(j*8,(j+1)*8)) for j,name in enumerate(['stand','forward','turn','forward_turn'])}
++        env.meter.save_samples(path/'samples.npz')
++        (path/'result.json').write_text(json.dumps({'condition':args.condition,'seed':args.seed,'terrain':args.terrain,'seconds':args.seconds,'checkpoint':str(checkpoint),'checkpoint_sha256':hashlib.sha256(checkpoint.read_bytes()).hexdigest(),'source_sha256':source_hashes(),'metrics':values,'optimizer_steps':0,'protocol':'32 env, DR/push off, 2s warmup, fixed velocity and central EE commands; terrain is original generator 4x4; simulation performance only'},indent=2)+'\n')
++        print('Evaluation saved:',path,flush=True)
++    finally:env.gym.destroy_sim(env.sim)
++
++def main():
++    parser=argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--mode',choices=['prepare','validate','train','evaluate'],default='validate')
++    parser.add_argument('--condition',choices=list('ABC'),default='A')
++    parser.add_argument('--seed',type=int,default=1);parser.add_argument('--device',default='cuda:0')
++    parser.add_argument('--name');parser.add_argument('--project',default='as2piper-low')
++    parser.add_argument('--checkpoint');parser.add_argument('--terrain',choices=['flat','rough'],default='flat');parser.add_argument('--seconds',type=float,default=40)
++    args=parser.parse_args();torch.set_num_threads(2)
++    register_tasks();manifests=compare_settings(args.seed)
++    if args.mode=='evaluate':
++        assert args.seconds>2;evaluate(args);return
++    path,initial=initialization(args.seed)
++    if args.mode=='prepare':
++        target=path.parent/'conditions.json'
++        value=canonical(manifests)
++        if target.exists():assert target.read_text()==value
++        else:
++            with target.open('x') as f:f.write(value)
++        print('Common initialization:',path,'model SHA256:',initial['model_sha256'])
++    elif args.mode=='validate':validate(args,path,initial)
++    else:train_run(args,path,initial)
++
++if __name__=='__main__':main()
+--- /dev/null
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/force_ablation/runtime.py
+@@ -0,0 +1,106 @@
++"""Record pre-reset physical state and actual reward calls without changing rewards."""
++import json
++from pathlib import Path
++import numpy as np
++import torch
++from legged_gym.envs.manip_loco.manip_loco import ManipLoco
++from rsl_rl.runners.on_policy_runner import OnPolicyRunner
++
++class Meter:
++    def __init__(self, env, verify=False):
++        self.env = env
++        self.verify = verify
++        self.clear()
++    def clear(self):
++        self.physics = []
++        self.rewards = []
++        self.current = {}
++    def record(self, key, raw, scale):
++        raw = torch.as_tensor(raw, device=self.env.device).expand(self.env.num_envs)
++        self.current[key] = (raw.detach().clone(), float(scale))
++    def sample(self):
++        e = self.env
++        if 'leg/feet_contact_forces' not in self.current:
++            # Pure diagnostic call: this function does not mutate timers/state.
++            raw, _ = e.reward_container._reward_feet_contact_forces()
++            self.record('leg/feet_contact_forces', raw, 0.)
++        force = e.contact_forces[:, e.feet_indices].norm(dim=-1)
++        error = e.base_lin_vel[:, :2] - e.commands[:, :2]
++        yaw_error = e.base_ang_vel[:, 2] - e.commands[:, 2]
++        ee = (e.curr_ee_goal_cart_world - e.ee_pos).norm(dim=-1)
++        self.physics.append(torch.cat([error, yaw_error[:, None], e.base_lin_vel[:, :2], e.base_ang_vel[:, 2:3],
++            ee[:, None], e.reset_buf[:, None].float(), e.time_out_buf[:, None].float(), force,
++            e.rew_buf[:, None] * 100, e.arm_rew_buf[:, None] * 100], dim=-1).detach().clone())
++        if self.verify:
++            for branch, target in [('leg', e.rew_buf), ('arm', e.arm_rew_buf)]:
++                expected = sum(v * w for k, (v, w) in self.current.items() if k.startswith(branch + '/')) / 100
++                assert torch.allclose(expected, target, atol=1e-6)
++        self.rewards.append(self.current)
++        self.current = {}
++    def summary(self, selection=slice(None)):
++        if not self.physics:
++            return {}
++        x = torch.stack(self.physics)[:, selection].cpu().numpy()
++        n = x.shape[0] * x.shape[1]
++        force = x[:, :, 9:13]
++        metrics = {'Tracking/vx_rmse_m_s': float(np.sqrt(np.mean(x[:, :, 0] ** 2))),
++            'Tracking/vy_rmse_m_s': float(np.sqrt(np.mean(x[:, :, 1] ** 2))),
++            'Tracking/yaw_rmse_rad_s': float(np.sqrt(np.mean(x[:, :, 2] ** 2))),
++            'Tracking/vx_mean_m_s': float(x[:, :, 3].mean()), 'Tracking/yaw_mean_rad_s': float(x[:, :, 5].mean()),
++            'EE/position_mean_m': float(x[:, :, 6].mean()), 'EE/position_p95_m': float(np.quantile(x[:, :, 6], .95)),
++            'Reset/failures': int((x[:, :, 7] * (1 - x[:, :, 8])).sum()), 'Reset/timeouts': int(x[:, :, 8].sum()),
++            'Reset/failures_per_1000_env_steps': float((x[:, :, 7] * (1 - x[:, :, 8])).sum() * 1000 / n),
++            'Samples/env_steps': int(n), 'Force/norm_mean_N': float(force.mean()),
++            'Force/norm_p95_N': float(np.quantile(force, .95)), 'Force/norm_p99_N': float(np.quantile(force, .99))}
++        for j, name in enumerate(self.env.feet_names if hasattr(self.env, 'feet_names') else ['FL', 'FR', 'RL', 'RR']):
++            for tag, value in [('mean', force[:, :, j].mean()), ('p95', np.quantile(force[:, :, j], .95)), ('p99', np.quantile(force[:, :, j], .99))]:
++                metrics['Force/' + name + '_' + tag + '_N'] = float(value)
++        weighted = {}
++        for key in self.rewards[0]:
++            raw = torch.stack([v[key][0] for v in self.rewards])[:, selection].cpu().numpy()
++            scale = self.rewards[0][key][1]
++            weighted[key] = raw * scale
++            metrics['RewardRaw/' + key] = float(raw.mean())
++            metrics['RewardWeighted/' + key] = float((raw * scale).mean())
++        for branch in ['leg', 'arm']:
++            values = {k: v for k, v in weighted.items() if k.startswith(branch + '/')}
++            total = sum(v.mean() for v in values.values())
++            absolute = sum(np.abs(v).mean() for v in values.values())
++            metrics['RewardTotal/' + branch + '_before_div100'] = float(total)
++            for key, value in values.items():
++                metrics['RewardAbsShare/' + key] = float(np.abs(value).mean() / absolute) if absolute else 0.
++                metrics['RewardSignedShare/' + key] = float(value.mean() / total) if abs(total) > 1e-9 else 0.
++        return metrics
++    def save_samples(self, path):
++        arrays = {'physics': torch.stack(self.physics).cpu().numpy()}
++        arrays.update({key.replace('/', '__'): torch.stack([v[key][0] for v in self.rewards]).cpu().numpy() for key in self.rewards[0]})
++        np.savez_compressed(path, **arrays)
++
++class MeteredEnvironment(ManipLoco):
++    def __init__(self, *args, **kwargs):
++        self.meter = None
++        super().__init__(*args, **kwargs)
++        self.meter = Meter(self)
++        for branch, names, functions, scales in [('leg', self.reward_names, self.reward_functions, self.reward_scales),
++                                                ('arm', self.arm_reward_names, self.arm_reward_functions, self.arm_reward_scales)]:
++            for i, (name, fn) in enumerate(zip(names, functions)):
++                def record(fn=fn, key=branch + '/' + name, scale=scales[name]):
++                    raw, metric = fn()
++                    self.meter.record(key, raw, scale)
++                    return raw, metric
++                functions[i] = record
++    def compute_reward(self):
++        super().compute_reward()
++        if self.meter is not None:
++            self.meter.sample()
++
++class AblationRunner(OnPolicyRunner):
++    def log(self, locs, *args, **kwargs):
++        import wandb
++        values = self.env.meter.summary()
++        if values:
++            wandb.log(values, step=locs['it'], commit=False)
++            with (Path(self.log_dir) / 'ablation_metrics.jsonl').open('a') as f:
++                f.write(json.dumps({'iteration': locs['it'], **values}) + '\n')
++        self.env.meter.clear()
++        return super().log(locs, *args, **kwargs)
+--- /dev/null
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/run_force_ablation.sh
+@@ -0,0 +1,10 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++export PYTHONDONTWRITEBYTECODE=1
++export PYTHONPATH="$PWD/.wandb_deps:$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
++export TORCH_EXTENSIONS_DIR="$PWD/../low-level-as2piper-head-orin/.torch_extensions"
++export MAX_JOBS=2
++export WANDB_ENTITY="${WANDB_ENTITY:-quadruped_capstone}"
++exec python -m force_ablation.run "$@"
+--- /dev/null
++++ /data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/run_head.sh
+@@ -0,0 +1,8 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
++export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export MAX_JOBS=2
++exec python legged_gym/scripts/train.py --task as2piper_head_orin_nocontact --proj_name as2piper-low --headless "$@"

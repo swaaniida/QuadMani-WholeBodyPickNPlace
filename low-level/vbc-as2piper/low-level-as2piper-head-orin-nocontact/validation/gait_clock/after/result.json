@@ -1,0 +1,137 @@
+{
+  "observation_shape": [
+    16,
+    755
+  ],
+  "reset_return_history_zero": true,
+  "internal_reset_history_filled": true,
+  "normalization": {
+    "clip_actions": 100.0,
+    "clip_observations": 100.0,
+    "obs_scales": {
+      "ang_vel": 1.0,
+      "dof_pos": 1.0,
+      "dof_vel": 0.05,
+      "height_measurements": 5.0,
+      "lin_vel": 1.0
+    }
+  },
+  "privileged_order": "added_base_mass, COM xyz delta, gripper added mass, friction, 12 native-order leg motor-strength offsets",
+  "caller_action_mutated": false,
+  "applied_arm_actions_max": 0.0,
+  "steps": 200,
+  "seconds": 4,
+  "contact_inputs_present": false,
+  "sensor_vs_instant_contact_disagreement": 0.5153124928474426,
+  "resets": 0,
+  "history_layout_checked": true,
+  "joint_normalization_checked": true,
+  "privileged_layout_checked": true,
+  "clock_changes_in_moving_commands": true,
+  "shaping_rollout": {
+    "tracking_contacts_shaped_force": {
+      "scale": -2.0,
+      "conditions": {
+        "stand": {
+          "raw_mean": 0.19466915726661682,
+          "weighted_mean": -0.38933831453323364,
+          "nonzero_fraction": 0.90375
+        },
+        "forward": {
+          "raw_mean": 0.18653284013271332,
+          "weighted_mean": -0.37306568026542664,
+          "nonzero_fraction": 0.84125
+        },
+        "turn": {
+          "raw_mean": 0.29367637634277344,
+          "weighted_mean": -0.5873527526855469,
+          "nonzero_fraction": 0.91625
+        },
+        "forward_turn": {
+          "raw_mean": 0.16987155377864838,
+          "weighted_mean": -0.33974310755729675,
+          "nonzero_fraction": 0.77125
+        }
+      }
+    },
+    "tracking_contacts_shaped_vel": {
+      "scale": -2.0,
+      "conditions": {
+        "stand": {
+          "raw_mean": 0.010933583602309227,
+          "weighted_mean": -0.021867167204618454,
+          "nonzero_fraction": 1.0
+        },
+        "forward": {
+          "raw_mean": 0.011077869683504105,
+          "weighted_mean": -0.02215573936700821,
+          "nonzero_fraction": 1.0
+        },
+        "turn": {
+          "raw_mean": 0.003975090570747852,
+          "weighted_mean": -0.007950181141495705,
+          "nonzero_fraction": 1.0
+        },
+        "forward_turn": {
+          "raw_mean": 0.0031216652132570744,
+          "weighted_mean": -0.006243330426514149,
+          "nonzero_fraction": 1.0
+        }
+      }
+    }
+  },
+  "shaping_probes": {
+    "swing_50N_weighted": -2.0,
+    "stance_50N_weighted": -0.0,
+    "stance_1m_s_weighted": -1.7293294668197632,
+    "stance_0m_s_weighted": -0.0,
+    "sensor_nan_and_stale_velocity_nan_independent": true
+  },
+  "sensor_only_foot_contacts_z_disabled": true,
+  "observe_priv_false_fresh": true,
+  "observe_priv_false_placeholder_zero": true,
+  "contact_sensor_poison_independence": true,
+  "active_contact_reward_functions": [
+    "collision",
+    "feet_air_time",
+    "feet_contact_forces",
+    "feet_drag",
+    "feet_height",
+    "feet_jerk",
+    "tracking_contacts_shaped_force",
+    "tracking_contacts_shaped_vel"
+  ],
+  "active_contact_rewards_no_sensor_input": true,
+  "action_delay_branches": {
+    "early": {
+      "applied_leg_action": 0.019999999552965164,
+      "observed_latest_command": 0.019999999552965164
+    },
+    "late": {
+      "applied_leg_action": 0.0,
+      "observed_latest_command": 0.019999999552965164
+    },
+    "disabled": {
+      "applied_leg_action": 0.019999999552965164,
+      "observed_latest_command": 0.019999999552965164
+    }
+  },
+  "all_current_observation_fields_checked": true,
+  "actual_runner_storage_shape": [
+    24,
+    16,
+    755
+  ],
+  "actual_runner_inference_action_shape": [
+    16,
+    18
+  ],
+  "actual_runner_optimizer_state_entries": 0,
+  "dimensions": {
+    "current_proprio": 67,
+    "privileged": 18,
+    "history": 670,
+    "total": 755,
+    "deployment": 737
+  }
+}

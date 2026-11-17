@@ -1,0 +1,73 @@
+{
+  "source": "/data/team/users/suhwan/vbc-as2piper/reports/deployment_workspace_review_20261114/contact_capture",
+  "asset_sha256": "d0d667cbcdf9dbbad62432ed149764e305a395685e460a3bd3157c80bad94876",
+  "asset_note": "Exact original45k training asset, without later camera; distinct from current-URDF static scan.",
+  "max_FK_measured_foot_difference_m": 4.298333972779789e-06,
+  "phase": "12..60s, zero velocity EE trajectory, one display replica/checkpoint",
+  "results": {
+    "20000": {
+      "samples": 1200,
+      "RR_contact_fraction": 0.0,
+      "RR_up_fraction": 0.9866666666666667,
+      "rear_total_mean_N": 64.17835998535156,
+      "front_total_mean_N": 163.83543395996094,
+      "front_margin_min_mm": 100.18693777374884,
+      "front_margin_mean_mm": 119.32296118048328,
+      "front_margin_P5_mm": 102.74312748791147,
+      "all4_projected_support_margin_min_mm": 99.3945456798242,
+      "active_contact_polygon_margin_mean_mm": 59.12672435835411,
+      "RR_up_while_front_margin_gt40mm_fraction": 0.9866666666666667,
+      "EE_position_error_mean_m": 0.02313295751810074,
+      "measured_CoP_COM_distance_mean_mm": 3.8195972415375,
+      "measured_CoP_COM_distance_P95_mm": 17.021699334467012
+    },
+    "28000": {
+      "samples": 1200,
+      "RR_contact_fraction": 0.021666666666666667,
+      "RR_up_fraction": 0.9683333333333334,
+      "rear_total_mean_N": 83.19606018066406,
+      "front_total_mean_N": 144.49378967285156,
+      "front_margin_min_mm": 123.22282199518487,
+      "front_margin_mean_mm": 143.6472781338141,
+      "front_margin_P5_mm": 125.13790251540166,
+      "all4_projected_support_margin_min_mm": 123.72945486292647,
+      "active_contact_polygon_margin_mean_mm": 26.772364658741292,
+      "RR_up_while_front_margin_gt40mm_fraction": 0.9683333333333334,
+      "EE_position_error_mean_m": 0.028853194788098335,
+      "measured_CoP_COM_distance_mean_mm": 10.292555337953798,
+      "measured_CoP_COM_distance_P95_mm": 36.69024628923493
+    },
+    "30000": {
+      "samples": 1200,
+      "RR_contact_fraction": 0.225,
+      "RR_up_fraction": 0.5333333333333333,
+      "rear_total_mean_N": 84.68084716796875,
+      "front_total_mean_N": 143.08929443359375,
+      "front_margin_min_mm": 117.19179660946088,
+      "front_margin_mean_mm": 130.0854137512466,
+      "front_margin_P5_mm": 119.3118564284918,
+      "all4_projected_support_margin_min_mm": 110.79920912811971,
+      "active_contact_polygon_margin_mean_mm": 45.67336674042893,
+      "RR_up_while_front_margin_gt40mm_fraction": 0.5333333333333333,
+      "EE_position_error_mean_m": 0.025195235386490822,
+      "measured_CoP_COM_distance_mean_mm": 5.378056273816904,
+      "measured_CoP_COM_distance_P95_mm": 18.559358464173293
+    },
+    "45000": {
+      "samples": 1200,
+      "RR_contact_fraction": 0.0,
+      "RR_up_fraction": 0.9925,
+      "rear_total_mean_N": 74.27068328857422,
+      "front_total_mean_N": 153.86151123046875,
+      "front_margin_min_mm": 125.72091301102992,
+      "front_margin_mean_mm": 136.34734349976046,
+      "front_margin_P5_mm": 127.86543908803006,
+      "all4_projected_support_margin_min_mm": 125.77076879028346,
+      "active_contact_polygon_margin_mean_mm": 43.82416018667793,
+      "RR_up_while_front_margin_gt40mm_fraction": 0.9925,
+      "EE_position_error_mean_m": 0.019829630851745605,
+      "measured_CoP_COM_distance_mean_mm": 3.255645655514798,
+      "measured_CoP_COM_distance_P95_mm": 12.323982349034274
+    }
+  }
+}

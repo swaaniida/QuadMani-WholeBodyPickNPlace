@@ -1,0 +1,45 @@
+{
+  "gait_reward_smooth_yaw4_fresh_s7_v3": {
+    "non_history_model0_tensors_checked": 33,
+    "changed": [],
+    "initial_iteration": 0,
+    "checkpoint_argument": null,
+    "seed": 7,
+    "asset_sha256": "b103445cd5378c80db4cd244d7a6e70487afc477874001b223a69e1f854c648c",
+    "realization": {
+      "terrain_sha256": "66aec25cfc16ac35731b8c35f967b168c6d3f7f234ae4e00b85dde708529184b",
+      "initial_dof_sha256": "bde65545e327ded3eb872b554358175830a01f4afeb95427510272baa541316e",
+      "env_origins_sha256": "6e7a7d83a9e1d3756c761bfe8452b054fa9ad962f6409219aee67fbf9d460c24"
+    }
+  },
+  "gait_reward_smooth_yaw4_contactmatch_fresh_s7_v3": {
+    "non_history_model0_tensors_checked": 33,
+    "changed": [],
+    "initial_iteration": 0,
+    "checkpoint_argument": null,
+    "seed": 7,
+    "asset_sha256": "b103445cd5378c80db4cd244d7a6e70487afc477874001b223a69e1f854c648c",
+    "realization": {
+      "terrain_sha256": "66aec25cfc16ac35731b8c35f967b168c6d3f7f234ae4e00b85dde708529184b",
+      "initial_dof_sha256": "60e6605eb5290800ad815f4732f1f41bcd39bef314e914b8afa667ba64848985",
+      "env_origins_sha256": "6e7a7d83a9e1d3756c761bfe8452b054fa9ad962f6409219aee67fbf9d460c24"
+    }
+  },
+  "pair": {
+    "environment_differences": [
+      [
+        ".study.preset",
+        "progress_gain2_proxy_smooth_yaw4",
+        "progress_gain2_proxy_smooth_yaw4_contactmatch"
+      ],
+      [
+        ".study.symmetric_contact",
+        null,
+        true
+      ]
+    ],
+    "ppo_identical": true,
+    "asset_terrain_origins_identical": true,
+    "note": "Model0 is after the first history-only/DAGGER iteration.33 non-history tensors are exact pre-PPO initialization; GPU physics/history gradients are not claimed bitwise equal."
+  }
+}

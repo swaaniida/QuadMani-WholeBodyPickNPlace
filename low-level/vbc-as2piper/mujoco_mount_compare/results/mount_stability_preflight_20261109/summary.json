@@ -1,0 +1,547 @@
+{
+  "title": "Static stance and horizontal impulse preflight",
+  "warning": "This is not a walking stability test and not the official AS2 controller. It checks model integrity and relative standing response only. Do not use it to certify walking.",
+  "conditions": {
+    "all_models_same": true,
+    "arm_pose_rad": [
+      0,
+      0.76,
+      -0.89,
+      0,
+      0.45,
+      0
+    ],
+    "leg_pose_rad_per_leg": [
+      0,
+      0.8,
+      -1.6
+    ],
+    "impulse_force_N": 30.0,
+    "impulse_duration_s": 0.05,
+    "impulse_Ns": 1.5,
+    "directions": [
+      "+X",
+      "-X",
+      "+Y",
+      "-Y"
+    ],
+    "timestep_s": 0.002,
+    "total_s": 4.0,
+    "minimum_contact_count_excludes_initial_settling_s": 0.1
+  },
+  "results": [
+    {
+      "variant": "as2_only",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_only_actual_link_inertia.xml",
+      "direction_world": null,
+      "impulse_Ns": 0.0,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009448691009300446,
+        -0.0004489128587630418,
+        0.3172658662341555
+      ],
+      "max_abs_roll_deg": 0.023175005130223896,
+      "max_abs_pitch_deg": 0.7031780486991003,
+      "minimum_base_z_m": 0.3041775616475417,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.02163768374112773,
+        -0.22929091621307904
+      ],
+      "final_base_displacement_m": 0.02912211161739719,
+      "final_com_displacement_m": 0.027613234213546438,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "no_impulse"
+    },
+    {
+      "variant": "as2_only",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_only_actual_link_inertia.xml",
+      "direction_world": [
+        1,
+        0,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009448691009300446,
+        -0.0004489128587630418,
+        0.3172658662341555
+      ],
+      "max_abs_roll_deg": 0.023175005130223896,
+      "max_abs_pitch_deg": 0.7031780486991003,
+      "minimum_base_z_m": 0.3040014360552391,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.021636847521427346,
+        -0.2289288317506968
+      ],
+      "final_base_displacement_m": 0.028321078593268083,
+      "final_com_displacement_m": 0.026796186524271785,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "forward"
+    },
+    {
+      "variant": "as2_only",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_only_actual_link_inertia.xml",
+      "direction_world": [
+        -1,
+        0,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009448691009300446,
+        -0.0004489128587630418,
+        0.3172658662341555
+      ],
+      "max_abs_roll_deg": 0.023175005130223896,
+      "max_abs_pitch_deg": 0.7031780486991003,
+      "minimum_base_z_m": 0.3030494544409477,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.02163857386897462,
+        -0.22969068660852376
+      ],
+      "final_base_displacement_m": 0.029961737466415714,
+      "final_com_displacement_m": 0.028469764270697858,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "backward"
+    },
+    {
+      "variant": "as2_only",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_only_actual_link_inertia.xml",
+      "direction_world": [
+        0,
+        1,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009448691009300446,
+        -0.0004489128587630418,
+        0.3172658662341555
+      ],
+      "max_abs_roll_deg": 0.5033084412355309,
+      "max_abs_pitch_deg": 0.7031780486991003,
+      "minimum_base_z_m": 0.3041775653346339,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.021540236338362818,
+        -0.2292921810113916
+      ],
+      "final_base_displacement_m": 0.029144790023087105,
+      "final_com_displacement_m": 0.027637231649408615,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "left"
+    },
+    {
+      "variant": "as2_only",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_only_actual_link_inertia.xml",
+      "direction_world": [
+        0,
+        -1,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009448691009300446,
+        -0.0004489128587630418,
+        0.3172658662341555
+      ],
+      "max_abs_roll_deg": 0.5463716509203181,
+      "max_abs_pitch_deg": 0.7031780486991003,
+      "minimum_base_z_m": 0.30417756515814975,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.021735139544409234,
+        -0.2292934776230817
+      ],
+      "final_base_displacement_m": 0.029151220414879928,
+      "final_com_displacement_m": 0.027644371691495084,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "right"
+    },
+    {
+      "variant": "as2_piper_center",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_center_actual_link_inertia.xml",
+      "direction_world": null,
+      "impulse_Ns": 0.0,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009070090068189878,
+        -0.0003597251059185707,
+        0.3959814701281889
+      ],
+      "max_abs_roll_deg": 0.03100131358844998,
+      "max_abs_pitch_deg": 0.8839915889927226,
+      "minimum_base_z_m": 0.2967188704745951,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.025664279141710142,
+        -0.6688130441740947
+      ],
+      "final_base_displacement_m": 0.04013917162703729,
+      "final_com_displacement_m": 0.041403231584329216,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "no_impulse"
+    },
+    {
+      "variant": "as2_piper_center",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_center_actual_link_inertia.xml",
+      "direction_world": [
+        1,
+        0,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009070090068189878,
+        -0.0003597251059185707,
+        0.3959814701281889
+      ],
+      "max_abs_roll_deg": 0.03100131358844998,
+      "max_abs_pitch_deg": 0.8839915889927226,
+      "minimum_base_z_m": 0.29662303881381685,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.02566219156696005,
+        -0.6679883745234035
+      ],
+      "final_base_displacement_m": 0.03930339639749366,
+      "final_com_displacement_m": 0.040605413077187014,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "forward"
+    },
+    {
+      "variant": "as2_piper_center",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_center_actual_link_inertia.xml",
+      "direction_world": [
+        -1,
+        0,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009070090068189878,
+        -0.0003597251059185707,
+        0.3959814701281889
+      ],
+      "max_abs_roll_deg": 0.03100131358844998,
+      "max_abs_pitch_deg": 0.9850302017274423,
+      "minimum_base_z_m": 0.29615233813575914,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.025666688616971436,
+        -0.6697686810501291
+      ],
+      "final_base_displacement_m": 0.04100092482231721,
+      "final_com_displacement_m": 0.0422278258025345,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "backward"
+    },
+    {
+      "variant": "as2_piper_center",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_center_actual_link_inertia.xml",
+      "direction_world": [
+        0,
+        1,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009070090068189878,
+        -0.0003597251059185707,
+        0.3959814701281889
+      ],
+      "max_abs_roll_deg": 0.4982254798867458,
+      "max_abs_pitch_deg": 0.8839915889927226,
+      "minimum_base_z_m": 0.29671887360688504,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.025543666705081333,
+        -0.6688174001793014
+      ],
+      "final_base_displacement_m": 0.04015525560544232,
+      "final_com_displacement_m": 0.04141784583582465,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "left"
+    },
+    {
+      "variant": "as2_piper_center",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_center_actual_link_inertia.xml",
+      "direction_world": [
+        0,
+        -1,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.009070090068189878,
+        -0.0003597251059185707,
+        0.3959814701281889
+      ],
+      "max_abs_roll_deg": 0.5497141901285236,
+      "max_abs_pitch_deg": 0.8839915889927226,
+      "minimum_base_z_m": 0.2967188730576429,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.025784930817935616,
+        -0.668821588703384
+      ],
+      "final_base_displacement_m": 0.04016089963171189,
+      "final_com_displacement_m": 0.04142550746589698,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "right"
+    },
+    {
+      "variant": "as2_piper_head_selected",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_head_actual_link_inertia.xml",
+      "direction_world": null,
+      "impulse_Ns": 0.0,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.056109388542903295,
+        -0.0003597251059185707,
+        0.40238737589022805
+      ],
+      "max_abs_roll_deg": 0.030448781172594613,
+      "max_abs_pitch_deg": 2.11769164515379,
+      "minimum_base_z_m": 0.29820415861645116,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.023269063877681122,
+        2.1176705670924982
+      ],
+      "final_base_displacement_m": 0.029561670957281218,
+      "final_com_displacement_m": 0.03279862327081706,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "no_impulse"
+    },
+    {
+      "variant": "as2_piper_head_selected",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_head_actual_link_inertia.xml",
+      "direction_world": [
+        1,
+        0,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.056109388542903295,
+        -0.0003597251059185707,
+        0.40238737589022805
+      ],
+      "max_abs_roll_deg": 0.030448781172594613,
+      "max_abs_pitch_deg": 2.3849368790836016,
+      "minimum_base_z_m": 0.2981853110187248,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.023270715663404096,
+        2.1174429137878468
+      ],
+      "final_base_displacement_m": 0.029212642514795908,
+      "final_com_displacement_m": 0.032638826993532974,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "forward"
+    },
+    {
+      "variant": "as2_piper_head_selected",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_head_actual_link_inertia.xml",
+      "direction_world": [
+        -1,
+        0,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.056109388542903295,
+        -0.0003597251059185707,
+        0.40238737589022805
+      ],
+      "max_abs_roll_deg": 0.030448781172594613,
+      "max_abs_pitch_deg": 2.131161143032462,
+      "minimum_base_z_m": 0.29777114594492726,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.02326753162392209,
+        2.117858724829214
+      ],
+      "final_base_displacement_m": 0.029960253008002948,
+      "final_com_displacement_m": 0.033005664350647376,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "backward"
+    },
+    {
+      "variant": "as2_piper_head_selected",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_head_actual_link_inertia.xml",
+      "direction_world": [
+        0,
+        1,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.056109388542903295,
+        -0.0003597251059185707,
+        0.40238737589022805
+      ],
+      "max_abs_roll_deg": 0.4332963061975559,
+      "max_abs_pitch_deg": 2.1176895090033687,
+      "minimum_base_z_m": 0.29820416538939837,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.02301326596521187,
+        2.1176681606731314
+      ],
+      "final_base_displacement_m": 0.029584603123535475,
+      "final_com_displacement_m": 0.03281908922131313,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "left"
+    },
+    {
+      "variant": "as2_piper_head_selected",
+      "model": "/data/team/users/suhwan/vbc-as2piper/mujoco_mount_compare/models/mount_workspace/as2_piper_head_actual_link_inertia.xml",
+      "direction_world": [
+        0,
+        -1,
+        0
+      ],
+      "impulse_Ns": 1.5,
+      "duration_s": 4.0,
+      "initial_base_xyz_m": [
+        0.0,
+        0.0,
+        0.3264069024246581
+      ],
+      "initial_com_xyz_m": [
+        0.056109388542903295,
+        -0.0003597251059185707,
+        0.40238737589022805
+      ],
+      "max_abs_roll_deg": 0.4804801468123868,
+      "max_abs_pitch_deg": 2.1176908376932224,
+      "minimum_base_z_m": 0.29820416934358346,
+      "minimum_feet_with_contact": 4,
+      "final_roll_pitch_deg": [
+        0.023524855235334142,
+        2.117669415876396
+      ],
+      "final_base_displacement_m": 0.029591343709492006,
+      "final_com_displacement_m": 0.032828480532915934,
+      "actuator_saturation_fraction": 0.0,
+      "fall_by_screening_threshold": false,
+      "controller": "joint-position PD hold for preflight only; no walking gait or velocity tracking",
+      "condition": "right"
+    }
+  ]
+}

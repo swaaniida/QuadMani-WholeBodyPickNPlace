@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "file_count": 4878,
+  "bytes": 5086387443,
+  "checkpoint_payloads": 487,
+  "assets": [
+    {
+      "urdf": "low-level-as2piper-head-orin-deploy/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+      "dofs": 20,
+      "mass_kg": 23.4303404741327,
+      "mesh_count": 42,
+      "missing": []
+    },
+    {
+      "urdf": "low-level-as2piper-head-orin-nocontact/resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf",
+      "dofs": 20,
+      "mass_kg": 23.328064081329998,
+      "mesh_count": 39,
+      "missing": []
+    },
+    {
+      "urdf": "reference/vbc-legacy/low-level/resources/robots/b1z1/urdf/b1z1.urdf",
+      "dofs": 19,
+      "mass_kg": 57.986969829999985,
+      "mesh_count": 24,
+      "missing": []
+    }
+  ],
+  "verified_manifest_files": 0,
+  "files_above_100MiB": [],
+  "external_sdk_required": true,
+  "errors": []
+}

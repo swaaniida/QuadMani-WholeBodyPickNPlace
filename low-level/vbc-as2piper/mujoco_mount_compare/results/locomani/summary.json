@@ -1,0 +1,772 @@
+{
+  "profiles_plate_standing": {
+    "variant": "profiles_plate",
+    "scenario": "standing",
+    "duration_s": 6.001999999999561,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03412503567717214,
+        -1.8612619306826474e-22
+      ],
+      "y": [
+        -0.0001438588013379461,
+        2.6499566477573847e-06
+      ],
+      "z": [
+        0.2925837178667936,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 0.03659374143687911,
+    "pitch_range_deg": [
+      -1.5589450793061592,
+      0.8521165660271107
+    ],
+    "four_feet_loaded_fraction": 0.9966777408637874,
+    "min_com_support_margin_m_when_3plus_feet": 0.16505568670797535,
+    "max_robot_self_contacts": 0.0,
+    "max_robot_contact_penetration_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.995408295118686,
+      -3.470749339471422
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.99999999999997,
+      20.000000000000032
+    ],
+    "object_xyz_final_m": [
+      0.61,
+      0.0,
+      0.03447507935937904
+    ],
+    "object_max_z_m": 0.03496076,
+    "soft_grasp_max_error_m": 0.0,
+    "virtual_base_force_max_N": 0.0,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "profiles_plate_tilt_in_place": {
+    "variant": "profiles_plate",
+    "scenario": "tilt_in_place",
+    "duration_s": 9.001999999999676,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03412503567717214,
+        0.07503821941172668
+      ],
+      "y": [
+        -0.0001438588013379461,
+        2.6499566477573847e-06
+      ],
+      "z": [
+        0.22113697265402232,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 0.03659374143687911,
+    "pitch_range_deg": [
+      -1.5589450793061592,
+      20.2880458320248
+    ],
+    "four_feet_loaded_fraction": 0.9977827050997783,
+    "min_com_support_margin_m_when_3plus_feet": 0.12532998606014328,
+    "max_robot_self_contacts": 0.0,
+    "max_robot_contact_penetration_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.995408295118686,
+      2.5329471040402662
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.99999999999996,
+      20.000000000000032
+    ],
+    "object_xyz_final_m": [
+      0.61,
+      0.0,
+      0.03447507935937904
+    ],
+    "object_max_z_m": 0.03496076,
+    "soft_grasp_max_error_m": 0.0,
+    "virtual_base_force_max_N": 0.0,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "profiles_plate_stand_walk_omni": {
+    "variant": "profiles_plate",
+    "scenario": "stand_walk_omni",
+    "duration_s": 17.982000000000912,
+    "base_xyz_range_m": {
+      "x": [
+        -0.07730214932305632,
+        0.02770971907850791
+      ],
+      "y": [
+        -0.011490062025837543,
+        0.05728288359483087
+      ],
+      "z": [
+        0.27301379613932764,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 2.3086582706492447,
+    "pitch_range_deg": [
+      -6.125879555435567,
+      1.0124538770468114
+    ],
+    "four_feet_loaded_fraction": 0.9988888888888889,
+    "min_com_support_margin_m_when_3plus_feet": 0.13472147849046107,
+    "max_robot_self_contacts": 0.0,
+    "max_robot_contact_penetration_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.995408295118686,
+      -3.470749339471422
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.999999999999957,
+      20.00000000000004
+    ],
+    "object_xyz_final_m": [
+      0.61,
+      0.0,
+      0.03447507935937904
+    ],
+    "object_max_z_m": 0.03496076,
+    "soft_grasp_max_error_m": 0.0,
+    "virtual_base_force_max_N": 22.723860195939718,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "profiles_plate_tilt_walk_omni": {
+    "variant": "profiles_plate",
+    "scenario": "tilt_walk_omni",
+    "duration_s": 20.001999999999793,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03412503567717214,
+        0.1253498732024194
+      ],
+      "y": [
+        -0.0052522097659478476,
+        0.0600861597855183
+      ],
+      "z": [
+        0.21015332277618587,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 1.551207929634894,
+    "pitch_range_deg": [
+      -1.5589450793061592,
+      21.853294180531112
+    ],
+    "four_feet_loaded_fraction": 0.998001998001998,
+    "min_com_support_margin_m_when_3plus_feet": 0.06996186175333424,
+    "max_robot_self_contacts": 0.0,
+    "max_robot_contact_penetration_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.995408295118686,
+      6.120749503582031
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.999999999999975,
+      20.00000000000004
+    ],
+    "object_xyz_final_m": [
+      0.61,
+      0.0,
+      0.03447507935937904
+    ],
+    "object_max_z_m": 0.03496076,
+    "soft_grasp_max_error_m": 0.0,
+    "virtual_base_force_max_N": 31.4361817031244,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "profiles_plate_pick_recover": {
+    "variant": "profiles_plate",
+    "scenario": "pick_recover",
+    "duration_s": 15.982000000002007,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03412503567717214,
+        0.0770945419078204
+      ],
+      "y": [
+        -0.00021303741647365812,
+        0.0004108898979829744
+      ],
+      "z": [
+        0.21993863581370032,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 0.08975679418476049,
+    "pitch_range_deg": [
+      -1.5589450793061592,
+      21.055181521846
+    ],
+    "four_feet_loaded_fraction": 0.99875,
+    "min_com_support_margin_m_when_3plus_feet": 0.09955660570367865,
+    "max_robot_self_contacts": 2.0,
+    "max_robot_contact_penetration_m": 0.0005830582047850097,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.995408295118686,
+      27.93096126337011
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.99999999999997,
+      20.00000000000004
+    ],
+    "object_xyz_final_m": [
+      0.29557771272614075,
+      0.0005149030831084935,
+      0.6240464362208409
+    ],
+    "object_max_z_m": 0.6258194123360968,
+    "soft_grasp_max_error_m": 0.03939358160425404,
+    "virtual_base_force_max_N": 0.0,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.11375,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "profiles_plate_pick_drag": {
+    "variant": "profiles_plate",
+    "scenario": "pick_drag",
+    "duration_s": 15.982000000002007,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03412503567717214,
+        0.11343511402122375
+      ],
+      "y": [
+        -0.007050178457012157,
+        0.0500571172619688
+      ],
+      "z": [
+        0.21222540240396484,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 1.6374051378711494,
+    "pitch_range_deg": [
+      -1.5589450793061592,
+      21.950015808525382
+    ],
+    "four_feet_loaded_fraction": 0.99875,
+    "min_com_support_margin_m_when_3plus_feet": 0.09689801284310567,
+    "max_robot_self_contacts": 2.0,
+    "max_robot_contact_penetration_m": 0.0005830582047850097,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.995408295118686,
+      27.93096126337011
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.999999999999975,
+      20.000000000000032
+    ],
+    "object_xyz_final_m": [
+      0.641695718413326,
+      -0.0051823538591180985,
+      0.03421560855130929
+    ],
+    "object_max_z_m": 0.03500859268506564,
+    "soft_grasp_max_error_m": 0.04200226621875101,
+    "virtual_base_force_max_N": 27.601193910117292,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "profiles_plate_pick_lift_drag": {
+    "variant": "profiles_plate",
+    "scenario": "pick_lift_drag",
+    "duration_s": 15.982000000002007,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03412503567717214,
+        0.1139581116053495
+      ],
+      "y": [
+        -0.003979759357678071,
+        0.04777791735440671
+      ],
+      "z": [
+        0.2104368917016598,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 1.5686850959337932,
+    "pitch_range_deg": [
+      -1.5589450793061592,
+      22.324219677023642
+    ],
+    "four_feet_loaded_fraction": 0.99875,
+    "min_com_support_margin_m_when_3plus_feet": 0.09955660570367865,
+    "max_robot_self_contacts": 1.0,
+    "max_robot_contact_penetration_m": 0.0005830582047850097,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.995408295118686,
+      29.37222011207582
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.999999999999975,
+      20.000000000000032
+    ],
+    "object_xyz_final_m": [
+      0.5900877422683802,
+      0.0041601966537860935,
+      0.03440444970042663
+    ],
+    "object_max_z_m": 0.03503656630020773,
+    "soft_grasp_max_error_m": 0.043844238879437156,
+    "virtual_base_force_max_N": 24.499500483061468,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "plate_only_standing": {
+    "variant": "plate_only",
+    "scenario": "standing",
+    "duration_s": 6.001999999999561,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03375600213808692,
+        -1.1161886293344088e-21
+      ],
+      "y": [
+        -0.00014186273696006817,
+        2.386701989279197e-06
+      ],
+      "z": [
+        0.29287074056918533,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 0.036077634497360477,
+    "pitch_range_deg": [
+      -1.506881430450729,
+      0.8451105840281145
+    ],
+    "four_feet_loaded_fraction": 0.9966777408637874,
+    "min_com_support_margin_m_when_3plus_feet": 0.16505353288372962,
+    "max_robot_self_contacts": 0.0,
+    "max_robot_contact_penetration_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.334155736215,
+      -2.748109154233247
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.99999999999996,
+      20.00000000000004
+    ],
+    "object_xyz_final_m": [
+      0.61,
+      0.0,
+      0.03447507935937904
+    ],
+    "object_max_z_m": 0.03496076,
+    "soft_grasp_max_error_m": 0.0,
+    "virtual_base_force_max_N": 0.0,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "plate_only_tilt_in_place": {
+    "variant": "plate_only",
+    "scenario": "tilt_in_place",
+    "duration_s": 9.001999999999676,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03375600213808692,
+        0.07481830963205095
+      ],
+      "y": [
+        -0.00014186273696006817,
+        2.386701989279197e-06
+      ],
+      "z": [
+        0.22144640221824308,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 0.036077634497360477,
+    "pitch_range_deg": [
+      -1.506881430450729,
+      20.207890873622922
+    ],
+    "four_feet_loaded_fraction": 0.9977827050997783,
+    "min_com_support_margin_m_when_3plus_feet": 0.126915565136359,
+    "max_robot_self_contacts": 0.0,
+    "max_robot_contact_penetration_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.334155736215,
+      3.794767260716505
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.99999999999997,
+      20.00000000000004
+    ],
+    "object_xyz_final_m": [
+      0.61,
+      0.0,
+      0.03447507935937904
+    ],
+    "object_max_z_m": 0.03496076,
+    "soft_grasp_max_error_m": 0.0,
+    "virtual_base_force_max_N": 0.0,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "plate_only_stand_walk_omni": {
+    "variant": "plate_only",
+    "scenario": "stand_walk_omni",
+    "duration_s": 17.982000000000912,
+    "base_xyz_range_m": {
+      "x": [
+        -0.07556241207043078,
+        0.027755796025072447
+      ],
+      "y": [
+        -0.011247257320620636,
+        0.05689703130807547
+      ],
+      "z": [
+        0.273708877489574,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 2.2610034214831467,
+    "pitch_range_deg": [
+      -5.91477195515077,
+      1.0197766284275793
+    ],
+    "four_feet_loaded_fraction": 0.9988888888888889,
+    "min_com_support_margin_m_when_3plus_feet": 0.13736116584814415,
+    "max_robot_self_contacts": 0.0,
+    "max_robot_contact_penetration_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.334155736215,
+      -2.748109154233247
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.999999999999957,
+      20.000000000000043
+    ],
+    "object_xyz_final_m": [
+      0.61,
+      0.0,
+      0.03447507935937904
+    ],
+    "object_max_z_m": 0.03496076,
+    "soft_grasp_max_error_m": 0.0,
+    "virtual_base_force_max_N": 22.55222530623985,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "plate_only_tilt_walk_omni": {
+    "variant": "plate_only",
+    "scenario": "tilt_walk_omni",
+    "duration_s": 20.001999999999793,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03375600213808692,
+        0.1249568889440445
+      ],
+      "y": [
+        -0.005251682404133497,
+        0.05979538161605671
+      ],
+      "z": [
+        0.21047180649949226,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 1.5193135094422274,
+    "pitch_range_deg": [
+      -1.506881430450729,
+      21.770623658381112
+    ],
+    "four_feet_loaded_fraction": 0.998001998001998,
+    "min_com_support_margin_m_when_3plus_feet": 0.06882602213322632,
+    "max_robot_self_contacts": 0.0,
+    "max_robot_contact_penetration_m": 0.0,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.334155736215,
+      7.4072595958369005
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.999999999999968,
+      20.000000000000036
+    ],
+    "object_xyz_final_m": [
+      0.61,
+      0.0,
+      0.03447507935937904
+    ],
+    "object_max_z_m": 0.03496076,
+    "soft_grasp_max_error_m": 0.0,
+    "virtual_base_force_max_N": 31.069948919026967,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "plate_only_pick_recover": {
+    "variant": "plate_only",
+    "scenario": "pick_recover",
+    "duration_s": 15.982000000002007,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03375600213808692,
+        0.0769870862320562
+      ],
+      "y": [
+        -0.00023904252885247664,
+        0.00042972385255177757
+      ],
+      "z": [
+        0.2201491827469517,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 0.10593265072745796,
+    "pitch_range_deg": [
+      -1.506881430450729,
+      21.020682678563045
+    ],
+    "four_feet_loaded_fraction": 0.99875,
+    "min_com_support_margin_m_when_3plus_feet": 0.10019363871179619,
+    "max_robot_self_contacts": 2.0,
+    "max_robot_contact_penetration_m": 0.000430703132658111,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.334155736215,
+      26.40332652564293
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.99999999999996,
+      20.00000000000004
+    ],
+    "object_xyz_final_m": [
+      0.296410320208156,
+      0.0006799261658744037,
+      0.6040093854151173
+    ],
+    "object_max_z_m": 0.6058140433353556,
+    "soft_grasp_max_error_m": 0.03708279348712751,
+    "virtual_base_force_max_N": 0.0,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.10125,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "plate_only_pick_drag": {
+    "variant": "plate_only",
+    "scenario": "pick_drag",
+    "duration_s": 15.982000000002007,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03375600213808692,
+        0.11272222470134922
+      ],
+      "y": [
+        -0.007024125574295204,
+        0.04941405245628242
+      ],
+      "z": [
+        0.21265171091019652,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 1.5854788169565621,
+    "pitch_range_deg": [
+      -1.506881430450729,
+      21.608092544042876
+    ],
+    "four_feet_loaded_fraction": 0.99875,
+    "min_com_support_margin_m_when_3plus_feet": 0.0972064958340595,
+    "max_robot_self_contacts": 1.0,
+    "max_robot_contact_penetration_m": 0.000430703132658111,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.334155736215,
+      26.40332652564293
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.99999999999997,
+      20.00000000000004
+    ],
+    "object_xyz_final_m": [
+      0.6546405871728964,
+      0.0018861094279897187,
+      0.03419819205238417
+    ],
+    "object_max_z_m": 0.035034365647660715,
+    "soft_grasp_max_error_m": 0.03688544811780449,
+    "virtual_base_force_max_N": 27.568415317617607,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  },
+  "plate_only_pick_lift_drag": {
+    "variant": "plate_only",
+    "scenario": "pick_lift_drag",
+    "duration_s": 15.982000000002007,
+    "base_xyz_range_m": {
+      "x": [
+        -0.03375600213808692,
+        0.11378799024748862
+      ],
+      "y": [
+        -0.003938637937545735,
+        0.047098961313131335
+      ],
+      "z": [
+        0.21098885805899714,
+        0.3263676624246581
+      ]
+    },
+    "max_abs_roll_deg": 1.5255621423233297,
+    "pitch_range_deg": [
+      -1.506881430450729,
+      22.165698152283138
+    ],
+    "four_feet_loaded_fraction": 0.99875,
+    "min_com_support_margin_m_when_3plus_feet": 0.10019363871179619,
+    "max_robot_self_contacts": 1.0,
+    "max_robot_contact_penetration_m": 0.000430703132658111,
+    "mujoco_warning_count": 0.0,
+    "object_in_vertical_fov_fraction": 1.0,
+    "tcp_in_vertical_fov_fraction": 1.0,
+    "object_horizontal_angle_range_deg": [
+      -23.334155736215,
+      29.508363195114217
+    ],
+    "tcp_horizontal_angle_range_deg": [
+      19.99999999999997,
+      20.00000000000004
+    ],
+    "object_xyz_final_m": [
+      0.6056876893803107,
+      0.005601469752377461,
+      0.03421119311310871
+    ],
+    "object_max_z_m": 0.035011998072689184,
+    "soft_grasp_max_error_m": 0.04395184716501098,
+    "virtual_base_force_max_N": 24.65036970266143,
+    "arm_actuator_saturation_fraction": {
+      "u_piper_joint1": 0.0,
+      "u_piper_joint2": 0.0,
+      "u_piper_joint3": 0.0,
+      "u_piper_joint4": 0.0,
+      "u_piper_joint5": 0.0,
+      "u_piper_joint6": 0.0
+    }
+  }
+}

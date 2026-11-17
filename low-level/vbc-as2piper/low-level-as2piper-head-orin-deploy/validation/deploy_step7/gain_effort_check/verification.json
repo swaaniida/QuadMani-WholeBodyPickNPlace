@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "unchanged_source_files": 57,
+  "production_gain_effort_changes": false,
+  "optimizer_updates": 0,
+  "physx_conditions": 140,
+  "physics_seconds_per_condition": 7,
+  "device": "CPU",
+  "real_robot_connected": false
+}

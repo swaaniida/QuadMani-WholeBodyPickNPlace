@@ -1,0 +1,70 @@
+Source: low-level-as2piper/logs/as2piper-low/plate_only_C_original_20261028/wandb/run-20261028_154103-as2piper_plate_C_orig_20261028_01/files/output.log
+Learning iteration 2079/45000 
+
+                       Computation: 35485 steps/s (collection: 3.842s, learning 0.313s)
+               Value function loss: 0.0112
+                    Surrogate loss: 0.1248
+   History latent supervision loss: 0.7235
+  Privileged info regularizer loss: 0.6709
+Privileged info regularizer lambda: 0.0000
+         Leg mean action noise std: 0.22
+         Arm mean action noise std: 1.00
+     action noise std distribution: [[0.15000000596046448, 0.25, 0.25, 0.15000000596046448, 0.25, 0.25, 0.15000000596046448, 0.25, 0.25, 0.15076301991939545, 0.25, 0.25, 0.9816216826438904, 1.0079749822616577, 1.0131797790527344, 0.9918885827064514, 1.0270265340805054, 0.9966673254966736]]
+                       Mean reward: -0.37
+               Mean episode length: 151.25
+                             Dones: 0.01
+      Mean episode rew_action_rate: -0.3213
+            Mean episode rew_alive: 13.7236
+       Mean episode rew_ang_vel_xy: -3.3136
+      Mean episode rew_base_height: -13.0292
+        Mean episode rew_collision: -5.0032
+    Mean episode rew_delta_torques: -0.0024
+          Mean episode rew_dof_acc: -1.9916
+   Mean episode rew_dof_pos_limits: -0.1337
+    Mean episode rew_feet_air_time: -0.2044
+Mean episode rew_feet_contact_forces: -0.6216
+        Mean episode rew_feet_drag: -2.2782
+      Mean episode rew_feet_height: -3.0323
+        Mean episode rew_feet_jerk: 0.0000
+          Mean episode rew_hip_pos: -1.4132
+        Mean episode rew_lin_vel_z: -2.4330
+             Mean episode rew_roll: -1.9264
+      Mean episode rew_stand_still: 1.0135
+          Mean episode rew_torques: -2.5506
+ Mean episode rew_tracking_ang_vel: 2.7524
+Mean episode rew_tracking_contacts_shaped_force: 0.0000
+Mean episode rew_tracking_contacts_shaped_vel: 0.0000
+Mean episode rew_tracking_lin_vel_max: 6.3797
+      Mean episode rew_walking_dof: 15.4282
+             Mean episode rew_work: -6.4242
+Mean episode rew_tracking_ee_world: 5.4569
+   Mean episode metric_action_rate: 21.4183
+         Mean episode metric_alive: 13.7236
+    Mean episode metric_ang_vel_xy: 16.5680
+   Mean episode metric_base_height: 4.9455
+     Mean episode metric_collision: 0.5003
+ Mean episode metric_delta_torques: 24326.5430
+       Mean episode metric_dof_acc: 2655419.5000
+Mean episode metric_dof_pos_limits: 0.0134
+ Mean episode metric_feet_air_time: -0.1022
+Mean episode metric_feet_contact_forces: 621.6052
+     Mean episode metric_feet_drag: 28.4772
+   Mean episode metric_feet_height: -3.0323
+     Mean episode metric_feet_jerk: 0.0000
+       Mean episode metric_hip_pos: 4.7108
+     Mean episode metric_lin_vel_z: 1.6220
+          Mean episode metric_roll: 0.9632
+   Mean episode metric_stand_still: 1.0135
+       Mean episode metric_torques: 102022.3438
+Mean episode metric_tracking_ang_vel: 6.1962
+Mean episode metric_tracking_contacts_shaped_force: 0.0000
+Mean episode metric_tracking_contacts_shaped_vel: 0.0000
+Mean episode metric_tracking_lin_vel_max: 3.1898
+   Mean episode metric_walking_dof: 10.2855
+          Mean episode metric_work: 2141.3899
+Mean episode metric_tracking_ee_world: 4.9914
+--------------------------------------------------------------------------------
+                   Total timesteps: 306708480
+                    Iteration time: 4.16s
+                        Total time: 9817.58s
+                               ETA: 202586.8s

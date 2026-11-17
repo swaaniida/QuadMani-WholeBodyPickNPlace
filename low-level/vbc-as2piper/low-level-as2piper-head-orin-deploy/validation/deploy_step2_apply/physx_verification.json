@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "backend": "PhysX CPU",
+  "envs": 4,
+  "steps": 300,
+  "seconds": 5.999999865889549,
+  "obs": 755,
+  "action": 18,
+  "dof": 20,
+  "optimizer_updates": 0,
+  "resample_calls_checked": 100,
+  "online_collision_check_called": false,
+  "actual_arm_stiffness": 400,
+  "actual_arm_damping": 40,
+  "max_command_slew_rad_s": 3.000000238418579,
+  "reset_count": 0,
+  "reset_reasons": {},
+  "visited_goal_ids": [
+    0,
+    25,
+    26,
+    27,
+    40,
+    52,
+    59,
+    63
+  ],
+  "max_ee_error_m": 0.0643918514251709,
+  "note": "Zero-action untrained integration rollout, NOT locomotion/EE performance or workspace dynamic certification. Production reward/PPO/DR unchanged."
+}

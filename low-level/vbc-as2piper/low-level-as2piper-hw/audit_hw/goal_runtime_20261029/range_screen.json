@@ -1,0 +1,384 @@
+{
+  "asset_sha256": "b103445cd5378c80db4cd244d7a6e70487afc477874001b223a69e1f854c648c",
+  "body_roll_pitch_rad": [
+    -0.15,
+    0,
+    0.15
+  ],
+  "samples_per_path": 9,
+  "candidates": {
+    "original": {
+      "bounds": [
+        [
+          0.38,
+          0.52
+        ],
+        [
+          -0.25,
+          0.6
+        ],
+        [
+          -0.4,
+          0.4
+        ],
+        [
+          -0.15,
+          0.15
+        ]
+      ],
+      "paths": 2880,
+      "poses": 25920,
+      "rejected_paths": 1469,
+      "rejected_fraction": 0.5100694298744202,
+      "max_ik_position_error_m": 0.2854423522949219,
+      "max_ik_orientation_error_deg": 82.41192626953125,
+      "min_joint_margin_from_guard_rad": 0.0,
+      "min_tcp_ground_height_m": 0.2752062678337097,
+      "steps": [
+        {
+          "t": 0.0,
+          "ik_failed": 101,
+          "body_collision": 681,
+          "floor_failed": 0,
+          "failed": 722
+        },
+        {
+          "t": 0.125,
+          "ik_failed": 103,
+          "body_collision": 618,
+          "floor_failed": 0,
+          "failed": 665
+        },
+        {
+          "t": 0.25,
+          "ik_failed": 97,
+          "body_collision": 599,
+          "floor_failed": 0,
+          "failed": 643
+        },
+        {
+          "t": 0.375,
+          "ik_failed": 94,
+          "body_collision": 605,
+          "floor_failed": 0,
+          "failed": 654
+        },
+        {
+          "t": 0.5,
+          "ik_failed": 104,
+          "body_collision": 635,
+          "floor_failed": 0,
+          "failed": 696
+        },
+        {
+          "t": 0.625,
+          "ik_failed": 113,
+          "body_collision": 688,
+          "floor_failed": 0,
+          "failed": 756
+        },
+        {
+          "t": 0.75,
+          "ik_failed": 118,
+          "body_collision": 764,
+          "floor_failed": 0,
+          "failed": 835
+        },
+        {
+          "t": 0.875,
+          "ik_failed": 144,
+          "body_collision": 856,
+          "floor_failed": 0,
+          "failed": 937
+        },
+        {
+          "t": 1.0,
+          "ik_failed": 168,
+          "body_collision": 943,
+          "floor_failed": 0,
+          "failed": 1025
+        }
+      ]
+    },
+    "compact": {
+      "bounds": [
+        [
+          0.4,
+          0.48
+        ],
+        [
+          0.1,
+          0.5
+        ],
+        [
+          -0.25,
+          0.25
+        ],
+        [
+          -0.1,
+          0.1
+        ]
+      ],
+      "paths": 2880,
+      "poses": 25920,
+      "rejected_paths": 489,
+      "rejected_fraction": 0.16979166865348816,
+      "max_ik_position_error_m": 0.10158035904169083,
+      "max_ik_orientation_error_deg": 7.169928073883057,
+      "min_joint_margin_from_guard_rad": 0.0,
+      "min_tcp_ground_height_m": 0.4437897205352783,
+      "steps": [
+        {
+          "t": 0.0,
+          "ik_failed": 8,
+          "body_collision": 201,
+          "floor_failed": 0,
+          "failed": 207
+        },
+        {
+          "t": 0.125,
+          "ik_failed": 3,
+          "body_collision": 149,
+          "floor_failed": 0,
+          "failed": 152
+        },
+        {
+          "t": 0.25,
+          "ik_failed": 2,
+          "body_collision": 114,
+          "floor_failed": 0,
+          "failed": 116
+        },
+        {
+          "t": 0.375,
+          "ik_failed": 2,
+          "body_collision": 105,
+          "floor_failed": 0,
+          "failed": 107
+        },
+        {
+          "t": 0.5,
+          "ik_failed": 2,
+          "body_collision": 123,
+          "floor_failed": 0,
+          "failed": 125
+        },
+        {
+          "t": 0.625,
+          "ik_failed": 1,
+          "body_collision": 143,
+          "floor_failed": 0,
+          "failed": 144
+        },
+        {
+          "t": 0.75,
+          "ik_failed": 1,
+          "body_collision": 191,
+          "floor_failed": 0,
+          "failed": 192
+        },
+        {
+          "t": 0.875,
+          "ik_failed": 3,
+          "body_collision": 246,
+          "floor_failed": 0,
+          "failed": 249
+        },
+        {
+          "t": 1.0,
+          "ik_failed": 5,
+          "body_collision": 307,
+          "floor_failed": 0,
+          "failed": 312
+        }
+      ]
+    },
+    "conservative": {
+      "bounds": [
+        [
+          0.4,
+          0.47
+        ],
+        [
+          0.2,
+          0.5
+        ],
+        [
+          -0.2,
+          0.2
+        ],
+        [
+          -0.08,
+          0.08
+        ]
+      ],
+      "paths": 2880,
+      "poses": 25920,
+      "rejected_paths": 355,
+      "rejected_fraction": 0.1232638955116272,
+      "max_ik_position_error_m": 0.07095745950937271,
+      "max_ik_orientation_error_deg": 5.591491222381592,
+      "min_joint_margin_from_guard_rad": 0.0,
+      "min_tcp_ground_height_m": 0.4833240807056427,
+      "steps": [
+        {
+          "t": 0.0,
+          "ik_failed": 28,
+          "body_collision": 126,
+          "floor_failed": 0,
+          "failed": 139
+        },
+        {
+          "t": 0.125,
+          "ik_failed": 6,
+          "body_collision": 84,
+          "floor_failed": 0,
+          "failed": 86
+        },
+        {
+          "t": 0.25,
+          "ik_failed": 0,
+          "body_collision": 72,
+          "floor_failed": 0,
+          "failed": 72
+        },
+        {
+          "t": 0.375,
+          "ik_failed": 0,
+          "body_collision": 54,
+          "floor_failed": 0,
+          "failed": 54
+        },
+        {
+          "t": 0.5,
+          "ik_failed": 0,
+          "body_collision": 62,
+          "floor_failed": 0,
+          "failed": 62
+        },
+        {
+          "t": 0.625,
+          "ik_failed": 0,
+          "body_collision": 86,
+          "floor_failed": 0,
+          "failed": 86
+        },
+        {
+          "t": 0.75,
+          "ik_failed": 0,
+          "body_collision": 115,
+          "floor_failed": 0,
+          "failed": 115
+        },
+        {
+          "t": 0.875,
+          "ik_failed": 0,
+          "body_collision": 168,
+          "floor_failed": 0,
+          "failed": 168
+        },
+        {
+          "t": 1.0,
+          "ik_failed": 0,
+          "body_collision": 228,
+          "floor_failed": 0,
+          "failed": 228
+        }
+      ]
+    },
+    "tight": {
+      "bounds": [
+        [
+          0.4,
+          0.46
+        ],
+        [
+          0.25,
+          0.48
+        ],
+        [
+          -0.15,
+          0.15
+        ],
+        [
+          -0.05,
+          0.05
+        ]
+      ],
+      "paths": 2880,
+      "poses": 25920,
+      "rejected_paths": 300,
+      "rejected_fraction": 0.1041666716337204,
+      "max_ik_position_error_m": 0.029846996068954468,
+      "max_ik_orientation_error_deg": 4.298741817474365,
+      "min_joint_margin_from_guard_rad": 0.0,
+      "min_tcp_ground_height_m": 0.5028179287910461,
+      "steps": [
+        {
+          "t": 0.0,
+          "ik_failed": 27,
+          "body_collision": 117,
+          "floor_failed": 0,
+          "failed": 131
+        },
+        {
+          "t": 0.125,
+          "ik_failed": 4,
+          "body_collision": 76,
+          "floor_failed": 0,
+          "failed": 78
+        },
+        {
+          "t": 0.25,
+          "ik_failed": 3,
+          "body_collision": 58,
+          "floor_failed": 0,
+          "failed": 60
+        },
+        {
+          "t": 0.375,
+          "ik_failed": 1,
+          "body_collision": 66,
+          "floor_failed": 0,
+          "failed": 67
+        },
+        {
+          "t": 0.5,
+          "ik_failed": 0,
+          "body_collision": 71,
+          "floor_failed": 0,
+          "failed": 71
+        },
+        {
+          "t": 0.625,
+          "ik_failed": 0,
+          "body_collision": 77,
+          "floor_failed": 0,
+          "failed": 77
+        },
+        {
+          "t": 0.75,
+          "ik_failed": 0,
+          "body_collision": 100,
+          "floor_failed": 0,
+          "failed": 100
+        },
+        {
+          "t": 0.875,
+          "ik_failed": 0,
+          "body_collision": 146,
+          "floor_failed": 0,
+          "failed": 146
+        },
+        {
+          "t": 1.0,
+          "ik_failed": 0,
+          "body_collision": 189,
+          "floor_failed": 0,
+          "failed": 189
+        }
+      ]
+    }
+  },
+  "limitations": "Sampled IK/body OBB/ground checks, not continuous collision certification; no legs/cables/objects/self-pairs."
+}

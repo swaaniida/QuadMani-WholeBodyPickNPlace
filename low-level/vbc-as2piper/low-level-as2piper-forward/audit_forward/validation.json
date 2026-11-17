@@ -1,0 +1,57 @@
+{
+  "b1_method_ast_identical": {
+    "_resample_ee_goal_sphere_once": true,
+    "_resample_ee_goal_orn_once": true,
+    "_resample_ee_goal": true,
+    "_update_curr_ee_goal": true,
+    "_collision_check": true,
+    "compute_reward": true
+  },
+  "original_files_unchanged": 55,
+  "proposal_count": 1200,
+  "accepted_by_guard": 766,
+  "rejected_ik": 152,
+  "rejected_body_head": 331,
+  "accepted_mujoco_endpoint_collisions": 0,
+  "max_accepted_position_error_m": 0.0114760813913759,
+  "fast_fk_home_error_m": 8.615908005724363e-08,
+  "spherical_ranges": {
+    "init_pos_start": [
+      0.4278984686862198,
+      0.421686284190671,
+      0.0
+    ],
+    "init_pos_end": [
+      0.4278984686862198,
+      0.421686284190671,
+      0.0
+    ],
+    "pos_l": [
+      0.38,
+      0.52
+    ],
+    "pos_p": [
+      -0.25,
+      0.6
+    ],
+    "pos_y": [
+      -0.4,
+      0.4
+    ],
+    "delta_orn_r": [
+      -0.15,
+      0.15
+    ],
+    "delta_orn_p": [
+      -0.15,
+      0.15
+    ],
+    "delta_orn_y": [
+      -0.15,
+      0.15
+    ],
+    "final_tracking_ee_reward": 0.55
+  },
+  "collision_guard": "Arm/gripper OBBs versus AS2 body/head AABB; 2mm/5mm padding; 3 arm path samples, original 10 EE samples",
+  "limitations": "Finite nominal tests; arm self/leg/cable/object collision and continuous path clearance are not guaranteed."
+}

@@ -1,0 +1,579 @@
+--- /dev/null
++++ b/audit_forward/observe_ee_training.py
+@@ -0,0 +1,161 @@
++"""Observe the real PPO run before goal updates/resets can hide EE errors."""
++import hashlib,json,os,time,types
++from pathlib import Path
++import isaacgym
++from isaacgym import gymtorch
++from isaacgym.torch_utils import euler_from_quat
++import torch
++import numpy as np
++from legged_gym.scripts import train_as2
++from legged_gym.utils import task_registry
++from legged_gym.utils.helpers import class_to_dict
++from legged_gym.envs.manip_loco.as2piper_forward import AS2PiPERForward
++
++ROOT=Path(__file__).resolve().parent.parent
++OUT=Path(os.environ.get('EE_AUDIT_DIR',str(ROOT/'audit_forward/ee_100_20261029')))
++OUT.mkdir(parents=True,exist_ok=True)
++GROUPS=['all','upright_age_gt_0p5','upright_random_age_gt_0p5','fallen','upright_random_hold']
++METRICS=['count','position_sum_m','position_sq_sum_m2','orientation_sum_deg','position_lt_2cm','position_lt_5cm','position_lt_10cm','orientation_lt_5deg','orientation_lt_10deg','pose_lt_5cm_10deg','arm_contact_gt_1N','arm_force_abs_max_sum_Nm']
++RESETS=['done','roll','pitch','height','timeout','roll_exclusive','pitch_exclusive','height_exclusive','timeout_exclusive','episode_steps_sum']
++SAMPLING=['requested','accepted','fallback','candidate_count','candidate_rejected','candidate_ik_rejected','candidate_body_rejected']
++observer=None
++
++
++class Observer:
++    def __init__(self,env):
++        self.e=env;self.active=False;self.step_count=0;self.iteration=0;self.rows=[]
++        dev=env.device;n=env.num_envs
++        self.phase=torch.zeros(n,device=dev,dtype=torch.bool)
++        self.metrics=torch.zeros(len(GROUPS),len(METRICS),device=dev)
++        self.resets=torch.zeros(len(RESETS),device=dev);self.sampling=torch.zeros(len(SAMPLING),device=dev)
++        self.sample_ids=torch.linspace(0,n-1,min(512,n),device=dev).long()
++        self.video_ids=torch.linspace(0,n-1,min(8,n),device=dev).long()
++        mass=env.mass_params_tensor.detach().cpu().numpy()
++        least=int(np.argmin((mass[:,0]/3.)**2+np.sum((mass[:,1:4]/.03)**2,axis=1)))
++        self.video_ids[0]=least
++        self.samples=[];self.frames=[];self.scratch=None
++        self.arm_bodies=[i for i,name in enumerate(env.body_names) if name.startswith('piper_') and name!='piper_base_link']
++        self.forces=gymtorch.wrap_tensor(env.gym.acquire_dof_force_tensor(env.sim)).view(n,env.num_dofs)
++        self.applied=None
++        self.install()
++        (OUT/'metadata.json').write_text(json.dumps(dict(num_envs=n,num_dofs=env.num_dofs,device=str(dev),groups=GROUPS,metrics=METRICS,resets=RESETS,sampling=SAMPLING,
++            sample_ids=self.sample_ids.tolist(),video_ids=self.video_ids.tolist(),body_names=env.body_names,dof_names=env.dof_names,
++            video_mass_params=mass[self.video_ids.cpu().numpy()].tolist(),least_perturbed_env=least,
++            goal_config=class_to_dict(env.cfg.goal_ee),domain_randomization=class_to_dict(env.cfg.domain_rand),
++            sample_columns=['applied_position_error_m','applied_orientation_error_deg','episode_age_s','upright','random_command','hold','done','arm_contact_N','arm_dof_force_abs_max_Nm'],
++            measurement='Actual post-physics EE against target applied at step start; captured before reset. Sensors enabled only in this audit process.'),indent=2))
++
++    def install(self):
++        e=self.e;old_step=e.step;old_check=e.check_termination;old_resample=e._resample_ee_goal;old_collision=e._collision_check
++        old_solve=e.collision_guard.solve;old_collides=e.collision_guard.collides
++        def step(actions):
++            if self.active:
++                self.applied=(e.curr_ee_goal_cart_world.clone(),e.ee_goal_orn_quat.clone(),self.phase.clone(),(e.goal_timer>=e.traj_timesteps).clone())
++            return old_step(actions)
++        def check():
++            old_check()
++            if self.active and self.applied is not None:self.capture()
++        def resample(ids,is_init=False):
++            previous=self.phase.clone()
++            old_resample(ids,is_init=is_init)
++            if is_init:self.phase[ids]=False
++            else:
++                self.phase[ids]=True;failed=e._last_rejected_ids;self.phase[failed]=previous[failed]
++                if self.active:
++                    self.sampling[0]+=len(ids);self.sampling[1]+=len(ids)-len(failed);self.sampling[2]+=len(failed)
++        def collision(ids):
++            if not self.active:return old_collision(ids)
++            self.scratch=[torch.zeros(len(ids),device=e.device,dtype=torch.bool) for _ in range(2)]
++            result=old_collision(ids)
++            self.sampling[3]+=len(ids);self.sampling[4]+=result.sum()
++            self.sampling[5]+=self.scratch[0].sum();self.sampling[6]+=self.scratch[1].sum();self.scratch=None
++            return result
++        def solve(*args,**kwargs):
++            q,failed=old_solve(*args,**kwargs)
++            if self.scratch is not None:self.scratch[0]|=failed
++            return q,failed
++        def collides(*args,**kwargs):
++            result=old_collides(*args,**kwargs)
++            if self.scratch is not None:self.scratch[1]|=result
++            return result
++        e.step=step;e.check_termination=check;e._resample_ee_goal=resample;e._collision_check=collision
++        e.collision_guard.solve=solve;e.collision_guard.collides=collides
++
++    @torch.no_grad()
++    def capture(self):
++        e=self.e;target,rotation,random,hold=self.applied
++        position=(e.ee_pos-target).norm(dim=-1)
++        actual=e.ee_orn/e.ee_orn.norm(dim=-1,keepdim=True)
++        orientation=torch.rad2deg(2*torch.acos((actual*rotation).sum(-1).abs().clamp(0,1)))
++        r,p,_=euler_from_quat(e.root_states[:,3:7]);height=e.root_states[:,2]-e.env_origins[:,2]
++        upright=(r.abs()<.35)&(p.abs()<.35)&(height>.22)
++        age=e.episode_length_buf*e.dt;late=age>.5
++        e.gym.refresh_dof_force_tensor(e.sim)
++        torque=self.forces[:,12:18].abs().max(dim=-1).values
++        contact=e.contact_forces[:,self.arm_bodies].norm(dim=-1).max(dim=-1).values
++        groups=torch.stack((torch.ones_like(upright),upright&late,upright&late&random,~upright,upright&late&random&hold)).float()
++        values=torch.stack((torch.ones_like(position),position,position*position,orientation,(position<.02).float(),(position<.05).float(),(position<.1).float(),
++                            (orientation<5).float(),(orientation<10).float(),((position<.05)&(orientation<10)).float(),(contact>1).float(),torque),dim=-1)
++        self.metrics+=groups@values
++        done=e.reset_buf.bool();roll=r.abs()>.8;pitch=p.abs()>.8;z=e.root_states[:,2]<.1;timeout=e.time_out_buf
++        exclusive=[done&roll,done&~roll&pitch,done&~roll&~pitch&z,done&~roll&~pitch&~z&timeout]
++        counts=[done.sum(),(done&roll).sum(),(done&pitch).sum(),(done&z).sum(),(done&timeout).sum()]+[x.sum() for x in exclusive]+[(e.episode_length_buf*done).sum()]
++        self.resets+=torch.stack(counts)
++        ids=self.sample_ids
++        self.samples.append(torch.stack((position[ids],orientation[ids],age[ids],upright[ids].float(),random[ids].float(),hold[ids].float(),done[ids].float(),contact[ids],torque[ids]),dim=-1).cpu().numpy())
++        if self.step_count%2==0:
++            ids=self.video_ids
++            self.frames.append(dict(step=self.step_count,iteration=self.iteration,
++                root=(e.root_states[ids,:7]-torch.cat((e.env_origins[ids],torch.zeros(len(ids),4,device=e.device)),dim=-1)).cpu().numpy(),
++                q=e.dof_pos[ids].cpu().numpy(),target=(target[ids]-e.env_origins[ids]).cpu().numpy(),target_quat=rotation[ids].cpu().numpy(),
++                ee=(e.ee_pos[ids]-e.env_origins[ids]).cpu().numpy(),done=done[ids].cpu().numpy(),random=random[ids].cpu().numpy(),
++                upright=upright[ids].cpu().numpy(),position_error=position[ids].cpu().numpy()))
++        self.step_count+=1
++
++    def log(self,iteration):
++        self.iteration=iteration+1
++        metrics=self.metrics.cpu().numpy();resets=self.resets.cpu().numpy();sampling=self.sampling.cpu().numpy()
++        row=dict(iteration=iteration,groups={g:dict(zip(METRICS,map(float,v))) for g,v in zip(GROUPS,metrics)},
++                 resets=dict(zip(RESETS,map(float,resets))),sampling=dict(zip(SAMPLING,map(float,sampling))))
++        self.rows.append(row)
++        with (OUT/'iterations.jsonl').open('a') as f:f.write(json.dumps(row)+'\n')
++        all_group=row['groups']['all'];up=row['groups']['upright_random_age_gt_0p5']
++        print('EE_AUDIT '+json.dumps(dict(iteration=iteration,position_mean_m=all_group['position_sum_m']/max(1,all_group['count']),
++            upright_random_count=up['count'],upright_random_position_mean_m=up['position_sum_m']/max(1,up['count']),
++            sampling=row['sampling'],resets=row['resets'])),flush=True)
++        self.metrics.zero_();self.resets.zero_();self.sampling.zero_()
++        if (iteration+1)%10==0:self.save()
++
++    def save(self):
++        if self.samples:np.savez_compressed(str(OUT/'tracking_samples.npz'),samples=np.stack(self.samples))
++        if self.frames:
++            keys=self.frames[0].keys();np.savez_compressed(str(OUT/'trajectories.npz'),**{k:np.stack([f[k] for f in self.frames]) for k in keys})
++
++
++# Sensors are enabled before gym.prepare_sim, only for this diagnostic process.
++original_create=AS2PiPERForward._create_envs
++def create_with_sensors(self):
++    original_create(self)
++    for env,actor in zip(self.envs,self.actor_handles):self.gym.enable_actor_dof_force_sensors(env,actor)
++AS2PiPERForward._create_envs=create_with_sensors
++original_make=task_registry.make_env
++def make_env(*args,**kwargs):
++    global observer
++    env,cfg=original_make(*args,**kwargs);observer=Observer(env);return env,cfg
++task_registry.make_env=make_env
++original_runner=task_registry.make_alg_runner
++def make_runner(*args,**kwargs):
++    result=original_runner(*args,**kwargs);runner=result[0];original_log=runner.log
++    def log(self,locs,*args,**kwargs):
++        original_log(locs,*args,**kwargs);observer.log(locs['it'])
++    runner.log=types.MethodType(log,runner);observer.active=True
++    return result
++task_registry.make_alg_runner=make_runner
++
++
++if __name__=='__main__':
++    start=time.monotonic()
++    try:train_as2.main()
++    finally:
++        if observer is not None:observer.save()
++        (OUT/'wall_time.json').write_text(json.dumps(dict(seconds=time.monotonic()-start)))
+--- /dev/null
++++ b/audit_forward/fixed_base_ee_test.py
+@@ -0,0 +1,120 @@
++"""PhysX control test: same arm sampler/IK/drives, fixed torso, no PPO/DR."""
++import json,os
++from pathlib import Path
++import isaacgym
++from isaacgym import gymapi,gymtorch
++from isaacgym.torch_utils import to_torch,orientation_error,quat_apply
++import torch
++import numpy as np
++from legged_gym import LEGGED_GYM_ROOT_DIR
++from legged_gym.envs.manip_loco.as2piper_forward import AS2PiPERForward
++from legged_gym.envs.manip_loco.as2piper_config import AS2PiPERPlateCfg
++from legged_gym.utils.helpers import class_to_dict
++from legged_gym.utils.urdf_chain import URDFChain
++from legged_gym.utils.arm_collision import ArmCollisionGuard
++
++ROOT=Path(LEGGED_GYM_ROOT_DIR)
++OUT=Path(os.environ.get('EE_AUDIT_DIR',str(ROOT/'audit_forward/ee_fixed_base_20261029')))
++OUT.mkdir(parents=True,exist_ok=True)
++
++
++def main():
++    torch.manual_seed(20261029);np.random.seed(20261029)
++    cfg=AS2PiPERPlateCfg();n=64;gym=gymapi.acquire_gym()
++    params=gymapi.SimParams();params.dt=.005;params.substeps=1;params.up_axis=gymapi.UP_AXIS_Z;params.gravity=gymapi.Vec3(0,0,-9.81)
++    params.use_gpu_pipeline=True;params.physx.use_gpu=True
++    for name in ['num_position_iterations','num_velocity_iterations','contact_offset','rest_offset','bounce_threshold_velocity','max_depenetration_velocity']:
++        setattr(params.physx,name,getattr(cfg.sim.physx,name))
++    sim=gym.create_sim(0,-1,gymapi.SIM_PHYSX,params);assert sim is not None
++    plane=gymapi.PlaneParams();plane.normal=gymapi.Vec3(0,0,1);gym.add_ground(sim,plane)
++    asset_path=Path(cfg.asset.file.format(LEGGED_GYM_ROOT_DIR=str(ROOT)))
++    options=gymapi.AssetOptions();options.fix_base_link=True;options.collapse_fixed_joints=True
++    options.flip_visual_attachments=False;options.default_dof_drive_mode=gymapi.DOF_MODE_POS
++    for name in ['replace_cylinder_with_capsule','armature','thickness','density','angular_damping','linear_damping','max_angular_velocity','max_linear_velocity','disable_gravity']:
++        setattr(options,name,getattr(cfg.asset,name))
++    asset=gym.load_asset(sim,str(asset_path.parent),asset_path.name,options)
++    names=gym.get_asset_dof_names(asset);bodies=gym.get_asset_rigid_body_names(asset);tcp=bodies.index(cfg.asset.gripper_name)
++    props=gym.get_asset_dof_properties(asset)
++    props['driveMode'][:]=gymapi.DOF_MODE_POS;props['stiffness'][:12]=80;props['damping'][:12]=2
++    props['stiffness'][12:18]=400;props['damping'][12:18]=40
++    props['stiffness'][-2:]=1800;props['damping'][-2:]=35
++    home=np.array([cfg.init_state.default_joint_angles[name] for name in names],dtype=np.float32)
++    envs=[];actors=[]
++    for i in range(n):
++        env=gym.create_env(sim,gymapi.Vec3(-1,-1,0),gymapi.Vec3(1,1,2),8)
++        pose=gymapi.Transform();pose.p=gymapi.Vec3(0,0,.3244069024246581)
++        actor=gym.create_actor(env,asset,pose,'robot_dog',i,0)
++        gym.set_actor_dof_properties(env,actor,props);gym.enable_actor_dof_force_sensors(env,actor)
++        state=np.zeros(20,dtype=gymapi.DofState.dtype);state['pos']=home
++        gym.set_actor_dof_states(env,actor,state,gymapi.STATE_ALL)
++        envs.append(env);actors.append(actor)
++    gym.prepare_sim(sim)
++    root=gymtorch.wrap_tensor(gym.acquire_actor_root_state_tensor(sim)).view(n,13)
++    state=gymtorch.wrap_tensor(gym.acquire_dof_state_tensor(sim)).view(n,20,2)
++    rigid=gymtorch.wrap_tensor(gym.acquire_rigid_body_state_tensor(sim)).view(n,len(bodies),13)
++    jac=gymtorch.wrap_tensor(gym.acquire_jacobian_tensor(sim,'robot_dog'))
++    force=gymtorch.wrap_tensor(gym.acquire_dof_force_tensor(sim)).view(n,20)
++    contact=gymtorch.wrap_tensor(gym.acquire_net_contact_force_tensor(sim)).view(n,len(bodies),3)
++    target=to_torch(home,device='cuda:0').repeat(n,1)
++    def refresh():
++        gym.refresh_dof_state_tensor(sim);gym.refresh_actor_root_state_tensor(sim);gym.refresh_rigid_body_state_tensor(sim)
++        gym.refresh_jacobian_tensors(sim);gym.refresh_dof_force_tensor(sim);gym.refresh_net_contact_force_tensor(sim)
++    gym.set_dof_position_target_tensor(sim,gymtorch.unwrap_tensor(target))
++    gym.simulate(sim);gym.fetch_results(sim,True);refresh()
++    # A minimal state object reuses the actual AS2/B1 methods, without changing
++    # the training task or its settings.
++    e=object.__new__(AS2PiPERForward);e.cfg=cfg;e.device='cuda:0';e.num_envs=n;e.dt=.02
++    e.root_states=root;e.dof_pos=state[:,:,0];e.ee_pos=rigid[:,tcp,:3];e.ee_orn=rigid[:,tcp,3:7]
++    e.env_origins=root[:,:3].clone();e.env_origins[:,2]=0
++    e.arm_base_offset=to_torch(cfg.asset.arm_base_offset,device=e.device).repeat(n,1)
++    e.base_yaw_quat=torch.zeros(n,4,device=e.device);e.base_yaw_quat[:,3]=1
++    e.ee_j_eef=jac[:,tcp-1,:,12:18]  # Fixed-base Jacobian excludes root body.
++    e.collision_guard=ArmCollisionGuard(asset_path,ROOT/'resources/commands/arm_collision.json',e.device)
++    e.goal_ee_ranges=class_to_dict(cfg.goal_ee.ranges)
++    e.init_start_ee_sphere=to_torch(cfg.goal_ee.ranges.init_pos_start,device=e.device)[None,:]
++    e.init_end_ee_sphere=to_torch(cfg.goal_ee.ranges.init_pos_end,device=e.device)[None,:]
++    for field in ['ee_start_sphere','ee_goal_sphere','ee_goal_cart','curr_ee_goal_cart','curr_ee_goal_cart_world','curr_ee_goal_sphere','ee_goal_orn_delta_rpy']:
++        setattr(e,field,torch.zeros(n,3,device=e.device))
++    e.ee_goal_orn_quat=torch.zeros(n,4,device=e.device);e.ee_goal_orn_quat[:,3]=1
++    e.traj_timesteps=torch.empty(n,device=e.device).uniform_(1,3)/e.dt
++    e.traj_total_timesteps=e.traj_timesteps+torch.empty(n,device=e.device).uniform_(.5,2)/e.dt
++    e.goal_timer=torch.zeros(n,device=e.device);e.commands=torch.zeros(n,3,device=e.device);e.stop_update_goal=False
++    e.collision_lower_limits=to_torch(cfg.goal_ee.collision_lower_limits,device=e.device)
++    e.collision_upper_limits=to_torch(cfg.goal_ee.collision_upper_limits,device=e.device)
++    e.underground_limit=cfg.goal_ee.underground_limit;e.num_collision_check_samples=10
++    e.collision_check_t=torch.linspace(0,1,10,device=e.device)[None,None,:]
++    e.pose_fallback_count=0;e._last_rejected_ids=torch.empty(0,device=e.device,dtype=torch.long)
++    all_ids=torch.arange(n,device=e.device);e._resample_ee_goal(all_ids,is_init=True)
++    rows=[];traces=[];arm_body=[i for i,b in enumerate(bodies) if b.startswith('piper_')]
++    for step in range(1500):
++        if step==150:e._resample_ee_goal(all_ids)  # Three-second home settling.
++        applied=e.curr_ee_goal_cart_world.clone();orientation=e.ee_goal_orn_quat.clone()
++        pose_error=torch.cat((applied-e.ee_pos,orientation_error(orientation,e.ee_orn)),dim=-1)[:,:,None]
++        target[:,12:18]=torch.clamp(e._control_ik(pose_error)+state[:,12:18,0],to_torch(props['lower'][12:18],device=e.device),to_torch(props['upper'][12:18],device=e.device))
++        for _ in range(4):
++            gym.set_dof_position_target_tensor(sim,gymtorch.unwrap_tensor(target));gym.simulate(sim);gym.fetch_results(sim,True);refresh()
++        position=(e.ee_pos-applied).norm(dim=-1)
++        angle=torch.rad2deg(2*torch.acos((orientation*e.ee_orn).sum(-1).abs().clamp(0,1)))
++        hold=e.goal_timer>=e.traj_timesteps
++        contacts=contact[:,arm_body].norm(dim=-1).max(dim=-1).values
++        rows.append(torch.stack((position,angle,hold.float(),contacts,force[:,12:18].abs().max(dim=-1).values),dim=-1).cpu().numpy())
++        if step%2==0:
++            traces.append(dict(root=root[:4,:7].cpu().numpy(),q=state[:4,:,0].cpu().numpy(),target=applied[:4].cpu().numpy(),ee=e.ee_pos[:4].cpu().numpy(),step=step))
++        e._update_curr_ee_goal()
++        if step%250==0:print('FIXED_BASE',step,float(position.mean()),float(angle.mean()),flush=True)
++    a=np.stack(rows);np.savez_compressed(str(OUT/'tracking.npz'),samples=a)
++    np.savez_compressed(str(OUT/'trajectories.npz'),**{k:np.stack([r[k] for r in traces]) for k in traces[0]})
++    summary={}
++    # Some B1 timers expire before 3 seconds; this early window is mixed,
++    # not a pure home-only measurement. Random windows below exclude it.
++    for label,selection in [('early_mixed',a[100:150]),('random_all',a[200:]),('random_hold',a[200:][a[200:,:,2]>.5])]:
++        v=selection.reshape(-1,5)
++        summary[label]=dict(count=len(v),position_mean_m=float(v[:,0].mean()),position_p95_m=float(np.quantile(v[:,0],.95)),
++            orientation_mean_deg=float(v[:,1].mean()),orientation_p95_deg=float(np.quantile(v[:,1],.95)),
++            contact_gt_1N_fraction=float((v[:,3]>1).mean()),force_abs_max_p95_Nm=float(np.quantile(v[:,4],.95)))
++    summary.update(pose_fallback_count=e.pose_fallback_count,conditions='Fixed torso, nominal mass/COM, gravity on; same URDF, spherical sampler, DLS IK, 400/40 arm and 1800/35 gripper drives. Not locomotion.')
++    (OUT/'summary.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary,indent=2),flush=True)
++    gym.destroy_sim(sim)
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/audit_forward/nominal_stand_test.py
+@@ -0,0 +1,60 @@
++"""Isolate free-base home holding: flat ground, nominal mass/COM, zero actions."""
++import json
++from pathlib import Path
++import isaacgym
++from isaacgym import gymapi,gymtorch
++import torch
++import numpy as np
++from legged_gym import LEGGED_GYM_ROOT_DIR
++from legged_gym.envs.manip_loco.as2piper_forward import AS2PiPERForward
++from legged_gym.envs.manip_loco.as2piper_config import AS2PiPERPlateCfg
++
++ROOT=Path(LEGGED_GYM_ROOT_DIR);OUT=ROOT/'audit_forward/ee_nominal_stand_20261029';OUT.mkdir(exist_ok=True)
++
++
++class FlatNominal(AS2PiPERForward):
++    def _create_trimesh(self):self._create_ground_plane()
++    def _get_env_origins(self):
++        self.custom_origins=False;self.env_origins=torch.zeros(self.num_envs,3,device=self.device)
++        self.env_origins[:,0]=torch.arange(self.num_envs,device=self.device)*3
++    def _reset_dofs(self,ids):
++        self.dof_pos[ids]=self.default_dof_pos;self.dof_vel[ids]=0
++        self.gym.set_dof_state_tensor(self.sim,gymtorch.unwrap_tensor(self.dof_state))
++
++
++def main():
++    torch.manual_seed(1);np.random.seed(1);cfg=AS2PiPERPlateCfg();cfg.env.num_envs=16
++    cfg.env.stop_update_goal=False;cfg.env.pitch_control=False
++    cfg.terrain.num_rows=2;cfg.terrain.num_cols=2;cfg.terrain.max_init_terrain_level=1
++    cfg.terrain.measure_heights=False;cfg.terrain.curriculum=False
++    for n in ['randomize_friction','randomize_base_mass','randomize_base_com','randomize_motor','randomize_gripper_mass','push_robots']:
++        setattr(cfg.domain_rand,n,False)
++    cfg.init_state.rand_yaw_range=0;cfg.init_state.origin_perturb_range=0;cfg.init_state.init_vel_perturb_range=0
++    params=gymapi.SimParams();params.dt=cfg.sim.dt;params.up_axis=gymapi.UP_AXIS_Z;params.gravity=gymapi.Vec3(0,0,-9.81)
++    params.use_gpu_pipeline=True;params.physx.use_gpu=True
++    for name in ['num_position_iterations','num_velocity_iterations','contact_offset','rest_offset','bounce_threshold_velocity','max_depenetration_velocity']:
++        setattr(params.physx,name,getattr(cfg.sim.physx,name))
++    e=FlatNominal(cfg,params,gymapi.SIM_PHYSX,'cuda:0',True);e.reset()
++    rows=[];traces=[];original=e.check_termination
++    def check():
++        original()
++        angles=e._get_body_orientation();height=e.root_states[:,2]-e.env_origins[:,2]
++        error=(e.ee_pos-e.curr_ee_goal_cart_world).norm(dim=-1)
++        up=(angles.abs().max(-1).values<.35)&(height>.22)
++        rows.append(torch.stack((error,up.float(),e.reset_buf.float(),height,angles[:,0],angles[:,1]),dim=-1).cpu().numpy())
++        traces.append(dict(root=(e.root_states[:2,:7]-torch.cat((e.env_origins[:2],torch.zeros(2,4,device=e.device)),dim=-1)).cpu().numpy(),q=e.dof_pos[:2].cpu().numpy()))
++    e.check_termination=check
++    for i in range(500):
++        e.goal_timer.zero_();e.commands.zero_()  # Hold the initial EE command.
++        e.step(torch.zeros(e.num_envs,18,device=e.device))
++        if i%100==0:print('NOMINAL',i,float(e.root_states[:,2].mean()),flush=True)
++    a=np.stack(rows);np.savez_compressed(str(OUT/'tracking.npz'),samples=a,**{k:np.stack([f[k] for f in traces]) for k in traces[0]})
++    result=dict(conditions='Free root, nominal mass/COM/motors, flat ground, exact neutral joint reset, zero policy actions, held home EE; not PPO and not the original domain-randomized task.',
++        envs=16,seconds=10,reset_count=int(a[:,:,2].sum()),upright_fraction=float(a[:,:,1].mean()),
++        late_position_mean_m=float(a[100:,:,0].mean()),late_position_p95_m=float(np.quantile(a[100:,:,0],.95)),
++        base_height_mean_m=float(a[100:,:,3].mean()),roll_p95_deg=float(np.rad2deg(np.quantile(np.abs(a[:,:,4]),.95))))
++    (OUT/'summary.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
++    e.gym.destroy_sim(e.sim)
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/audit_forward/replay_guard_analysis.py
+@@ -0,0 +1,43 @@
++"""Check whether rejection at t=0 can be fixed by destination-only retries."""
++import importlib,json,sys,types
++from pathlib import Path
++import numpy as np
++import torch
++from scipy.spatial.transform import Rotation
++ROOT=Path(__file__).resolve().parent.parent
++pkg=types.ModuleType('guard_utils');pkg.__path__=[str(ROOT/'legged_gym/utils')];sys.modules['guard_utils']=pkg
++Guard=importlib.import_module('guard_utils.arm_collision').ArmCollisionGuard
++
++
++def main():
++    out=ROOT/'audit_forward/ee_fixed_base_20261029'
++    a=np.load(str(out/'tracking.npz'))['samples'];d=np.load(str(out/'trajectories.npz'))
++    candidates=[]
++    for i,step in enumerate(d['step']):
++        if step<200:continue
++        for env in range(4):
++            if a[int(step),env,2]>.5:candidates.append((i,env))
++    rng=np.random.default_rng(20261029);chosen=rng.choice(len(candidates),min(1000,len(candidates)),replace=False)
++    q=[];target=[];orn=[]
++    for j in chosen:
++        i,env=candidates[j];root=d['root'][i,env];body=Rotation.from_quat(root[3:7]).as_matrix()
++        origin=root[:3]+body@np.array([.005,0,.08202847821788371])
++        local=body.T@(d['target'][i,env]-origin)
++        pitch=np.arctan2(local[2],np.linalg.norm(local[:2]));yaw=np.arctan2(local[1],local[0]);delta=rng.uniform(-.15,.15,3)
++        R=Rotation.from_euler('xyz',[delta[0],2.455216137744035-pitch+delta[1],yaw+delta[2]]).as_matrix()
++        q.append(d['q'][i,env,12:18]);target.append(local);orn.append(R)
++    q=torch.tensor(np.array(q),dtype=torch.float);p=torch.tensor(np.array(target),dtype=torch.float);R=torch.tensor(np.array(orn),dtype=torch.float)
++    asset=ROOT/'resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf'
++    guard=Guard(asset,ROOT/'resources/commands/arm_collision.json','cpu');offset=torch.tensor([.005,0,.0820284782])
++    q12,fail12=guard.solve(p,R,q);body12=guard.collides(q12,offset);reject12=fail12|body12
++    q64,fail64=guard.solve(p,R,q,iterations=64);body64=guard.collides(q64,offset);reject64=fail64|body64
++    results=dict(snapshot_count=len(q),source='Fixed-base actual hold states; previous goal position held fixed; new orientation delta independently sampled',
++        start_ik_reject_12=int(fail12.sum()),start_body_reject_12=int(body12.sum()),start_reject_12=int(reject12.sum()),
++        start_ik_reject_64=int(fail64.sum()),start_body_reject_64=int(body64.sum()),start_reject_64=int(reject64.sum()),
++        rejected_12_but_passed_64=int((reject12&~reject64).sum()),
++        consequence='At t=0, destination position cancels out of torch.lerp. Destination-only retries cannot change this failure. Orientation delta is held across all ten original B1 retries.',
++        limitation='Conservative boxes and iterative IK; rejection is not a proof of physical impossibility. Snapshots are not an exact resampling-event distribution.')
++    (out/'guard_start_analysis.json').write_text(json.dumps(results,indent=2));print(json.dumps(results,indent=2))
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/audit_forward/summarize_ee_test.py
+@@ -0,0 +1,72 @@
++"""Summarize raw applied-target errors; reconstruct true age after resets."""
++import json,os,re
++from pathlib import Path
++import numpy as np
++import matplotlib
++matplotlib.use('Agg')
++import matplotlib.pyplot as plt
++
++ROOT=Path(__file__).resolve().parent.parent
++OUT=Path(os.environ.get('EE_AUDIT_DIR',str(ROOT/'audit_forward/ee_100_20261029')))
++
++
++def stats(a,mask):
++    v=a[mask]
++    if not len(v):return dict(count=0)
++    return dict(count=len(v),position_mean_m=float(v[:,0].mean()),position_p50_m=float(np.quantile(v[:,0],.5)),
++        position_p95_m=float(np.quantile(v[:,0],.95)),orientation_mean_deg=float(v[:,1].mean()),orientation_p95_deg=float(np.quantile(v[:,1],.95)),
++        position_lt_2cm_fraction=float((v[:,0]<.02).mean()),position_lt_5cm_fraction=float((v[:,0]<.05).mean()),
++        pose_lt_5cm_10deg_fraction=float(((v[:,0]<.05)&(v[:,1]<10)).mean()),contact_gt_1N_fraction=float((v[:,7]>1).mean()),
++        force_max_p95_Nm=float(np.quantile(v[:,8],.95)))
++
++
++def main():
++    rows=[json.loads(l) for l in (OUT/'iterations.jsonl').read_text().splitlines()]
++    data=np.load(str(OUT/'tracking_samples.npz'))['samples']
++    # Runner randomizes episode_length_buf at startup. Its first episode age
++    # is artificial; raw done sequences reconstruct actual elapsed test time.
++    age=np.zeros(data.shape[:2],dtype=np.float32);counter=np.zeros(data.shape[1],dtype=np.float32)
++    for t in range(len(data)):
++        counter+=.02;age[t]=counter;counter[data[t,:,6]>.5]=0
++    up=data[:,:,3]>.5;random=data[:,:,4]>.5;hold=data[:,:,5]>.5;late=age>.5
++    result=dict(iterations_completed=len(rows),control_steps=len(data),sampled_envs=data.shape[1],
++        groups={label:stats(data,mask) for label,mask in [('all',np.ones_like(up)),('upright_late',up&late),('upright_random_late',up&late&random),
++             ('upright_random_hold',up&late&random&hold),('fallen',~up),('post_reset_first_0p1s',age<=.10001)]},
++        random_exposure_fraction=float(random.mean()),upright_fraction=float(up.mean()),
++        age_note='Age reconstructed from captured reset events; original startup episode_length_buf was randomized by the PPO runner.')
++    for window,subset in [('all_iterations',rows),('last_20_iterations',rows[-20:])]:
++        reset={k:sum(r['resets'][k] for r in subset) for k in rows[0]['resets']}
++        sampling={k:sum(r['sampling'][k] for r in subset) for k in rows[0]['sampling']}
++        if sampling['requested']:sampling['fallback_fraction']=sampling['fallback']/sampling['requested']
++        result[window]=dict(reset_counts=reset,sampling=sampling)
++    log=ROOT/'audit_forward/ee_100_stdout.log'
++    if log.exists():
++        text=re.sub(r'\x1b\[[0-9;]*m','',log.read_text())
++        lengths=[float(x) for x in re.findall(r'Mean episode length:\s+([\d.]+)',text)]
++        if lengths:result['last_logged_mean_episode_s']=lengths[-1]*.02
++    fixed=ROOT/'audit_forward/ee_fixed_base_20261029/summary.json'
++    if fixed.exists():result['fixed_base']=json.loads(fixed.read_text())
++    (OUT/'summary.json').write_text(json.dumps(result,indent=2))
++    fig,axes=plt.subplots(2,2,figsize=(13,8))
++    for label,selection in [('All sampled states',np.ones_like(up)),('Upright >0.5s',up&late),('Upright random >0.5s',up&late&random)]:
++        for ax,column,factor in [(axes[0,0],0,100),(axes[0,1],1,1)]:
++            y=[]
++            for row in rows:
++                start=row['iteration']*24;end=start+24;part=data[start:end];mask=selection[start:end]
++                y.append(float(part[:,:,column][mask].mean())*factor if mask.any() else np.nan)
++            ax.plot([r['iteration'] for r in rows],y,label=label)
++    axes[0,0].set_ylabel('Applied-target position error [cm]');axes[0,1].set_ylabel('Orientation error [deg]')
++    axes[0,0].axhline(5,color='gray',ls='--');axes[0,1].axhline(10,color='gray',ls='--')
++    for key in ['roll_exclusive','pitch_exclusive','height_exclusive','timeout_exclusive']:
++        axes[1,0].plot([r['iteration'] for r in rows],[r['resets'][key] for r in rows],label=key)
++    axes[1,0].set_ylabel('Episode ends per iteration')
++    axes[1,1].plot([r['iteration'] for r in rows],[r['sampling']['requested'] for r in rows],label='Goal requests')
++    axes[1,1].plot([r['iteration'] for r in rows],[r['sampling']['fallback'] for r in rows],label='Fallback holds')
++    axes[1,1].set_ylabel('Resampling events')
++    for ax in axes.flat:ax.set_xlabel('PPO iteration');ax.grid(alpha=.2);ax.legend(fontsize=8)
++    fig.suptitle('Actual PhysX errors before reset; same URDF/commands/rewards\nError curves use the recorded env subset and true age reconstructed from reset events.',fontsize=11)
++    fig.tight_layout(rect=[0,0,1,.92]);fig.savefig(str(OUT/'training_diagnostics.png'),dpi=150);plt.close(fig)
++    print(json.dumps(result,indent=2))
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/audit_forward/render_ee_replay.py
+@@ -0,0 +1,49 @@
++"""Replay recorded PhysX joint/root states in MuJoCo, without re-simulation."""
++import json,os
++from pathlib import Path
++import numpy as np
++from PIL import Image,ImageDraw
++import mujoco
++import imageio.v2 as imageio
++
++ROOT=Path(__file__).resolve().parent.parent
++OUT=Path(os.environ.get('EE_AUDIT_DIR',str(ROOT/'audit_forward/ee_100_20261029')))
++
++
++def main():
++    data=np.load(str(OUT/'trajectories.npz'));meta=json.loads((OUT/'metadata.json').read_text())
++    m=mujoco.MjModel.from_xml_path(str(ROOT/'resources/commands/plate_forward.xml'));d=mujoco.MjData(m)
++    m.vis.headlight.ambient[:]=[.6,.6,.6];m.vis.headlight.diffuse[:]=[.8,.8,.8]
++    renderer=mujoco.Renderer(m,height=360,width=640);cam=mujoco.MjvCamera();cam.azimuth=120;cam.elevation=-20;cam.distance=2.15
++    qids=[int(m.joint(n).qposadr) for n in meta['dof_names']]
++    def frame(i,env):
++        root=data['root'][i,env];d.qpos[:3]=root[:3];d.qpos[3:7]=root[[6,3,4,5]];d.qpos[qids]=data['q'][i,env]
++        mujoco.mj_forward(m,d);R=d.xmat[1].reshape(3,3)
++        cam.azimuth=120+np.rad2deg(np.arctan2(R[1,0],R[0,0]));cam.lookat[:]=root[:3]+[.10,0,.15]
++        renderer.update_scene(d,camera=cam)
++        for p,size,color in [(data['target'][i,env],.012,[1,.15,.15,.9]),(data['ee'][i,env],.008,[0,1,1,1])]:
++            g=renderer.scene.geoms[renderer.scene.ngeom];renderer.scene.ngeom+=1
++            mujoco.mjv_initGeom(g,mujoco.mjtGeom.mjGEOM_SPHERE,np.array([size]*3),p,np.eye(3).reshape(-1),np.array(color,dtype=np.float32))
++        image=Image.fromarray(renderer.render().copy());draw=ImageDraw.Draw(image)
++        draw.rectangle((0,0,640,58),fill=(245,245,245))
++        draw.text((8,6),'PhysX state replay | env %d | iter %d | %s'%(meta['video_ids'][env],data['iteration'][i],'RANDOM GOAL' if data['random'][i,env] else 'INITIAL HOLD'),fill='black')
++        draw.text((8,23),'Red: applied target | Cyan: actual EE | error %.1f cm'%(100*data['position_error'][i,env]),fill='black')
++        draw.text((8,40),'Flat height reference; training rough terrain not rendered',fill='black')
++        return np.array(image)
++    count=len(data['step']);envs=[0,1] if data['q'].shape[1]>1 else [0,0]
++    random_up=data['random']&data['upright']
++    score=random_up.sum(0)
++    if len(score)>1:envs[1]=1+int(np.argmax(score[1:]))
++    # Four seconds from each end: enough to show multiple short resets.
++    windows=[('initial',0,min(count,100)),('late',max(0,count-100),count)]
++    montage=Image.new('RGB',(1280,720),'white')
++    for row,(label,start,end) in enumerate(windows):
++        with imageio.get_writer(str(OUT/('ee_'+label+'_replay.mp4')),fps=25,codec='libx264',quality=8,macro_block_size=1) as writer:
++            for i in range(start,end):
++                joined=np.concatenate([frame(i,j) for j in envs],axis=1);writer.append_data(joined)
++                if i==(start+end)//2:montage.paste(Image.fromarray(joined),(0,row*360))
++    montage.save(str(OUT/'ee_replay_montage.jpg'),quality=94);renderer.close()
++    print('Rendered recorded trajectories. No MuJoCo physics integration was used.')
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ b/audit_forward/render_control_comparison.py
+@@ -0,0 +1,53 @@
++"""Actual recorded states from nominal stand, fixed arm and PPO tests."""
++from pathlib import Path
++import numpy as np
++from PIL import Image,ImageDraw
++import mujoco
++import imageio.v2 as imageio
++ROOT=Path(__file__).resolve().parent.parent;OUT=ROOT/'audit_forward/ee_100_20261029'
++
++
++def main():
++    stand=np.load(str(ROOT/'audit_forward/ee_nominal_stand_20261029/tracking.npz'))
++    fixed=np.load(str(ROOT/'audit_forward/ee_fixed_base_20261029/trajectories.npz'))
++    train=np.load(str(OUT/'trajectories.npz'))
++    cases=[('Nominal free base | zero actions | home hold',stand['root'][400,0],stand['q'][400,0],None),
++           ('Fixed base | independent spherical pose command',fixed['root'][500,0],fixed['q'][500,0],fixed['target'][500,0]),
++           ('PPO test | original randomization | late frame',train['root'][-50,0],train['q'][-50,0],train['target'][-50,0])]
++    m=mujoco.MjModel.from_xml_path(str(ROOT/'resources/commands/plate_forward.xml'));d=mujoco.MjData(m)
++    m.vis.headlight.ambient[:]=[.6]*3;m.vis.headlight.diffuse[:]=[.8]*3
++    renderer=mujoco.Renderer(m,height=360,width=640);camera=mujoco.MjvCamera();camera.distance=2.15;camera.elevation=-20
++    names=[leg+'_'+j+'_joint' for leg in ('FL','FR','RL','RR') for j in ('hip','thigh','calf')]+['piper_joint'+str(i) for i in range(1,7)]+['piper_gripper_joint1','piper_gripper_joint2']
++    ids=[int(m.joint(n).qposadr) for n in names]
++    canvas=Image.new('RGB',(1920,360),'white')
++    for i,(label,root,q,target) in enumerate(cases):
++        d.qpos[:3]=root[:3];d.qpos[3:7]=root[[6,3,4,5]];d.qpos[ids]=q;mujoco.mj_forward(m,d)
++        R=d.xmat[1].reshape(3,3);camera.azimuth=120+np.rad2deg(np.arctan2(R[1,0],R[0,0]));camera.lookat[:]=root[:3]+[.1,0,.15]
++        renderer.update_scene(d,camera=camera)
++        if target is not None:
++            g=renderer.scene.geoms[renderer.scene.ngeom];renderer.scene.ngeom+=1
++            mujoco.mjv_initGeom(g,mujoco.mjtGeom.mjGEOM_SPHERE,np.array([.012]*3),target,np.eye(3).reshape(-1),np.array([1,.1,.1,1],dtype=np.float32))
++        image=Image.fromarray(renderer.render().copy());draw=ImageDraw.Draw(image);draw.rectangle((0,0,640,38),fill='white')
++        draw.text((8,7),label,fill='black');draw.text((8,23),'Recorded PhysX state; PPO rough terrain omitted',fill='black');canvas.paste(image,(i*640,0))
++    canvas.save(str(OUT/'control_comparison.jpg'),quality=94)
++    # A separate actual-motion clip shows commanded arm motion with a fixed
++    # torso, rather than only the short-reset PPO initialization phase.
++    start,end=250,350
++    movement=np.linalg.norm(np.diff(fixed['target'][start:end],axis=0),axis=-1).sum(axis=0)
++    env=int(np.argmax(movement))
++    with imageio.get_writer(str(OUT/'ee_fixed_base_tracking.mp4'),fps=25,codec='libx264',quality=8,macro_block_size=1) as writer:
++        for frame in range(start,end):
++            root=fixed['root'][frame,env];d.qpos[:3]=root[:3];d.qpos[3:7]=root[[6,3,4,5]];d.qpos[ids]=fixed['q'][frame,env]
++            mujoco.mj_forward(m,d);camera.azimuth=120;camera.lookat[:]=root[:3]+[.1,0,.15];renderer.update_scene(d,camera=camera)
++            for point,size,color in [(fixed['target'][frame,env],.012,[1,.1,.1,1]),(fixed['ee'][frame,env],.008,[0,1,1,1])]:
++                g=renderer.scene.geoms[renderer.scene.ngeom];renderer.scene.ngeom+=1
++                mujoco.mjv_initGeom(g,mujoco.mjtGeom.mjGEOM_SPHERE,np.array([size]*3),point,np.eye(3).reshape(-1),np.array(color,dtype=np.float32))
++            image=Image.fromarray(renderer.render().copy());draw=ImageDraw.Draw(image);draw.rectangle((0,0,640,40),fill='white')
++            draw.text((8,7),'Fixed torso | nominal physics | B1 spherical pose command',fill='black')
++            error=100*np.linalg.norm(fixed['target'][frame,env]-fixed['ee'][frame,env])
++            draw.text((8,24),'Recorded PhysX | Red goal, cyan EE | error %.1f cm'%error,fill='black')
++            writer.append_data(np.array(image))
++    renderer.close()
++
++
++if __name__=='__main__':main()

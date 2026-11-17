@@ -1,0 +1,99 @@
+--- before/maniploco_rewards.py
++++ legged_gym/envs/rewards/maniploco_rewards.py
+@@ -189,27 +189,28 @@
+         return rew, rew
+ 
+     def _reward_feet_jerk(self):
+-        if not hasattr(self, "last_contact_forces"):            
+-            result = torch.zeros(self.env.num_envs).to(self.env.device)
++        # The original term penalizes contact-force changes, not kinematic jerk.
++        forces = self.env.contact_forces[:, self.env.feet_indices, :]
++        if not hasattr(self.env, "last_contact_forces"):
++            result = torch.zeros(self.env.num_envs, device=self.env.device)
+         else:
+-            result = torch.sum(torch.norm(self.env.force_sensor_tensor - self.env.last_contact_forces, dim=-1), dim=-1)
+-        
+-        self.env.last_contact_forces = self.env.force_sensor_tensor.clone()
+-        result[self.env.episode_length_buf<50] = 0.
++            result = (forces - self.env.last_contact_forces[..., :3]).norm(dim=-1).sum(dim=-1)
++        self.env.last_contact_forces = forces.clone()
++        result[self.env.episode_length_buf < 50] = 0.
+         return result, result
+-    
++
+     def _reward_alive(self):
+         return 1., 1.
+     
+     def _reward_feet_drag(self):
+         feet_xyz_vel = torch.abs(self.env.rigid_body_state[:, self.env.feet_indices, 7:10]).sum(dim=-1)
+-        dragging_vel = self.env.foot_contacts_from_sensor * feet_xyz_vel
++        dragging_vel = self.env.contact_filt * feet_xyz_vel
+         rew = dragging_vel.sum(dim=-1)
+         return rew, rew
+ 
+     def _reward_feet_contact_forces(self):
+         reset_flag = (self.env.episode_length_buf > 2./self.env.dt).type(torch.float)
+-        forces = torch.sum((torch.norm(self.env.force_sensor_tensor, dim=-1) - self.env.cfg.rewards.max_contact_force).clip(min=0), dim=-1)
++        forces = torch.sum((torch.norm(self.env.contact_forces[:, self.env.feet_indices, :], dim=-1) - self.env.cfg.rewards.max_contact_force).clip(min=0), dim=-1)
+         rew = reset_flag * forces
+         return rew, rew
+     
+@@ -226,7 +227,7 @@
+     
+     def _reward_base_height(self):
+         # Penalize base height away from target
+-        base_height = torch.mean(self.env.root_states[:, 2].unsqueeze(1), dim=1)
++        base_height = self.env.root_states[:, 2] - self.env._termination_ground_height()
+         return torch.abs(base_height - self.env.cfg.rewards.base_height_target), base_height
+     
+     def _reward_orientation_walking(self):
+@@ -317,7 +318,7 @@
+ 
+         reward = 0
+         for i in range(4):
+-            reward += - (1 - desired_contact[:, i]) * (
++            reward += (1 - desired_contact[:, i]) * (
+                         1 - torch.exp(-1 * foot_forces[:, i] ** 2 / self.env.cfg.rewards.gait_force_sigma))
+         
+         # cmd_stop_flag = ~self.env._get_walking_cmd_mask()
+@@ -327,11 +328,11 @@
+     def _reward_tracking_contacts_shaped_vel(self):
+         if not self.env.cfg.env.observe_gait_commands:
+             return 0,0
+-        foot_velocities = torch.norm(self.env.foot_velocities, dim=2).view(self.env.num_envs, -1)
++        foot_velocities = torch.norm(self.env.rigid_body_state[:, self.env.feet_indices, 7:10], dim=2)
+         desired_contact = self.env.desired_contact_states
+         reward = 0
+         for i in range(4):
+-            reward += - (desired_contact[:, i] * (
++            reward += (desired_contact[:, i] * (
+                         1 - torch.exp(-1 * foot_velocities[:, i] ** 2 / self.env.cfg.rewards.gait_vel_sigma)))
+         # cmd_stop_flag = ~self.env._get_walking_cmd_mask()
+         # reward[cmd_stop_flag] = 0
+@@ -346,6 +347,10 @@
+         else:
+             feet_height = self.env.rigid_body_state[:, self.env.feet_indices[:2], 2] # Only front feet
+ 
++        ground = self.env._reward_foot_ground_heights()
++        if not self.env.cfg.rewards.feet_height_allfeet:
++            ground = ground[:, :2]
++        feet_height = feet_height - ground
+         rew = torch.clamp(torch.norm(feet_height, dim=-1) - feet_height_tracking, max=0)
+         cmd_stop_flag = ~self.env._get_walking_cmd_mask()
+         rew[cmd_stop_flag] = 0
+@@ -354,7 +359,7 @@
+     def _reward_feet_air_time(self):
+         # Reward long steps
+         # Need to filter the contacts because the contact reporting of PhysX is unreliable on meshes
+-        first_contact = (self.env.feet_air_time > 0.) * self.env.foot_contacts_from_sensor  #self.env.contact_filt
++        first_contact = (self.env.feet_air_time > 0.) * self.env.contact_filt  #self.env.contact_filt
+         self.env.feet_air_time += self.env.dt
+ 
+         if self.env.cfg.rewards.feet_aritime_allfeet:
+@@ -363,5 +368,5 @@
+             rew_airTime = torch.sum((self.env.feet_air_time[:, :2] - 0.5) * first_contact[:, :2], dim=1)
+         
+         rew_airTime *= self.env._get_walking_cmd_mask()  # reward for stepping for any of the 3 motions
+-        self.env.feet_air_time *= ~ self.env.foot_contacts_from_sensor  #self.env.contact_filt
++        self.env.feet_air_time *= ~ self.env.contact_filt  #self.env.contact_filt
+         return rew_airTime, rew_airTime

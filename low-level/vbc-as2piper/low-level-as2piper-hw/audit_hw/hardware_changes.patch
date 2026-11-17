@@ -1,0 +1,515 @@
+--- /dev/null
++++ hardware/derive_hardware.py
+@@ -0,0 +1,79 @@
++"""Derive simulation starting parameters from mass, geometry and static loads."""
++import hashlib,json,sys
++import xml.etree.ElementTree as ET
++from pathlib import Path
++import numpy as np
++from scipy.optimize import lsq_linear
++import mujoco
++
++ROOT=Path(__file__).resolve().parent
++sys.path.insert(0,str(ROOT.parent/'mujoco_mount_compare'))
++from mount_workspace_study import setup,mass_properties
++
++
++def measure(path,kind):
++    m=mujoco.MjModel.from_xml_path(str(path));d,_,feet,_=setup(m,kind)
++    props=mass_properties(m,d);mass=props['mass_kg'];com=np.array(props['com_world_m'])
++    p=d.xpos[feet];A=np.stack([np.ones(4),p[:,0]-com[0],p[:,1]-com[1]])
++    load=lsq_linear(A,np.array([mass*9.81,0,0]),bounds=(0,np.inf)).x
++    assert np.linalg.norm(A@load-[mass*9.81,0,0])<1e-5
++    tau=d.qfrc_bias.copy()
++    for bid,f in zip(feet,load):
++        J=np.zeros((3,m.nv));mujoco.mj_jacBody(m,d,J,None,bid)
++        tau-=J.T@np.array([0,0,f])
++    dense=np.zeros((m.nv,m.nv));mujoco.mj_fullM(m,dense,d.qM)
++    idx=[int(m.joint(leg+'_'+j+'_joint').dofadr) for leg in ['FL','FR','RL','RR'] for j in ['hip','thigh','calf']]
++    return dict(**props,stance_height_m=float(d.qpos[2]),foot_positions=p.tolist(),
++        static_foot_load_N=load.tolist(),static_leg_torque_Nm=tau[idx].tolist(),
++        leg_inertia_diagonal_kg_m2=dense.diagonal()[idx].tolist(),
++        asset=str(path),asset_sha256=hashlib.sha256(path.read_bytes()).hexdigest())
++
++
++def main():
++    a=measure(ROOT/'resources/commands/plate_forward.xml','plate_only_forward')
++    b=measure(ROOT.parent/'mujoco_mount_compare/models/mount_workspace/b1z1.xml','b1z1')
++    mass=a['mass_kg']/b['mass_kg'];length=a['stance_height_m']/b['stance_height_m'];time=np.sqrt(length)
++    frequency=2/time
++    static=np.abs(a['static_leg_torque_Nm']).reshape(4,3).max(0)
++    preset=Path('/data/team/users/suhwan/robot-sources/unitree_ros/robots/as2_description/as2.xml')
++    preset_xml=ET.parse(preset).getroot()
++    armature=np.array([float(preset_xml.find("./default/default[@class='"+j+"_joint']/joint").get('armature')) for j in ['hip','thigh','calf']])
++    inertia=np.array(a['leg_inertia_diagonal_kg_m2']).reshape(4,3).max(0)+armature
++    # Uniform gravity similarity is only a candidate: AS2 is not a scaled B1.
++    kp_similarity=80*mass*length
++    kp_static=static/.12  # design allowance: <=0.12 rad nominal load sag
++    kp_bandwidth=inertia*(2*np.pi*2*frequency)**2  # 2x gait frequency
++    kp=np.maximum(np.maximum(kp_similarity,kp_static),kp_bandwidth)
++    kd=2*.7*np.sqrt(kp*inertia)  # swing-joint inertia; not full stance decoupling
++    effort=np.array([60.,60.,90.])
++    scale=np.minimum(np.minimum([.4,.45,.45],.2*effort/kp),.30)
++    p=np.array(a['foot_positions']);half=(p.max(0)-p.min(0))/2
++    # Full-system COM shift <=5% of support half-width, expressed at base link.
++    com_xy=.05*half[:2]*a['mass_kg']/8.8
++    values=dict(leg_kp=np.round(kp,3).tolist(),leg_kd=np.round(kd,3).tolist(),leg_armature=armature.tolist(),
++        leg_action_scale=np.round(scale,4).tolist(),gait_hz=float(frequency),
++        max_linear_velocity_m_s=float(.8*time),max_yaw_velocity_rad_s=1.,
++        added_base_mass_kg=[0.,min(15*mass,.10*a['mass_kg'])],
++        base_com_half_range_m=[float(com_xy[0]),float(com_xy[1]),float(min(com_xy))],
++        max_push_velocity_m_s=float(.5*time),
++        # Existing feet-height reward compares the norm of the two front heights.
++        feet_height_target_m=float(np.sqrt(2)*(.028+.10*a['stance_height_m'])),
++        # Allow a 1.5 dynamic factor with two legs supporting the entire robot.
++        max_contact_force_N=float(1.5*a['mass_kg']*9.81/2),gait_vel_sigma=float(.5*length),
++        gait_force_sigma=float(.5*mass*mass))
++    out=dict(as2=a,b1=b,official_simulation_preset=str(preset),official_preset_sha256=hashlib.sha256(preset.read_bytes()).hexdigest(),
++        ratios=dict(mass=mass,length=length,time=time,torque=mass*length,
++        angular_damping=mass*length**1.5),derived=values,
++        design_choices=dict(max_static_joint_sag_rad=.12,swing_damping_ratio=.7,
++            swing_bandwidth_to_gait=2,exploration_torque_budget_fraction=.2,
++            total_added_mass_fraction=.1,full_com_support_half_width_fraction=.05),
++        limitations=['Gravity dynamic similarity is approximate for different morphologies.',
++            'Static support assumes four vertical nonnegative forces on a plane.',
++            'Inertia diagonal damping neglects coupling; armature is an official simulation preset, not motor identification.',
++            'URDF effort is a simulation limit, not a measured continuous motor rating.',
++            'Camera, cables and exact mount hardware masses remain unverified.'])
++    target=ROOT/'resources/commands/hardware.json';target.write_text(json.dumps(out,indent=2));target.chmod(0o664)
++    print(json.dumps(out['ratios'],indent=2));print(json.dumps(values,indent=2))
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ hardware/verify_hardware.py
+@@ -0,0 +1,53 @@
++"""Run nominal/DR controls before authorizing a long PPO run; no W&B."""
++import argparse,json
++from pathlib import Path
++import isaacgym
++from isaacgym import gymapi
++import torch,numpy as np
++from legged_gym.envs.manip_loco.as2piper_hw import AS2PiPERHardware
++from legged_gym.envs.manip_loco.as2piper_hw_config import AS2PiPERHardwareCfg
++
++ROOT=Path(__file__).resolve().parent
++
++
++def main():
++    p=argparse.ArgumentParser();p.add_argument('--case',choices=['nominal','dr','explore'],default='nominal');a=p.parse_args()
++    torch.manual_seed(1);np.random.seed(1);cfg=AS2PiPERHardwareCfg();cfg.env.num_envs=32
++    if a.case=='nominal':
++        for k in ['randomize_friction','randomize_base_mass','randomize_base_com','randomize_motor','randomize_gripper_mass','push_robots']:setattr(cfg.domain_rand,k,False)
++        cfg.init_state.leg_reset_fraction=0;cfg.init_state.init_vel_perturb_range=0
++    params=gymapi.SimParams();params.dt=cfg.sim.dt;params.up_axis=gymapi.UP_AXIS_Z;params.gravity=gymapi.Vec3(0,0,-9.81);params.use_gpu_pipeline=True;params.physx.use_gpu=True
++    for k in ['num_position_iterations','num_velocity_iterations','contact_offset','rest_offset','bounce_threshold_velocity','max_depenetration_velocity']:setattr(params.physx,k,getattr(cfg.sim.physx,k))
++    e=AS2PiPERHardware(cfg,params,gymapi.SIM_PHYSX,'cuda:0',True);e.reset();rows=[];traces=[]
++    armature=e.gym.get_actor_dof_properties(e.envs[0],e.actor_handles[0])['armature'][:12]
++    assert np.allclose(armature,cfg.control.leg_armature*4)
++    original=e.check_termination
++    def check():
++        original();angles=e._get_body_orientation();h=e.root_states[:,2]-e.env_origins[:,2]
++        up=(angles.abs().max(-1).values<.35)&(h>.22)
++        rows.append(torch.cat((e.reset_buf[:,None].float(),up[:,None].float(),h[:,None],angles,
++            e.contact_forces[:,e.feet_indices,2],e.torques[:,:12].abs().max(-1).values[:,None],
++            (e.ee_pos-e.curr_ee_goal_cart_world).norm(dim=-1)[:,None]),dim=-1).cpu().numpy())
++        traces.append(dict(root=(e.root_states[:4,:7]-torch.cat((e.env_origins[:4],torch.zeros(4,4,device=e.device)),dim=-1)).cpu().numpy(),q=e.dof_pos[:4].cpu().numpy()))
++    e.check_termination=check
++    # Verify mismatch shaping cannot produce a positive weighted reward.
++    for name,fn in zip(e.reward_names,e.reward_functions):
++        if name.startswith('tracking_contacts_shaped'):
++            raw,_=fn();assert (raw*e.reward_scales[name]<=1e-6).all(),name
++    for i in range(500):
++        e.goal_timer.zero_();e.commands.zero_()
++        action=torch.randn(e.num_envs,18,device=e.device)*.3 if a.case=='explore' else torch.zeros(e.num_envs,18,device=e.device)
++        e.step(action)
++    x=np.stack(rows);out=ROOT/'audit_hw';out.mkdir(exist_ok=True)
++    np.savez_compressed(str(out/(a.case+'_control.npz')),samples=x,**{k:np.stack([v[k] for v in traces]) for k in traces[0]})
++    result=dict(case=a.case,envs=32,seconds=10,resets=int(x[:,:,0].sum()),upright_fraction=float(x[:,:,1].mean()),
++        resets_first_7s=int(x[:350,:,0].sum()),upright_first_7s=float(x[:350,:,1].mean()),leg_armature=armature.tolist(),
++        height_mean_m=float(x[100:,:,2].mean()),roll_pitch_abs_p95_deg=float(np.rad2deg(np.quantile(abs(x[:,:,3:5]),.95))),
++        mean_foot_normal_force_N=x[100:,:,5:9].mean((0,1)).tolist(),
++        loaded_fraction_per_foot=(x[100:,:,5:9]>5).mean((0,1)).tolist(),leg_torque_abs_max_Nm=float(x[:,:,9].max()),
++        ee_position_mean_m=float(x[100:,:,10].mean()))
++    (out/(a.case+'_control.json')).write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2),flush=True)
++    e.gym.destroy_sim(e.sim)
++
++
++if __name__=='__main__':main()
+--- /dev/null
++++ hardware/evaluate_hw.py
+@@ -0,0 +1,51 @@
++"""Measure learned velocity tracking; standing alone is not gait validation."""
++import argparse,json
++from pathlib import Path
++import isaacgym
++from isaacgym import gymapi
++import torch,numpy as np
++from legged_gym.envs.manip_loco.as2piper_hw import AS2PiPERHardware
++from legged_gym.envs.manip_loco.as2piper_hw_config import AS2PiPERHardwareCfg,AS2PiPERHardwareCfgPPO
++from legged_gym.utils.helpers import class_to_dict
++from legged_gym.utils.hw_runner import HardwareRunner
++
++ROOT=Path(__file__).resolve().parent
++
++
++def main():
++    parser=argparse.ArgumentParser();parser.add_argument('checkpoint');args=parser.parse_args()
++    cfg=AS2PiPERHardwareCfg();cfg.env.num_envs=32
++    cfg.init_state.leg_reset_fraction=0;cfg.init_state.init_vel_perturb_range=0
++    for k in ['randomize_friction','randomize_base_mass','randomize_base_com','randomize_motor','randomize_gripper_mass','push_robots']:setattr(cfg.domain_rand,k,False)
++    params=gymapi.SimParams();params.dt=cfg.sim.dt;params.up_axis=gymapi.UP_AXIS_Z;params.gravity=gymapi.Vec3(0,0,-9.81);params.use_gpu_pipeline=True;params.physx.use_gpu=True
++    for k in ['num_position_iterations','num_velocity_iterations','contact_offset','rest_offset','bounce_threshold_velocity','max_depenetration_velocity']:setattr(params.physx,k,getattr(cfg.sim.physx,k))
++    e=AS2PiPERHardware(cfg,params,gymapi.SIM_PHYSX,'cuda:0',True)
++    r=HardwareRunner(e,class_to_dict(AS2PiPERHardwareCfgPPO()),None,'cuda:0');r.load(args.checkpoint);r.alg.actor_critic.eval()
++    targets=torch.tensor([[0,0,0],[.15,0,0],[0,0,.25],[.15,0,.25]],device=e.device).repeat_interleave(8,0)
++    e._resample_commands=lambda ids:e.commands.__setitem__(ids,targets[ids])
++    e.commands[:]=targets;e.compute_observations();rows=[];frames=[];original=e.check_termination
++    def check():
++        original();rp=e._get_body_orientation();height=e.root_states[:,2]-e.env_origins[:,2]
++        rows.append(torch.cat((e.base_lin_vel[:,0:1],e.base_ang_vel[:,2:3],e.reset_buf[:,None],e.time_out_buf[:,None],
++            ((rp.abs().max(-1).values<.35)&(height>.22))[:,None],e.contact_forces[:,e.feet_indices,2]),dim=-1).cpu().numpy())
++    e.check_termination=check
++    with torch.no_grad():
++        for _ in range(500):
++            e.goal_timer.zero_();e.commands[:]=targets
++            action=r.alg.actor_critic.act_inference(e.obs_buf,hist_encoding=True)
++            e.step(action)
++    x=np.stack(rows);result={}
++    for i,name in enumerate(['stand','forward','turn','forward_turn']):
++        v=x[100:,i*8:(i+1)*8];t=targets[i*8].cpu().numpy()
++        result[name]=dict(command_vx_m_s=float(t[0]),command_yaw_rad_s=float(t[2]),
++            mean_vx_m_s=float(v[:,:,0].mean()),mean_yaw_rad_s=float(v[:,:,1].mean()),
++            vx_abs_error_m_s=float(abs(v[:,:,0]-t[0]).mean()),yaw_abs_error_rad_s=float(abs(v[:,:,1]-t[2]).mean()),
++            upright_fraction=float(v[:,:,4].mean()),fall_resets=int(((v[:,:,2]>.5)&(v[:,:,3]<.5)).sum()),
++            per_foot_loaded_fraction=(v[:,:,5:9]>5).mean((0,1)).tolist())
++    result['conditions']='Nominal flat, deterministic history-encoder inference, held initial EE, 32 envs, 10s; 8 envs per command.'
++    out=ROOT/'audit_hw';np.savez_compressed(str(out/'policy_evaluation.npz'),samples=x)
++    (out/'policy_evaluation.json').write_text(json.dumps(result,indent=2));print(json.dumps(result,indent=2))
++    e.gym.destroy_sim(e.sim)
++
++
++if __name__=='__main__':main()
+--- forward/run_as2.sh
++++ hardware/run_as2.sh
+@@ -1,15 +1,3 @@
+ #!/usr/bin/env bash
+ set -euo pipefail
+-umask 0002
+-cd "$(dirname "$0")"
+-export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
+-export MAX_JOBS=2
+-export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
+-export WANDB_MODE="${WANDB_MODE:-online}"
+-run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
+-export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_forward_spherical_${run_stamp}}"
+-export WANDB_NAME="${WANDB_NAME:-plate_forward_spherical_${run_stamp}}"
+-export WANDB_DISABLE_GIT=true
+-export OMP_NUM_THREADS="${OMP_NUM_THREADS:-2}"
+-python prepare_asset.py
+-exec python legged_gym/scripts/train_as2.py --task as2piper_plate_forward --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
++exec bash "$(dirname "$0")/run_hw.sh" "$@"
+--- /dev/null
++++ hardware/run_hw.sh
+@@ -0,0 +1,14 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++export PYTHONPATH="$PWD:$PWD/.deps:$PWD/rsl_rl_local:$PWD/../third_party/isaacgym/python${PYTHONPATH:+:$PYTHONPATH}"
++export TORCH_EXTENSIONS_DIR="$PWD/.torch_extensions"
++export MAX_JOBS=2 OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=1 PYTHONUNBUFFERED=1
++export WANDB_MODE="${WANDB_MODE:-online}"
++run_stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++export WANDB_RUN_ID="${WANDB_RUN_ID:-as2piper_hw_${run_stamp}}"
++export WANDB_NAME="${WANDB_NAME:-plate_hw_flat_${run_stamp}}"
++export WANDB_DISABLE_GIT=true
++python prepare_asset.py
++exec python legged_gym/scripts/train_hw.py --task as2piper_plate_hw --proj_name as2piper-low --exptid "$WANDB_NAME" --headless "$@"
+--- /dev/null
++++ hardware/launch_hw.sh
+@@ -0,0 +1,21 @@
++#!/usr/bin/env bash
++set -euo pipefail
++umask 0002
++cd "$(dirname "$0")"
++mkdir -p launch_logs
++stamp="$(date -u +%Y%m%d_%H%M%S)_$$"
++logfile="$PWD/launch_logs/train_${stamp}.log"
++nohup setsid bash "$PWD/run_hw.sh" "$@" >"$logfile" 2>&1 < /dev/null &
++training_pid=$!
++printf '%s\n' "$training_pid" >"$PWD/launch_logs/train_${stamp}.pid"
++# Report immediate initialization failures instead of presenting a stale PID.
++for check in 1 2 3 4 5 6 7 8; do
++    sleep 1
++    training_state="$(ps -p "$training_pid" -o stat= || true)"
++    if [[ -z "$training_state" || "$training_state" == Z* ]]; then
++        printf 'Training exited during initialization. Log: %s\n' "$logfile" >&2
++        tail -n 12 "$logfile" >&2
++        exit 1
++    fi
++done
++printf 'PID: %s\nLog: %s\n' "$training_pid" "$logfile"
+--- forward/legged_gym/envs/__init__.py
++++ hardware/legged_gym/envs/__init__.py
+@@ -38,3 +38,6 @@
+ from .manip_loco.as2piper_config import AS2PiPERPlateCfg, AS2PiPERPlateCfgPPO
+ from .manip_loco.as2piper_forward import AS2PiPERForward
+ task_registry.register('as2piper_plate_forward', AS2PiPERForward, AS2PiPERPlateCfg(), AS2PiPERPlateCfgPPO(), 'manip_loco')
++from .manip_loco.as2piper_hw import AS2PiPERHardware
++from .manip_loco.as2piper_hw_config import AS2PiPERHardwareCfg,AS2PiPERHardwareCfgPPO
++task_registry.register('as2piper_plate_hw',AS2PiPERHardware,AS2PiPERHardwareCfg(),AS2PiPERHardwareCfgPPO(),'manip_loco')
+--- /dev/null
++++ hardware/legged_gym/envs/manip_loco/as2piper_hw.py
+@@ -0,0 +1,100 @@
++"""Hardware-calibrated task with pose-aware retries and an explicit cold start."""
++import torch
++from isaacgym import gymtorch
++from isaacgym.torch_utils import torch_rand_float,sphere2cart
++from .as2piper_forward import AS2PiPERForward
++from legged_gym.utils.arm_collision import ArmCollisionGuard
++
++
++class RefinedGuard(ArmCollisionGuard):
++    def solve(self,target,orientation,seed,iterations=12):
++        q,failed=super().solve(target,orientation,seed,iterations)
++        if failed.any():
++            ids=failed.nonzero(as_tuple=False).flatten()
++            q1,f1=super().solve(target[ids],orientation[ids],q[ids],52)
++            q[ids]=q1;failed[ids]=f1
++        return q,failed
++
++
++class AS2PiPERHardware(AS2PiPERForward):
++    def _process_dof_props(self,props,env_id):
++        props=super()._process_dof_props(props,env_id)
++        props['armature'][:12]=self.cfg.control.leg_armature*4
++        return props
++
++    def _create_trimesh(self):
++        if self.cfg.terrain.mesh_type=='plane':return self._create_ground_plane()
++        return super()._create_trimesh()
++
++    def _init_buffers(self):
++        super()._init_buffers()
++        self.collision_guard.__class__=RefinedGuard
++        self.pose_requests=0;self.pose_accepted=0
++
++    def _get_env_origins(self):
++        if self.cfg.terrain.mesh_type!='plane':return super()._get_env_origins()
++        self.custom_origins=False
++        n=int(self.num_envs**.5)+1;idx=torch.arange(self.num_envs,device=self.device)
++        self.env_origins=torch.zeros(self.num_envs,3,device=self.device)
++        self.env_origins[:,0]=torch.div(idx,n,rounding_mode='floor')*3
++        self.env_origins[:,1]=(idx%n)*3
++
++    def _reset_dofs(self,ids):
++        self.dof_pos[ids]=self.default_dof_pos
++        noise=self.cfg.init_state.leg_reset_fraction
++        self.dof_pos[ids,:12]*=torch_rand_float(1-noise,1+noise,(len(ids),12),device=self.device)
++        self.dof_pos[ids]=torch.maximum(torch.minimum(self.dof_pos[ids],self.dof_pos_limits[:,1]),self.dof_pos_limits[:,0])
++        self.dof_vel[ids]=0
++        self.gym.set_dof_state_tensor(self.sim,gymtorch.unwrap_tensor(self.dof_state))
++
++    def _resample_ee_goal(self,env_ids,is_init=False):
++        if is_init or self.cfg.env.teleop_mode:
++            return super()._resample_ee_goal(env_ids,is_init)
++        if not len(env_ids):return
++        previous=self.ee_goal_sphere[env_ids].clone();orn=self.ee_goal_orn_delta_rpy[env_ids].clone()
++        self.ee_start_sphere[env_ids]=previous
++        pending=env_ids.clone();self.pose_requests+=len(env_ids)
++        for _ in range(10):
++            # Same independent uniform proposals; retry the complete pose.
++            self._resample_ee_goal_orn_once(pending)
++            self._resample_ee_goal_sphere_once(pending)
++            pending=pending[self._collision_check(pending)]
++            if not len(pending):break
++        self.pose_accepted+=len(env_ids)-len(pending)
++        if len(pending):
++            # env_ids are normally sorted; support arbitrary caller order too.
++            sorted_ids,order=env_ids.sort();where=torch.searchsorted(sorted_ids,pending)
++            self.ee_goal_sphere[pending]=previous[order[where]]
++            self.ee_goal_orn_delta_rpy[pending]=orn[order[where]]
++            self.pose_fallback_count+=len(pending)
++        self.ee_goal_cart[env_ids]=sphere2cart(self.ee_goal_sphere[env_ids]);self.goal_timer[env_ids]=0
++
++    def _resample_commands(self,ids):
++        if self.cfg.env.teleop_mode or not len(ids):return
++        # Start with attainable slow commands; restore the full scaled envelope.
++        progress=min(self.global_steps/(24*self.cfg.env.command_warmup_iterations),1.)
++        factor=.25+.75*progress
++        vmax=self.command_ranges['lin_vel_x'][1]*factor
++        wmax=self.command_ranges['ang_vel_yaw'][1]*factor
++        low=0. if self.global_steps<5000*24 else -vmax
++        self.commands[ids,0]=torch_rand_float(low,vmax,(len(ids),1),device=self.device).flatten()
++        self.commands[ids,1]=0
++        self.commands[ids,2]=torch_rand_float(-wmax,wmax,(len(ids),1),device=self.device).flatten()
++        # Explicitly include stand commands rather than relying only on clipping.
++        stop=torch.rand(len(ids),device=self.device)<.2
++        self.commands[ids[stop]]=0
++        keep=(self.commands[ids,0].abs()>.05)|(self.commands[ids,2].abs()>.1)
++        self.commands[ids]*=keep[:,None]
++
++    def _prepare_reward_function(self):
++        super()._prepare_reward_function()
++        # The inherited raw gait terms are <=0 with negative scales, creating
++        # positive reward for mismatch. Correct only this double-negative bug;
++        # retain every configured reward weight and the other formulas.
++        for index,name in enumerate(self.reward_names):
++            if name in ['tracking_contacts_shaped_force','tracking_contacts_shaped_vel']:
++                original=self.reward_functions[index]
++                def penalty(original=original):
++                    raw,metric=original()
++                    return -raw,metric
++                self.reward_functions[index]=penalty
+--- /dev/null
++++ hardware/legged_gym/envs/manip_loco/as2piper_hw_config.py
+@@ -0,0 +1,59 @@
++"""AS2 hardware-derived flat-ground WBC training, independent of the B1 task."""
++import json
++from pathlib import Path
++from .as2piper_config import AS2PiPERPlateCfg,AS2PiPERPlateCfgPPO
++
++HW=json.loads((Path(__file__).resolve().parents[3]/'resources/commands/hardware.json').read_text())['derived']
++
++
++class AS2PiPERHardwareCfg(AS2PiPERPlateCfg):
++    class env(AS2PiPERPlateCfg.env):
++        frequencies=HW['gait_hz']
++        command_warmup_iterations=1000
++        stop_update_goal=False
++        pitch_control=False
++    class init_state(AS2PiPERPlateCfg.init_state):
++        init_vel_perturb_range=.02
++        leg_reset_fraction=.05
++    class control(AS2PiPERPlateCfg.control):
++        leg_armature=HW['leg_armature']
++        stiffness={**{j+'_joint':v for j,v in zip(('hip','thigh','calf'),HW['leg_kp'])},'piper_joint':5.}
++        damping={**{j+'_joint':v for j,v in zip(('hip','thigh','calf'),HW['leg_kd'])},'piper_joint':.5}
++        action_scale=HW['leg_action_scale']*4+[2.1,.6,.6,0.,0.,0.]
++    class goal_ee(AS2PiPERPlateCfg.goal_ee):
++        class ranges(AS2PiPERPlateCfg.goal_ee.ranges):
++            init_pos_end=[.46,.25,0.]
++    class commands(AS2PiPERPlateCfg.commands):
++        lin_vel_x_clip=.05
++        ang_vel_yaw_clip=.1
++        class ranges:
++            lin_vel_x=[-HW['max_linear_velocity_m_s'],HW['max_linear_velocity_m_s']]
++            ang_vel_yaw=[-HW['max_yaw_velocity_rad_s'],HW['max_yaw_velocity_rad_s']]
++    class domain_rand(AS2PiPERPlateCfg.domain_rand):
++        added_mass_range=HW['added_base_mass_kg']
++        added_com_range_x=[-HW['base_com_half_range_m'][0],HW['base_com_half_range_m'][0]]
++        added_com_range_y=[-HW['base_com_half_range_m'][1],HW['base_com_half_range_m'][1]]
++        added_com_range_z=[-HW['base_com_half_range_m'][2],HW['base_com_half_range_m'][2]]
++        leg_motor_strength_range=[.9,1.1]
++        friction_range=[.6,1.2]
++        max_push_vel_xy=HW['max_push_velocity_m_s']
++    class terrain(AS2PiPERPlateCfg.terrain):
++        mesh_type='plane'
++        measure_heights=False
++        curriculum=False
++    class rewards(AS2PiPERPlateCfg.rewards):
++        max_contact_force=HW['max_contact_force_N']
++        feet_height_target=HW['feet_height_target_m']
++        gait_force_sigma=HW['gait_force_sigma']
++        gait_vel_sigma=HW['gait_vel_sigma']
++
++
++class AS2PiPERHardwareCfgPPO(AS2PiPERPlateCfgPPO):
++    class policy(AS2PiPERPlateCfgPPO.policy):
++        init_std=[[.3,.3,.3]*4+[1.]*6]
++        # Angle action units: avoid a high exploration floor after convergence.
++    class algorithm(AS2PiPERPlateCfgPPO.algorithm):
++        min_policy_std=[[.10,.10,.10]*4+[.2]*3+[.05]*3]
++    class runner(AS2PiPERPlateCfgPPO.runner):
++        experiment_name='as2piper_hw_flat_wbc'
++
+--- /dev/null
++++ hardware/legged_gym/utils/hw_runner.py
+@@ -0,0 +1,37 @@
++"""Extended checkpoints; original PPO updates and rollout loop are inherited."""
++import os,random
++import numpy as np
++import torch
++from rsl_rl.runners import OnPolicyRunner
++
++
++class HardwareRunner(OnPolicyRunner):
++    def save(self,path,it,infos=None):
++        state=dict(schema_version=2,model_state_dict=self.alg.actor_critic.state_dict(),
++            optimizer_state_dict=self.alg.optimizer.state_dict(),
++            history_optimizer_state_dict=self.alg.hist_encoder_optimizer.state_dict(),
++            iter=it,next_iteration=self.alg.counter,algorithm_counter=self.alg.counter,
++            learning_rate=self.alg.learning_rate,global_steps=self.env.global_steps,
++            common_step_counter=self.env.common_step_counter,tot_timesteps=self.tot_timesteps,
++            tot_time=self.tot_time,python_rng=random.getstate(),numpy_rng=np.random.get_state(),
++            torch_rng=torch.get_rng_state(),cuda_rng=torch.cuda.get_rng_state_all(),infos=infos)
++        temp=path+'.tmp';torch.save(state,temp);os.chmod(temp,0o664);os.replace(temp,path)
++
++    def load(self,path,load_optimizer=True):
++        d=torch.load(path,map_location=self.device)
++        self.alg.actor_critic.load_state_dict(d['model_state_dict'])
++        if load_optimizer:
++            self.alg.optimizer.load_state_dict(d['optimizer_state_dict'])
++            if 'history_optimizer_state_dict' in d:self.alg.hist_encoder_optimizer.load_state_dict(d['history_optimizer_state_dict'])
++        self.current_learning_iteration=d.get('next_iteration',d['iter']+1)
++        self.alg.counter=d.get('algorithm_counter',self.current_learning_iteration)
++        self.alg.learning_rate=d['optimizer_state_dict']['param_groups'][0]['lr']
++        self.env.global_steps=d.get('global_steps',24*self.current_learning_iteration)
++        self.env.common_step_counter=d.get('common_step_counter',self.env.global_steps)
++        self.tot_timesteps=d.get('tot_timesteps',self.current_learning_iteration*24*self.env.num_envs)
++        self.tot_time=d.get('tot_time',0.)
++        if 'python_rng' in d:
++            random.setstate(d['python_rng']);np.random.set_state(d['numpy_rng'])
++            torch.set_rng_state(d['torch_rng'].cpu())
++            torch.cuda.set_rng_state_all([v.cpu() for v in d['cuda_rng']])
++        return d.get('infos')
+--- /dev/null
++++ hardware/legged_gym/scripts/train_hw.py
+@@ -0,0 +1,46 @@
++"""Hardware task entry, runtime snapshots and extended checkpoint restoration."""
++import os,json,hashlib,importlib
++from pathlib import Path
++import isaacgym
++import torch,wandb
++from legged_gym import LEGGED_GYM_ROOT_DIR
++from legged_gym.envs import *
++from legged_gym.utils import get_args,task_registry
++from legged_gym.utils.helpers import class_to_dict
++from legged_gym.utils.hw_runner import HardwareRunner
++
++
++def main():
++    args=get_args();root=Path(LEGGED_GYM_ROOT_DIR)
++    out=root/'logs'/args.proj_name/args.exptid;out.mkdir(parents=True,exist_ok=True)
++    wandb.init(project=args.proj_name,name=args.exptid,id=os.environ.get('WANDB_RUN_ID'),
++        resume=os.environ.get('WANDB_RESUME','never'),mode=os.environ.get('WANDB_MODE','online'),dir=str(out))
++    cfg,train_cfg=task_registry.get_cfgs(args.task)
++    env,cfg=task_registry.make_env(name=args.task,args=args,env_cfg=cfg)
++    assert env.num_dofs==20 and env.num_actions==18 and env.obs_buf.shape==(env.num_envs,799)
++    assert env.ee_j_eef.shape==(env.num_envs,6,6)
++    importlib.import_module('legged_gym.utils.task_registry').OnPolicyRunner=HardwareRunner
++    runner,train_cfg,_=task_registry.make_alg_runner(log_root=str(out),env=env,name=args.task,args=args)
++    # Registry's historical set_it(checkpoint filename) must not undo next_iteration.
++    if args.resumeid:
++        runner.set_it(runner.alg.counter)
++        env._resample_commands(torch.arange(env.num_envs,device=env.device))
++    asset=Path(cfg.asset.file.format(LEGGED_GYM_ROOT_DIR=str(root)))
++    snapshot=dict(environment=class_to_dict(cfg),ppo=class_to_dict(train_cfg),
++        hardware=json.loads((root/'resources/commands/hardware.json').read_text()),
++        asset_sha256=hashlib.sha256(asset.read_bytes()).hexdigest(),
++        source_sha256={str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest()
++            for folder in ['legged_gym','rsl_rl_local/rsl_rl'] for p in (root/folder).rglob('*.py')},
++        initial_iteration=runner.current_learning_iteration)
++    (out/'runtime_snapshot.json').write_text(json.dumps(snapshot,indent=2,default=lambda v:v.tolist()))
++    wandb.config.update({'hardware_task':'as2piper_plate_hw','observations':799,'num_envs':env.num_envs,
++        'leg_kp':cfg.control.stiffness,'leg_kd':cfg.control.damping,'gait_hz':cfg.env.frequencies,
++        'terrain':cfg.terrain.mesh_type,'asset_sha256':snapshot['asset_sha256']})
++    target=args.max_iterations or train_cfg.runner.max_iterations
++    remaining=target-runner.current_learning_iteration
++    if remaining<=0:raise ValueError('Target iteration is not after the checkpoint')
++    runner.learn(num_learning_iterations=remaining,init_at_random_ep_len=True)
++    print('AS2 hardware training completed',flush=True);wandb.finish()
++
++
++if __name__=='__main__':main()

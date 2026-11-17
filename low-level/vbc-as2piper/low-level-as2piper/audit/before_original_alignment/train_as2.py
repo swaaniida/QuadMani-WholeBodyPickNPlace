@@ -1,0 +1,53 @@
+"""Isolated AS2 plate-only train entry; smoke mode also checks tensor contracts."""
+import os
+import json
+from pathlib import Path
+import isaacgym
+from legged_gym import LEGGED_GYM_ROOT_DIR
+from legged_gym.envs import *
+from legged_gym.utils import get_args,task_registry
+import torch
+import wandb
+
+
+def main():
+    args=get_args()
+    path=Path(LEGGED_GYM_ROOT_DIR)/'logs'/args.proj_name/args.exptid
+    path.mkdir(parents=True,exist_ok=True)
+    wandb.init(project=args.proj_name,name=args.exptid,mode=os.environ.get('WANDB_MODE','disabled'),dir=str(path))
+    cfg,train_cfg=task_registry.get_cfgs(args.task)
+    if os.environ.get('AS2_SMOKE')=='1':
+        cfg.env.num_envs=8
+        cfg.terrain.num_rows=2;cfg.terrain.num_cols=2;cfg.terrain.max_init_terrain_level=1
+    env,cfg=task_registry.make_env(name=args.task,args=args,env_cfg=cfg)
+    env.reset()
+    assert env.num_dofs==20 and env.num_actions==18
+    assert env.obs_buf.shape==(env.num_envs,cfg.env.num_observations)
+    assert env.ee_j_eef.shape==(env.num_envs,6,6)
+    assert torch.isfinite(env.ee_j_eef).all()
+    assert torch.isfinite(env.obs_buf).all()
+    if os.environ.get('AS2_SMOKE')=='1':
+        max_gripper_error=0.
+        total_reward=0.
+        for step in range(100):
+            result=env.step(torch.zeros(env.num_envs,18,device=env.device))
+            assert torch.isfinite(result[0]).all(),step
+            assert torch.isfinite(result[2]).all() and torch.isfinite(result[3]).all(),step
+            max_gripper_error=max(max_gripper_error,float((env.dof_pos[:,-2:]-env.default_dof_pos[-2:]).abs().max()))
+            total_reward+=float(result[2].abs().sum())
+        assert max_gripper_error < .005, max_gripper_error
+        assert total_reward>0
+        env.reset_idx(torch.arange(env.num_envs,device=env.device))
+        print('AS2 rollout contracts PASS: 100 steps + explicit reset',flush=True)
+        (path/'smoke_contracts.json').write_text(json.dumps(dict(
+            num_envs=env.num_envs,num_dofs=env.num_dofs,num_actions=env.num_actions,
+            observations=list(env.obs_buf.shape),jacobian=list(env.ee_j_eef.shape),
+            dof_names=env.dof_names,body_names=env.body_names,gripper_max_error_m=max_gripper_error,
+            sum_abs_rollout_reward=total_reward,asset=cfg.asset.file),indent=2))
+    runner,_,_=task_registry.make_alg_runner(log_root=str(path),env=env,name=args.task,args=args)
+    runner.learn(num_learning_iterations=runner.max_iterations if hasattr(runner,'max_iterations') else (args.max_iterations or train_cfg.runner.max_iterations),init_at_random_ep_len=True)
+    print('AS2 training completed',flush=True)
+    wandb.finish()
+
+
+if __name__=='__main__':main()

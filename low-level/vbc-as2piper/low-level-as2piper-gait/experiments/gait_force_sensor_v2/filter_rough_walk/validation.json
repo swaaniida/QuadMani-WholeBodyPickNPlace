@@ -1,0 +1,30 @@
+{
+  "terrain": "trimesh",
+  "vx": 0.25,
+  "reference": "Offline sphere/actual simulator triangle mesh distance gap<2mm; geometric near-contact, not a normal force measurement.",
+  "raw": {
+    "precision": 0.9552,
+    "recall": 0.3851612903225806,
+    "agreement": 0.5898829431438127,
+    "positive_fraction": 0.2612876254180602
+  },
+  "substep_peak": {
+    "precision": 0.9260226283724978,
+    "recall": 0.6864516129032258,
+    "agreement": 0.7612876254180602,
+    "positive_fraction": 0.48035117056856186
+  },
+  "filtered": {
+    "precision": 0.8971389645776566,
+    "recall": 0.8496774193548388,
+    "agreement": 0.8394648829431438,
+    "positive_fraction": 0.6137123745819398
+  },
+  "legacy_sensor": {
+    "precision": 1.0,
+    "recall": 0.8683870967741936,
+    "agreement": 0.9147157190635451,
+    "positive_fraction": 0.5627090301003345
+  },
+  "valid_frames": 598
+}

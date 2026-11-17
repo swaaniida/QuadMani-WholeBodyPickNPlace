@@ -1,0 +1,11 @@
+{
+  "nominal_robot_mass_kg": 22.72772408133,
+  "mean_foot_support_to_weight_ratio": 0.30322951078414917,
+  "per_command_mean": {
+    "stand": 0.31133514642715454,
+    "forward": 0.28498131036758423,
+    "turn": 0.31179681420326233,
+    "mixed": 0.3048047423362732
+  },
+  "note": "Mean vertical net foot contact force / modeled gravity load; resets and dynamic impacts can change this ratio."
+}

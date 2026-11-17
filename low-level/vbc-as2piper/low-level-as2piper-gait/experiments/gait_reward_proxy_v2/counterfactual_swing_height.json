@@ -1,0 +1,54 @@
+{
+  "stable201": {
+    "forward": {
+      "grid_symmetric_bonus": 0.5707740187644958,
+      "support_symmetric_bonus": 0.6223520636558533,
+      "support_swing_floor_stance_symmetric_bonus": 0.6408705115318298
+    },
+    "turn": {
+      "grid_symmetric_bonus": 0.5926944613456726,
+      "support_symmetric_bonus": 0.6331010460853577,
+      "support_swing_floor_stance_symmetric_bonus": 0.6546065807342529
+    },
+    "forward_turn": {
+      "grid_symmetric_bonus": 0.5673032402992249,
+      "support_symmetric_bonus": 0.6178932785987854,
+      "support_swing_floor_stance_symmetric_bonus": 0.6398985981941223
+    }
+  },
+  "progress201": {
+    "forward": {
+      "grid_symmetric_bonus": 0.3292948305606842,
+      "support_symmetric_bonus": 0.4287831783294678,
+      "support_swing_floor_stance_symmetric_bonus": 0.6657929420471191
+    },
+    "turn": {
+      "grid_symmetric_bonus": 0.38529857993125916,
+      "support_symmetric_bonus": 0.4639694392681122,
+      "support_swing_floor_stance_symmetric_bonus": 0.6647740006446838
+    },
+    "forward_turn": {
+      "grid_symmetric_bonus": 0.33327716588974,
+      "support_symmetric_bonus": 0.46386879682540894,
+      "support_swing_floor_stance_symmetric_bonus": 0.6528953313827515
+    }
+  },
+  "progress301": {
+    "forward": {
+      "grid_symmetric_bonus": 0.21136072278022766,
+      "support_symmetric_bonus": 0.2955300509929657,
+      "support_swing_floor_stance_symmetric_bonus": 0.6106203198432922
+    },
+    "turn": {
+      "grid_symmetric_bonus": 0.26605525612831116,
+      "support_symmetric_bonus": 0.35297778248786926,
+      "support_swing_floor_stance_symmetric_bonus": 0.6550514101982117
+    },
+    "forward_turn": {
+      "grid_symmetric_bonus": 0.2519705593585968,
+      "support_symmetric_bonus": 0.3674566149711609,
+      "support_swing_floor_stance_symmetric_bonus": 0.6546022295951843
+    }
+  },
+  "interpretation": "Counterfactual reward only on recorded poses. Higher bonus does not prove more stable gait or improved learning. Swing-only floor retains symmetric zero-height stance; not the previously rejected all-phase one-sided loss/raw-contact-height variant."
+}

@@ -1,0 +1,124 @@
+{
+  "stand": {
+    "command_vx_m_s": 0.0,
+    "command_yaw_rad_s": 0.0,
+    "mean_vx_m_s": -0.0013868954265490174,
+    "mean_yaw_rad_s": 0.00642586313188076,
+    "vx_abs_error_m_s": 0.0035774288699030876,
+    "yaw_abs_error_rad_s": 0.018253963440656662,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      1.0,
+      1.0,
+      1.0,
+      0.99375
+    ],
+    "foot_clearance_p95_m": [
+      -4.078820347785952e-06,
+      -1.5686824917793276e-05,
+      -5.427747964859009e-06,
+      2.127513289451597e-06
+    ],
+    "applied_leg_torque_abs_max_Nm": 17.789323806762695,
+    "ee_position_mean_m": 0.01499243639409542,
+    "ee_position_p95_m": 0.029144541267305604,
+    "ee_orientation_mean_deg": 3.663519859313965,
+    "stance_center_speed_mean_m_s": 0.008049235679209232,
+    "stance_slip_mean_m_s": 0.00832007173448801,
+    "midstance_slip_mean_m_s": 0.0,
+    "phase_contact_agreement": 0.0015625
+  },
+  "forward": {
+    "command_vx_m_s": 0.25,
+    "command_yaw_rad_s": 0.0,
+    "mean_vx_m_s": 0.26760950684547424,
+    "mean_yaw_rad_s": -0.040371689945459366,
+    "vx_abs_error_m_s": 0.02667859010398388,
+    "yaw_abs_error_rad_s": 0.0595887154340744,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.675625,
+      0.721875,
+      0.6659375,
+      0.5925
+    ],
+    "foot_clearance_p95_m": [
+      0.030106109008192997,
+      0.025251381844282137,
+      0.028509815037250513,
+      0.04179830513894558
+    ],
+    "applied_leg_torque_abs_max_Nm": 30.29307746887207,
+    "ee_position_mean_m": 0.016456440091133118,
+    "ee_position_p95_m": 0.035078126192092884,
+    "ee_orientation_mean_deg": 4.204977512359619,
+    "stance_center_speed_mean_m_s": 0.14820444583892822,
+    "stance_slip_mean_m_s": 0.1477760523557663,
+    "midstance_slip_mean_m_s": 0.004811579827219248,
+    "phase_contact_agreement": 0.813984375
+  },
+  "turn": {
+    "command_vx_m_s": 0.0,
+    "command_yaw_rad_s": 0.4000000059604645,
+    "mean_vx_m_s": 0.025135690346360207,
+    "mean_yaw_rad_s": 0.35747000575065613,
+    "vx_abs_error_m_s": 0.027468036860227585,
+    "yaw_abs_error_rad_s": 0.06503377109766006,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.7103125,
+      0.85125,
+      0.82,
+      0.6390625
+    ],
+    "foot_clearance_p95_m": [
+      0.024693766608834263,
+      0.015848398581147193,
+      0.018936743959784508,
+      0.03656523413956165
+    ],
+    "applied_leg_torque_abs_max_Nm": 24.725730895996094,
+    "ee_position_mean_m": 0.01680566743016243,
+    "ee_position_p95_m": 0.031298479065299006,
+    "ee_orientation_mean_deg": 3.7354421615600586,
+    "stance_center_speed_mean_m_s": 0.0991620421409607,
+    "stance_slip_mean_m_s": 0.10186216980218887,
+    "midstance_slip_mean_m_s": 0.005627566482871771,
+    "phase_contact_agreement": 0.735
+  },
+  "forward_turn": {
+    "command_vx_m_s": 0.25,
+    "command_yaw_rad_s": 0.4000000059604645,
+    "mean_vx_m_s": 0.24110637605190277,
+    "mean_yaw_rad_s": 0.35595452785491943,
+    "vx_abs_error_m_s": 0.02416032738983631,
+    "yaw_abs_error_rad_s": 0.06524787098169327,
+    "upright_fraction": 1.0,
+    "fall_resets": 0,
+    "per_foot_loaded_fraction": [
+      0.625,
+      0.844375,
+      0.6859375,
+      0.5915625
+    ],
+    "foot_clearance_p95_m": [
+      0.03454122431576251,
+      0.01696635223925113,
+      0.027642293646931642,
+      0.04182379133999347
+    ],
+    "applied_leg_torque_abs_max_Nm": 27.904129028320312,
+    "ee_position_mean_m": 0.01655479706823826,
+    "ee_position_p95_m": 0.03724875636398791,
+    "ee_orientation_mean_deg": 3.9145281314849854,
+    "stance_center_speed_mean_m_s": 0.15080347657203674,
+    "stance_slip_mean_m_s": 0.14964641630649567,
+    "midstance_slip_mean_m_s": 0.005009674467146397,
+    "phase_contact_agreement": 0.7921875
+  },
+  "conditions": "Flat, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+  "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity."
+}

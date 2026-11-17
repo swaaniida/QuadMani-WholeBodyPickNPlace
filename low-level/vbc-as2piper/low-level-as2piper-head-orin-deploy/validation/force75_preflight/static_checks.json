@@ -1,0 +1,30 @@
+{
+  "syntax": "all runtime Python AST parse pass",
+  "B_threshold_N": 75.0,
+  "base_threshold_N": 75.0,
+  "A_threshold_N": 40.0,
+  "C_threshold_N": 40.0,
+  "C_scale": 0.0,
+  "envs": 6144,
+  "iterations": 45000,
+  "save_interval": 200,
+  "obs": 755,
+  "deploy_obs": 737,
+  "actions": 18,
+  "dofs": 20,
+  "mass_kg": 23.4303404741327,
+  "actor_critic_history_jit": "pass",
+  "reward_probe_raw": [
+    0.0,
+    0.0,
+    100.0,
+    500.0
+  ],
+  "reward_probe_weighted": [
+    -0.0,
+    -0.0,
+    -0.10000000149011612,
+    -0.5
+  ],
+  "optimizer_steps": 0
+}

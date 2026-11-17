@@ -1,0 +1,1183 @@
+{
+  "terrain": "plane",
+  "seconds": 10,
+  "envs": 16,
+  "control": "zero leg actions, nominal PD, random arm IK; velocity commands exercise reward gates, no learned walking policy",
+  "inventory": {
+    "leg/action_rate": {
+      "scale": -0.015,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/alive": {
+      "scale": 1.0,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/ang_vel_xy": {
+      "scale": -0.2,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/base_height": {
+      "scale": -5.0,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/base_height_standing": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/base_height_walking": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/collision": {
+      "scale": -10.0,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/delta_torques": {
+      "scale": -1e-07,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/dof_acc": {
+      "scale": -7.5e-07,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/dof_default_pos": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/dof_error": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/dof_pos_limits": {
+      "scale": -10.0,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/energy_square": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/energy_square_standing": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/energy_square_walking": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/feet_air_time": {
+      "scale": 2.0,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/feet_contact_forces": {
+      "scale": -0.001,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/feet_drag": {
+      "scale": -0.08,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/feet_height": {
+      "scale": 1.0,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/feet_jerk": {
+      "scale": -0.0002,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/hip_pos": {
+      "scale": -0.3,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/lin_vel_z": {
+      "scale": -1.5,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/orientation": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/orientation_standing": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/orientation_walking": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/penalty_lin_vel_y": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/roll": {
+      "scale": -2,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/stand_still": {
+      "scale": 1.0,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/torques": {
+      "scale": -2.5e-05,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/torques_standing": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/torques_walking": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/tracking_ang_vel": {
+      "scale": 0.5,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/tracking_contacts_shaped_force": {
+      "scale": -2.0,
+      "called": true,
+      "gated_by_gait_observation": true,
+      "observe_gait_commands": false
+    },
+    "leg/tracking_contacts_shaped_vel": {
+      "scale": -2.0,
+      "called": true,
+      "gated_by_gait_observation": true,
+      "observe_gait_commands": false
+    },
+    "leg/tracking_lin_vel_max": {
+      "scale": 2.0,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/tracking_lin_vel_x_exp": {
+      "scale": 0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/tracking_lin_vel_x_l1": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/walking_dof": {
+      "scale": 1.5,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "leg/work": {
+      "scale": -0.003,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/arm_energy_abs_sum": {
+      "scale": null,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/arm_orientation": {
+      "scale": null,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/arm_termination": {
+      "scale": null,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/tracking_ee_cart": {
+      "scale": null,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/tracking_ee_orn": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/tracking_ee_orn_ry": {
+      "scale": null,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/tracking_ee_sphere": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/tracking_ee_sphere_standing": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/tracking_ee_sphere_walking": {
+      "scale": 0.0,
+      "called": false,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    },
+    "arm/tracking_ee_world": {
+      "scale": 0.8,
+      "called": true,
+      "gated_by_gait_observation": false,
+      "observe_gait_commands": false
+    }
+  },
+  "conditions": {
+    "stand": {
+      "base_world_mean_m": 0.3088313639163971,
+      "base_ground_mean_m": 0.0,
+      "base_height_mean_m": 0.3088313639163971,
+      "per_foot_force_p95_N": [
+        2.4608696937561034,
+        2.3682810068130493,
+        2.2112741708755492,
+        2.140769338607788
+      ],
+      "per_foot_clearance_p95_m": [
+        -4.894547164440155e-05,
+        -4.6152248978614806e-05,
+        -1.5440955758094786e-05,
+        -3.997236490249634e-06
+      ],
+      "sensor_force_gt40_fraction": 0.0,
+      "stale_foot_velocity_max_error_m_s": 0.9873369336128235,
+      "measured_force_delta_mean_N": 0.027804823592305183,
+      "resets": 0,
+      "body_contact_peak_N": 0.0,
+      "rewards": {
+        "leg/action_rate": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/alive": {
+          "raw_mean": 1.0,
+          "metric_mean": 1.0,
+          "weighted_mean_before_div100": 1.0,
+          "raw_min": 1.0,
+          "raw_max": 1.0
+        },
+        "leg/ang_vel_xy": {
+          "raw_mean": 0.00037523903301917017,
+          "metric_mean": 0.00037523903301917017,
+          "weighted_mean_before_div100": -7.504780660383403e-05,
+          "raw_min": 1.91272651051122e-08,
+          "raw_max": 0.002594569232314825
+        },
+        "leg/base_height": {
+          "raw_mean": 0.015575516037642956,
+          "metric_mean": 0.3088313639163971,
+          "weighted_mean_before_div100": -0.07787758018821478,
+          "raw_min": 0.014882147312164307,
+          "raw_max": 0.01632818579673767
+        },
+        "leg/collision": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/delta_torques": {
+          "raw_mean": 0.003371882252395153,
+          "metric_mean": 0.003371882252395153,
+          "weighted_mean_before_div100": -3.3718822523951527e-10,
+          "raw_min": 4.927487225359073e-06,
+          "raw_max": 0.3551010489463806
+        },
+        "leg/dof_acc": {
+          "raw_mean": 0.3818439543247223,
+          "metric_mean": 0.3818439543247223,
+          "weighted_mean_before_div100": -2.8638296574354173e-07,
+          "raw_min": 0.0003026106860488653,
+          "raw_max": 41.76500701904297
+        },
+        "leg/dof_pos_limits": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_air_time": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_contact_forces": {
+          "raw_mean": 69.41744232177734,
+          "metric_mean": 69.41744232177734,
+          "weighted_mean_before_div100": -0.06941744232177735,
+          "raw_min": 65.62471008300781,
+          "raw_max": 73.66954040527344
+        },
+        "leg/feet_drag": {
+          "raw_mean": 0.19882380962371826,
+          "metric_mean": 0.19882380962371826,
+          "weighted_mean_before_div100": -0.01590590476989746,
+          "raw_min": 0.18474890291690826,
+          "raw_max": 0.20644964277744293
+        },
+        "leg/feet_height": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_jerk": {
+          "raw_mean": 0.43308866024017334,
+          "metric_mean": 0.43308866024017334,
+          "weighted_mean_before_div100": -8.661773204803467e-05,
+          "raw_min": 0.010692596435546875,
+          "raw_max": 6.677574157714844
+        },
+        "leg/hip_pos": {
+          "raw_mean": 4.813892883248627e-05,
+          "metric_mean": 4.813892883248627e-05,
+          "weighted_mean_before_div100": -1.4441678649745881e-05,
+          "raw_min": 3.06292567984201e-05,
+          "raw_max": 9.27906803553924e-05
+        },
+        "leg/lin_vel_z": {
+          "raw_mean": 6.262715760385618e-05,
+          "metric_mean": 6.262715760385618e-05,
+          "weighted_mean_before_div100": -9.394073640578426e-05,
+          "raw_min": 2.0126533854636364e-05,
+          "raw_max": 0.00014816789189353585
+        },
+        "leg/roll": {
+          "raw_mean": 0.00202774815261364,
+          "metric_mean": 0.00202774815261364,
+          "weighted_mean_before_div100": -0.00405549630522728,
+          "raw_min": 5.540123311220668e-06,
+          "raw_max": 0.007013318128883839
+        },
+        "leg/stand_still": {
+          "raw_mean": 0.9759666323661804,
+          "metric_mean": 0.9759666323661804,
+          "weighted_mean_before_div100": 0.9759666323661804,
+          "raw_min": 0.9736793041229248,
+          "raw_max": 0.976738452911377
+        },
+        "leg/torques": {
+          "raw_mean": 380.5223388671875,
+          "metric_mean": 380.5223388671875,
+          "weighted_mean_before_div100": -0.009513058471679688,
+          "raw_min": 363.6207580566406,
+          "raw_max": 411.5355224609375
+        },
+        "leg/tracking_ang_vel": {
+          "raw_mean": 0.9999441504478455,
+          "metric_mean": 1.1179066859767772e-05,
+          "weighted_mean_before_div100": 0.49997207522392273,
+          "raw_min": 0.9957004189491272,
+          "raw_max": 1.0
+        },
+        "leg/tracking_contacts_shaped_force": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/tracking_contacts_shaped_vel": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/tracking_lin_vel_max": {
+          "raw_mean": 0.9972874522209167,
+          "metric_mean": 0.9972874522209167,
+          "weighted_mean_before_div100": 1.9945749044418335,
+          "raw_min": 0.9770997166633606,
+          "raw_max": 0.9999956488609314
+        },
+        "leg/walking_dof": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/work": {
+          "raw_mean": 6.281862735748291,
+          "metric_mean": 6.281862735748291,
+          "weighted_mean_before_div100": -0.018845588207244874,
+          "raw_min": 5.06702184677124,
+          "raw_max": 7.196238040924072
+        },
+        "arm/tracking_ee_world": {
+          "raw_mean": 0.9548202753067017,
+          "metric_mean": 0.02316121570765972,
+          "weighted_mean_before_div100": 0.7638562202453614,
+          "raw_min": 0.915492832660675,
+          "raw_max": 0.9762691855430603
+        }
+      },
+      "per_foot_sensor_force_mean_N": [
+        2.359445333480835,
+        2.23469614982605,
+        1.968366265296936,
+        1.979770541191101
+      ],
+      "per_foot_contact_force_mean_N": [
+        71.66261291503906,
+        72.03462982177734,
+        43.712894439697266,
+        41.39360427856445
+      ],
+      "contact_force_gt40_fraction": 0.91140625,
+      "sensor_contact_disagreement_fraction": 0.0,
+      "actual_vx_mean_m_s": -0.0014514934737235308,
+      "actual_yaw_mean_rad_s": 0.00019886824884451926,
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.0
+    },
+    "forward": {
+      "base_world_mean_m": 0.30868759751319885,
+      "base_ground_mean_m": 0.0,
+      "base_height_mean_m": 0.30868759751319885,
+      "per_foot_force_p95_N": [
+        2.452870762348175,
+        2.400779402256012,
+        1.9784075319766998,
+        2.0225708961486815
+      ],
+      "per_foot_clearance_p95_m": [
+        -4.925169050693512e-05,
+        -4.560127854347229e-05,
+        -1.570172607898712e-05,
+        -9.091198444366457e-06
+      ],
+      "sensor_force_gt40_fraction": 0.0,
+      "stale_foot_velocity_max_error_m_s": 0.9872027635574341,
+      "measured_force_delta_mean_N": 0.04001925140619278,
+      "resets": 0,
+      "body_contact_peak_N": 0.0,
+      "rewards": {
+        "leg/action_rate": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/alive": {
+          "raw_mean": 1.0,
+          "metric_mean": 1.0,
+          "weighted_mean_before_div100": 1.0,
+          "raw_min": 1.0,
+          "raw_max": 1.0
+        },
+        "leg/ang_vel_xy": {
+          "raw_mean": 0.0003869003849104047,
+          "metric_mean": 0.0003869003849104047,
+          "weighted_mean_before_div100": -7.738007698208094e-05,
+          "raw_min": 2.17602209886536e-05,
+          "raw_max": 0.0025477567687630653
+        },
+        "leg/base_height": {
+          "raw_mean": 0.01571928896009922,
+          "metric_mean": 0.30868759751319885,
+          "weighted_mean_before_div100": -0.0785964448004961,
+          "raw_min": 0.015376299619674683,
+          "raw_max": 0.016152799129486084
+        },
+        "leg/collision": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/delta_torques": {
+          "raw_mean": 0.005358016584068537,
+          "metric_mean": 0.005358016584068537,
+          "weighted_mean_before_div100": -5.358016584068537e-10,
+          "raw_min": 6.745460268575698e-06,
+          "raw_max": 0.5051577091217041
+        },
+        "leg/dof_acc": {
+          "raw_mean": 0.7073028683662415,
+          "metric_mean": 0.7073028683662415,
+          "weighted_mean_before_div100": -5.304771512746811e-07,
+          "raw_min": 0.0007833748823031783,
+          "raw_max": 50.0399284362793
+        },
+        "leg/dof_pos_limits": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_air_time": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_contact_forces": {
+          "raw_mean": 68.97496795654297,
+          "metric_mean": 68.97496795654297,
+          "weighted_mean_before_div100": -0.06897496795654297,
+          "raw_min": 65.80872344970703,
+          "raw_max": 72.75655364990234
+        },
+        "leg/feet_drag": {
+          "raw_mean": 0.19537460803985596,
+          "metric_mean": 0.19537460803985596,
+          "weighted_mean_before_div100": -0.015629968643188476,
+          "raw_min": 0.17998242378234863,
+          "raw_max": 0.20641157031059265
+        },
+        "leg/feet_height": {
+          "raw_mean": -0.2604731023311615,
+          "metric_mean": -0.2604731023311615,
+          "weighted_mean_before_div100": -0.2604731023311615,
+          "raw_min": -0.260480672121048,
+          "raw_max": -0.26046594977378845
+        },
+        "leg/feet_jerk": {
+          "raw_mean": 0.643850564956665,
+          "metric_mean": 0.643850564956665,
+          "weighted_mean_before_div100": -0.000128770112991333,
+          "raw_min": 0.010059356689453125,
+          "raw_max": 5.181632995605469
+        },
+        "leg/hip_pos": {
+          "raw_mean": 3.823587758233771e-05,
+          "metric_mean": 3.823587758233771e-05,
+          "weighted_mean_before_div100": -1.1470763274701312e-05,
+          "raw_min": 1.7687241779640317e-05,
+          "raw_max": 8.514976070728153e-05
+        },
+        "leg/lin_vel_z": {
+          "raw_mean": 6.182328797876835e-05,
+          "metric_mean": 6.182328797876835e-05,
+          "weighted_mean_before_div100": -9.273493196815252e-05,
+          "raw_min": 1.3069701708445791e-05,
+          "raw_max": 0.00012710732698906213
+        },
+        "leg/roll": {
+          "raw_mean": 0.0016750820213928819,
+          "metric_mean": 0.0016750820213928819,
+          "weighted_mean_before_div100": -0.0033501640427857637,
+          "raw_min": 5.352535126235125e-08,
+          "raw_max": 0.0072191022336483
+        },
+        "leg/stand_still": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/torques": {
+          "raw_mean": 378.602294921875,
+          "metric_mean": 378.602294921875,
+          "weighted_mean_before_div100": -0.009465057373046875,
+          "raw_min": 365.06744384765625,
+          "raw_max": 395.9765625
+        },
+        "leg/tracking_ang_vel": {
+          "raw_mean": 0.9998052716255188,
+          "metric_mean": 3.8999642129056156e-05,
+          "weighted_mean_before_div100": 0.4999026358127594,
+          "raw_min": 0.9833799004554749,
+          "raw_max": 1.0
+        },
+        "leg/tracking_contacts_shaped_force": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/tracking_contacts_shaped_vel": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/tracking_lin_vel_max": {
+          "raw_mean": -0.005884159356355667,
+          "metric_mean": -0.005884159356355667,
+          "weighted_mean_before_div100": -0.011768318712711334,
+          "raw_min": -0.04984670504927635,
+          "raw_max": 0.03684954345226288
+        },
+        "leg/walking_dof": {
+          "raw_mean": 0.9762374758720398,
+          "metric_mean": 0.9762374758720398,
+          "weighted_mean_before_div100": 1.4643562138080597,
+          "raw_min": 0.975220263004303,
+          "raw_max": 0.9770172834396362
+        },
+        "leg/work": {
+          "raw_mean": 6.11873722076416,
+          "metric_mean": 6.11873722076416,
+          "weighted_mean_before_div100": -0.018356211662292482,
+          "raw_min": 5.289886474609375,
+          "raw_max": 7.068432807922363
+        },
+        "arm/tracking_ee_world": {
+          "raw_mean": 0.9488580822944641,
+          "metric_mean": 0.02636602893471718,
+          "weighted_mean_before_div100": 0.7590864658355714,
+          "raw_min": 0.8820313811302185,
+          "raw_max": 0.9786993861198425
+        }
+      },
+      "per_foot_sensor_force_mean_N": [
+        2.372812271118164,
+        2.3333511352539062,
+        1.9100713729858398,
+        1.937256932258606
+      ],
+      "per_foot_contact_force_mean_N": [
+        71.51153564453125,
+        70.88616943359375,
+        43.665470123291016,
+        42.77326202392578
+      ],
+      "contact_force_gt40_fraction": 0.9646875,
+      "sensor_contact_disagreement_fraction": 0.0,
+      "actual_vx_mean_m_s": -0.0017653065733611584,
+      "actual_yaw_mean_rad_s": -0.0002574537065811455,
+      "command_vx_m_s": 0.30000001192092896,
+      "command_yaw_rad_s": 0.0
+    },
+    "turn": {
+      "base_world_mean_m": 0.3087262809276581,
+      "base_ground_mean_m": 0.0,
+      "base_height_mean_m": 0.3087262809276581,
+      "per_foot_force_p95_N": [
+        2.434817337989807,
+        2.3828558802604674,
+        1.9473075330257417,
+        2.01552734375
+      ],
+      "per_foot_clearance_p95_m": [
+        -4.98991459608078e-05,
+        -4.667416214942932e-05,
+        -1.648440957069397e-05,
+        -9.257346391677856e-06
+      ],
+      "sensor_force_gt40_fraction": 0.0,
+      "stale_foot_velocity_max_error_m_s": 0.9865986704826355,
+      "measured_force_delta_mean_N": 0.02952379733324051,
+      "resets": 0,
+      "body_contact_peak_N": 0.0,
+      "rewards": {
+        "leg/action_rate": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/alive": {
+          "raw_mean": 1.0,
+          "metric_mean": 1.0,
+          "weighted_mean_before_div100": 1.0,
+          "raw_min": 1.0,
+          "raw_max": 1.0
+        },
+        "leg/ang_vel_xy": {
+          "raw_mean": 0.00035530843888409436,
+          "metric_mean": 0.00035530843888409436,
+          "weighted_mean_before_div100": -7.106168777681887e-05,
+          "raw_min": 7.287335756700486e-05,
+          "raw_max": 0.0013892475981265306
+        },
+        "leg/base_height": {
+          "raw_mean": 0.015680626034736633,
+          "metric_mean": 0.3087262809276581,
+          "weighted_mean_before_div100": -0.07840313017368317,
+          "raw_min": 0.015402555465698242,
+          "raw_max": 0.016057103872299194
+        },
+        "leg/collision": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/delta_torques": {
+          "raw_mean": 0.001897390466183424,
+          "metric_mean": 0.001897390466183424,
+          "weighted_mean_before_div100": -1.897390466183424e-10,
+          "raw_min": 4.204157448839396e-06,
+          "raw_max": 0.15238825976848602
+        },
+        "leg/dof_acc": {
+          "raw_mean": 0.34886184334754944,
+          "metric_mean": 0.34886184334754944,
+          "weighted_mean_before_div100": -2.616463825106621e-07,
+          "raw_min": 0.0004516820772551,
+          "raw_max": 16.658889770507812
+        },
+        "leg/dof_pos_limits": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_air_time": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_contact_forces": {
+          "raw_mean": 68.92438507080078,
+          "metric_mean": 68.92438507080078,
+          "weighted_mean_before_div100": -0.06892438507080079,
+          "raw_min": 65.55736541748047,
+          "raw_max": 72.52019500732422
+        },
+        "leg/feet_drag": {
+          "raw_mean": 0.19788086414337158,
+          "metric_mean": 0.19788086414337158,
+          "weighted_mean_before_div100": -0.015830469131469727,
+          "raw_min": 0.17998948693275452,
+          "raw_max": 0.20647072792053223
+        },
+        "leg/feet_height": {
+          "raw_mean": -0.26047372817993164,
+          "metric_mean": -0.26047372817993164,
+          "weighted_mean_before_div100": -0.26047372817993164,
+          "raw_min": -0.2604806423187256,
+          "raw_max": -0.260466068983078
+        },
+        "leg/feet_jerk": {
+          "raw_mean": 0.45958468317985535,
+          "metric_mean": 0.45958468317985535,
+          "weighted_mean_before_div100": -9.191693663597107e-05,
+          "raw_min": 0.026981353759765625,
+          "raw_max": 4.773689270019531
+        },
+        "leg/hip_pos": {
+          "raw_mean": 4.419381366460584e-05,
+          "metric_mean": 4.419381366460584e-05,
+          "weighted_mean_before_div100": -1.3258144099381752e-05,
+          "raw_min": 2.9102728149155155e-05,
+          "raw_max": 7.5971067417413e-05
+        },
+        "leg/lin_vel_z": {
+          "raw_mean": 6.104058411438018e-05,
+          "metric_mean": 6.104058411438018e-05,
+          "weighted_mean_before_div100": -9.156087617157027e-05,
+          "raw_min": 1.674162376730237e-05,
+          "raw_max": 9.460339060751721e-05
+        },
+        "leg/roll": {
+          "raw_mean": 0.0010137612698599696,
+          "metric_mean": 0.0010137612698599696,
+          "weighted_mean_before_div100": -0.0020275225397199392,
+          "raw_min": 2.5863212727017526e-07,
+          "raw_max": 0.00436194334179163
+        },
+        "leg/stand_still": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/torques": {
+          "raw_mean": 378.4786376953125,
+          "metric_mean": 378.4786376953125,
+          "weighted_mean_before_div100": -0.009461965942382813,
+          "raw_min": 369.40643310546875,
+          "raw_max": 388.9934387207031
+        },
+        "leg/tracking_ang_vel": {
+          "raw_mean": 0.1655137687921524,
+          "metric_mean": 0.35976898670196533,
+          "weighted_mean_before_div100": 0.0827568843960762,
+          "raw_min": 0.1408298760652542,
+          "raw_max": 0.1940973401069641
+        },
+        "leg/tracking_contacts_shaped_force": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/tracking_contacts_shaped_vel": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/tracking_lin_vel_max": {
+          "raw_mean": 0.9975306987762451,
+          "metric_mean": 0.9975306987762451,
+          "weighted_mean_before_div100": 1.9950613975524902,
+          "raw_min": 0.9892213940620422,
+          "raw_max": 0.9999980330467224
+        },
+        "leg/walking_dof": {
+          "raw_mean": 0.9762175679206848,
+          "metric_mean": 0.9762175679206848,
+          "weighted_mean_before_div100": 1.4643263518810272,
+          "raw_min": 0.9752620458602905,
+          "raw_max": 0.9768744707107544
+        },
+        "leg/work": {
+          "raw_mean": 6.147164344787598,
+          "metric_mean": 6.147164344787598,
+          "weighted_mean_before_div100": -0.018441493034362794,
+          "raw_min": 5.444600582122803,
+          "raw_max": 6.952383041381836
+        },
+        "arm/tracking_ee_world": {
+          "raw_mean": 0.9574252367019653,
+          "metric_mean": 0.021779518574476242,
+          "weighted_mean_before_div100": 0.7659401893615723,
+          "raw_min": 0.9277632832527161,
+          "raw_max": 0.9742503762245178
+        }
+      },
+      "per_foot_sensor_force_mean_N": [
+        2.3668782711029053,
+        2.3389713764190674,
+        1.8854458332061768,
+        1.9491115808486938
+      ],
+      "per_foot_contact_force_mean_N": [
+        71.2298812866211,
+        71.52015686035156,
+        43.31330871582031,
+        42.76741027832031
+      ],
+      "contact_force_gt40_fraction": 0.97609375,
+      "sensor_contact_disagreement_fraction": 0.0,
+      "actual_vx_mean_m_s": -0.0016657167579978704,
+      "actual_yaw_mean_rad_s": 0.0001992323959711939,
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.6000000238418579
+    },
+    "forward_turn": {
+      "base_world_mean_m": 0.30871179699897766,
+      "base_ground_mean_m": 0.0,
+      "base_height_mean_m": 0.30871179699897766,
+      "per_foot_force_p95_N": [
+        2.410932981967926,
+        2.389091098308563,
+        1.9773459911346436,
+        2.0183457493782044
+      ],
+      "per_foot_clearance_p95_m": [
+        -5.041435360908508e-05,
+        -4.662089049816132e-05,
+        -1.6729533672332764e-05,
+        -1.0500848293304444e-05
+      ],
+      "sensor_force_gt40_fraction": 0.0,
+      "stale_foot_velocity_max_error_m_s": 0.9865217804908752,
+      "measured_force_delta_mean_N": 0.0420994758605957,
+      "resets": 0,
+      "body_contact_peak_N": 0.0,
+      "rewards": {
+        "leg/action_rate": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/alive": {
+          "raw_mean": 1.0,
+          "metric_mean": 1.0,
+          "weighted_mean_before_div100": 1.0,
+          "raw_min": 1.0,
+          "raw_max": 1.0
+        },
+        "leg/ang_vel_xy": {
+          "raw_mean": 0.000350791058735922,
+          "metric_mean": 0.000350791058735922,
+          "weighted_mean_before_div100": -7.01582117471844e-05,
+          "raw_min": 2.5712993192428257e-06,
+          "raw_max": 0.0033074673265218735
+        },
+        "leg/base_height": {
+          "raw_mean": 0.015695106238126755,
+          "metric_mean": 0.30871179699897766,
+          "weighted_mean_before_div100": -0.07847553119063377,
+          "raw_min": 0.01542016863822937,
+          "raw_max": 0.016080886125564575
+        },
+        "leg/collision": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/delta_torques": {
+          "raw_mean": 0.0045278058387339115,
+          "metric_mean": 0.0045278058387339115,
+          "weighted_mean_before_div100": -4.5278058387339115e-10,
+          "raw_min": 1.9241240806877613e-05,
+          "raw_max": 0.4529094099998474
+        },
+        "leg/dof_acc": {
+          "raw_mean": 0.6728227734565735,
+          "metric_mean": 0.6728227734565735,
+          "weighted_mean_before_div100": -5.046170800924302e-07,
+          "raw_min": 0.005108432378619909,
+          "raw_max": 56.173526763916016
+        },
+        "leg/dof_pos_limits": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_air_time": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/feet_contact_forces": {
+          "raw_mean": 68.86840057373047,
+          "metric_mean": 68.86840057373047,
+          "weighted_mean_before_div100": -0.06886840057373048,
+          "raw_min": 63.486045837402344,
+          "raw_max": 71.83055114746094
+        },
+        "leg/feet_drag": {
+          "raw_mean": 0.19561359286308289,
+          "metric_mean": 0.19561359286308289,
+          "weighted_mean_before_div100": -0.01564908742904663,
+          "raw_min": 0.18062043190002441,
+          "raw_max": 0.20770080387592316
+        },
+        "leg/feet_height": {
+          "raw_mean": -0.26047396659851074,
+          "metric_mean": -0.26047396659851074,
+          "weighted_mean_before_div100": -0.26047396659851074,
+          "raw_min": -0.26048195362091064,
+          "raw_max": -0.2604665756225586
+        },
+        "leg/feet_jerk": {
+          "raw_mean": 0.6263888478279114,
+          "metric_mean": 0.6263888478279114,
+          "weighted_mean_before_div100": -0.0001252777695655823,
+          "raw_min": 0.034229278564453125,
+          "raw_max": 6.6411285400390625
+        },
+        "leg/hip_pos": {
+          "raw_mean": 3.559708420652896e-05,
+          "metric_mean": 3.559708420652896e-05,
+          "weighted_mean_before_div100": -1.0679125261958689e-05,
+          "raw_min": 1.8698356143431738e-05,
+          "raw_max": 6.074251723475754e-05
+        },
+        "leg/lin_vel_z": {
+          "raw_mean": 6.184299854794517e-05,
+          "metric_mean": 6.184299854794517e-05,
+          "weighted_mean_before_div100": -9.276449782191776e-05,
+          "raw_min": 5.249201421975158e-06,
+          "raw_max": 0.00015115395945031196
+        },
+        "leg/roll": {
+          "raw_mean": 0.0009541772305965424,
+          "metric_mean": 0.0009541772305965424,
+          "weighted_mean_before_div100": -0.0019083544611930847,
+          "raw_min": 1.999426785914693e-06,
+          "raw_max": 0.004223894793540239
+        },
+        "leg/stand_still": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": 0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/torques": {
+          "raw_mean": 378.0561828613281,
+          "metric_mean": 378.0561828613281,
+          "weighted_mean_before_div100": -0.009451404571533203,
+          "raw_min": 364.7995300292969,
+          "raw_max": 398.6109619140625
+        },
+        "leg/tracking_ang_vel": {
+          "raw_mean": 0.1654542088508606,
+          "metric_mean": 0.35990333557128906,
+          "weighted_mean_before_div100": 0.0827271044254303,
+          "raw_min": 0.12258157879114151,
+          "raw_max": 0.20620504021644592
+        },
+        "leg/tracking_contacts_shaped_force": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/tracking_contacts_shaped_vel": {
+          "raw_mean": 0.0,
+          "metric_mean": 0.0,
+          "weighted_mean_before_div100": -0.0,
+          "raw_min": 0.0,
+          "raw_max": 0.0
+        },
+        "leg/tracking_lin_vel_max": {
+          "raw_mean": -0.006040616426616907,
+          "metric_mean": -0.006040616426616907,
+          "weighted_mean_before_div100": -0.012081232853233814,
+          "raw_min": -0.035380471497774124,
+          "raw_max": 0.029602020978927612
+        },
+        "leg/walking_dof": {
+          "raw_mean": 0.9762592315673828,
+          "metric_mean": 0.9762592315673828,
+          "weighted_mean_before_div100": 1.4643888473510742,
+          "raw_min": 0.9752686023712158,
+          "raw_max": 0.9769893884658813
+        },
+        "leg/work": {
+          "raw_mean": 6.111769199371338,
+          "metric_mean": 6.111769199371338,
+          "weighted_mean_before_div100": -0.018335307598114015,
+          "raw_min": 5.121847152709961,
+          "raw_max": 7.696954727172852
+        },
+        "arm/tracking_ee_world": {
+          "raw_mean": 0.953326404094696,
+          "metric_mean": 0.02397935837507248,
+          "weighted_mean_before_div100": 0.7626611232757569,
+          "raw_min": 0.8890989422798157,
+          "raw_max": 0.9806575179100037
+        }
+      },
+      "per_foot_sensor_force_mean_N": [
+        2.362454414367676,
+        2.337646484375,
+        1.9015153646469116,
+        1.9454001188278198
+      ],
+      "per_foot_contact_force_mean_N": [
+        71.04248046875,
+        71.13763427734375,
+        43.568580627441406,
+        43.08265686035156
+      ],
+      "contact_force_gt40_fraction": 0.98078125,
+      "sensor_contact_disagreement_fraction": 0.0,
+      "actual_vx_mean_m_s": -0.001812245580367744,
+      "actual_yaw_mean_rad_s": 0.00010169812594540417,
+      "command_vx_m_s": 0.30000001192092896,
+      "command_yaw_rad_s": 0.6000000238418579
+    }
+  },
+  "probes": {
+    "translation_1m": {
+      "base_reward_max_change": 5.960464477539063e-08,
+      "feet_reward_max_change": 8.940696716308594e-08
+    },
+    "swing_force_mismatch_weighted_mean": -2.0,
+    "stance_velocity_mismatch_weighted_mean": -1.7293294668197632,
+    "stance_velocity_sign_probe_weighted_mean": -1.7293294668197632,
+    "force_delta_probe_raw_mean": 200.0
+  },
+  "reward_sum_check_passed": true
+}

@@ -1,0 +1,5 @@
+{
+  "non_history_tensors": 33,
+  "different": [],
+  "note": "model_0 is saved after the first history-only update, not before all optimization."
+}

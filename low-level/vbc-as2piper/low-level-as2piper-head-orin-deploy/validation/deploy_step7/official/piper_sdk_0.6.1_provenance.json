@@ -1,0 +1,23 @@
+{
+  "source": "https://files.pythonhosted.org/packages/a8/0c/4473a7a9aca9c50798abec6a77e8e5e714ad968399db3d2b86162a05177c/piper_sdk-0.6.1-py3-none-any.whl",
+  "sha256": "743557e1b8dfe685f2c33d728ab28c3ff510de8860d6494e54ed5d801493d65c",
+  "github_tag": "0.6.1",
+  "github_commit": "081e7c588e5b79eeaefa67a0469bcc701c81014f",
+  "extracted": [
+    "piper_sdk/demo/V2/piper_read_arm_motor_max_acc_limit.py",
+    "piper_sdk/demo/V2/piper_set_motor_angle_limit.py",
+    "piper_sdk/demo/V2/piper_set_motor_max_acc_limit.py",
+    "piper_sdk/demo/V2/piper_test_interface_disconnect.py",
+    "piper_sdk/demo/V2/piper_test_multi_interface_instance.py",
+    "piper_sdk/interface/__init__.py",
+    "piper_sdk/interface/interface_version.py",
+    "piper_sdk/interface/piper_interface.py",
+    "piper_sdk/interface/piper_interface_v2.py",
+    "piper_sdk/piper_msgs/msg_v2/feedback/arm_feedback_current_motor_angle_limit_max_spd.py",
+    "piper_sdk/piper_msgs/msg_v2/feedback/arm_feedback_current_motor_max_acc_limit.py",
+    "piper_sdk/piper_msgs/msg_v2/transmit/arm_joint_config.py",
+    "piper_sdk/piper_msgs/msg_v2/transmit/arm_joint_mit_ctrl.py",
+    "piper_sdk/piper_msgs/msg_v2/transmit/arm_motor_angle_limit_max_spd_config.py"
+  ],
+  "installed": false
+}

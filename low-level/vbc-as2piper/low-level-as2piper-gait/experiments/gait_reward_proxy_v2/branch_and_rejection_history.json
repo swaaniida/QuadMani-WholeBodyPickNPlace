@@ -1,0 +1,39 @@
+{
+  "stable_proxy_resume1": {
+    "disposition": "cooperatively stopped after completed iteration335",
+    "reason": "At101/201, stepping without command tracking. Retained model300 (301 completed) evaluation continues; do not label as600-iteration trial.",
+    "checkpoint": "logs/as2piper-low/gait_reward_stable_proxy_s7_v2_resume1/model_335.pt",
+    "existing_online_training_untouched": true
+  },
+  "progress_gain2_proxy_yaw4": {
+    "disposition": "cooperatively stopped, latest complete optimizer/history checkpoint retained",
+    "completed_iterations": 433,
+    "reason": "Constant normalized-progress blend had low-command discontinuity; prepare corrected fresh0 comparison. Height group301 trial also worsened falls72 versus control47. Longer-budget convergence of old presets is not claimed impossible."
+  },
+  "stable_proxy_ground_resume1": {
+    "disposition": "cooperatively stopped after305 completed iterations;model300 (301 completed) retained and still evaluated",
+    "reason": "Height reference change alone did not give adequate command tracking at101/201; complete planned301 checkpoint comparison, focus next on targeted reward branches. This does not prove inability to learn at longer budgets.",
+    "checkpoint": "logs/as2piper-low/gait_reward_stable_proxy_ground_s7_v2_resume1/model_305.pt"
+  },
+  "progress_gain2_proxy_ground_floor": {
+    "disposition": "cooperatively stopped, latest complete optimizer/history checkpoint retained",
+    "completed_iterations": 332,
+    "reason": "Constant normalized-progress blend had low-command discontinuity; prepare corrected fresh0 comparison. Height group301 trial also worsened falls72 versus control47. Longer-budget convergence of old presets is not claimed impossible."
+  },
+  "progress_gain2_proxy_resume1": {
+    "disposition": "cooperatively stopped, latest complete optimizer/history checkpoint retained",
+    "completed_iterations": 503,
+    "reason": "Constant normalized-progress blend had low-command discontinuity; prepare corrected fresh0 comparison. Height group301 trial also worsened falls72 versus control47. Longer-budget convergence of old presets is not claimed impossible."
+  },
+  "fresh_v3": {
+    "runs": [
+      "gait_reward_smooth_yaw4_fresh_s7_v3",
+      "gait_reward_smooth_yaw4_contactmatch_fresh_s7_v3"
+    ],
+    "initial_iteration": 0,
+    "checkpoint": null,
+    "max_iterations": 600,
+    "seed": 7,
+    "difference": "Only symmetric_contact flag: missing stance contact receives cost, in addition to unwanted swing contact. Height remains grid/symmetric4cm in both."
+  }
+}

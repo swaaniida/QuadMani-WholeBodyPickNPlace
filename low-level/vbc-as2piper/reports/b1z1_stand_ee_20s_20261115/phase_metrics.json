@@ -1,0 +1,44 @@
+[
+  {
+    "phase": "front",
+    "ee_mean_error_m": 0.030790191143751144,
+    "ee_target_min_z": 0.699999988079071,
+    "ee_actual_min_z": 0.6750769019126892,
+    "base_min_z": 0.541328489780426
+  },
+  {
+    "phase": "left",
+    "ee_mean_error_m": 0.04820352420210838,
+    "ee_target_min_z": 0.7324864268302917,
+    "ee_actual_min_z": 0.7103591561317444,
+    "base_min_z": 0.5464274883270264
+  },
+  {
+    "phase": "right",
+    "ee_mean_error_m": 0.10904877632856369,
+    "ee_target_min_z": 0.8608125448226929,
+    "ee_actual_min_z": 0.8124731183052063,
+    "base_min_z": 0.5499146580696106
+  },
+  {
+    "phase": "upper",
+    "ee_mean_error_m": 0.06313052773475647,
+    "ee_target_min_z": 0.8608125448226929,
+    "ee_actual_min_z": 0.8404496908187866,
+    "base_min_z": 0.5563768148422241
+  },
+  {
+    "phase": "near ground",
+    "ee_mean_error_m": 0.05308765545487404,
+    "ee_target_min_z": 0.049267590045928955,
+    "ee_actual_min_z": 0.045262858271598816,
+    "base_min_z": 0.5201711654663086
+  },
+  {
+    "phase": "far low",
+    "ee_mean_error_m": 0.07258080691099167,
+    "ee_target_min_z": 0.049267590045928955,
+    "ee_actual_min_z": 0.04771566390991211,
+    "base_min_z": 0.5230870842933655
+  }
+]

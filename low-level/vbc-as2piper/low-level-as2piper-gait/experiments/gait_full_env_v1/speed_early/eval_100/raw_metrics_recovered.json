@@ -1,0 +1,37 @@
+{
+  "note": "Physical raw samples only. Reward diagnostics/trajectory save did not complete; not a complete evaluation artifact.",
+  "seconds": 20.0,
+  "num_envs": 32,
+  "stand": {
+    "mean_vx_m_s": 0.005570663139224052,
+    "mean_yaw_rad_s": 0.001050947466865182,
+    "fall_resets_total": 4,
+    "fall_resets_first_2s": 1,
+    "ee_position_mean_m": 0.01884292997419834,
+    "no_fall_environment_fraction": 0.625
+  },
+  "forward": {
+    "mean_vx_m_s": 0.00016385025810450315,
+    "mean_yaw_rad_s": -0.0004852045967709273,
+    "fall_resets_total": 0,
+    "fall_resets_first_2s": 0,
+    "ee_position_mean_m": 0.01698453538119793,
+    "no_fall_environment_fraction": 1.0
+  },
+  "turn": {
+    "mean_vx_m_s": 0.0024226922541856766,
+    "mean_yaw_rad_s": 0.0005385749391280115,
+    "fall_resets_total": 0,
+    "fall_resets_first_2s": 0,
+    "ee_position_mean_m": 0.018686160445213318,
+    "no_fall_environment_fraction": 1.0
+  },
+  "forward_turn": {
+    "mean_vx_m_s": 0.0033872132189571857,
+    "mean_yaw_rad_s": -0.0008812936139293015,
+    "fall_resets_total": 2,
+    "fall_resets_first_2s": 0,
+    "ee_position_mean_m": 0.017186060547828674,
+    "no_fall_environment_fraction": 0.75
+  }
+}

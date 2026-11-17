@@ -1,0 +1,12 @@
+{
+  "pid": 1745952,
+  "iterations": [
+    24000,
+    28000,
+    34000,
+    40000
+  ],
+  "purpose": "queued 36s vy=0 dynamic EE/base test; evaluation only",
+  "status": "replaced while queued; no simulation was active",
+  "replacement_reason": "include stronger 43400 candidate instead of weaker24000"
+}

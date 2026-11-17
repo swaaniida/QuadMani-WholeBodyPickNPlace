@@ -1,0 +1,20 @@
+{
+  "initial_iteration": 0,
+  "checkpoint": null,
+  "non_history_init_tensors_checked": 33,
+  "initial_tensors_changed": [],
+  "config_differences": [
+    [
+      ".study.foot_height_reference",
+      null,
+      "proxy"
+    ],
+    [
+      ".study.preset",
+      "progress_gain2_proxy_smooth_yaw4",
+      "progress_gain2_proxy_smooth_yaw4_footground"
+    ]
+  ],
+  "ppo_asset_terrain_origins_match": true,
+  "runtime_archived_source_hashes_matched": 52
+}

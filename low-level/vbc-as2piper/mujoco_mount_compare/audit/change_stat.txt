@@ -1,0 +1,13 @@
+ ...as2piper_umi_v7_mesh_seated_profiles_plate.urdf |    8 -
+ .../models/mesh_seated/profiles_plate.xml          |    2 
+ .../as2piper_umi_v7_mesh_seated_plate_only.urdf    |    8 -
+ .../models/mesh_seated/plate_only.xml              |    2 
+ .../models/mesh_seated/mount_config.json           |   29 +-
+ mujoco_mount_compare/build_verified_mounts.py      |   82 +++++
+ mujoco_mount_compare/verify_mounts.py              |  160 +++++++++++
+ mujoco_mount_compare/run_verified_demo.py          |  299 ++++++++++++++++++++
+ mujoco_mount_compare/summarize_verified.py         |   51 +++
+ mujoco_mount_compare/run_mesh_seated_checks.sh     |   17 +
+ mujoco_mount_compare/MESH_SEATED_REVIEW_KO.md      |  103 +++++++
+ mujoco_mount_compare/.gitignore                    |    3 
+ 12 files changed, 743 insertions(+), 21 deletions(-)

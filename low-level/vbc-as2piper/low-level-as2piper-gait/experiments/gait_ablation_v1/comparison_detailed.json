@@ -1,0 +1,1521 @@
+{
+  "original": {
+    "stand": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": false,
+      "mean_vx_m_s": 0.5424948334693909,
+      "mean_yaw_rad_s": -0.0756167471408844,
+      "vx_abs_error_m_s": 0.5424948334693909,
+      "yaw_abs_error_rad_s": 0.24173308908939362,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.455,
+        0.4875,
+        0.4675,
+        0.46375
+      ],
+      "foot_clearance_p95_m": [
+        0.05210228413343426,
+        0.06978388130664824,
+        0.043281698226928705,
+        0.06257457658648491
+      ],
+      "foot_clearance_p99_m": [
+        0.06510167345404606,
+        0.07667651742696756,
+        0.05212517544627188,
+        0.07399962618947024
+      ],
+      "per_foot_unloaded_fraction": [
+        0.545,
+        0.5125,
+        0.5325,
+        0.53625
+      ],
+      "applied_leg_torque_abs_max_Nm": 53.19432830810547,
+      "ee_position_mean_m": 0.021498221904039383,
+      "ee_position_p95_m": 0.03813784364610909,
+      "ee_orientation_mean_deg": 3.974714994430542,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.0802106261253357,
+      "stance_slip_mean_m_s": 0.05368244647979736,
+      "midstance_slip_mean_m_s": 0.0,
+      "phase_contact_agreement": 0.5315625,
+      "contact_dominant_Hz": 3.625,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.744065761566162,
+      "representative_pitch_rms_deg": 3.8907551765441895
+    },
+    "forward": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.5373350381851196,
+      "mean_yaw_rad_s": -0.17663681507110596,
+      "vx_abs_error_m_s": 0.29298195242881775,
+      "yaw_abs_error_rad_s": 0.30276668071746826,
+      "upright_fraction": 0.9987499713897705,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5103125,
+        0.55625,
+        0.434375,
+        0.491875
+      ],
+      "foot_clearance_p95_m": [
+        0.06795072481036186,
+        0.0625892162322998,
+        0.059317141771316514,
+        0.06107401922345159
+      ],
+      "foot_clearance_p99_m": [
+        0.08279226168990128,
+        0.07658128842711433,
+        0.07392534404993055,
+        0.07450268372893332
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4896875,
+        0.44375,
+        0.565625,
+        0.508125
+      ],
+      "applied_leg_torque_abs_max_Nm": 59.5527458190918,
+      "ee_position_mean_m": 0.021796440705657005,
+      "ee_position_p95_m": 0.04036921560764312,
+      "ee_orientation_mean_deg": 4.256454944610596,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.08163098245859146,
+      "stance_slip_mean_m_s": 0.05439520627260208,
+      "midstance_slip_mean_m_s": 0.04023252800107002,
+      "phase_contact_agreement": 0.637421875,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.243030309677124,
+      "representative_pitch_rms_deg": 3.753113269805908
+    },
+    "turn": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.5738192200660706,
+      "mean_yaw_rad_s": 0.011905130930244923,
+      "vx_abs_error_m_s": 0.5738192200660706,
+      "yaw_abs_error_rad_s": 0.5896706581115723,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.4634375,
+        0.585625,
+        0.455,
+        0.4903125
+      ],
+      "foot_clearance_p95_m": [
+        0.06653245538473129,
+        0.060802109539508806,
+        0.05591998510062694,
+        0.0581069130450487
+      ],
+      "foot_clearance_p99_m": [
+        0.08377560719847674,
+        0.07838733240962023,
+        0.06777730360627174,
+        0.0702118791639804
+      ],
+      "per_foot_unloaded_fraction": [
+        0.5365625,
+        0.414375,
+        0.545,
+        0.5096875
+      ],
+      "applied_leg_torque_abs_max_Nm": 55.063846588134766,
+      "ee_position_mean_m": 0.02301046811044216,
+      "ee_position_p95_m": 0.043829501606523984,
+      "ee_orientation_mean_deg": 4.059831619262695,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.09051220864057541,
+      "stance_slip_mean_m_s": 0.06148418039083481,
+      "midstance_slip_mean_m_s": 0.044453561305999756,
+      "phase_contact_agreement": 0.636875,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.736572265625,
+      "representative_pitch_rms_deg": 3.8659210205078125
+    },
+    "forward_turn": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.5655914545059204,
+      "mean_yaw_rad_s": 0.005977632012218237,
+      "vx_abs_error_m_s": 0.3170087933540344,
+      "yaw_abs_error_rad_s": 0.5965869426727295,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.485625,
+        0.5715625,
+        0.4503125,
+        0.494375
+      ],
+      "foot_clearance_p95_m": [
+        0.06780521199107169,
+        0.061583089828491186,
+        0.05669682286679745,
+        0.0559054564684629
+      ],
+      "foot_clearance_p99_m": [
+        0.08590396866202354,
+        0.08117022156715391,
+        0.07097888633608816,
+        0.06925772398710249
+      ],
+      "per_foot_unloaded_fraction": [
+        0.514375,
+        0.4284375,
+        0.5496875,
+        0.505625
+      ],
+      "applied_leg_torque_abs_max_Nm": 57.186279296875,
+      "ee_position_mean_m": 0.023026276379823685,
+      "ee_position_p95_m": 0.04322318863123654,
+      "ee_orientation_mean_deg": 4.28712797164917,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.09029950201511383,
+      "stance_slip_mean_m_s": 0.061848413199186325,
+      "midstance_slip_mean_m_s": 0.0442294105887413,
+      "phase_contact_agreement": 0.63109375,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 4.846205711364746,
+      "representative_pitch_rms_deg": 4.5114030838012695
+    },
+    "conditions": "Terrain=plane, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+    "task_variant": "gait_study_original",
+    "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_original/model_433.pt",
+    "walking_thresholds": {
+      "lin_vel_x": 0.1585554544667664,
+      "ang_vel_yaw": 0.5
+    },
+    "clearance_reference": "Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.",
+    "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.",
+    "local_acceptance_criteria": {
+      "stop": false,
+      "forward": false,
+      "turn": false,
+      "combined": false,
+      "no_fall": true,
+      "upright": true
+    },
+    "local_acceptance_pass": false,
+    "selection_error_score": 2.2455320104956624
+  },
+  "velocity": {
+    "stand": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": false,
+      "mean_vx_m_s": 0.36962029337882996,
+      "mean_yaw_rad_s": -0.2107810229063034,
+      "vx_abs_error_m_s": 0.36962616443634033,
+      "yaw_abs_error_rad_s": 0.2609204947948456,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.57375,
+        0.5496875,
+        0.4315625,
+        0.578125
+      ],
+      "foot_clearance_p95_m": [
+        0.06041378267109394,
+        0.06423455849289894,
+        0.028786415234208072,
+        0.05795113258063791
+      ],
+      "foot_clearance_p99_m": [
+        0.06993417069315906,
+        0.07101489484310149,
+        0.04150377035140988,
+        0.06983809515833853
+      ],
+      "per_foot_unloaded_fraction": [
+        0.42625,
+        0.4503125,
+        0.5684375,
+        0.421875
+      ],
+      "applied_leg_torque_abs_max_Nm": 43.295753479003906,
+      "ee_position_mean_m": 0.020653964951634407,
+      "ee_position_p95_m": 0.038231991976499555,
+      "ee_orientation_mean_deg": 4.127078533172607,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.05661929026246071,
+      "stance_slip_mean_m_s": 0.03960209712386131,
+      "midstance_slip_mean_m_s": 0.0,
+      "phase_contact_agreement": 0.46671875,
+      "contact_dominant_Hz": 1.875,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.1962647438049316,
+      "representative_pitch_rms_deg": 2.988046884536743
+    },
+    "forward": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.437752902507782,
+      "mean_yaw_rad_s": -0.22258438169956207,
+      "vx_abs_error_m_s": 0.18955865502357483,
+      "yaw_abs_error_rad_s": 0.32460880279541016,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5634375,
+        0.575625,
+        0.4628125,
+        0.604375
+      ],
+      "foot_clearance_p95_m": [
+        0.07719210684299468,
+        0.06197119429707527,
+        0.051061047986149764,
+        0.04730871170759199
+      ],
+      "foot_clearance_p99_m": [
+        0.08632646963000296,
+        0.07360190257430071,
+        0.06348531559109685,
+        0.06159554146230217
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4365625,
+        0.424375,
+        0.5371875,
+        0.395625
+      ],
+      "applied_leg_torque_abs_max_Nm": 46.87580490112305,
+      "ee_position_mean_m": 0.02062413841485977,
+      "ee_position_p95_m": 0.038228984922170625,
+      "ee_orientation_mean_deg": 4.286228179931641,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.06490255147218704,
+      "stance_slip_mean_m_s": 0.044752635061740875,
+      "midstance_slip_mean_m_s": 0.03355557844042778,
+      "phase_contact_agreement": 0.67203125,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.4363582134246826,
+      "representative_pitch_rms_deg": 2.492851972579956
+    },
+    "turn": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.44655564427375793,
+      "mean_yaw_rad_s": -0.04927270486950874,
+      "vx_abs_error_m_s": 0.44661545753479004,
+      "yaw_abs_error_rad_s": 0.6531208753585815,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5365625,
+        0.6115625,
+        0.4934375,
+        0.5571875
+      ],
+      "foot_clearance_p95_m": [
+        0.08037102147936818,
+        0.05995109118521211,
+        0.04034770578145978,
+        0.04422329999506473
+      ],
+      "foot_clearance_p99_m": [
+        0.09023551523685454,
+        0.07063432648777958,
+        0.050876195952296255,
+        0.06059518083930015
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4634375,
+        0.3884375,
+        0.5065625,
+        0.4428125
+      ],
+      "applied_leg_torque_abs_max_Nm": 46.6161003112793,
+      "ee_position_mean_m": 0.0210869200527668,
+      "ee_position_p95_m": 0.04082386177033185,
+      "ee_orientation_mean_deg": 4.363394737243652,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.06331614404916763,
+      "stance_slip_mean_m_s": 0.04153412953019142,
+      "midstance_slip_mean_m_s": 0.03423517569899559,
+      "phase_contact_agreement": 0.66203125,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.559187889099121,
+      "representative_pitch_rms_deg": 3.4508795738220215
+    },
+    "forward_turn": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.4181913137435913,
+      "mean_yaw_rad_s": -0.06160099431872368,
+      "vx_abs_error_m_s": 0.17474153637886047,
+      "yaw_abs_error_rad_s": 0.6628700494766235,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5478125,
+        0.5875,
+        0.4915625,
+        0.5925
+      ],
+      "foot_clearance_p95_m": [
+        0.07880152612924575,
+        0.062354907765984534,
+        0.04067563675343987,
+        0.04434735290706158
+      ],
+      "foot_clearance_p99_m": [
+        0.08745612233877181,
+        0.07543625131249423,
+        0.049012004211544974,
+        0.0567863538116216
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4521875,
+        0.4125,
+        0.5084375,
+        0.4075
+      ],
+      "applied_leg_torque_abs_max_Nm": 44.57247543334961,
+      "ee_position_mean_m": 0.020263629034161568,
+      "ee_position_p95_m": 0.03860505316406487,
+      "ee_orientation_mean_deg": 4.521223068237305,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.06071409955620766,
+      "stance_slip_mean_m_s": 0.04165268689393997,
+      "midstance_slip_mean_m_s": 0.034044232219457626,
+      "phase_contact_agreement": 0.66015625,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 4.373559474945068,
+      "representative_pitch_rms_deg": 3.345818042755127
+    },
+    "conditions": "Terrain=plane, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+    "task_variant": "gait_study_velocity",
+    "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_velocity/model_433.pt",
+    "walking_thresholds": {
+      "lin_vel_x": 0.1585554544667664,
+      "ang_vel_yaw": 0.5
+    },
+    "clearance_reference": "Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.",
+    "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.",
+    "local_acceptance_criteria": {
+      "stop": false,
+      "forward": false,
+      "turn": false,
+      "combined": false,
+      "no_fall": true,
+      "upright": true
+    },
+    "local_acceptance_pass": false,
+    "selection_error_score": 1.7509978801012038
+  },
+  "jerk": {
+    "stand": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": false,
+      "mean_vx_m_s": 0.6549019813537598,
+      "mean_yaw_rad_s": -0.0025915075093507767,
+      "vx_abs_error_m_s": 0.6549019813537598,
+      "yaw_abs_error_rad_s": 0.22384731471538544,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.35875,
+        0.451875,
+        0.45625,
+        0.4421875
+      ],
+      "foot_clearance_p95_m": [
+        0.03521576300263404,
+        0.0652848593890667,
+        0.041765991598367684,
+        0.07557223141193388
+      ],
+      "foot_clearance_p99_m": [
+        0.040862465053796745,
+        0.07048020780086517,
+        0.04845894403755664,
+        0.08807954996824262
+      ],
+      "per_foot_unloaded_fraction": [
+        0.64125,
+        0.548125,
+        0.54375,
+        0.5578125
+      ],
+      "applied_leg_torque_abs_max_Nm": 57.882591247558594,
+      "ee_position_mean_m": 0.023083867505192757,
+      "ee_position_p95_m": 0.0397340465337038,
+      "ee_orientation_mean_deg": 3.9218764305114746,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.09467256814241409,
+      "stance_slip_mean_m_s": 0.0597105398774147,
+      "midstance_slip_mean_m_s": 0.0,
+      "phase_contact_agreement": 0.572734375,
+      "contact_dominant_Hz": 3.5,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.3522274494171143,
+      "representative_pitch_rms_deg": 4.679093837738037
+    },
+    "forward": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.5603470802307129,
+      "mean_yaw_rad_s": -0.12977811694145203,
+      "vx_abs_error_m_s": 0.31125643849372864,
+      "yaw_abs_error_rad_s": 0.26765167713165283,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.475625,
+        0.540625,
+        0.435,
+        0.51125
+      ],
+      "foot_clearance_p95_m": [
+        0.059208044037222844,
+        0.06194414347410201,
+        0.05203105881810187,
+        0.06236055865883827
+      ],
+      "foot_clearance_p99_m": [
+        0.07570945620536802,
+        0.07376825034618376,
+        0.06508858427405356,
+        0.0798013745248317
+      ],
+      "per_foot_unloaded_fraction": [
+        0.524375,
+        0.459375,
+        0.565,
+        0.48875
+      ],
+      "applied_leg_torque_abs_max_Nm": 55.27031326293945,
+      "ee_position_mean_m": 0.022325338795781136,
+      "ee_position_p95_m": 0.04145662132650614,
+      "ee_orientation_mean_deg": 4.169023513793945,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.08479892462491989,
+      "stance_slip_mean_m_s": 0.05672314018011093,
+      "midstance_slip_mean_m_s": 0.0439949668943882,
+      "phase_contact_agreement": 0.6215625,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.5879650115966797,
+      "representative_pitch_rms_deg": 4.092886924743652
+    },
+    "turn": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.601543128490448,
+      "mean_yaw_rad_s": 0.07609432190656662,
+      "vx_abs_error_m_s": 0.601543128490448,
+      "yaw_abs_error_rad_s": 0.5274724364280701,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.4296875,
+        0.548125,
+        0.463125,
+        0.4828125
+      ],
+      "foot_clearance_p95_m": [
+        0.060032894089818,
+        0.06016898117959499,
+        0.048587408661842336,
+        0.06410725489258763
+      ],
+      "foot_clearance_p99_m": [
+        0.07587267115712164,
+        0.0717779584228992,
+        0.058581012934446265,
+        0.08013295024633403
+      ],
+      "per_foot_unloaded_fraction": [
+        0.5703125,
+        0.451875,
+        0.536875,
+        0.5171875
+      ],
+      "applied_leg_torque_abs_max_Nm": 60.195247650146484,
+      "ee_position_mean_m": 0.023552551865577698,
+      "ee_position_p95_m": 0.04482741896063088,
+      "ee_orientation_mean_deg": 4.127267360687256,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.09006741642951965,
+      "stance_slip_mean_m_s": 0.05922191962599754,
+      "midstance_slip_mean_m_s": 0.044563885778188705,
+      "phase_contact_agreement": 0.60515625,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.4210963249206543,
+      "representative_pitch_rms_deg": 4.249085426330566
+    },
+    "forward_turn": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.5572307109832764,
+      "mean_yaw_rad_s": 0.045225802809000015,
+      "vx_abs_error_m_s": 0.3097385764122009,
+      "yaw_abs_error_rad_s": 0.5560458898544312,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.4478125,
+        0.55,
+        0.43875,
+        0.5275
+      ],
+      "foot_clearance_p95_m": [
+        0.06592998802661894,
+        0.06320307031273832,
+        0.0520660515874624,
+        0.06340387016534801
+      ],
+      "foot_clearance_p99_m": [
+        0.07854109615087507,
+        0.07585431739687919,
+        0.06231738626956938,
+        0.07951563298702234
+      ],
+      "per_foot_unloaded_fraction": [
+        0.5521875,
+        0.45,
+        0.56125,
+        0.4725
+      ],
+      "applied_leg_torque_abs_max_Nm": 58.492374420166016,
+      "ee_position_mean_m": 0.022623755037784576,
+      "ee_position_p95_m": 0.042829998582601544,
+      "ee_orientation_mean_deg": 4.051177501678467,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.08486314862966537,
+      "stance_slip_mean_m_s": 0.0576699934899807,
+      "midstance_slip_mean_m_s": 0.04512733593583107,
+      "phase_contact_agreement": 0.608046875,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 4.098179340362549,
+      "representative_pitch_rms_deg": 4.696903228759766
+    },
+    "conditions": "Terrain=plane, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+    "task_variant": "gait_study_jerk",
+    "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_jerk/model_433.pt",
+    "walking_thresholds": {
+      "lin_vel_x": 0.1585554544667664,
+      "ang_vel_yaw": 0.5
+    },
+    "clearance_reference": "Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.",
+    "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.",
+    "local_acceptance_criteria": {
+      "stop": false,
+      "forward": false,
+      "turn": false,
+      "combined": false,
+      "no_fall": true,
+      "upright": true
+    },
+    "local_acceptance_pass": false,
+    "selection_error_score": 2.3499453201889993
+  },
+  "stop": {
+    "stand": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": false,
+      "mean_vx_m_s": 0.7084585428237915,
+      "mean_yaw_rad_s": -0.13056394457817078,
+      "vx_abs_error_m_s": 0.7084585428237915,
+      "yaw_abs_error_rad_s": 0.24269714951515198,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.3675,
+        0.5015625,
+        0.440625,
+        0.455
+      ],
+      "foot_clearance_p95_m": [
+        0.03538254238665101,
+        0.06323520988225936,
+        0.05890634059906005,
+        0.06785591095685954
+      ],
+      "foot_clearance_p99_m": [
+        0.04645626820623864,
+        0.06894865289330482,
+        0.06754968896508212,
+        0.07983831226825708
+      ],
+      "per_foot_unloaded_fraction": [
+        0.6325,
+        0.4984375,
+        0.559375,
+        0.545
+      ],
+      "applied_leg_torque_abs_max_Nm": 58.426822662353516,
+      "ee_position_mean_m": 0.022527841851115227,
+      "ee_position_p95_m": 0.037092656083405014,
+      "ee_orientation_mean_deg": 3.9974608421325684,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.10927396267652512,
+      "stance_slip_mean_m_s": 0.07011613994836807,
+      "midstance_slip_mean_m_s": 0.06116710230708122,
+      "phase_contact_agreement": 0.441171875,
+      "contact_dominant_Hz": 3.125,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.295914649963379,
+      "representative_pitch_rms_deg": 4.603641986846924
+    },
+    "forward": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.5947750806808472,
+      "mean_yaw_rad_s": -0.23871292173862457,
+      "vx_abs_error_m_s": 0.3450137674808502,
+      "yaw_abs_error_rad_s": 0.30706465244293213,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.4475,
+        0.5621875,
+        0.41125,
+        0.5228125
+      ],
+      "foot_clearance_p95_m": [
+        0.06544916331768036,
+        0.0627338945865631,
+        0.06969817429780958,
+        0.06227450147271156
+      ],
+      "foot_clearance_p99_m": [
+        0.08485772952437398,
+        0.07484058976173388,
+        0.08373159974813459,
+        0.07879995390772819
+      ],
+      "per_foot_unloaded_fraction": [
+        0.5525,
+        0.4378125,
+        0.58875,
+        0.4771875
+      ],
+      "applied_leg_torque_abs_max_Nm": 61.37346649169922,
+      "ee_position_mean_m": 0.022759519517421722,
+      "ee_position_p95_m": 0.04194904267787932,
+      "ee_orientation_mean_deg": 4.292887210845947,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.09384991228580475,
+      "stance_slip_mean_m_s": 0.06341833621263504,
+      "midstance_slip_mean_m_s": 0.047381721436977386,
+      "phase_contact_agreement": 0.6015625,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.552435874938965,
+      "representative_pitch_rms_deg": 4.064872741699219
+    },
+    "turn": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.6799719929695129,
+      "mean_yaw_rad_s": -0.08470909297466278,
+      "vx_abs_error_m_s": 0.6799719929695129,
+      "yaw_abs_error_rad_s": 0.6847091913223267,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.3965625,
+        0.5865625,
+        0.415,
+        0.525625
+      ],
+      "foot_clearance_p95_m": [
+        0.06495276317000388,
+        0.0587918885052204,
+        0.0655648812651634,
+        0.06634621545672416
+      ],
+      "foot_clearance_p99_m": [
+        0.08696920216083522,
+        0.07293989554047584,
+        0.07771557137370107,
+        0.08262821331620213
+      ],
+      "per_foot_unloaded_fraction": [
+        0.6034375,
+        0.4134375,
+        0.585,
+        0.474375
+      ],
+      "applied_leg_torque_abs_max_Nm": 61.91533660888672,
+      "ee_position_mean_m": 0.02418384701013565,
+      "ee_position_p95_m": 0.04264374617487192,
+      "ee_orientation_mean_deg": 4.128681659698486,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.12118077278137207,
+      "stance_slip_mean_m_s": 0.0844208300113678,
+      "midstance_slip_mean_m_s": 0.054005421698093414,
+      "phase_contact_agreement": 0.59,
+      "contact_dominant_Hz": 2.75,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.661804676055908,
+      "representative_pitch_rms_deg": 4.75265645980835
+    },
+    "forward_turn": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.6046522855758667,
+      "mean_yaw_rad_s": -0.08371628820896149,
+      "vx_abs_error_m_s": 0.35537368059158325,
+      "yaw_abs_error_rad_s": 0.683732807636261,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.42125,
+        0.583125,
+        0.4259375,
+        0.53875
+      ],
+      "foot_clearance_p95_m": [
+        0.07365946546196932,
+        0.06367523074150083,
+        0.06851090118288994,
+        0.061702764779329275
+      ],
+      "foot_clearance_p99_m": [
+        0.08978763148188589,
+        0.07762114018201823,
+        0.08140639975666995,
+        0.07878122776746746
+      ],
+      "per_foot_unloaded_fraction": [
+        0.57875,
+        0.416875,
+        0.5740625,
+        0.46125
+      ],
+      "applied_leg_torque_abs_max_Nm": 63.14622116088867,
+      "ee_position_mean_m": 0.022928569465875626,
+      "ee_position_p95_m": 0.04152682945132254,
+      "ee_orientation_mean_deg": 4.11920690536499,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.10028406232595444,
+      "stance_slip_mean_m_s": 0.0691300705075264,
+      "midstance_slip_mean_m_s": 0.05078267306089401,
+      "phase_contact_agreement": 0.599921875,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 4.370314121246338,
+      "representative_pitch_rms_deg": 4.298245906829834
+    },
+    "conditions": "Terrain=plane, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+    "task_variant": "gait_study_stop",
+    "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_stop/model_433.pt",
+    "walking_thresholds": {
+      "lin_vel_x": 0.1585554544667664,
+      "ang_vel_yaw": 0.5
+    },
+    "clearance_reference": "Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.",
+    "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.",
+    "local_acceptance_criteria": {
+      "stop": false,
+      "forward": false,
+      "turn": false,
+      "combined": false,
+      "no_fall": true,
+      "upright": true
+    },
+    "local_acceptance_pass": false,
+    "selection_error_score": 2.6642791241407395
+  },
+  "data_stop": {
+    "stand": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": false,
+      "mean_vx_m_s": 0.3822668492794037,
+      "mean_yaw_rad_s": -0.1916426122188568,
+      "vx_abs_error_m_s": 0.3822668492794037,
+      "yaw_abs_error_rad_s": 0.2588864862918854,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.55875,
+        0.5340625,
+        0.405,
+        0.5834375
+      ],
+      "foot_clearance_p95_m": [
+        0.0685681663453579,
+        0.06562796086072921,
+        0.045281179249286645,
+        0.058552310243248924
+      ],
+      "foot_clearance_p99_m": [
+        0.07744527280330656,
+        0.07204662472009657,
+        0.0545196604728698,
+        0.068284952789545
+      ],
+      "per_foot_unloaded_fraction": [
+        0.44125,
+        0.4659375,
+        0.595,
+        0.4165625
+      ],
+      "applied_leg_torque_abs_max_Nm": 51.661903381347656,
+      "ee_position_mean_m": 0.02225273847579956,
+      "ee_position_p95_m": 0.04073432311415672,
+      "ee_orientation_mean_deg": 4.163127899169922,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.05891558527946472,
+      "stance_slip_mean_m_s": 0.038166437298059464,
+      "midstance_slip_mean_m_s": 0.03709905222058296,
+      "phase_contact_agreement": 0.5203125,
+      "contact_dominant_Hz": 1.625,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.9402198791503906,
+      "representative_pitch_rms_deg": 3.037635087966919
+    },
+    "forward": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.44349685311317444,
+      "mean_yaw_rad_s": -0.2057129144668579,
+      "vx_abs_error_m_s": 0.19666928052902222,
+      "yaw_abs_error_rad_s": 0.3267585039138794,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5609375,
+        0.5675,
+        0.445,
+        0.596875
+      ],
+      "foot_clearance_p95_m": [
+        0.07930942177772521,
+        0.06250335425138473,
+        0.05542063452303409,
+        0.04684887081384658
+      ],
+      "foot_clearance_p99_m": [
+        0.08922541439533227,
+        0.07550376474857326,
+        0.06566774025559421,
+        0.05966765418648699
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4390625,
+        0.4325,
+        0.555,
+        0.403125
+      ],
+      "applied_leg_torque_abs_max_Nm": 54.833866119384766,
+      "ee_position_mean_m": 0.020803118124604225,
+      "ee_position_p95_m": 0.038461723364889615,
+      "ee_orientation_mean_deg": 4.216747283935547,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.0687057226896286,
+      "stance_slip_mean_m_s": 0.04808051511645317,
+      "midstance_slip_mean_m_s": 0.03460822254419327,
+      "phase_contact_agreement": 0.668515625,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.829892635345459,
+      "representative_pitch_rms_deg": 2.9895668029785156
+    },
+    "turn": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.4556443691253662,
+      "mean_yaw_rad_s": -0.024327676743268967,
+      "vx_abs_error_m_s": 0.45567744970321655,
+      "yaw_abs_error_rad_s": 0.6261786818504333,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5384375,
+        0.5953125,
+        0.4796875,
+        0.5553125
+      ],
+      "foot_clearance_p95_m": [
+        0.0832270063459873,
+        0.06066393740475177,
+        0.05042967498302453,
+        0.04374387748539447
+      ],
+      "foot_clearance_p99_m": [
+        0.09321918621659278,
+        0.0722400552034378,
+        0.06083695642650127,
+        0.06036774560809134
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4615625,
+        0.4046875,
+        0.5203125,
+        0.4446875
+      ],
+      "applied_leg_torque_abs_max_Nm": 59.41995620727539,
+      "ee_position_mean_m": 0.020818591117858887,
+      "ee_position_p95_m": 0.040911672078072996,
+      "ee_orientation_mean_deg": 4.1246256828308105,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.06719552725553513,
+      "stance_slip_mean_m_s": 0.044902510941028595,
+      "midstance_slip_mean_m_s": 0.03412127122282982,
+      "phase_contact_agreement": 0.665625,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.5625476837158203,
+      "representative_pitch_rms_deg": 3.6793863773345947
+    },
+    "forward_turn": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.4308197796344757,
+      "mean_yaw_rad_s": -0.0582454688847065,
+      "vx_abs_error_m_s": 0.18949183821678162,
+      "yaw_abs_error_rad_s": 0.658762514591217,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5471875,
+        0.5896875,
+        0.4621875,
+        0.5790625
+      ],
+      "foot_clearance_p95_m": [
+        0.08488467186689376,
+        0.06067621707916258,
+        0.05095187239348888,
+        0.041922275349497794
+      ],
+      "foot_clearance_p99_m": [
+        0.09361574068665493,
+        0.07083488121628752,
+        0.05989700876176348,
+        0.05682108104228972
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4528125,
+        0.4103125,
+        0.5378125,
+        0.4209375
+      ],
+      "applied_leg_torque_abs_max_Nm": 49.41336441040039,
+      "ee_position_mean_m": 0.020250149071216583,
+      "ee_position_p95_m": 0.03898525498807429,
+      "ee_orientation_mean_deg": 4.496166706085205,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.06045282632112503,
+      "stance_slip_mean_m_s": 0.039726193994283676,
+      "midstance_slip_mean_m_s": 0.03181552141904831,
+      "phase_contact_agreement": 0.66390625,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 4.7094597816467285,
+      "representative_pitch_rms_deg": 3.165363311767578
+    },
+    "conditions": "Terrain=plane, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+    "task_variant": "gait_study_data_stop",
+    "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_data_stop/model_433.pt",
+    "walking_thresholds": {
+      "lin_vel_x": 0.1585554544667664,
+      "ang_vel_yaw": 0.5
+    },
+    "clearance_reference": "Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.",
+    "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.",
+    "local_acceptance_criteria": {
+      "stop": false,
+      "forward": false,
+      "turn": false,
+      "combined": false,
+      "no_fall": true,
+      "upright": true
+    },
+    "local_acceptance_pass": false,
+    "selection_error_score": 1.7852812737226487
+  },
+  "speed": {
+    "stand": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": false,
+      "mean_vx_m_s": 0.24600695073604584,
+      "mean_yaw_rad_s": -0.13625997304916382,
+      "vx_abs_error_m_s": 0.24608974158763885,
+      "yaw_abs_error_rad_s": 0.2156495302915573,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.6003125,
+        0.6015625,
+        0.6940625,
+        0.61375
+      ],
+      "foot_clearance_p95_m": [
+        0.04192081764340399,
+        0.05350589081645011,
+        0.012783805280923813,
+        0.04771038629114627
+      ],
+      "foot_clearance_p99_m": [
+        0.05061898708343505,
+        0.06089486762881279,
+        0.019253195896744655,
+        0.05821793489158153
+      ],
+      "per_foot_unloaded_fraction": [
+        0.3996875,
+        0.3984375,
+        0.3059375,
+        0.38625
+      ],
+      "applied_leg_torque_abs_max_Nm": 40.80917739868164,
+      "ee_position_mean_m": 0.019038354977965355,
+      "ee_position_p95_m": 0.0316979069262743,
+      "ee_orientation_mean_deg": 3.9695661067962646,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.0413820706307888,
+      "stance_slip_mean_m_s": 0.031246185302734375,
+      "midstance_slip_mean_m_s": 0.02935674414038658,
+      "phase_contact_agreement": 0.627421875,
+      "contact_dominant_Hz": 2.25,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.6015021800994873,
+      "representative_pitch_rms_deg": 3.427988052368164
+    },
+    "forward": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.2811205983161926,
+      "mean_yaw_rad_s": -0.2244027853012085,
+      "vx_abs_error_m_s": 0.0793854370713234,
+      "yaw_abs_error_rad_s": 0.28562936186790466,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5684375,
+        0.6253125,
+        0.569375,
+        0.53625
+      ],
+      "foot_clearance_p95_m": [
+        0.06357817426323885,
+        0.05940482206642622,
+        0.03950190283358095,
+        0.04324100390076637
+      ],
+      "foot_clearance_p99_m": [
+        0.07512537479400634,
+        0.06948928669095036,
+        0.047753879353404007,
+        0.05513390734791744
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4315625,
+        0.3746875,
+        0.430625,
+        0.46375
+      ],
+      "applied_leg_torque_abs_max_Nm": 43.06471633911133,
+      "ee_position_mean_m": 0.01991541124880314,
+      "ee_position_p95_m": 0.036234267242252816,
+      "ee_orientation_mean_deg": 4.121975898742676,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.04486986622214317,
+      "stance_slip_mean_m_s": 0.03366884961724281,
+      "midstance_slip_mean_m_s": 0.02719229646027088,
+      "phase_contact_agreement": 0.71578125,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.7988128662109375,
+      "representative_pitch_rms_deg": 2.572009325027466
+    },
+    "turn": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.2924288809299469,
+      "mean_yaw_rad_s": -0.07655934244394302,
+      "vx_abs_error_m_s": 0.2924288809299469,
+      "yaw_abs_error_rad_s": 0.6765593886375427,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5225,
+        0.6384375,
+        0.615625,
+        0.5425
+      ],
+      "foot_clearance_p95_m": [
+        0.06821472272276873,
+        0.05878835283219814,
+        0.02950274311006068,
+        0.03848603591322895
+      ],
+      "foot_clearance_p99_m": [
+        0.07784739941358566,
+        0.06857663676142686,
+        0.0382015712559223,
+        0.05341597825288771
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4775,
+        0.3615625,
+        0.384375,
+        0.4575
+      ],
+      "applied_leg_torque_abs_max_Nm": 41.42379379272461,
+      "ee_position_mean_m": 0.01950838416814804,
+      "ee_position_p95_m": 0.0374995244666934,
+      "ee_orientation_mean_deg": 3.974432945251465,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.04579430818557739,
+      "stance_slip_mean_m_s": 0.03407096490263939,
+      "midstance_slip_mean_m_s": 0.026479123160243034,
+      "phase_contact_agreement": 0.705546875,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.7341175079345703,
+      "representative_pitch_rms_deg": 2.7953038215637207
+    },
+    "forward_turn": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.29229944944381714,
+      "mean_yaw_rad_s": -0.07976570725440979,
+      "vx_abs_error_m_s": 0.07361336797475815,
+      "yaw_abs_error_rad_s": 0.6797657608985901,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5409375,
+        0.6309375,
+        0.6003125,
+        0.5409375
+      ],
+      "foot_clearance_p95_m": [
+        0.07024955153465269,
+        0.05918365679681298,
+        0.03258194141089916,
+        0.0405847642570734
+      ],
+      "foot_clearance_p99_m": [
+        0.08002320557832715,
+        0.07045588508248313,
+        0.04205027662217615,
+        0.05197345115244389
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4590625,
+        0.3690625,
+        0.3996875,
+        0.4590625
+      ],
+      "applied_leg_torque_abs_max_Nm": 42.209136962890625,
+      "ee_position_mean_m": 0.01935776323080063,
+      "ee_position_p95_m": 0.03575170505791902,
+      "ee_orientation_mean_deg": 4.415993690490723,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.04488430544734001,
+      "stance_slip_mean_m_s": 0.033308353275060654,
+      "midstance_slip_mean_m_s": 0.026363879442214966,
+      "phase_contact_agreement": 0.7078125,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 4.5966668128967285,
+      "representative_pitch_rms_deg": 3.2282938957214355
+    },
+    "conditions": "Terrain=plane, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+    "task_variant": "gait_study_speed",
+    "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_speed/model_433.pt",
+    "walking_thresholds": {
+      "lin_vel_x": 0.1585554544667664,
+      "ang_vel_yaw": 0.5
+    },
+    "clearance_reference": "Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.",
+    "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.",
+    "local_acceptance_criteria": {
+      "stop": false,
+      "forward": true,
+      "turn": false,
+      "combined": false,
+      "no_fall": true,
+      "upright": true
+    },
+    "local_acceptance_pass": false,
+    "selection_error_score": 1.2487986400723456
+  },
+  "stable": {
+    "stand": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": false,
+      "mean_vx_m_s": 0.2543994188308716,
+      "mean_yaw_rad_s": -0.09607162326574326,
+      "vx_abs_error_m_s": 0.25645336508750916,
+      "yaw_abs_error_rad_s": 0.18740764260292053,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.640625,
+        0.6490625,
+        0.711875,
+        0.59875
+      ],
+      "foot_clearance_p95_m": [
+        0.029381899908184985,
+        0.039266270771622626,
+        0.010615146160125731,
+        0.042015109583735444
+      ],
+      "foot_clearance_p99_m": [
+        0.035139411315321896,
+        0.047859100401401455,
+        0.015677237510681095,
+        0.05290547385811803
+      ],
+      "per_foot_unloaded_fraction": [
+        0.359375,
+        0.3509375,
+        0.288125,
+        0.40125
+      ],
+      "applied_leg_torque_abs_max_Nm": 40.965518951416016,
+      "ee_position_mean_m": 0.018041186034679413,
+      "ee_position_p95_m": 0.029963491205126,
+      "ee_orientation_mean_deg": 3.910723924636841,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.04512989893555641,
+      "stance_slip_mean_m_s": 0.03523698076605797,
+      "midstance_slip_mean_m_s": 0.031745556741952896,
+      "phase_contact_agreement": 0.650078125,
+      "contact_dominant_Hz": 2.5,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 3.1024060249328613,
+      "representative_pitch_rms_deg": 3.4195854663848877
+    },
+    "forward": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.0,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.27185431122779846,
+      "mean_yaw_rad_s": -0.22078779339790344,
+      "vx_abs_error_m_s": 0.07537854462862015,
+      "yaw_abs_error_rad_s": 0.2730753421783447,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5325,
+        0.670625,
+        0.6253125,
+        0.553125
+      ],
+      "foot_clearance_p95_m": [
+        0.04666699916124341,
+        0.05296807922422886,
+        0.033466819301247584,
+        0.0337287601083517
+      ],
+      "foot_clearance_p99_m": [
+        0.05431977972388264,
+        0.06282794162631034,
+        0.04733504198491572,
+        0.04958439253270604
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4675,
+        0.329375,
+        0.3746875,
+        0.446875
+      ],
+      "applied_leg_torque_abs_max_Nm": 44.05363082885742,
+      "ee_position_mean_m": 0.019537050276994705,
+      "ee_position_p95_m": 0.0366780312731862,
+      "ee_orientation_mean_deg": 4.156888008117676,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.050088945776224136,
+      "stance_slip_mean_m_s": 0.03904000297188759,
+      "midstance_slip_mean_m_s": 0.027696356177330017,
+      "phase_contact_agreement": 0.723203125,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.269981622695923,
+      "representative_pitch_rms_deg": 2.4963595867156982
+    },
+    "turn": {
+      "command_vx_m_s": 0.0,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.2551744878292084,
+      "mean_yaw_rad_s": -0.06057970970869064,
+      "vx_abs_error_m_s": 0.2553081214427948,
+      "yaw_abs_error_rad_s": 0.6605796813964844,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.5115625,
+        0.6475,
+        0.6746875,
+        0.608125
+      ],
+      "foot_clearance_p95_m": [
+        0.0510502867400646,
+        0.054259308055043184,
+        0.022091358527541138,
+        0.03159589134156703
+      ],
+      "foot_clearance_p99_m": [
+        0.05866287797689436,
+        0.0648271918296814,
+        0.034394017755985246,
+        0.0455277782678604
+      ],
+      "per_foot_unloaded_fraction": [
+        0.4884375,
+        0.3525,
+        0.3253125,
+        0.391875
+      ],
+      "applied_leg_torque_abs_max_Nm": 44.597984313964844,
+      "ee_position_mean_m": 0.019834741950035095,
+      "ee_position_p95_m": 0.03912797123193738,
+      "ee_orientation_mean_deg": 3.9066262245178223,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.04358818009495735,
+      "stance_slip_mean_m_s": 0.03265773132443428,
+      "midstance_slip_mean_m_s": 0.025813603773713112,
+      "phase_contact_agreement": 0.70234375,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 2.144649028778076,
+      "representative_pitch_rms_deg": 3.1461739540100098
+    },
+    "forward_turn": {
+      "command_vx_m_s": 0.25,
+      "command_yaw_rad_s": 0.6000000238418579,
+      "command_above_walking_threshold": true,
+      "mean_vx_m_s": 0.2729927599430084,
+      "mean_yaw_rad_s": -0.059169262647628784,
+      "vx_abs_error_m_s": 0.06861922144889832,
+      "yaw_abs_error_rad_s": 0.6591693162918091,
+      "upright_fraction": 1.0,
+      "fall_resets": 0,
+      "per_foot_loaded_fraction": [
+        0.52125,
+        0.645,
+        0.63125,
+        0.5875
+      ],
+      "foot_clearance_p95_m": [
+        0.049886065721511816,
+        0.0533372700214385,
+        0.02919834814965724,
+        0.03307189624756561
+      ],
+      "foot_clearance_p99_m": [
+        0.05768750391900538,
+        0.06230153061449527,
+        0.041367541477084144,
+        0.04625524356961245
+      ],
+      "per_foot_unloaded_fraction": [
+        0.47875,
+        0.355,
+        0.36875,
+        0.4125
+      ],
+      "applied_leg_torque_abs_max_Nm": 42.71430969238281,
+      "ee_position_mean_m": 0.0182342529296875,
+      "ee_position_p95_m": 0.0338301470503211,
+      "ee_orientation_mean_deg": 3.8736541271209717,
+      "arm_contact_gt_1N_fraction": 0.0,
+      "arm_contact_max_N": 0.0,
+      "stance_center_speed_mean_m_s": 0.04527914151549339,
+      "stance_slip_mean_m_s": 0.0337875559926033,
+      "midstance_slip_mean_m_s": 0.026782363653182983,
+      "phase_contact_agreement": 0.71375,
+      "contact_dominant_Hz": 2.0,
+      "fall_resets_total": 0,
+      "representative_roll_rms_deg": 4.123520851135254,
+      "representative_pitch_rms_deg": 3.5933568477630615
+    },
+    "conditions": "Terrain=plane, DR=False, deterministic history inference, random arm goals=True, 32 envs, 10.0s; 8 envs per command.",
+    "task_variant": "gait_study_stable",
+    "checkpoint": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-gait/logs/as2piper-low/gait_ablation_v1_stable/model_433.pt",
+    "walking_thresholds": {
+      "lin_vel_x": 0.1585554544667664,
+      "ang_vel_yaw": 0.5
+    },
+    "clearance_reference": "Foot height relative to environment origin, accurate on plane; not local terrain clearance on trimesh.",
+    "slip_definition": "Estimated spherical-foot bottom point world velocity v_com + omega cross [0,0,-0.028], loaded when Fz>5N; not raw foot-center velocity.",
+    "local_acceptance_criteria": {
+      "stop": false,
+      "forward": true,
+      "turn": false,
+      "combined": false,
+      "no_fall": true,
+      "upright": true
+    },
+    "local_acceptance_pass": false,
+    "selection_error_score": 1.18982884734869
+  }
+}

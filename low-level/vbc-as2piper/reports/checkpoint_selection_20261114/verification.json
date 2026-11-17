@@ -1,0 +1,14 @@
+{
+  "original_source_manifest_unchanged": true,
+  "all_226_checkpoint_metadata_unchanged": true,
+  "nominal_evaluations": 20,
+  "scalar_metrics": 11200,
+  "dynamic_schedules_bitwise_match_existing_vy0": true,
+  "dynamic_100percent_vy_zero": true,
+  "optimizer_updates": 0,
+  "recommended_iteration": 28000,
+  "recommended_checkpoint_sha256": "f8d283d6872f866f3edb72b8dded6645df232d048746caa128a47c15610cb4d3",
+  "recommended_model_and_optimizer_finite": true,
+  "recommended_checkpoint_iteration": 28000,
+  "model_parameter_tensors": 41
+}

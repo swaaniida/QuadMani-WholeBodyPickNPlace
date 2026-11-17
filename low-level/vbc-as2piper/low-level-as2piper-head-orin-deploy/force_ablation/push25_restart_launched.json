@@ -1,0 +1,23 @@
+{
+  "stopped_pids": [
+    1255859
+  ],
+  "deleted_wandb": [
+    {
+      "run": "quadruped_capstone/as2piper-low/as2piper_headpiper_orin_200N_0.18m",
+      "result": "deleted"
+    }
+  ],
+  "deleted_local_paths": [
+    "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/runs/as2piper_headpiper_orin_200N_0.18m",
+    "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/failed_initializations/as2piper_headpiper_orin_200N_0.18m_20261111T130018Z",
+    "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/B_train_20261111T125451Z.log",
+    "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/B_train_20261111T131332Z.log"
+  ],
+  "new_pid": 1267655,
+  "new_log": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-head-orin-nocontact/experiments/contact_force_ablation/B_push25_train_20261111T135342Z.log",
+  "display_name": "as2piper_headpiper_orin_200N_0.18m",
+  "standing_push_multiplier": 2.5,
+  "start_iteration": 0,
+  "status": "detached process launched; online initialization not yet verified"
+}

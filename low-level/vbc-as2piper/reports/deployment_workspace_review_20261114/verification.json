@@ -1,0 +1,11 @@
+{
+  "no_production_code_edits": true,
+  "production_sources_except_preexisting_camera_asset_match_training_manifest": true,
+  "camera_asset_preexisting_new_hash": "8df7eb7b18d68bb376eca680bd09f256f8bd6f8cdfd9083d2fe5028fc0733139",
+  "training_asset_frozen_hash": "d0d667cbcdf9dbbad62432ed149764e305a395685e460a3bd3157c80bad94876",
+  "camera_append_preserves_all_original_links_and_joints": true,
+  "training_nominal_mass_kg": 23.328064081329995,
+  "current_camera_nominal_mass_kg": 23.43034047413,
+  "camera_added_nominal_kg": 0.10227639280000389,
+  "optimizer_updates": 0
+}

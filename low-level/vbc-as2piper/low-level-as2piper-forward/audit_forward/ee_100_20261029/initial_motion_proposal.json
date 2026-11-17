@@ -1,0 +1,31 @@
+{
+  "applied": false,
+  "proposal": "Keep actual FK initial start; use a distinct but close reachable initial end, retaining B1 spherical interpolation.",
+  "init_pos_start": [
+    0.4278984686862198,
+    0.421686284190671,
+    0.0
+  ],
+  "candidate_init_pos_end": [
+    0.46,
+    0.25,
+    0.0
+  ],
+  "path_points": 41,
+  "IK_rejections": 0,
+  "body_proxy_collisions": 0,
+  "endpoint_arm_position_m": [
+    0.4456997139868966,
+    0.0,
+    0.11380582125708055
+  ],
+  "endpoint_arm_joints_rad": [
+    -1.126143160945503e-07,
+    1.4502521753311157,
+    -0.7395703196525574,
+    -3.1707179459772306e-07,
+    0.011004495434463024,
+    2.7820658488053596e-07
+  ],
+  "limitation": "Kinematic/collision-screened proposal only; not used in the 100-iteration run and not dynamically validated as a new configuration."
+}

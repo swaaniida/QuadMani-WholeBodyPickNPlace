@@ -1,0 +1,38 @@
+[
+  {
+    "iteration": 45000,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 120.06661367416382
+  },
+  {
+    "iteration": 45000,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 129.97733759880066
+  },
+  {
+    "iteration": 43400,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 116.07653164863586
+  },
+  {
+    "iteration": 43400,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 134.483056306839
+  },
+  {
+    "iteration": 40600,
+    "terrain": "flat",
+    "returncode": 0,
+    "wall_seconds": 114.2830102443695
+  },
+  {
+    "iteration": 40600,
+    "terrain": "rough",
+    "returncode": 0,
+    "wall_seconds": 131.33290338516235
+  }
+]

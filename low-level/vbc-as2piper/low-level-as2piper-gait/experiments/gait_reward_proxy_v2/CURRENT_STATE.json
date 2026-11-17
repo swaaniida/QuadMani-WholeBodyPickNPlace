@@ -1,0 +1,165 @@
+{
+  "updated_utc": "2026-10-31T16:37:01.673481+00:00",
+  "runs": {
+    "stable_proxy": {
+      "latest_logger_iteration": [
+        "200",
+        "600"
+      ],
+      "pid": null,
+      "alive": false,
+      "finished": null,
+      "log": "experiments/gait_reward_proxy_v2/stable_proxy_train.log"
+    },
+    "stable_proxy_resume1": {
+      "latest_logger_iteration": [
+        "334",
+        "600"
+      ],
+      "pid": 691759,
+      "alive": false,
+      "finished": {
+        "completed_updates": 335,
+        "cooperative_stop": true
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/stable_proxy_resume1_20261030_080636_691754.log"
+    },
+    "progress_gain2_proxy": {
+      "latest_logger_iteration": [
+        "201",
+        "600"
+      ],
+      "pid": null,
+      "alive": false,
+      "finished": null,
+      "log": "experiments/gait_reward_proxy_v2/progress_gain2_proxy_train.log"
+    },
+    "progress_gain2_proxy_resume1": {
+      "latest_logger_iteration": [
+        "502",
+        "600"
+      ],
+      "pid": 691772,
+      "alive": false,
+      "finished": {
+        "completed_updates": 503,
+        "cooperative_stop": true
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/progress_gain2_proxy_resume1_20261030_080637_691767.log"
+    },
+    "stable_proxy_ground": {
+      "latest_logger_iteration": [
+        "133",
+        "600"
+      ],
+      "pid": null,
+      "alive": false,
+      "finished": null,
+      "log": "experiments/gait_reward_proxy_v2/stable_proxy_ground_train.log"
+    },
+    "stable_proxy_ground_resume1": {
+      "latest_logger_iteration": [
+        "304",
+        "600"
+      ],
+      "pid": 691803,
+      "alive": false,
+      "finished": {
+        "completed_updates": 305,
+        "cooperative_stop": true
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/stable_proxy_ground_resume1_20261030_080639_691796.log"
+    },
+    "progress_gain2_proxy_yaw4": {
+      "latest_logger_iteration": [
+        "432",
+        "600"
+      ],
+      "pid": 704881,
+      "alive": false,
+      "finished": {
+        "completed_updates": 433,
+        "cooperative_stop": true
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/progress_gain2_proxy_yaw4_20261030_084640_704876.log"
+    },
+    "progress_gain2_proxy_ground_floor": {
+      "latest_logger_iteration": [
+        "331",
+        "600"
+      ],
+      "pid": 710198,
+      "alive": false,
+      "finished": {
+        "completed_updates": 332,
+        "cooperative_stop": true
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/progress_gain2_proxy_ground_floor_20261030_090408_710193.log"
+    },
+    "progress_gain2_proxy_smooth_yaw4": {
+      "latest_logger_iteration": [
+        "494",
+        "600"
+      ],
+      "pid": 720756,
+      "alive": false,
+      "finished": {
+        "completed_updates": 495,
+        "cooperative_stop": true
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/progress_gain2_proxy_smooth_yaw4_20261030_093803_720749.log"
+    },
+    "progress_gain2_proxy_smooth_yaw4_contactmatch": {
+      "latest_logger_iteration": [
+        "599",
+        "600"
+      ],
+      "pid": 722632,
+      "alive": false,
+      "finished": {
+        "completed_updates": 600,
+        "cooperative_stop": false
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/progress_gain2_proxy_smooth_yaw4_contactmatch_20261030_094442_722626.log"
+    },
+    "progress_gain2_proxy_smooth_yaw4_footground": {
+      "latest_logger_iteration": [
+        "599",
+        "600"
+      ],
+      "pid": 741451,
+      "alive": false,
+      "finished": {
+        "completed_updates": 600,
+        "cooperative_stop": false
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/progress_gain2_proxy_smooth_yaw4_footground_20261030_105224_741434.log"
+    },
+    "progress_gain2_proxy_smooth_yaw4_contactmatch_deadband": {
+      "latest_logger_iteration": [
+        "999",
+        "1000"
+      ],
+      "pid": 749042,
+      "alive": false,
+      "finished": {
+        "completed_updates": 1000,
+        "cooperative_stop": false
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/progress_gain2_proxy_smooth_yaw4_contactmatch_deadband_20261030_111939_749034.log"
+    },
+    "progress_gain2_proxy_smooth_yaw4_footground_deadband": {
+      "latest_logger_iteration": [
+        "599",
+        "600"
+      ],
+      "pid": 763846,
+      "alive": false,
+      "finished": {
+        "completed_updates": 600,
+        "cooperative_stop": false
+      },
+      "log": "experiments/gait_reward_proxy_v2/resume_logs/gait_reward_smooth_yaw4_footground_deadband_fresh_s7_v6_20261031_105454_763841.log"
+    }
+  }
+}

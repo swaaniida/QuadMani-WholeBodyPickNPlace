@@ -1,0 +1,9 @@
+{
+  "iterations": [
+    34000,
+    40000,
+    40600,
+    43400
+  ],
+  "reason": "40600 improves vx and roll in both-terrain validation;28k has no clear advantage over20k/43.4k"
+}

@@ -1,0 +1,15 @@
+{
+  "protected_files": 97,
+  "changed_original_files": [],
+  "copied_reward_gait_hardware_ppo_unchanged": {
+    "legged_gym/envs/rewards/maniploco_rewards.py": true,
+    "legged_gym/envs/manip_loco/b1z1_config.py": true,
+    "validation/hardware.json": true,
+    "resources/robots/as2piper/urdf/as2piper_head_orin_training.urdf": true,
+    "rsl_rl_local/rsl_rl/algorithms/ppo.py": true,
+    "rsl_rl_local/rsl_rl/storage/rollout_storage.py": true,
+    "legged_gym/utils/helpers.py": true
+  },
+  "optimizer_steps": 0,
+  "network_parameters_unchanged_in_backward_test": true
+}

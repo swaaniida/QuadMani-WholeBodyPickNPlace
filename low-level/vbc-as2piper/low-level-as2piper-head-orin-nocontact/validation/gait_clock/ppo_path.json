@@ -1,0 +1,126 @@
+{
+  "mode": "structural replay and backward only; real PD observations/rewards with sampled diagnostic actions; no on-policy training",
+  "optimizer_steps": 0,
+  "timeout_bootstrap_verified": true,
+  "advantage_global_mean": -1.4901161193847656e-08,
+  "advantage_global_std": 0.9999998807907104,
+  "advantage_branch_means": [
+    0.6197277903556824,
+    -0.6197278499603271
+  ],
+  "mixing_ratio_at_0": 0.0,
+  "actual_ppo_update_gradients": {
+    "std": 0.3546246588230133,
+    "actor.priv_encoder": 0.019472545620787957,
+    "actor.history_encoder": 0.0,
+    "actor.actor_backbone": 0.09742761653240076,
+    "actor.actor_leg_control_head": 0.3768361970802192,
+    "actor.actor_arm_control_head": 0.10514679480214066,
+    "critic.critic_backbone": 0.07246339963928321,
+    "critic.critic_leg_control_head": 0.39878194928095706,
+    "critic.critic_arm_control_head": 0.11183553069087189
+  },
+  "actual_dagger_gradients": {
+    "std": 0.0,
+    "actor.priv_encoder": 0.0,
+    "actor.history_encoder": 0.9999992775265747,
+    "actor.actor_backbone": 0.0,
+    "actor.actor_leg_control_head": 0.0,
+    "actor.actor_arm_control_head": 0.0,
+    "critic.critic_backbone": 0.0,
+    "critic.critic_leg_control_head": 0.0,
+    "critic.critic_arm_control_head": 0.0
+  },
+  "advantage_routing_gradients": {
+    "leg_mix0": {
+      "std": 0.4139002561569214,
+      "actor.priv_encoder": 0.01686980693061401,
+      "actor.history_encoder": 0.0,
+      "actor.actor_backbone": 0.08277440102591428,
+      "actor.actor_leg_control_head": 0.3185110177022345,
+      "actor.actor_arm_control_head": 0.0,
+      "critic.critic_backbone": 0.0,
+      "critic.critic_leg_control_head": 0.0,
+      "critic.critic_arm_control_head": 0.0
+    },
+    "leg_mix1": {
+      "std": 0.451068252325058,
+      "actor.priv_encoder": 0.02791327458035116,
+      "actor.history_encoder": 0.0,
+      "actor.actor_backbone": 0.09651698224657547,
+      "actor.actor_leg_control_head": 0.3185110177022345,
+      "actor.actor_arm_control_head": 0.23518498122024692,
+      "critic.critic_backbone": 0.0,
+      "critic.critic_leg_control_head": 0.0,
+      "critic.critic_arm_control_head": 0.0
+    },
+    "arm_mix0": {
+      "std": 0.17930173873901367,
+      "actor.priv_encoder": 0.016732360968557777,
+      "actor.history_encoder": 0.0,
+      "actor.actor_backbone": 0.05398442502885743,
+      "actor.actor_leg_control_head": 0.0,
+      "actor.actor_arm_control_head": 0.23518498122024692,
+      "critic.critic_backbone": 0.0,
+      "critic.critic_leg_control_head": 0.0,
+      "critic.critic_arm_control_head": 0.0
+    },
+    "arm_mix1": {
+      "std": 0.451068252325058,
+      "actor.priv_encoder": 0.02791327458035116,
+      "actor.history_encoder": 0.0,
+      "actor.actor_backbone": 0.09651698224657547,
+      "actor.actor_leg_control_head": 0.3185110177022345,
+      "actor.actor_arm_control_head": 0.23518498122024692,
+      "critic.critic_backbone": 0.0,
+      "critic.critic_leg_control_head": 0.0,
+      "critic.critic_arm_control_head": 0.0
+    }
+  },
+  "old_682_jit_input_rejected": true,
+  "old_726_jit_input_rejected": true,
+  "old_744_actor_input_rejected": true,
+  "old_744_critic_input_rejected": true,
+  "old_actor700_input_rejected": true,
+  "old_critic700_input_rejected": true,
+  "network_input_widths": {
+    "actor_proprio_plus_latent": 87,
+    "critic_proprio_plus_priv": 85,
+    "history_frame": 67,
+    "storage_observation": 755,
+    "jit_deployment": 737
+  },
+  "history_actor_privileged_independence_max_error": 0.0,
+  "privileged_actor_sensitivity": 0.12263980507850647,
+  "scripted_deployment_max_error": 0.0,
+  "default_inference_history_verified": true,
+  "all_parameters_unchanged": true,
+  "adam_state_entries": 0,
+  "history_adam_state_entries": 0,
+  "standing_risk_counterfactual": [
+    {
+      "vx": 0.0,
+      "velocity_weighted": 0.0,
+      "walking_dof_unchanged": 1.464,
+      "two_term_sum": 1.464
+    },
+    {
+      "vx": 0.05,
+      "velocity_weighted": 0.33332222259258026,
+      "walking_dof_unchanged": 1.464,
+      "two_term_sum": 1.7973222225925802
+    },
+    {
+      "vx": 0.15,
+      "velocity_weighted": 0.9999666677777407,
+      "walking_dof_unchanged": 1.464,
+      "two_term_sum": 2.4639666677777408
+    },
+    {
+      "vx": 0.3,
+      "velocity_weighted": 1.9999333355554814,
+      "walking_dof_unchanged": 1.464,
+      "two_term_sum": 3.463933335555481
+    }
+  ]
+}

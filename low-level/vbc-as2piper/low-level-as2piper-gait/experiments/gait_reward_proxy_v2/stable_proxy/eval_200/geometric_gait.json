@@ -1,0 +1,99 @@
+{
+  "reference": "Shortest distance to actual terrain triangles or dynamic oriented box minus sphere radius 0.028m. Geometric near-contact gap<2mm, not GRF. Excludes first 2s, done frames and abs roll/pitch>=0.35rad. Unsigned geometry is not a penetration-depth test.",
+  "sampling_dt_s": 0.1,
+  "completed_updates": 201,
+  "conditions": "Terrain=trimesh, DR=True, deterministic history inference, random arm goals=True, 64 envs, 20.0s; 16 envs per command.",
+  "stand": {
+    "valid_fraction": 0.9895833333333334,
+    "gap_p95_per_foot_m": [
+      1.5025958418845653e-06,
+      8.672475814819326e-06,
+      1.563783735036841e-05,
+      0.011267315968870886
+    ],
+    "contact_fraction_per_foot": [
+      0.9817543859649123,
+      0.98,
+      0.9610526315789474,
+      0.9368421052631579
+    ],
+    "contact_proxy_agreement": 0.7933333333333333,
+    "contact_dominant_Hz": 0.611111111111111,
+    "grid_minus_contact_ground_abs_p95_m": 0.03816533125936985,
+    "counterfactual_grid_height_reward": 0.0,
+    "counterfactual_last_support_height_reward": 0.0,
+    "contact_proxy_precision": 0.9997687326549491,
+    "contact_proxy_recall": 0.786,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.018501492217183113
+  },
+  "forward": {
+    "valid_fraction": 0.9947916666666666,
+    "gap_p95_per_foot_m": [
+      0.026406501233577698,
+      0.011593522876501077,
+      0.02036505714058874,
+      0.021109952777624102
+    ],
+    "contact_fraction_per_foot": [
+      0.8101221640488656,
+      0.8795811518324608,
+      0.8174520069808028,
+      0.8195462478184992
+    ],
+    "contact_proxy_agreement": 0.8592495636998255,
+    "contact_dominant_Hz": 2.0,
+    "grid_minus_contact_ground_abs_p95_m": 0.04117737524211407,
+    "counterfactual_grid_height_reward": 0.5697982907295227,
+    "counterfactual_last_support_height_reward": 0.6187672019004822,
+    "contact_proxy_precision": 1.0,
+    "contact_proxy_recall": 0.8307627741055503,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.034493058919906616
+  },
+  "turn": {
+    "valid_fraction": 0.9885416666666667,
+    "gap_p95_per_foot_m": [
+      0.005853392556309666,
+      0.004616845771670317,
+      0.031014276295900336,
+      0.03895721137523646
+    ],
+    "contact_fraction_per_foot": [
+      0.9262381454162276,
+      0.9315068493150684,
+      0.7625570776255708,
+      0.6754478398314014
+    ],
+    "contact_proxy_agreement": 0.8587987355110642,
+    "contact_dominant_Hz": 2.0,
+    "grid_minus_contact_ground_abs_p95_m": 0.03457869179546833,
+    "counterfactual_grid_height_reward": 0.5901434421539307,
+    "counterfactual_last_support_height_reward": 0.6280215978622437,
+    "contact_proxy_precision": 0.9996144454440303,
+    "contact_proxy_recall": 0.8289459661089204,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.041234198957681656
+  },
+  "forward_turn": {
+    "valid_fraction": 0.9840277777777777,
+    "gap_p95_per_foot_m": [
+      0.013365821167826648,
+      0.010533864982426143,
+      0.029503710567951195,
+      0.0377553928643465
+    ],
+    "contact_fraction_per_foot": [
+      0.8906139731827806,
+      0.9064925899788285,
+      0.7868736767819337,
+      0.7381792519407199
+    ],
+    "contact_proxy_agreement": 0.8589449541284404,
+    "contact_dominant_Hz": 2.0,
+    "grid_minus_contact_ground_abs_p95_m": 0.034780662506818764,
+    "counterfactual_grid_height_reward": 0.5659497380256653,
+    "counterfactual_last_support_height_reward": 0.6123524308204651,
+    "contact_proxy_precision": 0.9998720900486058,
+    "contact_proxy_recall": 0.8302708443972384,
+    "geometric_contact_estimated_bottom_point_slip_m_s": 0.034607693552970886
+  },
+  "slip_note": "Uses recorded v_COM + omega cross vertical sphere-bottom offset; approximate contact-point slip on rough terrain."
+}

@@ -1,0 +1,63 @@
+{
+  "completed_iterations": 401,
+  "definition": "Supplementary0.5s cycle-average metrics at original2Hz; keep original instantaneous strict gate unchanged. Exclude cycles with resets or absRP>=.35; require >=85% valid cycles. Pose residual relative to endpoint chord/linear yaw includes commanded curvature, not a pure disturbance estimate.",
+  "groups": {
+    "stand": {
+      "vx_mean": 9.431001672055572e-05,
+      "yaw_mean": 0.0020235932897776365,
+      "cycle_vx_MAE_m_s": 0.012197266332805157,
+      "cycle_yaw_MAE_rad_s": 0.01870129257440567,
+      "cycle_vy_MAE_m_s": 0.010374730452895164,
+      "valid_cycle_fraction": 0.9428571428571428,
+      "cycles": 528,
+      "xy_departure_from_endpoint_chord_p95_m": 0.028389160423198896,
+      "yaw_departure_from_endpoint_linear_p95_deg": 0.5957437501642793
+    },
+    "forward": {
+      "vx_mean": 0.25227850675582886,
+      "yaw_mean": 0.018705517053604126,
+      "cycle_vx_MAE_m_s": 0.11661937832832336,
+      "cycle_yaw_MAE_rad_s": 0.09654716402292252,
+      "cycle_vy_MAE_m_s": 0.049600038677453995,
+      "valid_cycle_fraction": 0.8714285714285714,
+      "cycles": 488,
+      "xy_departure_from_endpoint_chord_p95_m": 0.043612672361177024,
+      "yaw_departure_from_endpoint_linear_p95_deg": 3.267895450165567
+    },
+    "turn": {
+      "vx_mean": 0.20691251754760742,
+      "yaw_mean": 0.44848644733428955,
+      "cycle_vx_MAE_m_s": 0.2132643163204193,
+      "cycle_yaw_MAE_rad_s": 0.18180739879608154,
+      "cycle_vy_MAE_m_s": 0.06666184961795807,
+      "valid_cycle_fraction": 0.8821428571428571,
+      "cycles": 494,
+      "xy_departure_from_endpoint_chord_p95_m": 0.04952042957826282,
+      "yaw_departure_from_endpoint_linear_p95_deg": 3.874946441897026
+    },
+    "forward_turn": {
+      "vx_mean": 0.17188233137130737,
+      "yaw_mean": 0.41485586762428284,
+      "cycle_vx_MAE_m_s": 0.11756055057048798,
+      "cycle_yaw_MAE_rad_s": 0.21778112649917603,
+      "cycle_vy_MAE_m_s": 0.06289894133806229,
+      "valid_cycle_fraction": 0.9142857142857143,
+      "cycles": 512,
+      "xy_departure_from_endpoint_chord_p95_m": 0.051835542442873396,
+      "yaw_departure_from_endpoint_linear_p95_deg": 3.8734368753215818
+    }
+  },
+  "cycle_baseline_criteria": {
+    "stop": true,
+    "forward": false,
+    "turn": false,
+    "combined": false,
+    "lateral": true,
+    "enough_valid_cycles": true,
+    "xy_cycle_ripple_p95_under3cm": false,
+    "yaw_cycle_ripple_p95_under5deg": true,
+    "no_fall_environments_at_least95pct": false,
+    "orientation_stable_at_least99pct": false
+  },
+  "cycle_baseline_pass": false
+}

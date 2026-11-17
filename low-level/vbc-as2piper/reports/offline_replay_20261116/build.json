@@ -1,0 +1,11 @@
+{
+  "html": "reports/ee_ground_compare_20261114/viewer/downloads/as2piper_3d_offline.html",
+  "html_bytes": 29077733,
+  "zip_bytes": 18742634,
+  "scenarios": [
+    "motion36_vy0",
+    "ground64"
+  ],
+  "unique_binary_assets": 6,
+  "network_dependencies": 0
+}

@@ -1,0 +1,10 @@
+{
+  "pid": 1758012,
+  "iterations": [
+    20000,
+    24000,
+    28000,
+    30000
+  ],
+  "purpose": "Check earlier candidates and repeat20k/30k references in identical36s protocol; evaluation only"
+}

@@ -1,0 +1,11 @@
+{
+  "conditions": "Free root, nominal mass/COM/motors, flat ground, exact neutral joint reset, zero policy actions, held home EE; not PPO and not the original domain-randomized task.",
+  "envs": 16,
+  "seconds": 10,
+  "reset_count": 0,
+  "upright_fraction": 1.0,
+  "late_position_mean_m": 0.01127784512937069,
+  "late_position_p95_m": 0.011580521566793322,
+  "base_height_mean_m": 0.30492353439331055,
+  "roll_p95_deg": 0.36221970997398417
+}

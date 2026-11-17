@@ -1,0 +1,276 @@
+{
+  "baseline": "/data/team/users/suhwan/vbc-legacy",
+  "target": "/data/team/users/suhwan/vbc-as2piper/low-level-as2piper-forward",
+  "files": {
+    "legged_gym/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/__init__.py",
+      "sha256": "830d216f003c4647e3e78d9e7d880354e65ca4af62163bd58a89968d358775d4",
+      "baseline_sha256": "830d216f003c4647e3e78d9e7d880354e65ca4af62163bd58a89968d358775d4",
+      "status": "identical"
+    },
+    "legged_gym/envs/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/__init__.py",
+      "sha256": "552174cbba8d155a3eea475f394ddc04d1c98744cd8784815de3141ab321bf97",
+      "baseline_sha256": "2d72bfef6bac9058d605976fb34d176a9e498905e4028ab8e893723b4a0790eb",
+      "status": "modified"
+    },
+    "legged_gym/envs/base/base_config.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/base/base_config.py",
+      "sha256": "c2789af5409c82337862d78d99f82ef262d393af5dc810df6afe221d37ed2677",
+      "baseline_sha256": "c2789af5409c82337862d78d99f82ef262d393af5dc810df6afe221d37ed2677",
+      "status": "identical"
+    },
+    "legged_gym/envs/base/base_task.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/base/base_task.py",
+      "sha256": "a4871fa657bd9f58331ea02ac9ec9fdea79872b5c691afd6a5ddea4eb610b5e0",
+      "baseline_sha256": "a4871fa657bd9f58331ea02ac9ec9fdea79872b5c691afd6a5ddea4eb610b5e0",
+      "status": "identical"
+    },
+    "legged_gym/envs/base/legged_robot.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/base/legged_robot.py",
+      "sha256": "568af178cb75f35fa4ae9844b51427e7e56c7dd5cf34e5f67828ea0ce4a30fdc",
+      "baseline_sha256": "568af178cb75f35fa4ae9844b51427e7e56c7dd5cf34e5f67828ea0ce4a30fdc",
+      "status": "identical"
+    },
+    "legged_gym/envs/base/legged_robot_config.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/base/legged_robot_config.py",
+      "sha256": "94aa55144eb8a8486d19090f7911ec53a0fdc9a4fa1e6a7e7c455d4649452512",
+      "baseline_sha256": "94aa55144eb8a8486d19090f7911ec53a0fdc9a4fa1e6a7e7c455d4649452512",
+      "status": "identical"
+    },
+    "legged_gym/envs/manip_loco/as2piper_config.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/as2piper_config.py",
+      "sha256": "e6c8201cd0a791e2756232c5803b9ab5c78b7fc1ed23b39c75bda87cf5945bbe",
+      "baseline_sha256": null,
+      "status": "added"
+    },
+    "legged_gym/envs/manip_loco/as2piper_forward.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/as2piper_forward.py",
+      "sha256": "62934f0d133dd94331564a810deab84e9fca6c2bf478a3ffc54a642fca7c81b2",
+      "baseline_sha256": null,
+      "status": "added"
+    },
+    "legged_gym/envs/manip_loco/b1z1_config.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/b1z1_config.py",
+      "sha256": "71d0cbd174c42cfbae937c2d38436e017bf8f5fe387576c9f94bfd55eae4a7ea",
+      "baseline_sha256": "71d0cbd174c42cfbae937c2d38436e017bf8f5fe387576c9f94bfd55eae4a7ea",
+      "status": "identical"
+    },
+    "legged_gym/envs/manip_loco/manip_loco.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/manip_loco/manip_loco.py",
+      "sha256": "4bbc6c0bd071dfd0e79967e3ce54f446b52830a861c7cccab441a366fa07bb94",
+      "baseline_sha256": "751bb31c84aad500fc081f9ffd54ae77188e70f7bb6b917ff355e60c6cb4440c",
+      "status": "modified"
+    },
+    "legged_gym/envs/rewards/maniploco_rewards.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/envs/rewards/maniploco_rewards.py",
+      "sha256": "6a170885da50f383daaf3c9af5daf68e2be621cf6ac5e3eaed22ed56a7aa4344",
+      "baseline_sha256": "6a170885da50f383daaf3c9af5daf68e2be621cf6ac5e3eaed22ed56a7aa4344",
+      "status": "identical"
+    },
+    "legged_gym/scripts/b1z1_interface.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/b1z1_interface.py",
+      "sha256": "8c68b87b6a303dc5fa4916657b8df78f7bee94c0445285965a963adbcd799695",
+      "baseline_sha256": "8c68b87b6a303dc5fa4916657b8df78f7bee94c0445285965a963adbcd799695",
+      "status": "identical"
+    },
+    "legged_gym/scripts/play.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/play.py",
+      "sha256": "4487d172c385062738f2f00ab5129f9bbf2cb30ad321054561af3328bf3cfbc2",
+      "baseline_sha256": "4487d172c385062738f2f00ab5129f9bbf2cb30ad321054561af3328bf3cfbc2",
+      "status": "identical"
+    },
+    "legged_gym/scripts/train.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/train.py",
+      "sha256": "1f7ebe974922880220ae51986a81352ead6e8921694aea40c7f46a4fa57309dc",
+      "baseline_sha256": "1f7ebe974922880220ae51986a81352ead6e8921694aea40c7f46a4fa57309dc",
+      "status": "identical"
+    },
+    "legged_gym/scripts/train_as2.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/scripts/train_as2.py",
+      "sha256": "f7c4d05dac84b758fe8f56da6e766c2737395d8c029d3b392bcb2792032b1a29",
+      "baseline_sha256": null,
+      "status": "added"
+    },
+    "legged_gym/tests/test_env.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/tests/test_env.py",
+      "sha256": "7148330dec541c8116242bccbfd3b5dc4d3e49cb8f15d779fb09fe846932d1d7",
+      "baseline_sha256": "7148330dec541c8116242bccbfd3b5dc4d3e49cb8f15d779fb09fe846932d1d7",
+      "status": "identical"
+    },
+    "legged_gym/utils/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/__init__.py",
+      "sha256": "1be8b2f5c8e6ad54578b3647be9bb85a52bbd8ebc1eda596e19330ac4414d1bf",
+      "baseline_sha256": "1be8b2f5c8e6ad54578b3647be9bb85a52bbd8ebc1eda596e19330ac4414d1bf",
+      "status": "identical"
+    },
+    "legged_gym/utils/arm_collision.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/arm_collision.py",
+      "sha256": "2ce3a1235b713c67774708f7143a0c34d376e769a0c98c56e781564585f30f8c",
+      "baseline_sha256": null,
+      "status": "added"
+    },
+    "legged_gym/utils/helpers.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/helpers.py",
+      "sha256": "3176c22acc05edd5be26b98bf67cb43e8300223f70646f160d72d42c6bfab3e3",
+      "baseline_sha256": "3176c22acc05edd5be26b98bf67cb43e8300223f70646f160d72d42c6bfab3e3",
+      "status": "identical"
+    },
+    "legged_gym/utils/logger.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/logger.py",
+      "sha256": "ba2e407e2c21c0dbbc4952420a4bcf47a1a91788f3fd5c7cfc8dddafeceadc44",
+      "baseline_sha256": "d44948d0fe3467765a2d2c51ac683fdf0be2214038d71925064858992021cc61",
+      "status": "modified"
+    },
+    "legged_gym/utils/math.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/math.py",
+      "sha256": "bffd4e3e0334f615f2d1e30a5b4f86281297333dad009975302a0d5709bb8249",
+      "baseline_sha256": "bffd4e3e0334f615f2d1e30a5b4f86281297333dad009975302a0d5709bb8249",
+      "status": "identical"
+    },
+    "legged_gym/utils/task_registry.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/task_registry.py",
+      "sha256": "6e79556b4e6613f1f33771e782dfe3eb1e2dfe28fc0d7518952f458cafb9b84e",
+      "baseline_sha256": "6e79556b4e6613f1f33771e782dfe3eb1e2dfe28fc0d7518952f458cafb9b84e",
+      "status": "identical"
+    },
+    "legged_gym/utils/terrain.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/terrain.py",
+      "sha256": "c38aa9a69e9d651495f699a91349c250ec40580b1b189c98c9fc79b3518eceec",
+      "baseline_sha256": "c38aa9a69e9d651495f699a91349c250ec40580b1b189c98c9fc79b3518eceec",
+      "status": "identical"
+    },
+    "legged_gym/utils/urdf_chain.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/low-level/legged_gym/utils/urdf_chain.py",
+      "sha256": "4235d369e82097334e02412fd949df7081a149fbea7e2ff8788911eb8f6fba82",
+      "baseline_sha256": null,
+      "status": "added"
+    },
+    "rsl_rl_local/rsl_rl/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/__init__.py",
+      "sha256": "5c70c5a865ae3a49f5201bfc873678548b69f3b0ddec4d00bcf8bf28bb24f33d",
+      "baseline_sha256": "5c70c5a865ae3a49f5201bfc873678548b69f3b0ddec4d00bcf8bf28bb24f33d",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/algorithms/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/algorithms/__init__.py",
+      "sha256": "f17b125df2f308b5675f79c9cd6cc34a8b138cf2e8a2f560e4f0d5ab76caeca2",
+      "baseline_sha256": "f17b125df2f308b5675f79c9cd6cc34a8b138cf2e8a2f560e4f0d5ab76caeca2",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/algorithms/ppo.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/algorithms/ppo.py",
+      "sha256": "ef5d310f30918b2b70f396477e895cfd821de8bd49c6ef8cb532dc3ef7449402",
+      "baseline_sha256": "ef5d310f30918b2b70f396477e895cfd821de8bd49c6ef8cb532dc3ef7449402",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/algorithms/ppo_hrl.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/algorithms/ppo_hrl.py",
+      "sha256": "d0acf3a194da05877c29a97286df9a544bb49013ab865b247ef03aef2fb5a8dd",
+      "baseline_sha256": "d0acf3a194da05877c29a97286df9a544bb49013ab865b247ef03aef2fb5a8dd",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/env/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/env/__init__.py",
+      "sha256": "b4c617f8535f521496d62b4b057e6523a6d2f83520e3c0ce3a0c2ee0ef028b5c",
+      "baseline_sha256": "b4c617f8535f521496d62b4b057e6523a6d2f83520e3c0ce3a0c2ee0ef028b5c",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/env/vec_env.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/env/vec_env.py",
+      "sha256": "6e8f46bec6a4081f4248f010bf5641f71b51cdbaa0282bce76e6ef5580caace7",
+      "baseline_sha256": "6e8f46bec6a4081f4248f010bf5641f71b51cdbaa0282bce76e6ef5580caace7",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/modules/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/modules/__init__.py",
+      "sha256": "1e47151a47ed8086d6f84fce6460a8f52425037d6a836cedbb3f9f9091e26564",
+      "baseline_sha256": "1e47151a47ed8086d6f84fce6460a8f52425037d6a836cedbb3f9f9091e26564",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/modules/actor_critic.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/modules/actor_critic.py",
+      "sha256": "3ae847a2bd9cf318bda5ad94c63068929fb0ac5bb9494cd0fb2a048e31ca3542",
+      "baseline_sha256": "3ae847a2bd9cf318bda5ad94c63068929fb0ac5bb9494cd0fb2a048e31ca3542",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/modules/actor_critic_hrl.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/modules/actor_critic_hrl.py",
+      "sha256": "47240df478c24a48ca937603375c72ad24ceaf61e1dd7e1b5146a95cbeead7ce",
+      "baseline_sha256": "47240df478c24a48ca937603375c72ad24ceaf61e1dd7e1b5146a95cbeead7ce",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/modules/actor_critic_recurrent.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/modules/actor_critic_recurrent.py",
+      "sha256": "db5eeb05c963e5ab61829b076a7360ce9441deb0441cca7e08d214623cadce3c",
+      "baseline_sha256": "db5eeb05c963e5ab61829b076a7360ce9441deb0441cca7e08d214623cadce3c",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/runners/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/runners/__init__.py",
+      "sha256": "a6a5cd71aee2c653306a19d993246f4f7c2c183ce3f6e9fc02f05ed1b9b83464",
+      "baseline_sha256": "a6a5cd71aee2c653306a19d993246f4f7c2c183ce3f6e9fc02f05ed1b9b83464",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/runners/on_policy_runner.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/runners/on_policy_runner.py",
+      "sha256": "d8319df782ad20a3b685c40b6f24a49250f9f89ba2a68341168656b88e5b45c7",
+      "baseline_sha256": "d8319df782ad20a3b685c40b6f24a49250f9f89ba2a68341168656b88e5b45c7",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/runners/on_policy_runner_hrl.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/runners/on_policy_runner_hrl.py",
+      "sha256": "59a24fb0c343f475706c3a7bac541a84a9161c6390b9a75860f378f73fb02251",
+      "baseline_sha256": "59a24fb0c343f475706c3a7bac541a84a9161c6390b9a75860f378f73fb02251",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/storage/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/storage/__init__.py",
+      "sha256": "ceee29ca94bc82243e6b40eb9f7cb1778baf9f88729676a1277769802c7ba716",
+      "baseline_sha256": "ceee29ca94bc82243e6b40eb9f7cb1778baf9f88729676a1277769802c7ba716",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/storage/rollout_storage.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/storage/rollout_storage.py",
+      "sha256": "b003609b55899faa7fdcf11ba90f09c6e54aa492054d977bab2c8f36cdbbe5d3",
+      "baseline_sha256": "b003609b55899faa7fdcf11ba90f09c6e54aa492054d977bab2c8f36cdbbe5d3",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/storage/rollout_storage_hrl.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/storage/rollout_storage_hrl.py",
+      "sha256": "d2501b935f0c3cf47bda0163cc8e0123d905aa7436dc705b3e86d152c9dfe1ad",
+      "baseline_sha256": "d2501b935f0c3cf47bda0163cc8e0123d905aa7436dc705b3e86d152c9dfe1ad",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/utils/__init__.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/utils/__init__.py",
+      "sha256": "6a29eb8996bfc2a2d799282851f6d23fbe446a9e743ad1aeb8031026c101183c",
+      "baseline_sha256": "6a29eb8996bfc2a2d799282851f6d23fbe446a9e743ad1aeb8031026c101183c",
+      "status": "identical"
+    },
+    "rsl_rl_local/rsl_rl/utils/utils.py": {
+      "baseline": "/data/team/users/suhwan/vbc-legacy/third_party/rsl_rl/rsl_rl/utils/utils.py",
+      "sha256": "c883c535b2a7eda3ffdc2200505a4ae36dc12cdcf9fc6d306eb2b30f64f202fc",
+      "baseline_sha256": "c883c535b2a7eda3ffdc2200505a4ae36dc12cdcf9fc6d306eb2b30f64f202fc",
+      "status": "identical"
+    }
+  },
+  "counts": {
+    "identical": 34,
+    "modified": 3,
+    "added": 5
+  },
+  "original_as2_source_unchanged": true,
+  "original_as2_files_checked": 55,
+  "runtime_matches_100_iteration_test": {
+    "legged_gym/envs/manip_loco/as2piper_config.py": true,
+    "legged_gym/envs/manip_loco/as2piper_forward.py": true,
+    "legged_gym/envs/manip_loco/manip_loco.py": true,
+    "legged_gym/envs/rewards/maniploco_rewards.py": true,
+    "resources/robots/as2piper/urdf/as2piper_plate_forward_training.urdf": true
+  },
+  "collision_geometry_asset_sha_matches": true,
+  "config_contract": "check_original_settings.py passed: 57 flattened environment changes, PPO only experiment_name",
+  "training_started": false,
+  "verdict": "Executable; not ready for unattended 45000 iterations before known EE sampler/initial-goal issues are corrected and verified."
+}

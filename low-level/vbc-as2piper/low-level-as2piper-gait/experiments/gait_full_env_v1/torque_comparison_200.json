@@ -1,0 +1,14 @@
+{
+  "original": {
+    "above_90pct_fraction": 4.340277777777778e-06,
+    "max_ratio": 0.9390847947862413
+  },
+  "speed": {
+    "above_90pct_fraction": 0.0,
+    "max_ratio": 0.5837815602620443
+  },
+  "stable": {
+    "above_90pct_fraction": 0.0,
+    "max_ratio": 0.5602804395887587
+  }
+}

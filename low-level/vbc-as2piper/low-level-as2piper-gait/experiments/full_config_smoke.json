@@ -1,0 +1,6 @@
+{
+  "iteration": 3,
+  "floating_tensors": 188,
+  "nonfinite_tensors": 0,
+  "conditions": "Original rough terrain and full robot DR,256 environments,3 updates; initialization/finite-state smoke only."
+}

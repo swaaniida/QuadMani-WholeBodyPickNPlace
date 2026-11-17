@@ -1,0 +1,159 @@
+{
+  "reference": 20000,
+  "groups": {
+    "tracking": {
+      "Tracking/vx_rmse_m_s": 0.5,
+      "Tracking/vy_rmse_m_s": 0.2,
+      "Tracking/yaw_rmse_rad_s": 0.3
+    },
+    "posture": {
+      "Pose/roll_abs_mean_deg": 0.4,
+      "Pose/roll_abs_p95_deg": 0.2,
+      "RewardRaw/leg/base_height": 0.2,
+      "RewardRaw/leg/ang_vel_xy": 0.2
+    },
+    "ee": {
+      "EE/position_mean_m": 0.5,
+      "EE/position_p95_m": 0.5
+    },
+    "load": {
+      "RewardRaw/leg/torques": 0.25,
+      "RewardRaw/leg/work": 0.25,
+      "Force/norm_p99_N": 0.25,
+      "RewardRaw/leg/collision": 0.25
+    }
+  },
+  "priorities": {
+    "balanced": {
+      "tracking": 0.5,
+      "posture": 0.25,
+      "ee": 0.15,
+      "load": 0.1
+    },
+    "tracking_first": {
+      "tracking": 0.7,
+      "posture": 0.1,
+      "ee": 0.15,
+      "load": 0.05
+    },
+    "posture_first": {
+      "tracking": 0.3,
+      "posture": 0.45,
+      "ee": 0.15,
+      "load": 0.1
+    }
+  },
+  "scores": [
+    {
+      "iteration": 18000,
+      "failures": 0,
+      "tracking": 1.1280518372204018,
+      "posture": 1.0994139601596578,
+      "ee": 0.9924233525869381,
+      "load": 0.9683803506731052,
+      "balanced": 1.0845809466054666,
+      "tracking_first": 1.096860202491943,
+      "posture_first": 1.078853371193318
+    },
+    {
+      "iteration": 20000,
+      "failures": 0,
+      "tracking": 1.0,
+      "posture": 1.0,
+      "ee": 1.0,
+      "load": 1.0,
+      "balanced": 1.0,
+      "tracking_first": 1.0,
+      "posture_first": 1.0
+    },
+    {
+      "iteration": 24000,
+      "failures": 0,
+      "tracking": 1.0033102463937633,
+      "posture": 1.1115524625467073,
+      "ee": 1.0242591541956432,
+      "load": 0.9848299326020097,
+      "balanced": 1.0316651052231058,
+      "tracking_first": 1.016352788489752,
+      "posture_first": 1.0533135484536946
+    },
+    {
+      "iteration": 28000,
+      "failures": 0,
+      "tracking": 1.0615283963047037,
+      "posture": 0.9542934308642853,
+      "ee": 1.0143396036568582,
+      "load": 1.0275922416662455,
+      "balanced": 1.0242477205835765,
+      "tracking_first": 1.042029773131562,
+      "posture_first": 1.0028007274954929
+    },
+    {
+      "iteration": 30000,
+      "failures": 0,
+      "tracking": 1.0637741192846106,
+      "posture": 0.8520159254527058,
+      "ee": 1.0062551913507454,
+      "load": 0.9424485419248745,
+      "balanced": 0.990074173900581,
+      "tracking_first": 1.0279041818433536,
+      "posture_first": 0.9477225351342
+    },
+    {
+      "iteration": 34000,
+      "failures": 0,
+      "tracking": 1.0129349700021149,
+      "posture": 0.8589847385757567,
+      "ee": 0.9999546172908593,
+      "load": 0.9269987385039469,
+      "balanced": 0.9639067360890202,
+      "tracking_first": 0.9912960823778822,
+      "posture_first": 0.9331166898037485
+    },
+    {
+      "iteration": 40000,
+      "failures": 0,
+      "tracking": 0.9916341548461268,
+      "posture": 0.8401074186837478,
+      "ee": 1.0254029682507713,
+      "load": 0.9646838543485903,
+      "balanced": 0.9561227627664751,
+      "tracking_first": 0.9801992882157087,
+      "posture_first": 0.9258174155339992
+    },
+    {
+      "iteration": 40600,
+      "failures": 0,
+      "tracking": 1.0459434318293293,
+      "posture": 0.7225738088425642,
+      "ee": 0.9966952234456425,
+      "load": 0.9505948703030185,
+      "balanced": 0.948178938672454,
+      "tracking_first": 1.0014518101967842,
+      "posture_first": 0.883505014075101
+    },
+    {
+      "iteration": 43400,
+      "failures": 0,
+      "tracking": 1.0330829571345674,
+      "posture": 0.8960669083565268,
+      "ee": 0.9980029858641124,
+      "load": 0.8422147866732291,
+      "balanced": 0.9744801322033552,
+      "tracking_first": 1.0045759480431282,
+      "posture_first": 0.947076922447747
+    },
+    {
+      "iteration": 45000,
+      "failures": 0,
+      "tracking": 1.112229139075541,
+      "posture": 0.7665689784330977,
+      "ee": 0.9927371313806624,
+      "load": 0.9098372087795646,
+      "balanced": 0.9876511047311007,
+      "tracking_first": 1.0496197253422659,
+      "posture_first": 0.9185190726026121
+    }
+  ],
+  "note": "Transparent heuristic, lower is better, reference20k=1; not a validated deployment safety index. Reset is a separate exclusion criterion. Pitch is reported, not scored as an unrequested flat-body objective."
+}
