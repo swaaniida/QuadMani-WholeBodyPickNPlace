@@ -1,0 +1,18 @@
+{
+  "upstream_url": "https://github.com/NVlabs/GraspGenX",
+  "upstream_commit": "44eb1d77d6d27bc97ee361e3afb717a2115e30a9",
+  "distribution_version": "1.0.0",
+  "package_dunder_version": "0.1.0",
+  "checkpoint_repo": "https://huggingface.co/adithyamurali/GraspGenXModel",
+  "checkpoint_revision": "7c834043c11a11417e31d6d5ea9355801e40a2c1",
+  "generator": "release/gen/epoch_736.pth",
+  "generator_sha256": "8b55f31cdb8340a573b4df27b027c15cff326bd6debcb389bf631d2aaab7ac44",
+  "discriminator": "release/dis/epoch_1056.pth",
+  "discriminator_sha256": "cbf3f3bdb2e4c03fca8486ed24de0e6a8a859e6bd22bce2f1434a610335abd3e",
+  "gripper_repo": "https://huggingface.co/datasets/adithyamurali/gripper_descriptions",
+  "gripper_revision": "19a03c00d19aeaf052d0f6801f0041982d676e8a",
+  "gripper": "franka_umi",
+  "asset_subdir": "gripper_descriptions/assets/x_grippers/franka_umi",
+  "mesh": "vis_mesh.obj (static open visual configuration)",
+  "frame": "gripper base; not calibrated robot TCP"
+}

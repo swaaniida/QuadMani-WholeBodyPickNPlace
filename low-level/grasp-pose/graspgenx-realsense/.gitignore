@@ -1,0 +1,12 @@
+.venv/
+.venv-client/
+.venv-tracking/
+.runtime/
+.cache/
+tools/
+upstream/
+outputs/
+dist/
+__pycache__/
+.pytest_cache/
+local_client/outputs*/

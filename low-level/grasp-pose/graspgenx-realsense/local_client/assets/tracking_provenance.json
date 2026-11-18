@@ -1,0 +1,16 @@
+{
+  "tracking_sam_repo": "https://github.com/RogerQi/Tracking_SAM",
+  "tracking_sam_commit": "d5e5e81a361dce4ddbe3264a2b8027b2b43ea3fd",
+  "sam_repo": "https://github.com/facebookresearch/segment-anything",
+  "sam_commit": "dca509fe793f601edb92606367a655c15ac00fdf",
+  "sam_type": "vit_h",
+  "sam_checkpoint": "sam_vit_h_4b8939.pth",
+  "vos": "AOTT (official AOT memory propagation, pre_ytb_dav)",
+  "vos_checkpoint": "AOTT_PRE_YTB_DAV.pth",
+  "aot_commit": "ada8a3cbf0ba6dde563a49e78e56dbbcde01d143",
+  "correlation_commit": "14a159ebad5399adf5db965bb5cab095c98ebc87",
+  "grounding_dino_commit": "60d796825e1266e56f7e4e9e00e88de662b67bd3",
+  "grounding_dino_checkpoint": "groundingdino_swint_ogc.pth",
+  "torch": "1.13.1+cu117",
+  "graspgenx_torch_environment_is_separate": true
+}

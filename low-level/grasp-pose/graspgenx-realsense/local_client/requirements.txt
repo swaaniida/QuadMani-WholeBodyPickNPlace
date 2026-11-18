@@ -1,0 +1,8 @@
+numpy==1.26.4
+opencv-python==4.11.0.86
+pyrealsense2>=2.56,<3
+pyzmq>=26,<28
+msgpack>=1.1,<2
+msgpack-numpy==0.4.8
+viser==1.1.1
+trimesh==4.5.3

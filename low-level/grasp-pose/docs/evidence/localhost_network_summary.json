@@ -1,0 +1,61 @@
+{
+  "summary": {
+    "name/diffusion": {
+      "network_rtt_ms": {
+        "mean": 400.4623976070434,
+        "p50": 387.83347932621837,
+        "p95": 474.300976539962
+      },
+      "server_infer_ms": {
+        "mean": 399.19962882995605,
+        "p50": 386.65675185620785,
+        "p95": 472.93905657716095
+      },
+      "server_handler_sync_ms": {
+        "mean": 399.37845412641764,
+        "p50": 386.82713522575796,
+        "p95": 473.13017977867275
+      }
+    },
+    "params/graspmoe": {
+      "network_rtt_ms": {
+        "mean": 925.3945252858102,
+        "p50": 920.307301916182,
+        "p95": 963.3211076958105
+      },
+      "server_infer_ms": {
+        "mean": 923.9789803512394,
+        "p50": 919.0606959164143,
+        "p95": 961.8879271671176
+      },
+      "server_handler_sync_ms": {
+        "mean": 924.2554169613868,
+        "p50": 919.3017133511603,
+        "p95": 962.1952938148752
+      }
+    },
+    "params/diffusion": {
+      "network_rtt_ms": {
+        "mean": 958.6444710381329,
+        "p50": 974.2936105467379,
+        "p95": 995.4611951019615
+      },
+      "server_infer_ms": {
+        "mean": 957.2340245358646,
+        "p50": 972.8430970571935,
+        "p95": 994.0421974752098
+      },
+      "server_handler_sync_ms": {
+        "mean": 957.5297628995031,
+        "p50": 973.1337684206665,
+        "p95": 994.3613078212366
+      }
+    }
+  },
+  "errors": [
+    "ValueError: Unknown action: 'unknown'",
+    "ValueError: point_cloud must be (N, 3); got (3, 2)",
+    "ValueError: Request is missing 'sweep_volume_params'."
+  ],
+  "client_imported_torch": false
+}

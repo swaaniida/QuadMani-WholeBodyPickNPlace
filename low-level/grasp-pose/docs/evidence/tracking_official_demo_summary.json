@@ -1,0 +1,20 @@
+{
+  "upstream_demo": "demo.py main() executed with GUI-only headless harness",
+  "click_xy": [
+    311,
+    290
+  ],
+  "initial_sam_iou": 0.9700006048265156,
+  "frames": 82,
+  "vos_frames": 81,
+  "sam_init_ms": 12123.034386429936,
+  "warm_vos_mean_ms": 54.45968544227071,
+  "warm_vos_p50_ms": 63.75015596859157,
+  "warm_vos_p95_ms": 68.05845275521278,
+  "warm_vos_compute_fps": 18.36220668332793,
+  "peak_allocated_mib": 6414.87060546875,
+  "elapsed_s": 120.99899439606816,
+  "torch": "1.13.1+cu117",
+  "cuda": "11.7",
+  "windows_camera_tested": false
+}
